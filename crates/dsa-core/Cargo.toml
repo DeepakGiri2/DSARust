@@ -1,0 +1,12 @@
+[package]
+name = "dsa-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Platform-free trace model and debugger timeline for DSA Visualized"
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }

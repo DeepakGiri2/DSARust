@@ -1,0 +1,33 @@
+[package]
+name = "dsa-app"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "DSA Visualized — native NeetCode animation debugger"
+
+[[bin]]
+name = "dsa-visualized"
+path = "src/main.rs"
+
+[dependencies]
+dsa-core = { workspace = true }
+dsa-content = { workspace = true }
+dsa-viz = { workspace = true }
+dsa-harness = { workspace = true }
+dsa-ai = { workspace = true }
+dsa-store = { workspace = true }
+eframe = { workspace = true }
+egui = { workspace = true }
+egui_extras = { workspace = true }
+image = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+directories = { workspace = true }
+log = { workspace = true }
+env_logger = { workspace = true }
+
+# No build script and no platform-specific dependencies: the same crate graph
+# compiles for Windows, Linux and macOS. Window creation, GL context and font
+# loading are all handled by eframe.

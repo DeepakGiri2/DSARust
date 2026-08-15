@@ -1,0 +1,11 @@
+[package]
+name = "dsa-viz"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Animated, interpolating renderers for the DSA Visualized views"
+
+[dependencies]
+dsa-core = { workspace = true }
+egui = { workspace = true }
