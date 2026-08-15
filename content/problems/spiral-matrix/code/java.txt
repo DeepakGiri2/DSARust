@@ -1,0 +1,28 @@
+static List<Integer> spiralOrder(int[][] matrix) {
+    List<Integer> out = new ArrayList<>(); //@init
+    int top = 0, bottom = matrix.length - 1; //@bounds
+    int left = 0, right = matrix[0].length - 1;
+    while (top <= bottom && left <= right) { //@loop
+        for (int c = left; c <= right; c++) { //@goRight
+            out.add(matrix[top][c]);
+        }
+        top++; //@shrinkTop
+        for (int r = top; r <= bottom; r++) { //@goDown
+            out.add(matrix[r][right]);
+        }
+        right--; //@shrinkRight
+        if (top <= bottom) { //@checkRow
+            for (int c = right; c >= left; c--) { //@goLeft
+                out.add(matrix[bottom][c]);
+            }
+            bottom--; //@shrinkBottom
+        }
+        if (left <= right) { //@checkCol
+            for (int r = bottom; r >= top; r--) { //@goUp
+                out.add(matrix[r][left]);
+            }
+            left++; //@shrinkLeft
+        }
+    }
+    return out; //@ret
+}

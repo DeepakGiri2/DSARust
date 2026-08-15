@@ -1,0 +1,33 @@
+slug = 'concatenation-of-array'
+title = 'Concatenation of Array'
+category = 'Arrays & Hashing'
+difficulty = 'Easy'
+tier = '250'
+complexity = 'O(n) time · O(n) space'
+
+description = 'Given an array nums of length n, build an array ans of length 2n where ans is nums followed by nums again — so ans[i] = nums[i] and ans[i+n] = nums[i].'
+approach = 'Allocate a result of size 2n, then walk the input once. Each value is copied into two positions at the same time: index i and index i + n.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+nums = [1, 4, 1, 2]
+
+[[tests]]
+expected = '1 4 1 2 1 4 1 2'
+[tests.input]
+nums = [1, 4, 1, 2]
+
+[[tests]]
+expected = '1 2 1 1 2 1'
+[tests.input]
+nums = [1, 2, 1]
+
+[[tests]]
+expected = '5 5'
+[tests.input]
+nums = [5]

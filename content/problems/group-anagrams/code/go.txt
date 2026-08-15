@@ -1,0 +1,22 @@
+func sortKey(w string) string {
+    b := []byte(w)
+    sort.Slice(b, func(i, j int) bool { return b[i] < b[j] })
+    return string(b)
+}
+
+func groupAnagrams(words []string) [][]string {
+    groups := map[string][]string{} //@init
+    order := []string{} //@order
+    for _, w := range words { //@loop
+        key := sortKey(w) //@key
+        if _, ok := groups[key]; !ok { //@new
+            order = append(order, key) //@addorder
+        }
+        groups[key] = append(groups[key], w) //@add
+    }
+    res := [][]string{} //@res
+    for _, k := range order { //@collect
+        res = append(res, groups[k]) //@push
+    }
+    return res //@return
+}

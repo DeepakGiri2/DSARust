@@ -1,0 +1,47 @@
+const INF = 1 << 30
+
+func minimumEffortPath(heights [][]int) int {
+    rows, cols := len(heights), len(heights[0])
+    effort := make([][]int, rows) //@init
+    visited := make([][]bool, rows) //@visited
+    for r := range effort {
+        effort[r] = make([]int, cols)
+        visited[r] = make([]bool, cols)
+        for c := range effort[r] {
+            effort[r][c] = INF
+        }
+    }
+    effort[0][0] = 0 //@seed
+    dirs := [][2]int{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}
+    for iter := 0; iter < rows*cols; iter++ { //@loop
+        br, bc := -1, -1 //@pick
+        for r := 0; r < rows; r++ { //@scan
+            for c := 0; c < cols; c++ {
+                if !visited[r][c] && effort[r][c] != INF && (br < 0 || effort[r][c] < effort[br][bc]) {
+                    br, bc = r, c //@lowest
+                }
+            }
+        }
+        if br < 0 { //@stuck
+            break
+        }
+        if br == rows-1 && bc == cols-1 { //@arrived
+            return effort[br][bc] //@ret
+        }
+        visited[br][bc] = true //@settle
+        for _, d := range dirs { //@relax
+            nr, nc := br+d[0], bc+d[1]
+            if nr >= 0 && nr < rows && nc >= 0 && nc < cols && !visited[nr][nc] {
+                diff := abs(heights[nr][nc] - heights[br][bc]) //@diff
+                t := effort[br][bc] //@worst
+                if diff > t {
+                    t = diff
+                }
+                if t < effort[nr][nc] { //@better
+                    effort[nr][nc] = t //@update
+                }
+            }
+        }
+    }
+    return -1 //@none
+}

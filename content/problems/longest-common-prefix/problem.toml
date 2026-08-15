@@ -1,0 +1,33 @@
+slug = 'longest-common-prefix'
+title = 'Longest Common Prefix'
+category = 'Arrays & Hashing'
+difficulty = 'Easy'
+tier = '250'
+complexity = 'O(n · m) time · O(1) space (n words, m = shortest length)'
+
+description = 'Given several words, find the longest string that is a prefix of every one of them. Return the empty string if there is no common prefix. Watch a vertical scan compare one column of characters at a time.'
+approach = 'Vertical scanning: take character j from the first word and check that every other word has the same character at position j. Stop at the first mismatch (or when a word ends); the prefix collected so far is the answer.'
+
+[[inputs]]
+name = 's'
+label = 'words (space-separated)'
+type = 'string'
+max_len = 60
+
+[default_input]
+s = 'flower flow flight'
+
+[[tests]]
+expected = 'fl'
+[tests.input]
+s = 'flower flow flight'
+
+[[tests]]
+expected = ''
+[tests.input]
+s = 'dog racecar car'
+
+[[tests]]
+expected = 'inters'
+[tests.input]
+s = 'interspecies interstellar interstate'

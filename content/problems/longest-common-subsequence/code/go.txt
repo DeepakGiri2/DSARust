@@ -1,0 +1,19 @@
+func longestCommonSubsequence(text1 string, text2 string) int {
+    m, n := len(text1), len(text2) //@init
+    dp := make([][]int, m+1) //@alloc
+    for i := range dp {
+        dp[i] = make([]int, n+1)
+    }
+    for i := 1; i <= m; i++ { //@outer
+        for j := 1; j <= n; j++ { //@inner
+            if text1[i-1] == text2[j-1] { //@match
+                dp[i][j] = dp[i-1][j-1] + 1 //@diag
+            } else if dp[i-1][j] >= dp[i][j-1] { //@cmp
+                dp[i][j] = dp[i-1][j] //@up
+            } else {
+                dp[i][j] = dp[i][j-1] //@left
+            }
+        }
+    }
+    return dp[m][n] //@ret
+}

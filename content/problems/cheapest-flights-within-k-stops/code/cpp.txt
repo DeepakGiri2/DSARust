@@ -1,0 +1,22 @@
+const int INF = 1 << 30;
+
+int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+    vector<int> dist(n, INF); //@init
+    dist[src] = 0; //@seed
+    for (int round = 0; round <= k; round++) { //@rounds
+        vector<int> next = dist; //@copy
+        for (auto& f : flights) { //@edges
+            if (dist[f[0]] == INF) { //@unreached
+                continue;
+            }
+            if (dist[f[0]] + f[2] < next[f[1]]) { //@cheaper
+                next[f[1]] = dist[f[0]] + f[2]; //@update
+            }
+        }
+        dist = next; //@commit
+    }
+    if (dist[dst] == INF) { //@check
+        return -1; //@fail
+    }
+    return dist[dst]; //@ret
+}

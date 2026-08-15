@@ -1,0 +1,58 @@
+slug = 'furthest-building-you-can-reach'
+title = 'Furthest Building You Can Reach'
+category = 'Heap / Priority Queue'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '1642'
+complexity = 'O(n log n) time · O(ladders) space'
+
+description = 'Climbing between buildings costs bricks equal to the height difference, or one ladder regardless of height. Given a supply of each, return the furthest building reachable.'
+approach = 'Ladders should go to the biggest climbs, but which those are is not known until the end. So spend a ladder on every climb as it appears, and once more ladders are in use than exist, take back the *smallest* of them and pay for that climb with bricks instead. A min-heap of the climbs currently using ladders makes that smallest one immediately available, so the decision is always revised in the cheapest possible direction.'
+
+[[inputs]]
+name = 'heights'
+label = 'heights'
+type = 'int-array'
+max_len = 12
+min = 1
+max = 40
+
+[[inputs]]
+name = 'bricks'
+label = 'bricks'
+type = 'int'
+min = 0
+max = 100
+
+[[inputs]]
+name = 'ladders'
+label = 'ladders'
+type = 'int'
+min = 0
+max = 5
+
+[default_input]
+heights = [4, 2, 7, 6, 9, 14, 12]
+bricks = 5
+ladders = 1
+
+[[tests]]
+expected = '4'
+[tests.input]
+heights = [4, 2, 7, 6, 9, 14, 12]
+bricks = 5
+ladders = 1
+
+[[tests]]
+expected = '7'
+[tests.input]
+heights = [4, 12, 2, 7, 3, 18, 20, 3, 19]
+bricks = 10
+ladders = 2
+
+[[tests]]
+expected = '3'
+[tests.input]
+heights = [14, 3, 19, 3]
+bricks = 17
+ladders = 0

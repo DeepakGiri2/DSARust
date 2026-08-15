@@ -1,0 +1,11 @@
+string removeStars(string s) {
+    string stack = ""; //@init
+    for (int i = 0; i < (int)s.size(); i++) { //@loop
+        if (s[i] == '*') { //@isStar
+            stack.pop_back(); //@pop
+        } else { //@isChar
+            stack.push_back(s[i]); //@push
+        }
+    }
+    return stack; //@ret
+}

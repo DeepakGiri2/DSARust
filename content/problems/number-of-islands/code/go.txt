@@ -1,0 +1,24 @@
+func numIslands(grid [][]byte) int {
+    rows, cols := len(grid), len(grid[0])
+    count := 0 //@count0
+    for r := 0; r < rows; r++ { //@rowloop
+        for c := 0; c < cols; c++ { //@colloop
+            if grid[r][c] == '1' { //@isfound
+                count++ //@inc
+                dfs(grid, r, c) //@calldfs
+            }
+        }
+    }
+    return count //@ret
+}
+
+func dfs(grid [][]byte, r int, c int) {
+    if r < 0 || r >= len(grid) || c < 0 || c >= len(grid[0]) || grid[r][c] != '1' { //@bounds
+        return //@retn
+    }
+    grid[r][c] = '0' //@sink
+    dfs(grid, r+1, c) //@down
+    dfs(grid, r-1, c) //@up
+    dfs(grid, r, c+1) //@right
+    dfs(grid, r, c-1) //@left
+}

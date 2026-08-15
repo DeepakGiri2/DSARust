@@ -1,0 +1,14 @@
+int search(vector<int>& nums, int target) {
+    int lo = 0, hi = (int)nums.size() - 1; //@init
+    while (lo <= hi) { //@loop
+        int mid = lo + (hi - lo) / 2; //@mid
+        if (nums[mid] == target) { //@cmp
+            return mid; //@found
+        } else if (nums[mid] < target) { //@less
+            lo = mid + 1; //@right
+        } else {
+            hi = mid - 1; //@left
+        }
+    }
+    return -1; //@none
+}

@@ -1,0 +1,30 @@
+slug = 'removing-stars-from-a-string'
+title = 'Removing Stars From a String'
+category = 'Stack'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '2390'
+complexity = 'O(n) time · O(n) space'
+
+description = "Each '*' removes the closest non-star character to its left, along with itself. Return the string once no stars remain."
+approach = "'The closest character to the left that has not already been removed' is the definition of the top of a stack. Building the answer on a stack means each star is a single pop, so what looks like a repeated shifting-and-searching problem is one pass with no searching at all."
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 60
+help = "letters and '*'"
+
+[default_input]
+s = 'leet**cod*e'
+
+[[tests]]
+expected = 'lecoe'
+[tests.input]
+s = 'leet**cod*e'
+
+[[tests]]
+expected = 'era'
+[tests.input]
+s = 'erase**'

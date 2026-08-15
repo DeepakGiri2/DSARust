@@ -1,0 +1,36 @@
+slug = 'binary-search'
+title = 'Binary Search'
+category = 'Binary Search'
+difficulty = 'Easy'
+tier = '50'
+complexity = 'O(log n) time · O(1) space'
+
+description = 'Given a sorted array of distinct integers and a target, return the index of the target, or -1 if it is not present. Must run in O(log n).'
+approach = 'Keep a live range [lo, hi] that must contain the target. Compare the middle element: equal → done; smaller → target is right of mid; larger → target is left of mid. Each comparison halves the range.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums (sorted)'
+type = 'int-array'
+max_len = 40
+
+[[inputs]]
+name = 'target'
+label = 'target'
+type = 'int'
+
+[default_input]
+nums = [-3, 0, 2, 5, 8, 11, 14, 20]
+target = 11
+
+[[tests]]
+expected = '5'
+[tests.input]
+nums = [-3, 0, 2, 5, 8, 11, 14, 20]
+target = 11
+
+[[tests]]
+expected = '-1'
+[tests.input]
+nums = [-3, 0, 2, 5, 8, 11, 14, 20]
+target = 7

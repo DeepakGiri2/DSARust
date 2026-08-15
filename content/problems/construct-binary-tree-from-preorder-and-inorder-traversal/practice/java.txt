@@ -1,0 +1,67 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static int idx;
+    static TreeNode buildTree(int[] preorder, int[] inorder) {
+        idx = 0;
+        return helper(preorder, inorder, 0, inorder.length - 1);
+    }
+
+    static TreeNode helper(int[] preorder, int[] inorder, int lo, int hi) {
+        if (lo > hi) {
+            return null;
+        }
+        int rootVal = preorder[idx];
+        idx++;
+        TreeNode root = new TreeNode(rootVal);
+        int mid = lo;
+        while (inorder[mid] != rootVal) {
+            mid++;
+        }
+        root.left = helper(preorder, inorder, lo, mid - 1);
+        root.right = helper(preorder, inorder, mid + 1, hi);
+        return root;
+    }
+
+    static class TreeNode {
+        int val;
+        TreeNode left, right;
+        TreeNode(int v) { val = v; }
+    }
+
+    static int[] readInts(String line) {
+        line = line.trim();
+        if (line.isEmpty()) return new int[0];
+        String[] parts = line.split("\\s+");
+        int[] nums = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);
+        return nums;
+    }
+
+    static String serialize(TreeNode root) {
+        if (root == null) return "";
+        List<String> tokens = new ArrayList<>();
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while (!q.isEmpty()) {
+            TreeNode node = q.poll();
+            if (node == null) { tokens.add("n"); continue; }
+            tokens.add(Integer.toString(node.val));
+            q.add(node.left);
+            q.add(node.right);
+        }
+        int end = tokens.size();
+        while (end > 0 && tokens.get(end - 1).equals("n")) end--;
+        return String.join(" ", tokens.subList(0, end));
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] preorder = readInts(br.readLine());
+        int[] inorder = readInts(br.readLine());
+        TreeNode root = buildTree(preorder, inorder);
+        System.out.println(serialize(root));
+    }
+}

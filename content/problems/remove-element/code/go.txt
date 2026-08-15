@@ -1,0 +1,10 @@
+func removeElement(nums []int, val int) int {
+    k := 0 //@init
+    for i := 0; i < len(nums); i++ { //@loop
+        if nums[i] != val { //@check
+            nums[k] = nums[i] //@keep
+            k++ //@inc
+        }
+    }
+    return k //@ret
+}

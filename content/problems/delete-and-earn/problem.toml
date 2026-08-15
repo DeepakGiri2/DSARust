@@ -1,0 +1,36 @@
+slug = 'delete-and-earn'
+title = 'Delete and Earn'
+category = '1-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '740'
+complexity = 'O(n + maxValue) time · O(maxValue) space'
+
+description = 'Taking a number earns its value but deletes every copy of the numbers one above and one below it. Maximise the total earned.'
+approach = "Copies of the same number never conflict, so bucket them: replace the array by 'total points available at value v'. The constraint then reads 'you may not take two adjacent values', which is House Robber over the value line rather than over the input. Solving the transformed problem is the whole work; the DP itself is the standard two-variable rolling one."
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 12
+min = 1
+max = 12
+
+[default_input]
+nums = [3, 4, 2]
+
+[[tests]]
+expected = '6'
+[tests.input]
+nums = [3, 4, 2]
+
+[[tests]]
+expected = '9'
+[tests.input]
+nums = [2, 2, 3, 3, 3, 4]
+
+[[tests]]
+expected = '1'
+[tests.input]
+nums = [1]

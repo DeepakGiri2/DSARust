@@ -1,0 +1,54 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> current = new ArrayList<>();
+        boolean[] used = new boolean[nums.length];
+        backtrack(nums, current, used, res);
+        return res;
+    }
+
+    static void backtrack(int[] nums, List<Integer> current, boolean[] used, List<List<Integer>> res) {
+        if (current.size() == nums.length) {
+            res.add(new ArrayList<>(current));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i]) {
+                continue;
+            }
+            used[i] = true;
+            current.add(nums[i]);
+            backtrack(nums, current, used, res);
+            current.remove(current.size() - 1);
+            used[i] = false;
+        }
+    }
+
+    static int[] readInts(BufferedReader br) throws Exception {
+        String line = br.readLine();
+        if (line == null || line.trim().isEmpty()) return new int[0];
+        String[] parts = line.trim().split("\\s+");
+        int[] nums = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);
+        return nums;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] nums = readInts(br);
+        List<List<Integer>> res = permute(nums);
+        StringBuilder sb = new StringBuilder();
+        for (List<Integer> p : res) {
+            for (int i = 0; i < p.size(); i++) {
+                if (i > 0) sb.append(' ');
+                sb.append(p.get(i));
+            }
+            sb.append('\n');
+        }
+        System.out.print(sb);
+    }
+}

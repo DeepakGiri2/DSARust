@@ -1,0 +1,28 @@
+func isPalindrome(s string) bool {
+    l, r := 0, len(s)-1 //@init
+    for l < r { //@loop
+        for l < r && !alnum(s[l]) { //@skipL
+            l++ //@incL
+        }
+        for l < r && !alnum(s[r]) { //@skipR
+            r-- //@decR
+        }
+        if lower(s[l]) != lower(s[r]) { //@cmp
+            return false //@bad
+        }
+        l++ //@moveL
+        r-- //@moveR
+    }
+    return true //@good
+}
+
+func alnum(c byte) bool {
+    return c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z'
+}
+
+func lower(c byte) byte {
+    if c >= 'A' && c <= 'Z' {
+        return c + 32
+    }
+    return c
+}

@@ -1,0 +1,24 @@
+func wallsAndGates(rooms [][]int) {
+    const INF = 2147483647
+    q := [][2]int{} //@init
+    for r := range rooms { //@scanRows
+        for c := range rooms[r] { //@scanCols
+            if rooms[r][c] == 0 { //@gate
+                q = append(q, [2]int{r, c}) //@seed
+            }
+        }
+    }
+    dirs := [][2]int{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}
+    for len(q) > 0 { //@loop
+        cur := q[0] //@pop
+        q = q[1:]
+        for _, d := range dirs { //@neighbours
+            nr, nc := cur[0]+d[0], cur[1]+d[1]
+            if nr >= 0 && nr < len(rooms) && nc >= 0 && nc < len(rooms[0]) &&
+                rooms[nr][nc] == INF { //@empty
+                rooms[nr][nc] = rooms[cur[0]][cur[1]] + 1 //@setDist
+                q = append(q, [2]int{nr, nc}) //@push
+            }
+        }
+    }
+}

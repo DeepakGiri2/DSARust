@@ -1,0 +1,43 @@
+slug = 'construct-binary-tree-from-preorder-and-inorder-traversal'
+title = 'Construct Binary Tree From Preorder and Inorder Traversal'
+category = 'Trees'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n^2) time (linear scan per node) · O(n) space'
+
+description = 'Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is its inorder traversal, reconstruct and return the tree. The first preorder value is always the root; locating it inside inorder splits everything into a left and a right subtree.'
+approach = 'Recursion with two indices. preorder[idx] names the next root; find that value inside the current inorder window [lo..hi] — everything to its left forms the left subtree, everything to its right forms the right subtree. Advance the shared preorder pointer as each root is consumed and recurse on the two halves.'
+
+[[inputs]]
+name = 'preorder'
+label = 'preorder traversal'
+type = 'int-array'
+max_len = 40
+
+[[inputs]]
+name = 'inorder'
+label = 'inorder traversal'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+preorder = [3, 9, 20, 15, 7]
+inorder = [9, 3, 15, 20, 7]
+
+[[tests]]
+expected = '3 9 20 n n 15 7'
+[tests.input]
+preorder = [3, 9, 20, 15, 7]
+inorder = [9, 3, 15, 20, 7]
+
+[[tests]]
+expected = '1 2'
+[tests.input]
+preorder = [1, 2]
+inorder = [2, 1]
+
+[[tests]]
+expected = '1'
+[tests.input]
+preorder = [1]
+inorder = [1]

@@ -1,0 +1,11 @@
+func containsDuplicate(nums []int) bool {
+    seen := map[int]bool{} //@init
+    for i, x := range nums { //@loop
+        if seen[x] { //@check
+            return true //@dup
+        }
+        seen[x] = true //@store
+        _ = i
+    }
+    return false //@none
+}

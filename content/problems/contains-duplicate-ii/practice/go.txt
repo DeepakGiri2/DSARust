@@ -1,0 +1,44 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func containsNearbyDuplicate(nums []int, k int) bool {
+    seen := map[int]bool{}
+    for i := 0; i < len(nums); i++ {
+        if i > k {
+            delete(seen, nums[i-k-1])
+        }
+        if seen[nums[i]] {
+            return true
+        }
+        seen[nums[i]] = true
+    }
+    return false
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    nums := readInts(reader)
+    k := readInts(reader)[0]
+    if containsNearbyDuplicate(nums, k) {
+        fmt.Println("true")
+    } else {
+        fmt.Println("false")
+    }
+}

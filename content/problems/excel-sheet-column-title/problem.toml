@@ -1,0 +1,40 @@
+slug = 'excel-sheet-column-title'
+title = 'Excel Sheet Column Title'
+category = 'Math & Geometry'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '168'
+complexity = 'O(log n) time · O(log n) space'
+
+description = 'Convert a 1-based column number into its spreadsheet column name: 1 is A, 26 is Z, 27 is AA.'
+approach = "This is base 26 with one twist: there is no digit for zero, so the digits run 1..26 rather than 0..25. Subtracting 1 before each division shifts the range back to a normal 0..25 digit, after which ordinary base conversion applies. Without that single decrement, 26 would come out as 'A@' instead of 'Z'."
+
+[[inputs]]
+name = 'columnNumber'
+label = 'columnNumber'
+type = 'int'
+min = 1
+max = 100000
+
+[default_input]
+columnNumber = 701
+
+[[tests]]
+expected = 'ZY'
+[tests.input]
+columnNumber = 701
+
+[[tests]]
+expected = 'A'
+[tests.input]
+columnNumber = 1
+
+[[tests]]
+expected = 'AB'
+[tests.input]
+columnNumber = 28
+
+[[tests]]
+expected = 'Z'
+[tests.input]
+columnNumber = 26

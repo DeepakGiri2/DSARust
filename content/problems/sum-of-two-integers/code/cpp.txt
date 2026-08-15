@@ -1,0 +1,9 @@
+int getSum(int a, int b) {
+    unsigned sum = a, carry = b; //@init
+    while (carry != 0) { //@loop
+        unsigned next = (sum & carry) << 1; //@carry
+        sum = sum ^ carry; //@add
+        carry = next; //@shift
+    }
+    return (int)sum; //@ret
+}

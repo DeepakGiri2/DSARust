@@ -1,0 +1,18 @@
+func carFleet(target int, position []int, speed []int) int {
+    n := len(position)
+    idx := make([]int, n) //@order
+    for i := range idx {
+        idx[i] = i
+    }
+    sort.Slice(idx, func(a, b int) bool { //@sort
+        return position[idx[a]] > position[idx[b]]
+    })
+    stack := []float64{} //@init
+    for _, i := range idx { //@loop
+        t := float64(target-position[i]) / float64(speed[i]) //@time
+        if len(stack) == 0 || t > stack[len(stack)-1] { //@check
+            stack = append(stack, t) //@push
+        }
+    }
+    return len(stack) //@ret
+}

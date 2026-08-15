@@ -1,0 +1,29 @@
+slug = 'symmetric-tree'
+title = 'Symmetric Tree'
+category = 'Trees'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '101'
+complexity = 'O(n) time · O(h) space (h = height)'
+
+description = 'Return true if a binary tree is a mirror image of itself about its root.'
+approach = 'Symmetry is not a property of one node, so recurse on *pairs*. Compare the left child of one side with the right child of the other: the outer pair and the inner pair. Two nils match, one nil never matches, and unequal values fail immediately — everything else follows from those three rules applied down the mirror.'
+
+[[inputs]]
+name = 'root'
+label = "tree (level-order, 'n' = null)"
+type = 'tree'
+max_len = 80
+
+[default_input]
+root = '1 2 2 3 4 4 3'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+root = '1 2 2 3 4 4 3'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+root = '1 2 2 n 3 n 3'

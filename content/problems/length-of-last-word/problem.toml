@@ -1,0 +1,33 @@
+slug = 'length-of-last-word'
+title = 'Length of Last Word'
+category = 'Arrays & Hashing'
+difficulty = 'Easy'
+tier = '250'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Given a string s made of words separated by spaces, return the length of the last word. Watch a pointer walk in from the right, first hopping over trailing spaces, then counting the letters of the final word.'
+approach = 'Scan from the end of the string. Skip any trailing spaces first, then count consecutive non-space characters until you hit another space or run off the front.'
+
+[[inputs]]
+name = 's'
+label = 's (words separated by spaces)'
+type = 'string'
+max_len = 40
+
+[default_input]
+s = 'Hello World  '
+
+[[tests]]
+expected = '5'
+[tests.input]
+s = 'Hello World  '
+
+[[tests]]
+expected = '4'
+[tests.input]
+s = '   fly me   to   the moon  '
+
+[[tests]]
+expected = '6'
+[tests.input]
+s = 'luffy is still joyboy'

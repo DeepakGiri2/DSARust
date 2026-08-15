@@ -1,0 +1,18 @@
+class MedianFinder {
+    priority_queue<int> low; // max-heap //@init
+    priority_queue<int, vector<int>, greater<int>> high; // min-heap
+public:
+    void addNum(int num) {
+        low.push(num); //@pushLow
+        high.push(low.top()); low.pop(); //@shift
+        if (high.size() > low.size()) { //@rebalance
+            low.push(high.top()); high.pop(); //@moveBack
+        }
+    }
+    double findMedian() {
+        if (low.size() > high.size()) { //@odd
+            return low.top(); //@retOdd
+        }
+        return (low.top() + high.top()) / 2.0; //@retEven
+    }
+};

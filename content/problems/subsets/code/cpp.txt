@@ -1,0 +1,17 @@
+vector<vector<int>> subsets(vector<int>& nums) {
+    vector<vector<int>> res; //@init
+    vector<int> subset; //@sub
+    backtrack(0, nums, subset, res); //@call
+    return res; //@done
+}
+
+void backtrack(int i, vector<int>& nums, vector<int>& subset, vector<vector<int>>& res) {
+    if (i == (int)nums.size()) { //@base
+        res.push_back(subset); //@add
+        return; //@ret
+    }
+    subset.push_back(nums[i]); //@include
+    backtrack(i + 1, nums, subset, res); //@recIn
+    subset.pop_back(); //@exclude
+    backtrack(i + 1, nums, subset, res); //@recEx
+}

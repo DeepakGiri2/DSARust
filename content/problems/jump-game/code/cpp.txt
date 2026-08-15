@@ -1,0 +1,12 @@
+bool canJump(vector<int>& nums) {
+    int reach = 0; //@init
+    for (int i = 0; i < (int)nums.size(); i++) { //@loop
+        if (i > reach) { //@check
+            return false; //@bad
+        }
+        if (i + nums[i] > reach) { //@cmp
+            reach = i + nums[i]; //@update
+        }
+    }
+    return true; //@ret
+}

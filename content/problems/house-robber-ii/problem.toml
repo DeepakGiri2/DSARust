@@ -1,0 +1,30 @@
+slug = 'house-robber-ii'
+title = 'House Robber II'
+category = '1-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Houses are arranged in a circle, so the first and last are adjacent. Rob without ever taking two adjacent houses.'
+approach = 'The circle only matters because the first and last houses clash, and they clash only if both are robbed. So run the straight-line solution twice — once excluding the last house, once excluding the first — and take the better. Each run is the plain House Robber.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+min = 0
+max = 100
+
+[default_input]
+nums = [2, 3, 2]
+
+[[tests]]
+expected = '3'
+[tests.input]
+nums = [2, 3, 2]
+
+[[tests]]
+expected = '4'
+[tests.input]
+nums = [1, 2, 3, 1]

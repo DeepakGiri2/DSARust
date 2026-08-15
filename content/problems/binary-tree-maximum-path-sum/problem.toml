@@ -1,0 +1,33 @@
+slug = 'binary-tree-maximum-path-sum'
+title = 'Binary Tree Maximum Path Sum'
+category = 'Trees'
+difficulty = 'Hard'
+tier = '150'
+complexity = 'O(n) time · O(h) space (recursion stack, h = height)'
+
+description = 'A path is any sequence of connected nodes; it need not pass through the root, and it bends through at most one node. Return the maximum sum of node values along any such path. Watch a post-order DFS bubble up each subtree’s best downward gain while a running best records the best full path seen so far.'
+approach = 'Post-order DFS. Each node returns its best DOWNWARD gain = val + max(0, leftGain, rightGain) — a path continuing to its parent can only take one side. But the path that BENDS at this node is val + max(0, leftGain) + max(0, rightGain); use that to update a global best. Negative gains are clamped to 0 (dropping a branch is always allowed).'
+
+[[inputs]]
+name = 'root'
+label = "tree (level-order, 'n' = null)"
+type = 'tree'
+max_len = 60
+
+[default_input]
+root = '-10 9 20 n n 15 7'
+
+[[tests]]
+expected = '42'
+[tests.input]
+root = '-10 9 20 n n 15 7'
+
+[[tests]]
+expected = '6'
+[tests.input]
+root = '1 2 3'
+
+[[tests]]
+expected = '-3'
+[tests.input]
+root = '-3'

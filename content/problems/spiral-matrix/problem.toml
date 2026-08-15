@@ -1,0 +1,35 @@
+slug = 'spiral-matrix'
+title = 'Spiral Matrix'
+category = 'Math & Geometry'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '54'
+complexity = 'O(rows · cols) time · O(1) extra space'
+
+description = 'Return every element of a matrix in spiral order: right along the top, down the right side, left along the bottom, up the left side, and inwards.'
+approach = 'Four walls rather than four directions. After walking a side, retire that whole row or column by moving its wall inwards, which means the next walk automatically stops in the right place and no cell can be visited twice. The two mid-loop checks matter: a single remaining row would otherwise be walked back across, and a single remaining column walked back up.'
+
+[[inputs]]
+name = 'matrix'
+label = 'matrix'
+type = 'string'
+max_len = 60
+help = 'rows separated by spaces, values by commas'
+
+[default_input]
+matrix = '1,2,3 4,5,6 7,8,9'
+
+[[tests]]
+expected = '1 2 3 6 9 8 7 4 5'
+[tests.input]
+matrix = '1,2,3 4,5,6 7,8,9'
+
+[[tests]]
+expected = '1 2 3 4 8 12 11 10 9 5 6 7'
+[tests.input]
+matrix = '1,2,3,4 5,6,7,8 9,10,11,12'
+
+[[tests]]
+expected = '7'
+[tests.input]
+matrix = '7'

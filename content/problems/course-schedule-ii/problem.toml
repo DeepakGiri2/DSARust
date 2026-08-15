@@ -1,0 +1,39 @@
+slug = 'course-schedule-ii'
+title = 'Course Schedule II'
+category = 'Graphs'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(V + E) time · O(V + E) space'
+
+description = 'Given prerequisites between courses, return an order in which they can all be taken, or an empty list if none exists.'
+approach = "Kahn's algorithm. Count how many prerequisites each course still needs; anything at zero can be taken now. Taking a course releases its dependents, and if the finished order is shorter than the course count, the leftovers form a cycle."
+
+[[inputs]]
+name = 'numCourses'
+label = 'numCourses'
+type = 'int'
+min = 1
+max = 8
+
+[[inputs]]
+name = 'prereqs'
+label = 'prereqs'
+type = 'string'
+max_len = 60
+help = "pairs 'course,needs'"
+
+[default_input]
+numCourses = 4
+prereqs = '1,0 2,0 3,1 3,2'
+
+[[tests]]
+expected = '0 1 2 3'
+[tests.input]
+numCourses = 4
+prereqs = '1,0 2,0 3,1 3,2'
+
+[[tests]]
+expected = ''
+[tests.input]
+numCourses = 2
+prereqs = '0,1 1,0'

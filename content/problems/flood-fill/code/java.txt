@@ -1,0 +1,20 @@
+static void fill(int[][] image, int r, int c, int from, int to) {
+    if (r < 0 || r >= image.length || c < 0 || c >= image[0].length ||
+        image[r][c] != from) { //@bounds
+        return; //@stop
+    }
+    image[r][c] = to; //@paint
+    fill(image, r + 1, c, from, to); //@down
+    fill(image, r - 1, c, from, to); //@up
+    fill(image, r, c + 1, from, to); //@right
+    fill(image, r, c - 1, from, to); //@left
+}
+
+static int[][] floodFill(int[][] image, int sr, int sc, int color) {
+    int start = image[sr][sc]; //@start
+    if (start == color) { //@same
+        return image;
+    }
+    fill(image, sr, sc, start, color); //@call
+    return image; //@ret
+}

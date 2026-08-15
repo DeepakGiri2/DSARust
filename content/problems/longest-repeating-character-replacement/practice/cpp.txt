@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int characterReplacement(string s, int k) {
+    unordered_map<char, int> count;
+    int res = 0, left = 0, maxf = 0;
+    for (int right = 0; right < (int)s.size(); right++) {
+        count[s[right]]++;
+        if (count[s[right]] > maxf) {
+            maxf = count[s[right]];
+        }
+        while ((right - left + 1) - maxf > k) {
+            count[s[left]]--;
+            left++;
+        }
+        if (right - left + 1 > res) {
+            res = right - left + 1;
+        }
+    }
+    return res;
+}
+
+int main() {
+    string s;
+    getline(cin, s);
+    int k;
+    cin >> k;
+    cout << characterReplacement(s, k) << endl;
+}

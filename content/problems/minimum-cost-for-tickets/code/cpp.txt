@@ -1,0 +1,19 @@
+int mincostTickets(vector<int>& days, vector<int>& costs) {
+    int last = days.back(); //@span
+    vector<bool> travel(last + 1, false); //@mark
+    for (int d : days) { //@markLoop
+        travel[d] = true;
+    }
+    vector<int> dp(last + 1, 0); //@init
+    for (int d = 1; d <= last; d++) { //@loop
+        if (!travel[d]) { //@rest
+            dp[d] = dp[d - 1]; //@carry
+            continue;
+        }
+        int one = dp[max(0, d - 1)] + costs[0]; //@one
+        int seven = dp[max(0, d - 7)] + costs[1]; //@seven
+        int thirty = dp[max(0, d - 30)] + costs[2]; //@thirty
+        dp[d] = min(one, min(seven, thirty)); //@best
+    }
+    return dp[last]; //@ret
+}

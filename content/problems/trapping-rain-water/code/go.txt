@@ -1,0 +1,23 @@
+func trap(height []int) int {
+    l, r := 0, len(height)-1 //@init
+    leftMax, rightMax := 0, 0 //@max
+    water := 0 //@water
+    for l < r { //@loop
+        if height[l] < height[r] { //@which
+            if height[l] >= leftMax { //@chkL
+                leftMax = height[l] //@setL
+            } else {
+                water += leftMax - height[l] //@addL
+            }
+            l++ //@moveL
+        } else {
+            if height[r] >= rightMax { //@chkR
+                rightMax = height[r] //@setR
+            } else {
+                water += rightMax - height[r] //@addR
+            }
+            r-- //@moveR
+        }
+    }
+    return water //@ret
+}

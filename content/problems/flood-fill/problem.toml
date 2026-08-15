@@ -1,0 +1,68 @@
+slug = 'flood-fill'
+title = 'Flood Fill'
+category = 'Graphs'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '733'
+complexity = 'O(rows · cols) time · O(rows · cols) space'
+
+description = 'Repaint the connected region of same-coloured pixels containing a starting pixel.'
+approach = 'A grid is a graph in disguise: each pixel is a node and its four neighbours are its edges. Depth-first search from the start, recolouring on arrival. Recolouring *is* the visited mark — a repainted pixel no longer matches the original colour, so it fails the entry test and cannot be entered twice. That is also why the no-op case must be checked first, or the recursion would never terminate.'
+
+[[inputs]]
+name = 'image'
+label = 'image'
+type = 'grid'
+max_len = 200
+help = 'one digit per pixel'
+
+[[inputs]]
+name = 'sr'
+label = 'sr'
+type = 'int'
+min = 0
+max = 20
+
+[[inputs]]
+name = 'sc'
+label = 'sc'
+type = 'int'
+min = 0
+max = 20
+
+[[inputs]]
+name = 'color'
+label = 'color'
+type = 'int'
+min = 0
+max = 9
+
+[default_input]
+image = '111 110 101'
+sr = 1
+sc = 1
+color = 2
+
+[[tests]]
+expected = '222 220 201'
+[tests.input]
+image = '111 110 101'
+sr = 1
+sc = 1
+color = 2
+
+[[tests]]
+expected = '00 00'
+[tests.input]
+image = '00 00'
+sr = 0
+sc = 0
+color = 0
+
+[[tests]]
+expected = '030 333 030'
+[tests.input]
+image = '010 111 010'
+sr = 1
+sc = 1
+color = 3

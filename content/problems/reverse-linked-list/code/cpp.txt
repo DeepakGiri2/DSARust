@@ -1,0 +1,11 @@
+ListNode* reverseList(ListNode* head) {
+    ListNode* prev = nullptr; //@init
+    ListNode* curr = head; //@init2
+    while (curr != nullptr) { //@loop
+        ListNode* next = curr->next; //@save
+        curr->next = prev; //@flip
+        prev = curr; //@advP
+        curr = next; //@advC
+    }
+    return prev; //@ret
+}

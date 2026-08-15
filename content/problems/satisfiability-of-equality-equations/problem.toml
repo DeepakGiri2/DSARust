@@ -1,0 +1,45 @@
+slug = 'satisfiability-of-equality-equations'
+title = 'Satisfiability of Equality Equations'
+category = 'Union Find'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '990'
+complexity = 'O(n · α(26)) time · O(1) space'
+
+description = 'Given equations of the form "a==b" or "a!=b" over single-letter variables, decide whether values can be assigned to the letters so that every equation holds.'
+approach = 'Equality is exactly what union-find models: merging two letters says "these must be the same value". The ordering is the whole trick — process every == first so the components are final, then check each != against them. A != whose two letters share a root is a contradiction; if none contradicts, an assignment exists (give every component its own number).'
+
+[[inputs]]
+name = 'equations'
+label = 'equations'
+type = 'string'
+max_len = 60
+help = 'comma separated, e.g. a==b, b!=c'
+
+[default_input]
+equations = 'a==b, b==c, a!=c'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+equations = 'a==b, b==c, a!=c'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+equations = 'a==b, b!=a'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+equations = 'a==b, b==a'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+equations = 'a==b, c==d, b!=d'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+equations = 'a!=a'

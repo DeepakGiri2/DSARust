@@ -1,0 +1,61 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val) {
+                tail.next = list1;
+                list1 = list1.next;
+            } else {
+                tail.next = list2;
+                list2 = list2.next;
+            }
+            tail = tail.next;
+        }
+        if (list1 != null) {
+            tail.next = list1;
+        } else {
+            tail.next = list2;
+        }
+        return dummy.next;
+    }
+
+    static int[] readInts(BufferedReader br) throws Exception {
+        String line = br.readLine();
+        if (line == null || line.trim().isEmpty()) return new int[0];
+        String[] parts = line.trim().split("\\s+");
+        int[] nums = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);
+        return nums;
+    }
+
+    static class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int v) { val = v; }
+    }
+
+    static ListNode buildList(int[] vals) {
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+        for (int v : vals) { tail.next = new ListNode(v); tail = tail.next; }
+        return dummy.next;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] v1 = readInts(br);
+        int[] v2 = readInts(br);
+        ListNode head = mergeTwoLists(buildList(v1), buildList(v2));
+        StringBuilder sb = new StringBuilder();
+        for (ListNode p = head; p != null; p = p.next) {
+            if (sb.length() > 0) sb.append(' ');
+            sb.append(p.val);
+        }
+        System.out.println(sb);
+    }
+}

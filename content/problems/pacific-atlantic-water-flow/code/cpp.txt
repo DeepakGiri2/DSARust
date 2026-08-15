@@ -1,0 +1,35 @@
+int dirs[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+void flow(vector<vector<int>>& h, vector<vector<bool>>& seen, int r, int c) {
+    seen[r][c] = true; //@mark
+    for (auto& d : dirs) { //@neighbours
+        int nr = r + d[0], nc = c + d[1];
+        if (nr >= 0 && nr < (int)h.size() && nc >= 0 && nc < (int)h[0].size() &&
+            !seen[nr][nc] && h[nr][nc] >= h[r][c]) { //@uphill
+            flow(h, seen, nr, nc); //@recurse
+        }
+    }
+}
+
+vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+    int rows = heights.size(), cols = heights[0].size();
+    vector<vector<bool>> pac(rows, vector<bool>(cols, false)); //@init
+    vector<vector<bool>> atl(rows, vector<bool>(cols, false));
+    for (int r = 0; r < rows; r++) { //@leftRight
+        flow(heights, pac, r, 0);
+        flow(heights, atl, r, cols - 1);
+    }
+    for (int c = 0; c < cols; c++) { //@topBottom
+        flow(heights, pac, 0, c);
+        flow(heights, atl, rows - 1, c);
+    }
+    vector<vector<int>> res; //@collect
+    for (int r = 0; r < rows; r++) { //@rowLoop
+        for (int c = 0; c < cols; c++) { //@colLoop
+            if (pac[r][c] && atl[r][c]) { //@both
+                res.push_back({r, c}); //@add
+            }
+        }
+    }
+    return res; //@ret
+}

@@ -1,0 +1,41 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static String sortKey(String w) {
+        char[] a = w.toCharArray();
+        Arrays.sort(a);
+        return new String(a);
+    }
+
+    static List<List<String>> groupAnagrams(String[] words) {
+        Map<String, List<String>> groups = new HashMap<>();
+        List<String> order = new ArrayList<>();
+        for (String w : words) {
+            String key = sortKey(w);
+            if (!groups.containsKey(key)) {
+                order.add(key);
+            }
+            groups.computeIfAbsent(key, x -> new ArrayList<>()).add(w);
+        }
+        List<List<String>> res = new ArrayList<>();
+        for (String k : order) {
+            res.add(groups.get(k));
+        }
+        return res;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String line = br.readLine();
+        String[] words = (line == null || line.trim().isEmpty()) ? new String[0] : line.trim().split("\\s+");
+        List<List<String>> groups = groupAnagrams(words);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < groups.size(); i++) {
+            if (i > 0) sb.append("\n");
+            sb.append(String.join(" ", groups.get(i)));
+        }
+        System.out.println(sb.toString());
+    }
+}

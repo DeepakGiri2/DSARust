@@ -1,0 +1,24 @@
+func lemonadeChange(bills []int) bool {
+    five, ten := 0, 0 //@init
+    for _, b := range bills { //@loop
+        if b == 5 { //@fiver
+            five++ //@keepFive
+        } else if b == 10 { //@tenner
+            if five == 0 { //@noFive
+                return false
+            }
+            five-- //@giveFive
+            ten++ //@keepTen
+        } else { //@twenty
+            if ten > 0 && five > 0 { //@preferTen
+                ten--
+                five-- //@giveTenFive
+            } else if five >= 3 { //@threeFives
+                five -= 3 //@giveThree
+            } else { //@stuck
+                return false //@no
+            }
+        }
+    }
+    return true //@yes
+}

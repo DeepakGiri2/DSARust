@@ -1,0 +1,46 @@
+class LFUCache {
+    int cap, minFreq = 0;
+    unordered_map<int, pair<int, int>> vals;                 // key -> {value, freq} //@init
+    unordered_map<int, list<int>> freqs;                     // freq -> keys, newest first
+    unordered_map<int, list<int>::iterator> where;           // key -> its node
+
+    void touch(int key) { //@touch
+        int f = vals[key].second;
+        freqs[f].erase(where[key]); //@unlink
+        if (freqs[f].empty() && minFreq == f) { //@bumpmin
+            minFreq++;
+        }
+        vals[key].second = ++f; //@bump
+        freqs[f].push_front(key);
+        where[key] = freqs[f].begin(); //@relink
+    }
+
+public:
+    LFUCache(int capacity) : cap(capacity) {}
+
+    int get(int key) { //@get
+        if (!vals.count(key)) { //@miss
+            return -1; //@nokey
+        }
+        touch(key); //@hit
+        return vals[key].first; //@val
+    }
+
+    void put(int key, int value) { //@put
+        if (vals.count(key)) { //@exists
+            vals[key].first = value; //@update
+            touch(key);
+            return;
+        }
+        if ((int)vals.size() == cap) { //@full
+            int victim = freqs[minFreq].back(); //@victim
+            freqs[minFreq].pop_back();
+            vals.erase(victim);
+            where.erase(victim); //@evict
+        }
+        vals[key] = {value, 1};
+        freqs[1].push_front(key);
+        where[key] = freqs[1].begin(); //@insert
+        minFreq = 1; //@newmin
+    }
+};

@@ -1,0 +1,19 @@
+int longestConsecutive(vector<int>& nums) {
+    unordered_set<int> set; //@build
+    for (int n : nums) { //@add
+        set.insert(n); //@insert
+    }
+    int best = 0; //@best
+    for (int n : set) { //@scan
+        if (!set.count(n - 1)) { //@isstart
+            int length = 1; //@len
+            while (set.count(n + length)) { //@walk
+                length++; //@grow
+            }
+            if (length > best) { //@cmp
+                best = length; //@update
+            }
+        }
+    }
+    return best; //@return
+}

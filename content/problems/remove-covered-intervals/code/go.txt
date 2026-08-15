@@ -1,0 +1,18 @@
+func removeCoveredIntervals(intervals [][]int) int {
+    sort.Slice(intervals, func(a, b int) bool { //@sort
+        if intervals[a][0] != intervals[b][0] {
+            return intervals[a][0] < intervals[b][0]
+        }
+        return intervals[a][1] > intervals[b][1]
+    })
+    count, reach := 0, 0 //@init
+    for _, iv := range intervals { //@loop
+        if iv[1] > reach { //@extends
+            count++ //@keep
+            reach = iv[1] //@extend
+        } else { //@covered
+            continue
+        }
+    }
+    return count //@ret
+}

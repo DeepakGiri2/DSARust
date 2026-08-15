@@ -1,0 +1,30 @@
+slug = 'set-matrix-zeroes'
+title = 'Set Matrix Zeroes'
+category = 'Math & Geometry'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '73'
+complexity = 'O(rows · cols) time · O(1) extra space'
+
+description = 'If a cell is 0, set its entire row and column to 0 — in place, using no extra arrays.'
+approach = 'The trap is that zeroing as you go creates new zeros, which then zero everything. So separate marking from applying. The marks need somewhere to live, and the first row and column are already going to be zeroed if anything in them is zero — so they can be borrowed as the notepad. Only their shared corner is ambiguous, which is why the original state of the first row is saved in a single flag and both are written last.'
+
+[[inputs]]
+name = 'matrix'
+label = 'matrix'
+type = 'string'
+max_len = 60
+help = 'rows separated by spaces, values by commas'
+
+[default_input]
+matrix = '1,1,1 1,0,1 1,1,1'
+
+[[tests]]
+expected = '1,0,1 0,0,0 1,0,1'
+[tests.input]
+matrix = '1,1,1 1,0,1 1,1,1'
+
+[[tests]]
+expected = '0,0,0,0 0,4,5,0 0,3,1,0'
+[tests.input]
+matrix = '0,1,2,0 3,4,5,2 1,3,1,5'

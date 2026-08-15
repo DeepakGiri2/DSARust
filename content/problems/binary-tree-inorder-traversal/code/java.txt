@@ -1,0 +1,15 @@
+static List<Integer> inorderTraversal(TreeNode root) {
+    List<Integer> out = new ArrayList<>(); //@init
+    Deque<TreeNode> stack = new ArrayDeque<>(); //@stack
+    TreeNode cur = root; //@cur
+    while (cur != null || !stack.isEmpty()) { //@loop
+        while (cur != null) { //@dive
+            stack.push(cur); //@push
+            cur = cur.left; //@left
+        }
+        cur = stack.pop(); //@pop
+        out.add(cur.val); //@visit
+        cur = cur.right; //@right
+    }
+    return out; //@ret
+}

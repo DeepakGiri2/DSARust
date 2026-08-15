@@ -1,0 +1,46 @@
+slug = 'lfu-cache'
+title = 'LFU Cache'
+category = 'Design'
+difficulty = 'Hard'
+tier = 'extra'
+leetcode = '460'
+complexity = 'O(1) per operation · O(capacity) space'
+
+description = 'A cache with a fixed capacity that evicts the least frequently used key when it is full, breaking ties by evicting the least recently used of those.'
+approach = 'Two maps and one counter. The first maps a key to its value and use count; the second maps a use count to the keys with that count, kept in recency order. A get or put moves the key from bucket f to bucket f+1, both O(1). minFreq tracks the lowest non-empty bucket, and it only ever moves in two ways: up by one when the bucket it points at empties out during a touch, or back to 1 when a new key is inserted — which is why eviction never has to search.'
+
+[[inputs]]
+name = 'capacity'
+label = 'capacity'
+type = 'int'
+min = 1
+max = 4
+
+[[inputs]]
+name = 'ops'
+label = 'ops'
+type = 'string'
+max_len = 90
+help = 'put k v · get k'
+
+[default_input]
+capacity = 2
+ops = 'put 1 1, put 2 2, get 1, put 3 3, get 2, get 3, put 4 4, get 1, get 3, get 4'
+
+[[tests]]
+expected = '1 -1 3 -1 3 4'
+[tests.input]
+capacity = 2
+ops = 'put 1 1, put 2 2, get 1, put 3 3, get 2, get 3, put 4 4, get 1, get 3, get 4'
+
+[[tests]]
+expected = '1 -1 2'
+[tests.input]
+capacity = 1
+ops = 'put 1 1, get 1, put 2 2, get 1, get 2'
+
+[[tests]]
+expected = '9 2'
+[tests.input]
+capacity = 2
+ops = 'put 1 1, put 2 2, put 1 9, get 1, get 2'

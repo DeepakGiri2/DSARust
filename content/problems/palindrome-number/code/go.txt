@@ -1,0 +1,11 @@
+func isPalindrome(x int) bool {
+    if x < 0 || (x%10 == 0 && x != 0) { //@reject
+        return false
+    }
+    rev := 0 //@init
+    for x > rev { //@loop
+        rev = rev*10 + x%10 //@take
+        x /= 10 //@drop
+    }
+    return x == rev || x == rev/10 //@ret
+}

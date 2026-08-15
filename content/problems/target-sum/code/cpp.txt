@@ -1,0 +1,13 @@
+int findTargetSumWays(vector<int>& nums, int target) {
+    map<int, int> ways; //@init
+    ways[0] = 1;
+    for (int v : nums) { //@loop
+        map<int, int> next; //@fresh
+        for (auto& [s, c] : ways) { //@scan
+            next[s + v] += c; //@plus
+            next[s - v] += c; //@minus
+        }
+        ways = next; //@swap
+    }
+    return ways.count(target) ? ways[target] : 0; //@ret
+}

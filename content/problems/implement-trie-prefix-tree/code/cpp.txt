@@ -1,0 +1,40 @@
+struct Trie {
+    unordered_map<char, Trie*> children;
+    bool end = false;
+
+    void insert(string word) {
+        Trie* cur = this;
+        for (int i = 0; i < (int)word.size(); i++) { //@insLoop
+            char c = word[i];
+            if (cur->children.find(c) == cur->children.end()) { //@insMiss
+                cur->children[c] = new Trie();
+            }
+            cur = cur->children[c]; //@insDown
+        }
+        cur->end = true; //@insEnd
+    }
+
+    bool search(string word) {
+        Trie* cur = this;
+        for (int i = 0; i < (int)word.size(); i++) { //@srchLoop
+            char c = word[i];
+            if (cur->children.find(c) == cur->children.end()) { //@srchMiss
+                return false; //@srchFail
+            }
+            cur = cur->children[c]; //@srchDown
+        }
+        return cur->end; //@srchEnd
+    }
+
+    bool startsWith(string prefix) {
+        Trie* cur = this;
+        for (int i = 0; i < (int)prefix.size(); i++) { //@swLoop
+            char c = prefix[i];
+            if (cur->children.find(c) == cur->children.end()) { //@swMiss
+                return false; //@swFail
+            }
+            cur = cur->children[c]; //@swDown
+        }
+        return true; //@swEnd
+    }
+};

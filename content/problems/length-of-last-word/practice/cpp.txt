@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int lengthOfLastWord(string s) {
+    int i = (int)s.size() - 1;
+    int length = 0;
+    while (i >= 0 && s[i] == ' ') {
+        i--;
+    }
+    while (i >= 0 && s[i] != ' ') {
+        length++;
+        i--;
+    }
+    return length;
+}
+
+int main() {
+    string line;
+    getline(cin, line);
+    if (!line.empty() && line.back() == '\r') line.pop_back();
+    cout << lengthOfLastWord(line) << endl;
+}

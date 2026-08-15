@@ -1,0 +1,53 @@
+slug = 'rotate-array'
+title = 'Rotate Array'
+category = 'Arrays & Hashing'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '189'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Rotate the array to the right by k steps, in place.'
+approach = 'Three reversals. Reversing the whole array puts the last k elements at the front but backwards, and the first n−k at the back, also backwards; reversing each of those two blocks straightens them out. Taking k mod n first is what makes k larger than the array harmless.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 12
+min = -100
+max = 99
+
+[[inputs]]
+name = 'k'
+label = 'k'
+type = 'int'
+min = 0
+max = 30
+
+[default_input]
+nums = [1, 2, 3, 4, 5, 6, 7]
+k = 3
+
+[[tests]]
+expected = '5 6 7 1 2 3 4'
+[tests.input]
+nums = [1, 2, 3, 4, 5, 6, 7]
+k = 3
+
+[[tests]]
+expected = '3 99 -1 -100'
+[tests.input]
+nums = [-1, -100, 3, 99]
+k = 2
+
+[[tests]]
+expected = '2 1'
+[tests.input]
+nums = [1, 2]
+k = 5
+
+[[tests]]
+expected = '1 2 3'
+[tests.input]
+nums = [1, 2, 3]
+k = 0

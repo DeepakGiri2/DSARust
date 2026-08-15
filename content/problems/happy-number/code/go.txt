@@ -1,0 +1,18 @@
+func isHappy(n int) bool {
+    slow, fast := n, next(n) //@init
+    for fast != 1 && slow != fast { //@loop
+        slow = next(slow) //@slow
+        fast = next(next(fast)) //@fast
+    }
+    return fast == 1 //@ret
+}
+
+func next(n int) int {
+    sum := 0
+    for n > 0 {
+        d := n % 10
+        sum += d * d
+        n /= 10
+    }
+    return sum
+}

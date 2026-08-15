@@ -1,0 +1,40 @@
+slug = 'game-of-life'
+title = 'Game of Life'
+category = 'Math & Geometry'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '289'
+complexity = 'O(m·n) time · O(1) extra space'
+
+description = "Apply one step of Conway's Game of Life to a board of live (1) and dead (0) cells, in place. A live cell with two or three live neighbours survives; a dead cell with exactly three is born; everything else dies or stays dead."
+approach = "Every cell must be updated from the *old* board, so writing the new value directly would corrupt its neighbours' input. Rather than copy the board, store both states in one integer: bit 0 keeps the old value and bit 1 records the new one. Reading `cell & 1` therefore always sees the original, and a final pass shifts every cell right by one to reveal the next generation."
+
+[[inputs]]
+name = 'board'
+label = 'board'
+type = 'grid'
+max_len = 40
+help = 'rows of 0/1, space separated'
+
+[default_input]
+board = '010 001 111'
+
+[[tests]]
+expected = '000 101 011'
+[tests.input]
+board = '010 001 111'
+
+[[tests]]
+expected = '000 101 011 010'
+[tests.input]
+board = '010 001 111 000'
+
+[[tests]]
+expected = '11 11'
+[tests.input]
+board = '11 11'
+
+[[tests]]
+expected = '00 00'
+[tests.input]
+board = '00 00'

@@ -1,0 +1,7 @@
+func trailingZeroes(n int) int {
+    count := 0 //@init
+    for p := 5; p <= n; p *= 5 { //@loop
+        count += n / p //@add
+    }
+    return count //@ret
+}

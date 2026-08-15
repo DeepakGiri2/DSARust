@@ -1,0 +1,23 @@
+void wallsAndGates(vector<vector<int>>& rooms) {
+    const int INF = 2147483647;
+    queue<pair<int, int>> q; //@init
+    for (int r = 0; r < (int)rooms.size(); r++) { //@scanRows
+        for (int c = 0; c < (int)rooms[0].size(); c++) { //@scanCols
+            if (rooms[r][c] == 0) { //@gate
+                q.push({r, c}); //@seed
+            }
+        }
+    }
+    int dirs[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    while (!q.empty()) { //@loop
+        auto cur = q.front(); q.pop(); //@pop
+        for (auto& d : dirs) { //@neighbours
+            int nr = cur.first + d[0], nc = cur.second + d[1];
+            if (nr >= 0 && nr < (int)rooms.size() && nc >= 0 && nc < (int)rooms[0].size() &&
+                rooms[nr][nc] == INF) { //@empty
+                rooms[nr][nc] = rooms[cur.first][cur.second] + 1; //@setDist
+                q.push({nr, nc}); //@push
+            }
+        }
+    }
+}

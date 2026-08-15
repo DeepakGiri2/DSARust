@@ -1,0 +1,38 @@
+const int INF = 1 << 30;
+
+int minimumEffortPath(vector<vector<int>>& heights) {
+    int rows = heights.size(), cols = heights[0].size();
+    vector<vector<int>> effort(rows, vector<int>(cols, INF)); //@init
+    vector<vector<bool>> visited(rows, vector<bool>(cols, false)); //@visited
+    effort[0][0] = 0; //@seed
+    int dirs[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    for (int iter = 0; iter < rows * cols; iter++) { //@loop
+        int br = -1, bc = -1; //@pick
+        for (int r = 0; r < rows; r++) { //@scan
+            for (int c = 0; c < cols; c++) {
+                if (!visited[r][c] && effort[r][c] != INF &&
+                    (br < 0 || effort[r][c] < effort[br][bc])) {
+                    br = r; bc = c; //@lowest
+                }
+            }
+        }
+        if (br < 0) { //@stuck
+            break;
+        }
+        if (br == rows - 1 && bc == cols - 1) { //@arrived
+            return effort[br][bc]; //@ret
+        }
+        visited[br][bc] = true; //@settle
+        for (auto& d : dirs) { //@relax
+            int nr = br + d[0], nc = bc + d[1];
+            if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && !visited[nr][nc]) {
+                int diff = abs(heights[nr][nc] - heights[br][bc]); //@diff
+                int t = max(effort[br][bc], diff); //@worst
+                if (t < effort[nr][nc]) { //@better
+                    effort[nr][nc] = t; //@update
+                }
+            }
+        }
+    }
+    return -1; //@none
+}

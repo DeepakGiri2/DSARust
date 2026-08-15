@@ -1,0 +1,29 @@
+class MyQueue {
+    vector<int> inbox, outbox; //@init
+    void transfer() {
+        if (outbox.empty()) { //@needTransfer
+            while (!inbox.empty()) { //@drain
+                int v = inbox.back(); //@move
+                inbox.pop_back();
+                outbox.push_back(v); //@onto
+            }
+        }
+    }
+public:
+    void push(int x) {
+        inbox.push_back(x); //@push
+    }
+    int pop() {
+        transfer(); //@callPop
+        int v = outbox.back(); //@pop
+        outbox.pop_back();
+        return v; //@retPop
+    }
+    int peek() {
+        transfer(); //@callPeek
+        return outbox.back(); //@peek
+    }
+    bool empty() {
+        return inbox.empty() && outbox.empty(); //@empty
+    }
+};

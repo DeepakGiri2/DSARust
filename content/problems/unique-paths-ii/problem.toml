@@ -1,0 +1,35 @@
+slug = 'unique-paths-ii'
+title = 'Unique Paths II'
+category = '2-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '63'
+complexity = 'O(rows · cols) time · O(rows · cols) space'
+
+description = 'Count the paths from the top-left to the bottom-right of a grid, moving only right or down, where cells marked 1 are blocked.'
+approach = "Every path into a cell arrives from directly above or directly left, and those two sets of paths are disjoint — so the count for a cell is simply the sum of its two neighbours' counts. An obstacle is not a special rule but a zero: no path reaches it, so it contributes nothing onwards, and blocking propagates by itself."
+
+[[inputs]]
+name = 'grid'
+label = 'grid'
+type = 'grid'
+max_len = 200
+help = '0 = free, 1 = obstacle'
+
+[default_input]
+grid = '000 010 000'
+
+[[tests]]
+expected = '2'
+[tests.input]
+grid = '000 010 000'
+
+[[tests]]
+expected = '1'
+[tests.input]
+grid = '01 00'
+
+[[tests]]
+expected = '1'
+[tests.input]
+grid = '0'

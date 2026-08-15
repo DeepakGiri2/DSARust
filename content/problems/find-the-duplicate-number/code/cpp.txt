@@ -1,0 +1,16 @@
+int findDuplicate(vector<int>& nums) {
+    int slow = 0, fast = 0; //@init
+    while (true) { //@phase1
+        slow = nums[slow]; //@slow1
+        fast = nums[nums[fast]]; //@fast1
+        if (slow == fast) { //@meet
+            break; //@break
+        }
+    }
+    int slow2 = 0; //@reset
+    while (slow != slow2) { //@phase2
+        slow = nums[slow]; //@walkA
+        slow2 = nums[slow2]; //@walkB
+    }
+    return slow; //@ret
+}

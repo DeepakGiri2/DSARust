@@ -1,0 +1,8 @@
+func maxDepth(root *TreeNode) int {
+    if root == nil { //@base
+        return 0 //@ret0
+    }
+    left := maxDepth(root.Left) //@recL
+    right := maxDepth(root.Right) //@recR
+    return 1 + max(left, right) //@ret
+}

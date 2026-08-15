@@ -1,0 +1,11 @@
+static Node copyRandomList(Node head) {
+    Map<Node, Node> clones = new HashMap<>(); //@init
+    for (Node cur = head; cur != null; cur = cur.next) { //@pass1
+        clones.put(cur, new Node(cur.val)); //@make
+    }
+    for (Node cur = head; cur != null; cur = cur.next) { //@pass2
+        clones.get(cur).next = clones.get(cur.next); //@linkNext
+        clones.get(cur).random = clones.get(cur.random); //@linkRandom
+    }
+    return clones.get(head); //@ret
+}

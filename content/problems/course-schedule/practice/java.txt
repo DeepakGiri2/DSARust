@@ -1,0 +1,54 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) adj.add(new ArrayList<>());
+        for (int[] p : prerequisites) {
+            adj.get(p[0]).add(p[1]);
+        }
+        int[] state = new int[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            if (!dfs(i, adj, state)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static boolean dfs(int course, List<List<Integer>> adj, int[] state) {
+        if (state[course] == 1) {
+            return false;
+        }
+        if (state[course] == 2) {
+            return true;
+        }
+        state[course] = 1;
+        for (int dep : adj.get(course)) {
+            if (!dfs(dep, adj, state)) {
+                return false;
+            }
+        }
+        state[course] = 2;
+        return true;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int numCourses = Integer.parseInt(br.readLine().trim());
+        String line2 = br.readLine();
+        if (line2 == null) line2 = "";
+        line2 = line2.trim();
+        List<int[]> prereqList = new ArrayList<>();
+        if (!line2.isEmpty()) {
+            for (String tok : line2.split("\\s+")) {
+                String[] parts = tok.split(",");
+                prereqList.add(new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1])});
+            }
+        }
+        int[][] prerequisites = prereqList.toArray(new int[0][]);
+        System.out.println(canFinish(numCourses, prerequisites));
+    }
+}

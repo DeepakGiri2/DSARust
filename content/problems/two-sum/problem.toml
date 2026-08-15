@@ -1,0 +1,36 @@
+slug = 'two-sum'
+title = 'Two Sum'
+category = 'Arrays & Hashing'
+difficulty = 'Easy'
+tier = '50'
+complexity = 'O(n) time · O(n) space'
+
+description = 'Given an array of integers nums and an integer target, return the indices of the two numbers that add up to target. Exactly one solution exists.'
+approach = 'One pass with a hash map. For each element x, check if (target − x) was already seen; if yes we have the pair, otherwise record x → index in the map.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+
+[[inputs]]
+name = 'target'
+label = 'target'
+type = 'int'
+
+[default_input]
+nums = [2, 7, 11, 15, 3]
+target = 14
+
+[[tests]]
+expected = '2 4'
+[tests.input]
+nums = [2, 7, 11, 15, 3]
+target = 14
+
+[[tests]]
+expected = '1 2'
+[tests.input]
+nums = [3, 2, 4]
+target = 6

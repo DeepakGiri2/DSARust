@@ -1,0 +1,37 @@
+slug = 'maximum-average-subarray-i'
+title = 'Maximum Average Subarray I'
+category = 'Sliding Window'
+difficulty = 'Easy'
+tier = '250'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Given an integer array nums and an integer k, find the contiguous subarray of length k with the largest average and return that average. A fixed-size window slides across the array, one add and one drop at a time.'
+approach = 'Sum the first k elements, then slide a fixed window: each step add the entering value and subtract the leaving one so the sum updates in O(1). Track the largest window sum; the answer is that sum divided by k.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+
+[[inputs]]
+name = 'k'
+label = 'k'
+type = 'int'
+min = 1
+
+[default_input]
+nums = [1, 12, -5, -6, 50, 3]
+k = 4
+
+[[tests]]
+expected = '12.75'
+[tests.input]
+nums = [1, 12, -5, -6, 50, 3]
+k = 4
+
+[[tests]]
+expected = '4.5'
+[tests.input]
+nums = [1, 2, 3, 4, 5]
+k = 2

@@ -1,0 +1,40 @@
+slug = 'lru-cache'
+title = 'LRU Cache'
+category = 'Linked List'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '146'
+complexity = 'O(1) per operation · O(capacity) space'
+
+description = 'A fixed-capacity cache where reading or writing a key makes it the most recently used, and an insertion into a full cache evicts the least recently used key.'
+approach = "Two structures, each covering the other's blind spot. A hash map finds a key in O(1) but knows nothing about order; a doubly linked list keeps order and can splice a node out in O(1) but cannot find it. Storing the *node* as the map's value joins them: look the key up in the map, then unlink and re-insert that node at the front without walking anything."
+
+[[inputs]]
+name = 'capacity'
+label = 'capacity'
+type = 'int'
+min = 1
+max = 5
+
+[[inputs]]
+name = 'ops'
+label = 'ops'
+type = 'string'
+max_len = 60
+help = 'put <k> <v> / get <k>, comma separated'
+
+[default_input]
+capacity = 2
+ops = 'put 1 1, put 2 2, get 1, put 3 3, get 2, get 3'
+
+[[tests]]
+expected = '1 -1 3'
+[tests.input]
+capacity = 2
+ops = 'put 1 1, put 2 2, get 1, put 3 3, get 2, get 3'
+
+[[tests]]
+expected = '-1 2'
+[tests.input]
+capacity = 1
+ops = 'put 1 1, put 2 2, get 1, get 2'

@@ -1,0 +1,10 @@
+func singleNumber(nums []int) int {
+    ones, twos := 0, 0 //@init
+    for _, v := range nums { //@loop
+        seenOnce := ones ^ v //@xorOnes
+        ones = seenOnce &^ twos //@maskOnes
+        seenTwice := twos ^ v //@xorTwos
+        twos = seenTwice &^ ones //@maskTwos
+    }
+    return ones //@ret
+}

@@ -1,0 +1,29 @@
+func checkInclusion(s1 string, s2 string) bool {
+    n := len(s1) //@n
+    if n > len(s2) { //@guard
+        return false //@guardRet
+    }
+    need := [26]int{} //@need
+    win := [26]int{} //@win
+    for i := 0; i < n; i++ { //@build
+        need[s1[i]-'a']++ //@bn
+        win[s2[i]-'a']++ //@bw
+    }
+    for right := n - 1; right < len(s2); right++ { //@loop
+        if right >= n { //@slide
+            win[s2[right]-'a']++ //@addR
+            win[s2[right-n]-'a']-- //@subL
+        }
+        ok := true //@ok
+        for c := 0; c < 26; c++ { //@compare
+            if win[c] != need[c] { //@diff
+                ok = false //@setno
+                break //@brk
+            }
+        }
+        if ok { //@match
+            return true //@found
+        }
+    }
+    return false //@ret
+}

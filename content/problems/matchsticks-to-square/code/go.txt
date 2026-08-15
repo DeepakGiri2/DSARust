@@ -1,0 +1,36 @@
+func makesquare(matchsticks []int) bool {
+    total := 0 //@sum
+    for _, m := range matchsticks {
+        total += m
+    }
+    if total%4 != 0 { //@divisible
+        return false
+    }
+    side := total / 4 //@side
+    sort.Sort(sort.Reverse(sort.IntSlice(matchsticks))) //@sort
+    if matchsticks[0] > side { //@tooLong
+        return false
+    }
+    sides := [4]int{} //@sides
+    var back func(i int) bool
+    back = func(i int) bool {
+        if i == len(matchsticks) { //@placedAll
+            return true //@yes
+        }
+        for s := 0; s < 4; s++ { //@loop
+            if sides[s]+matchsticks[i] > side { //@overflow
+                continue
+            }
+            if s > 0 && sides[s] == sides[s-1] { //@symmetric
+                continue
+            }
+            sides[s] += matchsticks[i] //@place
+            if back(i + 1) { //@recurse
+                return true //@propagate
+            }
+            sides[s] -= matchsticks[i] //@undo
+        }
+        return false //@no
+    }
+    return back(0) //@call
+}

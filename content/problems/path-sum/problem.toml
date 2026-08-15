@@ -1,0 +1,45 @@
+slug = 'path-sum'
+title = 'Path Sum'
+category = 'Trees'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '112'
+complexity = 'O(n) time · O(h) space (h = height)'
+
+description = 'Return true if the tree has a root-to-leaf path whose values add up to a given target.'
+approach = 'Carry the *remaining* target down instead of a running total. Each node subtracts its own value and hands the rest to its children, so a leaf only has to ask one question: is what is left exactly zero? Testing at the leaf — not at every node — is what makes it a root-to-*leaf* path.'
+
+[[inputs]]
+name = 'root'
+label = "tree (level-order, 'n' = null)"
+type = 'tree'
+max_len = 80
+
+[[inputs]]
+name = 'targetSum'
+label = 'targetSum'
+type = 'int'
+min = -200
+max = 200
+
+[default_input]
+root = '5 4 8 11 n 13 4 7 2'
+targetSum = 22
+
+[[tests]]
+expected = 'true'
+[tests.input]
+root = '5 4 8 11 n 13 4 7 2'
+targetSum = 22
+
+[[tests]]
+expected = 'true'
+[tests.input]
+root = '5 4 8 11 n 13 4 7 2'
+targetSum = 26
+
+[[tests]]
+expected = 'false'
+[tests.input]
+root = '1 2 3'
+targetSum = 5

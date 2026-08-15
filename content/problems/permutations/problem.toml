@@ -1,0 +1,33 @@
+slug = 'permutations'
+title = 'Permutations'
+category = 'Backtracking'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n · n!) time · O(n) space (recursion depth)'
+
+description = 'Given an array of distinct integers nums, return all possible orderings (permutations). Unlike subsets, order matters and every element must appear exactly once, so we track which elements are already placed with a boolean used array.'
+approach = 'At each recursion level we fill the next position by scanning every element and trying any that is not yet used: mark it used, append it to the current permutation, recurse, then unmark and pop to explore other choices. When the current permutation has length n it is complete — record a copy. Watch the used array flip as the recursion tries every ordering.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums (distinct)'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+nums = [1, 2, 3]
+
+[[tests]]
+expected = "1 2 3\n1 3 2\n2 1 3\n2 3 1\n3 1 2\n3 2 1"
+[tests.input]
+nums = [1, 2, 3]
+
+[[tests]]
+expected = "1 2\n2 1"
+[tests.input]
+nums = [1, 2]
+
+[[tests]]
+expected = '7'
+[tests.input]
+nums = [7]

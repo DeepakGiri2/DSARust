@@ -1,0 +1,48 @@
+slug = 'solving-questions-with-brainpower'
+title = 'Solving Questions With Brainpower'
+category = '1-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '2140'
+complexity = 'O(n) time · O(n) space'
+
+description = 'Each question is worth some points but costs brainpower, which forces you to skip that many questions after it. Maximise the points earned.'
+approach = "Solve it backwards. Forwards, taking a question affects an unknown number of *later* decisions, which are not made yet; backwards, they already are — so 'take it' is simply its points plus the answer that starts after the skipped block. The choice at each index is then just take against skip, with a jump instead of a step."
+
+[[inputs]]
+name = 'points'
+label = 'points'
+type = 'int-array'
+max_len = 10
+min = 1
+max = 100
+
+[[inputs]]
+name = 'brainpower'
+label = 'brainpower'
+type = 'int-array'
+max_len = 10
+min = 0
+max = 10
+
+[default_input]
+points = [3, 4, 4, 2]
+brainpower = [2, 3, 4, 5]
+
+[[tests]]
+expected = '5'
+[tests.input]
+points = [3, 4, 4, 2]
+brainpower = [2, 3, 4, 5]
+
+[[tests]]
+expected = '7'
+[tests.input]
+points = [1, 2, 3, 4, 5]
+brainpower = [1, 2, 3, 4, 5]
+
+[[tests]]
+expected = '12'
+[tests.input]
+points = [12]
+brainpower = [3]

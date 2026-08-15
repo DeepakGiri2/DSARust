@@ -1,0 +1,27 @@
+static List<int[]>[] adj;
+static boolean[] visited;
+
+static int dfs(int node) {
+    visited[node] = true; //@visit
+    int total = 0; //@total
+    for (int[] e : adj[node]) { //@neighbours
+        if (visited[e[0]]) { //@seen
+            continue;
+        }
+        total += e[1]; //@cost
+        total += dfs(e[0]); //@recurse
+    }
+    return total; //@ret2
+}
+
+static int minReorder(int n, int[][] connections) {
+    adj = new List[n]; //@build
+    for (int i = 0; i < n; i++) adj[i] = new ArrayList<>();
+    for (int[] c : connections) { //@edges
+        adj[c[0]].add(new int[]{c[1], 1}); //@forward
+        adj[c[1]].add(new int[]{c[0], 0}); //@backward
+    }
+    visited = new boolean[n]; //@init
+    int count = dfs(0); //@call
+    return count; //@ret
+}

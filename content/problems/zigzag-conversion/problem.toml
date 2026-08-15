@@ -1,0 +1,45 @@
+slug = 'zigzag-conversion'
+title = 'Zigzag Conversion'
+category = 'Math & Geometry'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '6'
+complexity = 'O(n) time · O(n) space'
+
+description = 'Write a string in a zigzag down and up across a given number of rows, then read it off row by row.'
+approach = "Never build the grid. Each character only needs to know which row it lands in, and that row number just walks down to the bottom and back up to the top — so keep a row index and a direction that flips at either end. Appending each character to its row's buffer and concatenating the buffers at the end gives the answer in one pass."
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 20
+
+[[inputs]]
+name = 'numRows'
+label = 'numRows'
+type = 'int'
+min = 1
+max = 6
+
+[default_input]
+s = 'PAYPALISHIRING'
+numRows = 3
+
+[[tests]]
+expected = 'PAHNAPLSIIGYIR'
+[tests.input]
+s = 'PAYPALISHIRING'
+numRows = 3
+
+[[tests]]
+expected = 'PINALSIGYAHRPI'
+[tests.input]
+s = 'PAYPALISHIRING'
+numRows = 4
+
+[[tests]]
+expected = 'AB'
+[tests.input]
+s = 'AB'
+numRows = 1

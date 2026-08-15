@@ -1,0 +1,21 @@
+static boolean isNStraightHand(int[] hand, int groupSize) {
+    if (hand.length % groupSize != 0) { //@divisible
+        return false;
+    }
+    TreeMap<Integer, Integer> count = new TreeMap<>(); //@count
+    for (int c : hand) count.merge(c, 1, Integer::sum);
+    List<Integer> keys = new ArrayList<>(count.keySet()); //@sort
+    for (int c : keys) { //@loop
+        int n = count.getOrDefault(c, 0); //@need
+        if (n == 0) { //@spent
+            continue;
+        }
+        for (int k = 0; k < groupSize; k++) { //@build
+            if (count.getOrDefault(c + k, 0) < n) { //@missing
+                return false; //@no
+            }
+            count.merge(c + k, -n, Integer::sum); //@consume
+        }
+    }
+    return true; //@yes
+}

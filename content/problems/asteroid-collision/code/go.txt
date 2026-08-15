@@ -1,0 +1,21 @@
+func asteroidCollision(asteroids []int) []int {
+    stack := []int{} //@init
+    for _, a := range asteroids { //@loop
+        alive := true //@alive
+        for alive && a < 0 && len(stack) > 0 && stack[len(stack)-1] > 0 { //@collide
+            top := stack[len(stack)-1] //@peek
+            if top < -a { //@smaller
+                stack = stack[:len(stack)-1] //@popTop
+            } else if top == -a { //@equal
+                stack = stack[:len(stack)-1] //@popBoth
+                alive = false
+            } else { //@bigger
+                alive = false //@die
+            }
+        }
+        if alive { //@survives
+            stack = append(stack, a) //@push
+        }
+    }
+    return stack //@ret
+}

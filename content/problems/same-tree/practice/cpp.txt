@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int v) : val(v), left(nullptr), right(nullptr) {}
+};
+
+bool isSameTree(TreeNode* p, TreeNode* q) {
+    if (p == nullptr && q == nullptr) {
+        return true;
+    }
+    if (p == nullptr || q == nullptr) {
+        return false;
+    }
+    if (p->val != q->val) {
+        return false;
+    }
+    bool left = isSameTree(p->left, q->left);
+    bool right = isSameTree(p->right, q->right);
+    return left && right;
+}
+
+TreeNode* buildTree(vector<string>& tokens) {
+    if (tokens.empty() || tokens[0] == "n") return nullptr;
+    TreeNode* root = new TreeNode(stoi(tokens[0]));
+    queue<TreeNode*> q;
+    q.push(root);
+    size_t i = 1;
+    while (!q.empty() && i < tokens.size()) {
+        TreeNode* cur = q.front(); q.pop();
+        if (i < tokens.size()) {
+            if (tokens[i] != "n") { cur->left = new TreeNode(stoi(tokens[i])); q.push(cur->left); }
+            i++;
+        }
+        if (i < tokens.size()) {
+            if (tokens[i] != "n") { cur->right = new TreeNode(stoi(tokens[i])); q.push(cur->right); }
+            i++;
+        }
+    }
+    return root;
+}
+
+vector<string> readTokens() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<string> tokens;
+    string tk;
+    while (ss >> tk) tokens.push_back(tk);
+    return tokens;
+}
+
+int main() {
+    vector<string> tp = readTokens();
+    vector<string> tq = readTokens();
+    TreeNode* p = buildTree(tp);
+    TreeNode* q = buildTree(tq);
+    cout << (isSameTree(p, q) ? "true" : "false") << endl;
+}

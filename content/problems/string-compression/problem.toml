@@ -1,0 +1,45 @@
+slug = 'string-compression'
+title = 'String Compression'
+category = 'String Algorithms'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '443'
+complexity = 'O(n) time · O(1) extra space'
+
+description = 'Compress a character array in place: each run of a repeated character becomes the character followed by its length (a run of one gets no number). Return the new length.'
+approach = 'Two indices over one array: read walks the input, write walks the output, and write never overtakes read because a run of length L costs at most 1 + digits(L) ≤ L cells. Counting the run first and only then writing is what keeps the in-place overwrite safe — and multi-digit counts must be written digit by digit, which is the part interviewers watch for.'
+
+[[inputs]]
+name = 'chars'
+label = 'chars'
+type = 'string'
+max_len = 24
+help = 'the character array, e.g. aabbccc'
+
+[default_input]
+chars = 'aabbbccccc'
+
+[[tests]]
+expected = 'a2b3c5'
+[tests.input]
+chars = 'aabbbccccc'
+
+[[tests]]
+expected = 'a2b2c3'
+[tests.input]
+chars = 'aabbccc'
+
+[[tests]]
+expected = 'a'
+[tests.input]
+chars = 'a'
+
+[[tests]]
+expected = 'a12'
+[tests.input]
+chars = 'aaaaaaaaaaaa'
+
+[[tests]]
+expected = 'abc'
+[tests.input]
+chars = 'abc'

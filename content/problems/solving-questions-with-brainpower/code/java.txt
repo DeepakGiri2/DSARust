@@ -1,0 +1,19 @@
+static long mostPoints(int[][] questions) {
+    int n = questions.length;
+    long[] dp = new long[n + 1]; //@init
+    for (int i = n - 1; i >= 0; i--) { //@loop
+        int points = questions[i][0], brain = questions[i][1]; //@read
+        int next = i + brain + 1; //@jump
+        long take = points; //@take
+        if (next <= n) { //@inRange
+            take += dp[next]; //@addFuture
+        }
+        long skip = dp[i + 1]; //@skip
+        if (take > skip) { //@compare
+            dp[i] = take; //@storeTake
+        } else {
+            dp[i] = skip; //@storeSkip
+        }
+    }
+    return dp[0]; //@ret
+}

@@ -1,0 +1,12 @@
+TreeNode* mergeTrees(TreeNode* a, TreeNode* b) {
+    if (a == nullptr) { //@aNil
+        return b;
+    }
+    if (b == nullptr) { //@bNil
+        return a;
+    }
+    TreeNode* merged = new TreeNode(a->val + b->val); //@sum
+    merged->left = mergeTrees(a->left, b->left); //@recL
+    merged->right = mergeTrees(a->right, b->right); //@recR
+    return merged; //@ret
+}

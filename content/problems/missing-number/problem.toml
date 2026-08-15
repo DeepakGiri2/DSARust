@@ -1,0 +1,30 @@
+slug = 'missing-number'
+title = 'Missing Number'
+category = 'Bit Manipulation'
+difficulty = 'Easy'
+tier = '150'
+complexity = 'O(n) time · O(1) space'
+
+description = 'An array holds n distinct numbers taken from 0..n. Return the one that is missing.'
+approach = 'XOR every index and every value together. Each present number appears once as a value and once as an index, so it cancels itself; the missing one appears only as an index and survives. No sum, so no overflow.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+min = 0
+max = 20
+
+[default_input]
+nums = [3, 0, 1]
+
+[[tests]]
+expected = '2'
+[tests.input]
+nums = [3, 0, 1]
+
+[[tests]]
+expected = '2'
+[tests.input]
+nums = [0, 1]

@@ -1,0 +1,406 @@
+# The NeetCode roadmap, as data.
+#
+# Categories render in the order they appear here; a problem shows up in a
+# tier when its own tier is that tier or smaller (50 < 150 < 250).
+# `slug` is optional and only needed when it differs from the title.
+#
+# Adding a problem here makes it appear in the app. Giving it a directory
+# under problems/<slug>/ with a trace.rhai makes it animated. Neither needs
+# a rebuild.
+
+[[category]]
+name = 'Arrays & Hashing'
+problems = [
+  { title = 'Contains Duplicate', difficulty = 'Easy', tier = '50' },
+  { title = 'Valid Anagram', difficulty = 'Easy', tier = '50' },
+  { title = 'Two Sum', difficulty = 'Easy', tier = '50' },
+  { title = 'Group Anagrams', difficulty = 'Medium', tier = '50' },
+  { title = 'Top K Frequent Elements', difficulty = 'Medium', tier = '50' },
+  { title = 'Encode and Decode Strings', difficulty = 'Medium', tier = '150' },
+  { title = 'Product of Array Except Self', difficulty = 'Medium', tier = '50' },
+  { title = 'Valid Sudoku', difficulty = 'Medium', tier = '150' },
+  { title = 'Longest Consecutive Sequence', difficulty = 'Medium', tier = '50' },
+  { title = 'Concatenation of Array', difficulty = 'Easy', tier = '250' },
+  { title = 'Replace Elements With Greatest Element on Right Side', difficulty = 'Easy', tier = '250' },
+  { title = 'Is Subsequence', difficulty = 'Easy', tier = '250' },
+  { title = 'Length of Last Word', difficulty = 'Easy', tier = '250' },
+  { title = 'Longest Common Prefix', difficulty = 'Easy', tier = '250' },
+  { title = "Pascal's Triangle", difficulty = 'Easy', tier = '250' },
+  { title = 'Remove Element', difficulty = 'Easy', tier = '250' },
+  { title = 'Majority Element', difficulty = 'Easy', tier = '250' },
+  { title = 'Sort Colors', difficulty = 'Medium', tier = '250' },
+  { title = 'Design HashSet', difficulty = 'Easy', tier = '250' },
+  { title = 'Design HashMap', difficulty = 'Easy', tier = '250' },
+  { title = 'Sort an Array', difficulty = 'Medium', tier = '250' },
+  { title = 'Subarray Sum Equals K', difficulty = 'Medium', tier = '250' },
+  { title = 'Insert Delete GetRandom O(1)', difficulty = 'Medium', tier = '250' },
+  { title = 'Rotate Array', difficulty = 'Medium', tier = 'extra' },
+  { title = 'Next Permutation', difficulty = 'Medium', tier = 'extra' },
+  { title = 'First Missing Positive', difficulty = 'Hard', tier = 'extra' },
+  { title = 'Isomorphic Strings', difficulty = 'Easy', tier = 'extra' },
+]
+
+[[category]]
+name = 'Two Pointers'
+problems = [
+  { title = 'Valid Palindrome', difficulty = 'Easy', tier = '50' },
+  { title = 'Two Sum II — Sorted Array', difficulty = 'Medium', tier = '50', slug = 'two-sum-ii-input-array-is-sorted' },
+  { title = '3Sum', difficulty = 'Medium', tier = '50' },
+  { title = 'Container With Most Water', difficulty = 'Medium', tier = '50' },
+  { title = 'Trapping Rain Water', difficulty = 'Hard', tier = '150' },
+  { title = 'Reverse String', difficulty = 'Easy', tier = '250' },
+  { title = 'Valid Palindrome II', difficulty = 'Easy', tier = '250' },
+  { title = 'Merge Sorted Array', difficulty = 'Easy', tier = '250' },
+  { title = 'Remove Duplicates From Sorted Array', difficulty = 'Easy', tier = '250' },
+  { title = 'Boats to Save People', difficulty = 'Medium', tier = '250' },
+  { title = '4Sum', difficulty = 'Medium', tier = '250' },
+  { title = 'Remove Duplicates From Sorted Array II', difficulty = 'Medium', tier = '250' },
+]
+
+[[category]]
+name = 'Sliding Window'
+problems = [
+  { title = 'Best Time to Buy & Sell Stock', difficulty = 'Easy', tier = '50', slug = 'best-time-to-buy-and-sell-stock' },
+  { title = 'Longest Substring Without Repeating Characters', difficulty = 'Medium', tier = '50' },
+  { title = 'Longest Repeating Character Replacement', difficulty = 'Medium', tier = '150' },
+  { title = 'Permutation in String', difficulty = 'Medium', tier = '150' },
+  { title = 'Minimum Window Substring', difficulty = 'Hard', tier = '150' },
+  { title = 'Sliding Window Maximum', difficulty = 'Hard', tier = '150' },
+  { title = 'Contains Duplicate II', difficulty = 'Easy', tier = '250' },
+  { title = 'Maximum Average Subarray I', difficulty = 'Easy', tier = '250' },
+  { title = 'Minimum Size Subarray Sum', difficulty = 'Medium', tier = '250' },
+  { title = 'Frequency of the Most Frequent Element', difficulty = 'Medium', tier = '250' },
+  { title = 'Max Consecutive Ones III', difficulty = 'Medium', tier = 'extra' },
+]
+
+[[category]]
+name = 'Stack'
+problems = [
+  { title = 'Valid Parentheses', difficulty = 'Easy', tier = '50' },
+  { title = 'Min Stack', difficulty = 'Medium', tier = '50' },
+  { title = 'Evaluate Reverse Polish Notation', difficulty = 'Medium', tier = '150' },
+  { title = 'Generate Parentheses', difficulty = 'Medium', tier = '150' },
+  { title = 'Daily Temperatures', difficulty = 'Medium', tier = '50' },
+  { title = 'Car Fleet', difficulty = 'Medium', tier = '150' },
+  { title = 'Largest Rectangle in Histogram', difficulty = 'Hard', tier = '150' },
+  { title = 'Baseball Game', difficulty = 'Easy', tier = '250' },
+  { title = 'Implement Stack Using Queues', difficulty = 'Easy', tier = '250' },
+  { title = 'Implement Queue Using Stacks', difficulty = 'Easy', tier = '250' },
+  { title = 'Asteroid Collision', difficulty = 'Medium', tier = '250' },
+  { title = 'Online Stock Span', difficulty = 'Medium', tier = '250' },
+  { title = 'Simplify Path', difficulty = 'Medium', tier = '250' },
+  { title = 'Decode String', difficulty = 'Medium', tier = '250' },
+  { title = 'Removing Stars From a String', difficulty = 'Medium', tier = '250' },
+  { title = 'Basic Calculator II', difficulty = 'Medium', tier = 'extra' },
+]
+
+[[category]]
+name = 'Binary Search'
+problems = [
+  { title = 'Binary Search', difficulty = 'Easy', tier = '50' },
+  { title = 'Search a 2D Matrix', difficulty = 'Medium', tier = '150' },
+  { title = 'Koko Eating Bananas', difficulty = 'Medium', tier = '150' },
+  { title = 'Find Minimum in Rotated Sorted Array', difficulty = 'Medium', tier = '50' },
+  { title = 'Search in Rotated Sorted Array', difficulty = 'Medium', tier = '50' },
+  { title = 'Time Based Key-Value Store', difficulty = 'Medium', tier = '150' },
+  { title = 'Median of Two Sorted Arrays', difficulty = 'Hard', tier = '150' },
+  { title = 'Search Insert Position', difficulty = 'Easy', tier = '250' },
+  { title = 'Guess Number Higher or Lower', difficulty = 'Easy', tier = '250' },
+  { title = 'Arranging Coins', difficulty = 'Easy', tier = '250' },
+  { title = 'Valid Perfect Square', difficulty = 'Easy', tier = '250' },
+  { title = 'Capacity to Ship Packages Within D Days', difficulty = 'Medium', tier = '250' },
+  { title = 'Sqrt(x)', difficulty = 'Easy', tier = '250' },
+  { title = 'Find Peak Element', difficulty = 'Medium', tier = '250' },
+  { title = 'Find First and Last Position of Element in Sorted Array', difficulty = 'Medium', tier = 'extra' },
+]
+
+[[category]]
+name = 'Linked List'
+problems = [
+  { title = 'Reverse Linked List', difficulty = 'Easy', tier = '50' },
+  { title = 'Merge Two Sorted Lists', difficulty = 'Easy', tier = '50' },
+  { title = 'Reorder List', difficulty = 'Medium', tier = '150' },
+  { title = 'Remove Nth Node From End of List', difficulty = 'Medium', tier = '50' },
+  { title = 'Copy List With Random Pointer', difficulty = 'Medium', tier = '150' },
+  { title = 'Add Two Numbers', difficulty = 'Medium', tier = '150' },
+  { title = 'Linked List Cycle', difficulty = 'Easy', tier = '50' },
+  { title = 'Find the Duplicate Number', difficulty = 'Medium', tier = '150' },
+  { title = 'LRU Cache', difficulty = 'Medium', tier = '150' },
+  { title = 'Merge K Sorted Lists', difficulty = 'Hard', tier = '150' },
+  { title = 'Reverse Nodes in K-Group', difficulty = 'Hard', tier = '150' },
+  { title = 'Middle of the Linked List', difficulty = 'Easy', tier = '250' },
+  { title = 'Palindrome Linked List', difficulty = 'Easy', tier = '250' },
+  { title = 'Remove Linked List Elements', difficulty = 'Easy', tier = '250' },
+  { title = 'Remove Duplicates From Sorted List', difficulty = 'Easy', tier = '250' },
+  { title = 'Swap Nodes in Pairs', difficulty = 'Medium', tier = '250' },
+  { title = 'Design Browser History', difficulty = 'Medium', tier = '250' },
+  { title = 'Reverse Linked List II', difficulty = 'Medium', tier = 'extra' },
+  { title = 'Sort List', difficulty = 'Medium', tier = 'extra' },
+]
+
+[[category]]
+name = 'Trees'
+problems = [
+  { title = 'Invert Binary Tree', difficulty = 'Easy', tier = '50' },
+  { title = 'Maximum Depth of Binary Tree', difficulty = 'Easy', tier = '50' },
+  { title = 'Diameter of Binary Tree', difficulty = 'Easy', tier = '150' },
+  { title = 'Balanced Binary Tree', difficulty = 'Easy', tier = '150' },
+  { title = 'Same Tree', difficulty = 'Easy', tier = '50' },
+  { title = 'Subtree of Another Tree', difficulty = 'Easy', tier = '50' },
+  { title = 'Lowest Common Ancestor of a BST', difficulty = 'Medium', tier = '50', slug = 'lowest-common-ancestor-of-a-binary-search-tree' },
+  { title = 'Binary Tree Level Order Traversal', difficulty = 'Medium', tier = '50' },
+  { title = 'Binary Tree Right Side View', difficulty = 'Medium', tier = '150' },
+  { title = 'Count Good Nodes in Binary Tree', difficulty = 'Medium', tier = '150' },
+  { title = 'Validate Binary Search Tree', difficulty = 'Medium', tier = '50' },
+  { title = 'Kth Smallest Element in a BST', difficulty = 'Medium', tier = '150' },
+  { title = 'Construct Binary Tree From Preorder and Inorder Traversal', difficulty = 'Medium', tier = '150' },
+  { title = 'Binary Tree Maximum Path Sum', difficulty = 'Hard', tier = '150' },
+  { title = 'Serialize and Deserialize Binary Tree', difficulty = 'Hard', tier = '150' },
+  { title = 'Binary Tree Inorder Traversal', difficulty = 'Easy', tier = '250' },
+  { title = 'Binary Tree Preorder Traversal', difficulty = 'Easy', tier = '250' },
+  { title = 'Binary Tree Postorder Traversal', difficulty = 'Easy', tier = '250' },
+  { title = 'Symmetric Tree', difficulty = 'Easy', tier = '250' },
+  { title = 'Path Sum', difficulty = 'Easy', tier = '250' },
+  { title = 'Merge Two Binary Trees', difficulty = 'Easy', tier = '250' },
+  { title = 'Insert Into a Binary Search Tree', difficulty = 'Medium', tier = '250' },
+  { title = 'Delete Node in a BST', difficulty = 'Medium', tier = '250' },
+  { title = 'Convert Sorted Array to Binary Search Tree', difficulty = 'Easy', tier = '250' },
+  { title = 'Search in a Binary Search Tree', difficulty = 'Easy', tier = '250' },
+  { title = 'Binary Tree Zigzag Level Order Traversal', difficulty = 'Medium', tier = 'extra' },
+  { title = 'Flatten Binary Tree to Linked List', difficulty = 'Medium', tier = 'extra' },
+  { title = 'Binary Search Tree Iterator', difficulty = 'Medium', tier = 'extra' },
+]
+
+[[category]]
+name = 'Heap / Priority Queue'
+problems = [
+  { title = 'Kth Largest Element in a Stream', difficulty = 'Easy', tier = '150' },
+  { title = 'Last Stone Weight', difficulty = 'Easy', tier = '150' },
+  { title = 'K Closest Points to Origin', difficulty = 'Medium', tier = '150' },
+  { title = 'Kth Largest Element in an Array', difficulty = 'Medium', tier = '50' },
+  { title = 'Task Scheduler', difficulty = 'Medium', tier = '150' },
+  { title = 'Design Twitter', difficulty = 'Medium', tier = '150' },
+  { title = 'Find Median From Data Stream', difficulty = 'Hard', tier = '150' },
+  { title = 'Single-Threaded CPU', difficulty = 'Medium', tier = '250' },
+  { title = 'Car Pooling', difficulty = 'Medium', tier = '250' },
+  { title = 'Furthest Building You Can Reach', difficulty = 'Medium', tier = '250' },
+  { title = 'IPO', difficulty = 'Hard', tier = '250' },
+  { title = 'Reorganize String', difficulty = 'Medium', tier = '250' },
+  { title = 'Find K Pairs With Smallest Sums', difficulty = 'Medium', tier = 'extra' },
+]
+
+[[category]]
+name = 'Backtracking'
+problems = [
+  { title = 'Subsets', difficulty = 'Medium', tier = '50' },
+  { title = 'Combination Sum', difficulty = 'Medium', tier = '50' },
+  { title = 'Permutations', difficulty = 'Medium', tier = '50' },
+  { title = 'Subsets II', difficulty = 'Medium', tier = '150' },
+  { title = 'Combination Sum II', difficulty = 'Medium', tier = '150' },
+  { title = 'Word Search', difficulty = 'Medium', tier = '50' },
+  { title = 'Palindrome Partitioning', difficulty = 'Medium', tier = '150' },
+  { title = 'Letter Combinations of a Phone Number', difficulty = 'Medium', tier = '150' },
+  { title = 'N-Queens', difficulty = 'Hard', tier = '150' },
+  { title = 'Combinations', difficulty = 'Medium', tier = '250' },
+  { title = 'Restore IP Addresses', difficulty = 'Medium', tier = '250' },
+  { title = 'Matchsticks to Square', difficulty = 'Medium', tier = '250' },
+]
+
+[[category]]
+name = 'Tries'
+problems = [
+  { title = 'Implement Trie (Prefix Tree)', difficulty = 'Medium', tier = '50' },
+  { title = 'Design Add and Search Words Data Structure', difficulty = 'Medium', tier = '150' },
+  { title = 'Word Search II', difficulty = 'Hard', tier = '150' },
+  { title = 'Replace Words', difficulty = 'Medium', tier = '250' },
+]
+
+[[category]]
+name = 'Graphs'
+problems = [
+  { title = 'Number of Islands', difficulty = 'Medium', tier = '50' },
+  { title = 'Clone Graph', difficulty = 'Medium', tier = '50' },
+  { title = 'Max Area of Island', difficulty = 'Medium', tier = '150' },
+  { title = 'Pacific Atlantic Water Flow', difficulty = 'Medium', tier = '150' },
+  { title = 'Surrounded Regions', difficulty = 'Medium', tier = '150' },
+  { title = 'Rotting Oranges', difficulty = 'Medium', tier = '50' },
+  { title = 'Walls and Gates', difficulty = 'Medium', tier = '150' },
+  { title = 'Course Schedule', difficulty = 'Medium', tier = '50' },
+  { title = 'Course Schedule II', difficulty = 'Medium', tier = '150' },
+  { title = 'Redundant Connection', difficulty = 'Medium', tier = '150' },
+  { title = 'Number of Connected Components in an Undirected Graph', difficulty = 'Medium', tier = '150' },
+  { title = 'Graph Valid Tree', difficulty = 'Medium', tier = '150' },
+  { title = 'Word Ladder', difficulty = 'Hard', tier = '150' },
+  { title = 'Flood Fill', difficulty = 'Easy', tier = '250' },
+  { title = 'Island Perimeter', difficulty = 'Easy', tier = '250' },
+  { title = 'Find the Town Judge', difficulty = 'Easy', tier = '250' },
+  { title = 'Count Sub Islands', difficulty = 'Medium', tier = '250' },
+  { title = 'Reorder Routes to Make All Paths Lead to the City Zero', difficulty = 'Medium', tier = '250' },
+  { title = 'Snakes and Ladders', difficulty = 'Medium', tier = '250' },
+  { title = 'Evaluate Division', difficulty = 'Medium', tier = 'extra' },
+]
+
+[[category]]
+name = 'Advanced Graphs'
+problems = [
+  { title = 'Reconstruct Itinerary', difficulty = 'Hard', tier = '150' },
+  { title = 'Min Cost to Connect All Points', difficulty = 'Medium', tier = '150' },
+  { title = 'Network Delay Time', difficulty = 'Medium', tier = '150' },
+  { title = 'Swim in Rising Water', difficulty = 'Hard', tier = '150' },
+  { title = 'Alien Dictionary', difficulty = 'Hard', tier = '150' },
+  { title = 'Cheapest Flights Within K Stops', difficulty = 'Medium', tier = '150' },
+  { title = 'Path With Minimum Effort', difficulty = 'Medium', tier = '250' },
+  { title = 'Path With Maximum Probability', difficulty = 'Medium', tier = '250' },
+]
+
+[[category]]
+name = '1-D Dynamic Programming'
+problems = [
+  { title = 'Climbing Stairs', difficulty = 'Easy', tier = '50' },
+  { title = 'Min Cost Climbing Stairs', difficulty = 'Easy', tier = '150' },
+  { title = 'House Robber', difficulty = 'Medium', tier = '50' },
+  { title = 'House Robber II', difficulty = 'Medium', tier = '150' },
+  { title = 'Longest Palindromic Substring', difficulty = 'Medium', tier = '150' },
+  { title = 'Palindromic Substrings', difficulty = 'Medium', tier = '150' },
+  { title = 'Decode Ways', difficulty = 'Medium', tier = '150' },
+  { title = 'Coin Change', difficulty = 'Medium', tier = '50' },
+  { title = 'Maximum Product Subarray', difficulty = 'Medium', tier = '150' },
+  { title = 'Word Break', difficulty = 'Medium', tier = '150' },
+  { title = 'Longest Increasing Subsequence', difficulty = 'Medium', tier = '50' },
+  { title = 'Partition Equal Subset Sum', difficulty = 'Medium', tier = '150' },
+  { title = 'Fibonacci Number', difficulty = 'Easy', tier = '250' },
+  { title = 'N-th Tribonacci Number', difficulty = 'Easy', tier = '250' },
+  { title = 'Delete and Earn', difficulty = 'Medium', tier = '250' },
+  { title = 'Perfect Squares', difficulty = 'Medium', tier = '250' },
+  { title = 'Integer Break', difficulty = 'Medium', tier = '250' },
+  { title = 'Stone Game', difficulty = 'Medium', tier = '250' },
+  { title = 'Minimum Cost For Tickets', difficulty = 'Medium', tier = '250' },
+  { title = 'Solving Questions With Brainpower', difficulty = 'Medium', tier = '250' },
+  { title = 'Maximum Sum Circular Subarray', difficulty = 'Medium', tier = 'extra' },
+]
+
+[[category]]
+name = '2-D Dynamic Programming'
+problems = [
+  { title = 'Unique Paths', difficulty = 'Medium', tier = '50' },
+  { title = 'Longest Common Subsequence', difficulty = 'Medium', tier = '50' },
+  { title = 'Best Time to Buy & Sell Stock With Cooldown', difficulty = 'Medium', tier = '150', slug = 'best-time-to-buy-and-sell-stock-with-cooldown' },
+  { title = 'Coin Change II', difficulty = 'Medium', tier = '150' },
+  { title = 'Target Sum', difficulty = 'Medium', tier = '150' },
+  { title = 'Interleaving String', difficulty = 'Medium', tier = '150' },
+  { title = 'Longest Increasing Path in a Matrix', difficulty = 'Hard', tier = '150' },
+  { title = 'Distinct Subsequences', difficulty = 'Hard', tier = '150' },
+  { title = 'Edit Distance', difficulty = 'Medium', tier = '150' },
+  { title = 'Burst Balloons', difficulty = 'Hard', tier = '150' },
+  { title = 'Regular Expression Matching', difficulty = 'Hard', tier = '150' },
+  { title = 'Unique Paths II', difficulty = 'Medium', tier = '250' },
+  { title = 'Minimum Path Sum', difficulty = 'Medium', tier = '250' },
+  { title = 'Maximal Square', difficulty = 'Medium', tier = '250' },
+  { title = 'Triangle', difficulty = 'Medium', tier = 'extra' },
+]
+
+[[category]]
+name = 'Greedy'
+problems = [
+  { title = 'Maximum Subarray', difficulty = 'Medium', tier = '50' },
+  { title = 'Jump Game', difficulty = 'Medium', tier = '50' },
+  { title = 'Jump Game II', difficulty = 'Medium', tier = '150' },
+  { title = 'Gas Station', difficulty = 'Medium', tier = '150' },
+  { title = 'Hand of Straights', difficulty = 'Medium', tier = '150' },
+  { title = 'Merge Triplets to Form Target Triplet', difficulty = 'Medium', tier = '150' },
+  { title = 'Partition Labels', difficulty = 'Medium', tier = '150' },
+  { title = 'Valid Parenthesis String', difficulty = 'Medium', tier = '150' },
+  { title = 'Lemonade Change', difficulty = 'Easy', tier = '250' },
+  { title = 'Candy', difficulty = 'Hard', tier = '250' },
+  { title = 'Dota2 Senate', difficulty = 'Medium', tier = '250' },
+  { title = 'Eliminate Maximum Number of Monsters', difficulty = 'Medium', tier = '250' },
+  { title = 'Best Time to Buy & Sell Stock II', difficulty = 'Medium', tier = 'extra', slug = 'best-time-to-buy-and-sell-stock-ii' },
+]
+
+[[category]]
+name = 'Intervals'
+problems = [
+  { title = 'Insert Interval', difficulty = 'Medium', tier = '150' },
+  { title = 'Merge Intervals', difficulty = 'Medium', tier = '50' },
+  { title = 'Non-overlapping Intervals', difficulty = 'Medium', tier = '150' },
+  { title = 'Meeting Rooms', difficulty = 'Easy', tier = '150' },
+  { title = 'Meeting Rooms II', difficulty = 'Medium', tier = '150' },
+  { title = 'Minimum Interval to Include Each Query', difficulty = 'Hard', tier = '150' },
+  { title = 'Interval List Intersections', difficulty = 'Medium', tier = '250' },
+  { title = 'Remove Covered Intervals', difficulty = 'Medium', tier = '250' },
+  { title = 'Summary Ranges', difficulty = 'Easy', tier = 'extra' },
+  { title = 'Minimum Number of Arrows to Burst Balloons', difficulty = 'Medium', tier = 'extra' },
+]
+
+[[category]]
+name = 'Math & Geometry'
+problems = [
+  { title = 'Rotate Image', difficulty = 'Medium', tier = '150' },
+  { title = 'Spiral Matrix', difficulty = 'Medium', tier = '150' },
+  { title = 'Set Matrix Zeroes', difficulty = 'Medium', tier = '150' },
+  { title = 'Happy Number', difficulty = 'Easy', tier = '150' },
+  { title = 'Plus One', difficulty = 'Easy', tier = '150' },
+  { title = 'Pow(x, n)', difficulty = 'Medium', tier = '150' },
+  { title = 'Multiply Strings', difficulty = 'Medium', tier = '150' },
+  { title = 'Detect Squares', difficulty = 'Medium', tier = '150' },
+  { title = 'Palindrome Number', difficulty = 'Easy', tier = '250' },
+  { title = 'Roman to Integer', difficulty = 'Easy', tier = '250' },
+  { title = 'Integer to Roman', difficulty = 'Medium', tier = '250' },
+  { title = 'Excel Sheet Column Title', difficulty = 'Easy', tier = '250' },
+  { title = 'Zigzag Conversion', difficulty = 'Medium', tier = '250' },
+  { title = 'Count Primes', difficulty = 'Medium', tier = '250' },
+  { title = 'Game of Life', difficulty = 'Medium', tier = 'extra' },
+  { title = 'Factorial Trailing Zeroes', difficulty = 'Medium', tier = 'extra' },
+]
+
+[[category]]
+name = 'Bit Manipulation'
+problems = [
+  { title = 'Single Number', difficulty = 'Easy', tier = '50' },
+  { title = 'Number of 1 Bits', difficulty = 'Easy', tier = '150' },
+  { title = 'Counting Bits', difficulty = 'Easy', tier = '150' },
+  { title = 'Reverse Bits', difficulty = 'Easy', tier = '150' },
+  { title = 'Missing Number', difficulty = 'Easy', tier = '150' },
+  { title = 'Sum of Two Integers', difficulty = 'Medium', tier = '150' },
+  { title = 'Reverse Integer', difficulty = 'Medium', tier = '150' },
+  { title = 'Add Binary', difficulty = 'Easy', tier = '250' },
+  { title = 'Hamming Distance', difficulty = 'Easy', tier = '250' },
+  { title = 'Bitwise AND of Numbers Range', difficulty = 'Medium', tier = '250' },
+  { title = 'Single Number II', difficulty = 'Medium', tier = '250' },
+]
+
+[[category]]
+name = 'Prefix Sums'
+problems = [
+  { title = 'Find Pivot Index', difficulty = 'Easy', tier = 'extra' },
+  { title = 'Range Sum Query — Immutable', difficulty = 'Easy', tier = 'extra', slug = 'range-sum-query-immutable' },
+  { title = 'Range Sum Query 2D — Immutable', difficulty = 'Medium', tier = 'extra', slug = 'range-sum-query-2d-immutable' },
+  { title = 'Subarray Sums Divisible by K', difficulty = 'Medium', tier = 'extra' },
+  { title = 'Corporate Flight Bookings', difficulty = 'Medium', tier = 'extra' },
+]
+
+[[category]]
+name = 'Union Find'
+problems = [
+  { title = 'Number of Provinces', difficulty = 'Medium', tier = 'extra' },
+  { title = 'Satisfiability of Equality Equations', difficulty = 'Medium', tier = 'extra' },
+  { title = 'Accounts Merge', difficulty = 'Medium', tier = 'extra' },
+]
+
+[[category]]
+name = 'String Algorithms'
+problems = [
+  { title = 'Find the Index of the First Occurrence in a String', difficulty = 'Easy', tier = 'extra', slug = 'implement-strstr' },
+  { title = 'Repeated Substring Pattern', difficulty = 'Easy', tier = 'extra' },
+  { title = 'Reverse Words in a String', difficulty = 'Medium', tier = 'extra' },
+  { title = 'String Compression', difficulty = 'Medium', tier = 'extra' },
+]
+
+[[category]]
+name = 'Design'
+problems = [
+  { title = 'Design Circular Queue', difficulty = 'Medium', tier = 'extra' },
+  { title = 'Design Hit Counter', difficulty = 'Medium', tier = 'extra' },
+  { title = 'Random Pick With Weight', difficulty = 'Medium', tier = 'extra' },
+  { title = 'LFU Cache', difficulty = 'Hard', tier = 'extra' },
+]

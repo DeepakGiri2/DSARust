@@ -1,0 +1,13 @@
+func removeDuplicates(nums []int) int {
+    if len(nums) == 0 { //@empty
+        return 0 //@ret0
+    }
+    slow := 0 //@init
+    for fast := 1; fast < len(nums); fast++ { //@loop
+        if nums[fast] != nums[slow] { //@cmp
+            slow++ //@incS
+            nums[slow] = nums[fast] //@write
+        }
+    }
+    return slow + 1 //@ret
+}

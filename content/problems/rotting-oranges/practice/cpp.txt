@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int orangesRotting(vector<vector<int>>& grid) {
+    int rows = grid.size(), cols = grid[0].size();
+    queue<pair<int,int>> q;
+    int fresh = 0;
+    for (int r = 0; r < rows; r++) {
+        for (int c = 0; c < cols; c++) {
+            if (grid[r][c] == 2) q.push({r, c});
+            else if (grid[r][c] == 1) fresh++;
+        }
+    }
+    int minutes = 0;
+    int dr[] = {1, -1, 0, 0}, dc[] = {0, 0, 1, -1};
+    while (!q.empty() && fresh > 0) {
+        minutes++;
+        int sz = q.size();
+        for (int i = 0; i < sz; i++) {
+            auto cell = q.front(); q.pop();
+            for (int k = 0; k < 4; k++) {
+                int nr = cell.first + dr[k], nc = cell.second + dc[k];
+                if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && grid[nr][nc] == 1) {
+                    grid[nr][nc] = 2;
+                    fresh--;
+                    q.push({nr, nc});
+                }
+            }
+        }
+    }
+    if (fresh > 0) {
+        return -1;
+    }
+    return minutes;
+}
+
+int main() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<string> rows;
+    string tk;
+    while (ss >> tk) rows.push_back(tk);
+    vector<vector<int>> grid;
+    for (auto& row : rows) {
+        vector<int> r;
+        for (char ch : row) r.push_back(ch - '0');
+        grid.push_back(r);
+    }
+    cout << orangesRotting(grid) << endl;
+}

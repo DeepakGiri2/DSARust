@@ -1,0 +1,13 @@
+type StockSpanner struct {
+    stack [][2]int //@init
+}
+
+func (s *StockSpanner) Next(price int) int {
+    span := 1 //@span
+    for len(s.stack) > 0 && s.stack[len(s.stack)-1][0] <= price { //@while
+        span += s.stack[len(s.stack)-1][1] //@absorb
+        s.stack = s.stack[:len(s.stack)-1] //@pop
+    }
+    s.stack = append(s.stack, [2]int{price, span}) //@push
+    return span //@ret
+}

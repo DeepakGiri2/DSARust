@@ -1,0 +1,16 @@
+func summaryRanges(nums []int) []string {
+    out := []string{} //@init
+    for i := 0; i < len(nums); { //@loop
+        start := i //@start
+        for i+1 < len(nums) && nums[i+1] == nums[i]+1 { //@extend
+            i++ //@grow
+        }
+        if start == i { //@single
+            out = append(out, strconv.Itoa(nums[start])) //@one
+        } else {
+            out = append(out, strconv.Itoa(nums[start])+"->"+strconv.Itoa(nums[i])) //@range
+        }
+        i++ //@next
+    }
+    return out //@ret
+}

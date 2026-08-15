@@ -1,0 +1,31 @@
+vector<vector<string>> res; //@init
+vector<string> cur; //@cur
+
+bool isPalindrome(const string& s, int lo, int hi) {
+    while (lo < hi) {
+        if (s[lo] != s[hi]) return false;
+        lo++; hi--;
+    }
+    return true;
+}
+
+void back(const string& s, int start) {
+    if (start == (int)s.size()) { //@complete
+        res.push_back(cur); //@record
+        return; //@retDone
+    }
+    for (int end = start; end < (int)s.size(); end++) { //@loop
+        if (!isPalindrome(s, start, end)) { //@check
+            continue;
+        }
+        cur.push_back(s.substr(start, end - start + 1)); //@choose
+        back(s, end + 1); //@recurse
+        cur.pop_back(); //@undo
+    }
+}
+
+vector<vector<string>> partition(string s) {
+    res.clear(); cur.clear();
+    back(s, 0); //@call
+    return res; //@ret
+}

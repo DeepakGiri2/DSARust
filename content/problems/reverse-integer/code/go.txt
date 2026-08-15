@@ -1,0 +1,17 @@
+func reverse(x int) int {
+    sign := 1 //@sign
+    if x < 0 {
+        sign = -1
+        x = -x
+    }
+    out := 0 //@init
+    for x > 0 { //@loop
+        d := x % 10 //@digit
+        if out > (2147483647-d)/10 { //@overflow
+            return 0 //@fail
+        }
+        out = out*10 + d //@push
+        x /= 10 //@drop
+    }
+    return sign * out //@ret
+}

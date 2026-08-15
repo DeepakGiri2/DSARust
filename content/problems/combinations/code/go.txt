@@ -1,0 +1,18 @@
+func combine(n int, k int) [][]int {
+    res := [][]int{} //@init
+    cur := []int{} //@cur
+    var back func(start int)
+    back = func(start int) {
+        if len(cur) == k { //@complete
+            res = append(res, append([]int{}, cur...)) //@record
+            return //@retDone
+        }
+        for v := start; v <= n-(k-len(cur))+1; v++ { //@loop
+            cur = append(cur, v) //@choose
+            back(v + 1) //@recurse
+            cur = cur[:len(cur)-1] //@undo
+        }
+    }
+    back(1) //@call
+    return res //@ret
+}

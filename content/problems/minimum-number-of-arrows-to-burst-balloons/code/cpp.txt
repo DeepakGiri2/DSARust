@@ -1,0 +1,14 @@
+int findMinArrowShots(vector<vector<int>>& points) {
+    sort(points.begin(), points.end(), [](auto& a, auto& b) { //@sort
+        return a[1] < b[1];
+    });
+    int arrows = 1; //@init
+    long end = points[0][1]; //@first
+    for (int i = 1; i < (int)points.size(); i++) { //@loop
+        if (points[i][0] > end) { //@miss
+            arrows++; //@shoot
+            end = points[i][1]; //@newend
+        }
+    }
+    return arrows; //@ret
+}

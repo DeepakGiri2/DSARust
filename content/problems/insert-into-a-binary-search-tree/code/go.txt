@@ -1,0 +1,22 @@
+func insertIntoBST(root *TreeNode, val int) *TreeNode {
+    if root == nil { //@empty
+        return &TreeNode{Val: val}
+    }
+    cur := root //@cur
+    for { //@loop
+        if val < cur.Val { //@less
+            if cur.Left == nil { //@leftFree
+                cur.Left = &TreeNode{Val: val} //@attachL
+                break
+            }
+            cur = cur.Left //@goL
+        } else { //@more
+            if cur.Right == nil { //@rightFree
+                cur.Right = &TreeNode{Val: val} //@attachR
+                break
+            }
+            cur = cur.Right //@goR
+        }
+    }
+    return root //@ret
+}

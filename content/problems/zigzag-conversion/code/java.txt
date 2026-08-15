@@ -1,0 +1,22 @@
+static String convert(String s, int numRows) {
+    if (numRows == 1) { //@single
+        return s;
+    }
+    StringBuilder[] rows = new StringBuilder[numRows]; //@init
+    for (int i = 0; i < numRows; i++) rows[i] = new StringBuilder();
+    int row = 0, dir = 1; //@cursor
+    for (int i = 0; i < s.length(); i++) { //@loop
+        rows[row].append(s.charAt(i)); //@place
+        if (row == 0) { //@atTop
+            dir = 1; //@down
+        } else if (row == numRows - 1) { //@atBottom
+            dir = -1; //@up
+        }
+        row += dir; //@move
+    }
+    StringBuilder out = new StringBuilder(); //@join
+    for (StringBuilder r : rows) { //@concat
+        out.append(r);
+    }
+    return out.toString(); //@ret
+}

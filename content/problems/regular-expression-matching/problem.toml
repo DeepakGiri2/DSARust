@@ -1,0 +1,51 @@
+slug = 'regular-expression-matching'
+title = 'Regular Expression Matching'
+category = '2-D Dynamic Programming'
+difficulty = 'Hard'
+tier = '150'
+leetcode = '10'
+complexity = 'O(m · n) time · O(m · n) space'
+
+description = "Match a string against a pattern supporting '.' for any single character and '*' for zero or more of the preceding element."
+approach = "A '*' is not a character but a modifier on the pair before it, so the table must treat 'x*' as a unit. Two branches then cover everything: use the group zero times, which skips two pattern characters, or — if the preceding element matches the current character — use it once more, which consumes a character of the string but leaves the pattern where it is. Everything else in the code is bookkeeping around those two branches."
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 12
+
+[[inputs]]
+name = 'p'
+label = 'p'
+type = 'string'
+max_len = 12
+help = 'supports . and *'
+
+[default_input]
+s = 'aab'
+p = 'c*a*b'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = 'aab'
+p = 'c*a*b'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = 'aa'
+p = 'a'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = 'ab'
+p = '.*'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = 'mississippi'
+p = 'mis*is*p*.'

@@ -1,0 +1,13 @@
+static boolean hasPathSum(TreeNode root, int targetSum) {
+    if (root == null) { //@base
+        return false;
+    }
+    int rem = targetSum - root.val; //@sub
+    if (root.left == null && root.right == null) { //@leaf
+        return rem == 0; //@check
+    }
+    if (hasPathSum(root.left, rem)) { //@recL
+        return true; //@foundL
+    }
+    return hasPathSum(root.right, rem); //@recR
+}

@@ -1,0 +1,50 @@
+slug = 'isomorphic-strings'
+title = 'Isomorphic Strings'
+category = 'Arrays & Hashing'
+difficulty = 'Easy'
+tier = 'extra'
+leetcode = '205'
+complexity = 'O(n) time · O(1) space (two 128-entry tables)'
+
+description = 'Two strings are isomorphic if the characters of one can be replaced to get the other, with every occurrence of a character mapped consistently and no two characters mapping to the same one.'
+approach = 'One map is not enough: s→t alone accepts "badc" → "baba", where b and d both become b. Two maps enforce that the correspondence is a bijection — each direction must agree with what was recorded earlier, and a conflict in either direction is a rejection.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 16
+
+[[inputs]]
+name = 't'
+label = 't'
+type = 'string'
+max_len = 16
+
+[default_input]
+s = 'paper'
+t = 'title'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = 'paper'
+t = 'title'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = 'egg'
+t = 'add'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = 'foo'
+t = 'bar'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = 'badc'
+t = 'baba'

@@ -1,0 +1,16 @@
+func canCompleteCircuit(gas []int, cost []int) int {
+    total, tank, start := 0, 0, 0 //@init
+    for i := 0; i < len(gas); i++ { //@loop
+        diff := gas[i] - cost[i] //@diff
+        total += diff //@total
+        tank += diff //@tank
+        if tank < 0 { //@check
+            start = i + 1 //@restart
+            tank = 0 //@reset
+        }
+    }
+    if total < 0 { //@feasible
+        return -1 //@none
+    }
+    return start //@ret
+}

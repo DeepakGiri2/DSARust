@@ -1,0 +1,27 @@
+func maximalSquare(matrix [][]byte) int {
+    rows, cols := len(matrix), len(matrix[0])
+    dp := make([][]int, rows+1) //@init
+    for r := range dp {
+        dp[r] = make([]int, cols+1)
+    }
+    best := 0 //@best
+    for r := 1; r <= rows; r++ { //@rowLoop
+        for c := 1; c <= cols; c++ { //@colLoop
+            if matrix[r-1][c-1] == '0' { //@zero
+                continue
+            }
+            side := dp[r-1][c] //@side
+            if dp[r][c-1] < side {
+                side = dp[r][c-1]
+            }
+            if dp[r-1][c-1] < side {
+                side = dp[r-1][c-1]
+            }
+            dp[r][c] = side + 1 //@store
+            if dp[r][c] > best { //@improve
+                best = dp[r][c] //@update
+            }
+        }
+    }
+    return best * best //@ret
+}

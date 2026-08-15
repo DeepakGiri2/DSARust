@@ -1,0 +1,35 @@
+slug = 'meeting-rooms'
+title = 'Meeting Rooms'
+category = 'Intervals'
+difficulty = 'Easy'
+tier = '150'
+leetcode = '252'
+complexity = 'O(n log n) time · O(1) space'
+
+description = 'Given a list of meeting time intervals, return true if a person could attend all of them.'
+approach = 'Unsorted, any two meetings might clash, so every pair would have to be compared. Sorted by start time, a clash can only ever be with the meeting immediately before — anything earlier ended even sooner, or would already have been reported. That reduces the whole question to one comparison per meeting.'
+
+[[inputs]]
+name = 'intervals'
+label = 'intervals'
+type = 'string'
+max_len = 60
+help = "'start end' pairs, comma separated"
+
+[default_input]
+intervals = '0 30, 5 10, 15 20'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+intervals = '0 30, 5 10, 15 20'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+intervals = '7 10, 2 4'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+intervals = '1 5, 5 9'

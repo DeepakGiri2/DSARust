@@ -1,0 +1,33 @@
+int neighbours(vector<vector<int>>& board, int r, int c) {
+    int live = 0; //@zero
+    for (int dr = -1; dr <= 1; dr++) { //@scan
+        for (int dc = -1; dc <= 1; dc++) {
+            if (dr == 0 && dc == 0) continue;
+            int nr = r + dr, nc = c + dc;
+            if (nr >= 0 && nr < (int)board.size() && nc >= 0 && nc < (int)board[0].size()
+                && (board[nr][nc] & 1) == 1) { //@alive
+                live++; //@bump
+            }
+        }
+    }
+    return live; //@total
+}
+
+void gameOfLife(vector<vector<int>>& board) {
+    int m = board.size(), n = board[0].size();
+    for (int r = 0; r < m; r++) { //@row
+        for (int c = 0; c < n; c++) { //@col
+            int live = neighbours(board, r, c); //@count
+            if ((board[r][c] & 1) == 1 && (live == 2 || live == 3)) { //@survive
+                board[r][c] |= 2; //@keep
+            } else if ((board[r][c] & 1) == 0 && live == 3) { //@born
+                board[r][c] |= 2; //@spawn
+            }
+        }
+    }
+    for (int r = 0; r < m; r++) { //@second
+        for (int c = 0; c < n; c++) {
+            board[r][c] >>= 1; //@shift
+        }
+    }
+}

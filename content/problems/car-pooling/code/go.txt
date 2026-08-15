@@ -1,0 +1,16 @@
+func carPooling(trips [][]int, capacity int) bool {
+    sort.Slice(trips, func(a, b int) bool { return trips[a][1] < trips[b][1] }) //@sort
+    h := &MinHeap{} //@init
+    onboard := 0 //@onboard
+    for _, t := range trips { //@loop
+        for h.Len() > 0 && h.Peek()[0] <= t[1] { //@dropoff
+            onboard -= h.Pop()[1] //@leave
+        }
+        onboard += t[0] //@board
+        if onboard > capacity { //@over
+            return false //@no
+        }
+        h.Push([2]int{t[2], t[0]}) //@push
+    }
+    return true //@yes
+}

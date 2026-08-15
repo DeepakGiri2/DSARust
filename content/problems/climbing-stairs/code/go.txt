@@ -1,0 +1,16 @@
+func climbStairs(n int) int {
+    memo := map[int]int{} //@init
+    return climb(n, memo) //@call
+}
+
+func climb(n int, memo map[int]int) int {
+    if n <= 2 { //@base
+        return n //@retbase
+    }
+    if v, ok := memo[n]; ok { //@memo
+        return v //@retmemo
+    }
+    result := climb(n-1, memo) + climb(n-2, memo) //@rec
+    memo[n] = result //@store
+    return result //@ret
+}

@@ -1,0 +1,14 @@
+static int eliminateMaximum(int[] dist, int[] speed) {
+    int n = dist.length;
+    Integer[] idx = new Integer[n]; //@order
+    for (int i = 0; i < n; i++) idx[i] = i;
+    Arrays.sort(idx, (a, b) -> //@sort
+        Long.compare((long) dist[a] * speed[b], (long) dist[b] * speed[a]));
+    for (int i = 0; i < n; i++) { //@loop
+        int m = idx[i]; //@next
+        if (dist[m] <= (long) i * speed[m]) { //@late
+            return i; //@ret
+        }
+    }
+    return n; //@all
+}

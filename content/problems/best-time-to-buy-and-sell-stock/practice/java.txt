@@ -1,0 +1,34 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static int maxProfit(int[] prices) {
+        int minPrice = prices[0], best = 0;
+        for (int day = 1; day < prices.length; day++) {
+            int profit = prices[day] - minPrice;
+            if (profit > best) {
+                best = profit;
+            }
+            if (prices[day] < minPrice) {
+                minPrice = prices[day];
+            }
+        }
+        return best;
+    }
+
+    static int[] readInts(BufferedReader br) throws Exception {
+        String line = br.readLine();
+        if (line == null || line.trim().isEmpty()) return new int[0];
+        String[] parts = line.trim().split("\\s+");
+        int[] nums = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);
+        return nums;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] prices = readInts(br);
+        System.out.println(maxProfit(prices));
+    }
+}

@@ -1,0 +1,33 @@
+slug = 'majority-element'
+title = 'Majority Element'
+category = 'Arrays & Hashing'
+difficulty = 'Easy'
+tier = '250'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Given an array that is guaranteed to contain a majority element (one that appears more than ⌊n/2⌋ times), return it. Watch the Boyer-Moore voting algorithm keep a single candidate and a running count that cancels out non-matching votes.'
+approach = 'Boyer-Moore voting. Keep a candidate and a count. When count hits 0, adopt the current element as the candidate. Each matching element votes count up, each differing element votes it down. Because the majority appears more than half the time, it is the last one standing.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+nums = [2, 2, 1, 1, 1, 2, 2]
+
+[[tests]]
+expected = '2'
+[tests.input]
+nums = [2, 2, 1, 1, 1, 2, 2]
+
+[[tests]]
+expected = '3'
+[tests.input]
+nums = [3, 2, 3]
+
+[[tests]]
+expected = '6'
+[tests.input]
+nums = [6]

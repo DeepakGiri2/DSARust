@@ -1,0 +1,10 @@
+static int removeElement(int[] nums, int val) {
+    int k = 0; //@init
+    for (int i = 0; i < nums.length; i++) { //@loop
+        if (nums[i] != val) { //@check
+            nums[k] = nums[i]; //@keep
+            k++; //@inc
+        }
+    }
+    return k; //@ret
+}

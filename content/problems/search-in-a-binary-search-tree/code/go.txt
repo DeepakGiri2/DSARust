@@ -1,0 +1,14 @@
+func searchBST(root *TreeNode, val int) *TreeNode {
+    cur := root //@cur
+    for cur != nil { //@loop
+        if val == cur.Val { //@hit
+            return cur //@ret
+        }
+        if val < cur.Val { //@less
+            cur = cur.Left //@goL
+        } else { //@greater
+            cur = cur.Right //@goR
+        }
+    }
+    return nil //@miss
+}

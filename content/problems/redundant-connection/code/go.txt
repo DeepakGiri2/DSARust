@@ -1,0 +1,22 @@
+func findRedundantConnection(edges [][]int) []int {
+    parent := make([]int, len(edges)+1) //@init
+    for i := range parent {
+        parent[i] = i //@seed
+    }
+    for _, e := range edges { //@loop
+        a, b := find(parent, e[0]), find(parent, e[1]) //@find
+        if a == b { //@cycle
+            return e //@ret
+        }
+        parent[a] = b //@union
+    }
+    return nil //@none
+}
+
+func find(parent []int, x int) int {
+    for parent[x] != x { //@walk
+        parent[x] = parent[parent[x]] //@compress
+        x = parent[x] //@up
+    }
+    return x //@root
+}

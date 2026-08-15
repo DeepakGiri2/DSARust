@@ -1,0 +1,26 @@
+class Solution {
+    vector<int> prefix;
+public:
+    Solution(vector<int>& w) {
+        prefix.resize(w.size()); //@init
+        int sum = 0; //@zero
+        for (int i = 0; i < (int)w.size(); i++) { //@build
+            sum += w[i];
+            prefix[i] = sum; //@add
+        }
+    } //@ready
+
+    int pickIndex() { //@pick
+        int target = rand() % prefix.back() + 1; //@draw
+        int lo = 0, hi = prefix.size() - 1; //@bounds
+        while (lo < hi) { //@search
+            int mid = (lo + hi) / 2; //@mid
+            if (prefix[mid] < target) { //@cmp
+                lo = mid + 1; //@right
+            } else {
+                hi = mid; //@left
+            }
+        }
+        return lo; //@ret
+    }
+};

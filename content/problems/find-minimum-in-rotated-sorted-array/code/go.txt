@@ -1,0 +1,12 @@
+func findMin(nums []int) int {
+    lo, hi := 0, len(nums)-1 //@init
+    for lo < hi { //@loop
+        mid := lo + (hi-lo)/2 //@mid
+        if nums[mid] > nums[hi] { //@cmp
+            lo = mid + 1 //@right
+        } else {
+            hi = mid //@left
+        }
+    }
+    return nums[lo] //@done
+}

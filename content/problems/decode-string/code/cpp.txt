@@ -1,0 +1,26 @@
+string decodeString(string s) {
+    vector<int> counts; //@init
+    vector<string> parts; //@parts
+    string cur = ""; //@cur
+    int n = 0; //@num
+    for (char ch : s) { //@loop
+        if (ch >= '0' && ch <= '9') { //@isDigit
+            n = n * 10 + (ch - '0'); //@accum
+        } else if (ch == '[') { //@isOpen
+            counts.push_back(n); //@pushCount
+            parts.push_back(cur); //@pushStr
+            n = 0; cur = ""; //@reset
+        } else if (ch == ']') { //@isClose
+            int k = counts.back(); //@popCount
+            counts.pop_back();
+            string prev = parts.back(); //@popStr
+            parts.pop_back();
+            string rep;
+            for (int i = 0; i < k; i++) rep += cur;
+            cur = prev + rep; //@expand
+        } else { //@isLetter
+            cur += ch; //@append
+        }
+    }
+    return cur; //@ret
+}

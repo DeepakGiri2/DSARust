@@ -1,0 +1,8 @@
+func middleNode(head *ListNode) *ListNode {
+    slow, fast := head, head //@init
+    for fast != nil && fast.Next != nil { //@loop
+        slow = slow.Next //@slow
+        fast = fast.Next.Next //@fast
+    }
+    return slow //@ret
+}

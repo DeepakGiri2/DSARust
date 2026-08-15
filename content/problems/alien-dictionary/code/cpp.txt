@@ -1,0 +1,47 @@
+string alienOrder(vector<string>& words) {
+    map<char, set<char>> adj; //@init
+    map<char, int> indeg; //@degrees
+    for (auto& w : words) { //@letters
+        for (char ch : w) {
+            if (!indeg.count(ch)) {
+                indeg[ch] = 0;
+                adj[ch] = {};
+            }
+        }
+    }
+    for (size_t i = 0; i + 1 < words.size(); i++) { //@pairs
+        string a = words[i], b = words[i + 1];
+        size_t n = min(a.size(), b.size());
+        if (a.size() > b.size() && a.substr(0, n) == b.substr(0, n)) { //@prefix
+            return ""; //@invalid
+        }
+        for (size_t j = 0; j < n; j++) { //@compare
+            if (a[j] != b[j]) { //@differ
+                if (!adj[a[j]].count(b[j])) {
+                    adj[a[j]].insert(b[j]); //@edge
+                    indeg[b[j]]++; //@bump
+                }
+                break; //@stop
+            }
+        }
+    }
+    vector<char> q; //@queue
+    for (auto& kv : indeg) { //@seed
+        if (kv.second == 0) q.push_back(kv.first);
+    }
+    string out; //@build
+    for (size_t i = 0; i < q.size(); i++) { //@loop
+        char c = q[i]; //@pop
+        out += c; //@emit
+        for (char nxt : adj[c]) { //@neighbours
+            indeg[nxt]--; //@dec
+            if (indeg[nxt] == 0) { //@ready
+                q.push_back(nxt); //@enqueue
+            }
+        }
+    }
+    if (out.size() != indeg.size()) { //@cycle
+        return ""; //@none
+    }
+    return out; //@ret
+}

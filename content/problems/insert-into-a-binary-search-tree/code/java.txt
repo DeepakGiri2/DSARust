@@ -1,0 +1,22 @@
+static TreeNode insertIntoBST(TreeNode root, int val) {
+    if (root == null) { //@empty
+        return new TreeNode(val);
+    }
+    TreeNode cur = root; //@cur
+    while (true) { //@loop
+        if (val < cur.val) { //@less
+            if (cur.left == null) { //@leftFree
+                cur.left = new TreeNode(val); //@attachL
+                break;
+            }
+            cur = cur.left; //@goL
+        } else { //@more
+            if (cur.right == null) { //@rightFree
+                cur.right = new TreeNode(val); //@attachR
+                break;
+            }
+            cur = cur.right; //@goR
+        }
+    }
+    return root; //@ret
+}

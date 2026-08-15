@@ -1,0 +1,44 @@
+slug = 'combination-sum'
+title = 'Combination Sum'
+category = 'Backtracking'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n^(target/min)) time · O(target/min) space (recursion depth)'
+
+description = 'Given an array of distinct positive integers candidates and a target, return all unique combinations that sum to target. The same candidate may be reused an unlimited number of times. Because reuse is allowed, the recursion branches on the SAME index instead of always advancing.'
+approach = 'At index i we make one of two choices: USE candidates[i] (subtract it from remaining and recurse on the SAME index i, so it can be picked again), or DROP it (move on to index i+1). Track remaining = target - sum. When remaining hits exactly 0 the combination is complete — record a copy. If remaining goes negative (overshot) or i runs off the end, prune. Recursing on i (not i+1) is the one line that enables unlimited reuse.'
+
+[[inputs]]
+name = 'candidates'
+label = 'candidates (distinct, positive)'
+type = 'int-array'
+max_len = 40
+
+[[inputs]]
+name = 'target'
+label = 'target'
+type = 'int'
+min = 1
+max = 12
+
+[default_input]
+candidates = [2, 3, 6, 7]
+target = 7
+
+[[tests]]
+expected = "2 2 3\n7"
+[tests.input]
+candidates = [2, 3, 6, 7]
+target = 7
+
+[[tests]]
+expected = "2 2 2 2\n2 3 3\n3 5"
+[tests.input]
+candidates = [2, 3, 5]
+target = 8
+
+[[tests]]
+expected = '3 3'
+[tests.input]
+candidates = [3]
+target = 6

@@ -1,0 +1,12 @@
+func findTargetSumWays(nums []int, target int) int {
+    ways := map[int]int{0: 1} //@init
+    for _, v := range nums { //@loop
+        next := map[int]int{} //@fresh
+        for s, c := range ways { //@scan
+            next[s+v] += c //@plus
+            next[s-v] += c //@minus
+        }
+        ways = next //@swap
+    }
+    return ways[target] //@ret
+}

@@ -1,0 +1,13 @@
+static int numRescueBoats(int[] people, int limit) {
+    Arrays.sort(people); //@sort
+    int l = 0, r = people.length - 1; //@init
+    int boats = 0; //@boats
+    while (l <= r) { //@loop
+        if (people[l] + people[r] <= limit) { //@fit
+            l++; //@moveL
+        }
+        r--; //@moveR
+        boats++; //@count
+    }
+    return boats; //@ret
+}

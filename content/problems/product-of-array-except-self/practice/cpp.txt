@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> productExceptSelf(vector<int>& nums) {
+    int n = (int)nums.size();
+    vector<int> res(n, 1);
+    int prefix = 1;
+    for (int i = 0; i < n; i++) {
+        res[i] = prefix;
+        prefix *= nums[i];
+    }
+    int postfix = 1;
+    for (int i = n - 1; i >= 0; i--) {
+        res[i] *= postfix;
+        postfix *= nums[i];
+    }
+    return res;
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> nums = readInts();
+    vector<int> res = productExceptSelf(nums);
+    for (size_t i = 0; i < res.size(); i++) {
+        if (i) cout << " ";
+        cout << res[i];
+    }
+    cout << endl;
+}

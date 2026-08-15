@@ -1,0 +1,45 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func removeDuplicates(nums []int) int {
+    if len(nums) == 0 {
+        return 0
+    }
+    slow := 0
+    for fast := 1; fast < len(nums); fast++ {
+        if nums[fast] != nums[slow] {
+            slow++
+            nums[slow] = nums[fast]
+        }
+    }
+    return slow + 1
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    nums := readInts(reader)
+    k := removeDuplicates(nums)
+    fmt.Println(k)
+    parts := make([]string, k)
+    for i := 0; i < k; i++ {
+        parts[i] = strconv.Itoa(nums[i])
+    }
+    fmt.Println(strings.Join(parts, " "))
+}

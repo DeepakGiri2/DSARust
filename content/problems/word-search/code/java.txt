@@ -1,0 +1,27 @@
+static boolean exist(char[][] board, String word) {
+    int rows = board.length, cols = board[0].length;
+    for (int r = 0; r < rows; r++) { //@rowloop
+        for (int c = 0; c < cols; c++) { //@colloop
+            if (dfs(board, word, r, c, 0)) { //@calldfs
+                return true; //@rettrue
+            }
+        }
+    }
+    return false; //@retfalse
+}
+
+static boolean dfs(char[][] board, String word, int r, int c, int k) {
+    if (k == word.length()) { //@found
+        return true; //@retok
+    }
+    if (r < 0 || r >= board.length || c < 0 || c >= board[0].length || board[r][c] != word.charAt(k)) { //@bounds
+        return false; //@retbad
+    }
+    board[r][c] = '#'; //@mark
+    boolean found = dfs(board, word, r + 1, c, k + 1) || //@down
+        dfs(board, word, r - 1, c, k + 1) || //@up
+        dfs(board, word, r, c + 1, k + 1) || //@right
+        dfs(board, word, r, c - 1, k + 1); //@left
+    board[r][c] = word.charAt(k); //@restore
+    return found; //@retback
+}

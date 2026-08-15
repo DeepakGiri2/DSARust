@@ -1,0 +1,26 @@
+func predictPartyVictory(senate string) string {
+    radiant, dire := []int{}, []int{} //@init
+    n := len(senate) //@n
+    for i := 0; i < n; i++ { //@fill
+        if senate[i] == 'R' {
+            radiant = append(radiant, i)
+        } else {
+            dire = append(dire, i)
+        }
+    }
+    for len(radiant) > 0 && len(dire) > 0 { //@loop
+        r := radiant[0] //@popR
+        radiant = radiant[1:]
+        d := dire[0] //@popD
+        dire = dire[1:]
+        if r < d { //@earlier
+            radiant = append(radiant, r+n) //@requeueR
+        } else { //@later
+            dire = append(dire, d+n) //@requeueD
+        }
+    }
+    if len(radiant) > 0 { //@check
+        return "Radiant" //@retR
+    }
+    return "Dire" //@retD
+}

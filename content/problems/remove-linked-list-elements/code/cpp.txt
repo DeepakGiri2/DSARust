@@ -1,0 +1,12 @@
+ListNode* removeElements(ListNode* head, int val) {
+    ListNode dummy(0, head); //@dummy
+    ListNode* prev = &dummy; //@prev
+    for (ListNode* cur = head; cur != nullptr; cur = cur->next) { //@loop
+        if (cur->val == val) { //@match
+            prev->next = cur->next; //@unlink
+        } else { //@keep
+            prev = cur; //@advance
+        }
+    }
+    return dummy.next; //@ret
+}

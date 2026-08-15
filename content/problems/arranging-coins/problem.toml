@@ -1,0 +1,40 @@
+slug = 'arranging-coins'
+title = 'Arranging Coins'
+category = 'Binary Search'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '441'
+complexity = 'O(log n) time · O(1) space'
+
+description = 'Coins are laid out in a staircase where row k holds exactly k coins. Given n coins, return how many rows are completely filled.'
+approach = "k complete rows need k·(k+1)/2 coins, and that total only grows, so 'k rows fit' is true up to the answer and false after it. Binary search the number of rows directly rather than laying coins out one row at a time — the same shape as an integer square root, with a triangular number in place of a square."
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 1
+max = 1000000
+
+[default_input]
+n = 5
+
+[[tests]]
+expected = '2'
+[tests.input]
+n = 5
+
+[[tests]]
+expected = '3'
+[tests.input]
+n = 8
+
+[[tests]]
+expected = '1'
+[tests.input]
+n = 1
+
+[[tests]]
+expected = '4'
+[tests.input]
+n = 10

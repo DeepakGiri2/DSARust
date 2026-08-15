@@ -1,0 +1,35 @@
+class Twitter {
+    int clock = 0; //@init
+    map<int, vector<pair<int, int>>> tweets; //@tweets
+    map<int, set<int>> follows; //@follows
+public:
+    void postTweet(int userId, int tweetId) {
+        clock++; //@clock
+        tweets[userId].push_back({clock, tweetId}); //@post
+    }
+    void follow(int a, int b) {
+        follows[a].insert(b); //@follow
+    }
+    void unfollow(int a, int b) {
+        follows[a].erase(b); //@unfollow
+    }
+    vector<int> getNewsFeed(int userId) {
+        priority_queue<pair<int, int>> h; //@heapInit
+        vector<int> sources = {userId}; //@self
+        for (int f : follows[userId]) { //@followed
+            sources.push_back(f);
+        }
+        for (int s : sources) { //@collect
+            auto& list = tweets[s];
+            for (int i = (int)list.size() - 1; i >= 0 && i >= (int)list.size() - 10; i--) { //@recent
+                h.push(list[i]); //@push
+            }
+        }
+        vector<int> out; //@out
+        while ((int)out.size() < 10 && !h.empty()) { //@drain
+            auto top = h.top(); h.pop(); //@pop
+            out.push_back(top.second); //@emit
+        }
+        return out; //@ret
+    }
+};

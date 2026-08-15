@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isValidSudoku(vector<string>& board) {
+    set<string> seen;
+    for (int r = 0; r < 9; r++) {
+        for (int c = 0; c < 9; c++) {
+            char v = board[r][c];
+            if (v == '.') {
+                continue;
+            }
+            int b = (r / 3) * 3 + c / 3;
+            vector<string> keys = {"r" + to_string(r) + "#" + string(1, v), "c" + to_string(c) + "#" + string(1, v), "b" + to_string(b) + "#" + string(1, v)};
+            for (auto& k : keys) {
+                if (seen.count(k)) {
+                    return false;
+                }
+                seen.insert(k);
+            }
+        }
+    }
+    return true;
+}
+
+int main() {
+    string line;
+    getline(cin, line);
+    while (!line.empty() && (line.back() == '\r' || line.back() == '\n' || line.back() == ' ')) line.pop_back();
+    vector<string> board(9);
+    for (int r = 0; r < 9; r++) board[r] = line.substr(r * 9, 9);
+    cout << (isValidSudoku(board) ? "true" : "false") << endl;
+}

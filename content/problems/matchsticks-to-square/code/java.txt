@@ -1,0 +1,40 @@
+static int[] sides = new int[4]; //@sides
+static int sideLen;
+
+static boolean back(int[] sticks, int i) {
+    if (i == sticks.length) { //@placedAll
+        return true; //@yes
+    }
+    for (int s = 0; s < 4; s++) { //@loop
+        if (sides[s] + sticks[i] > sideLen) { //@overflow
+            continue;
+        }
+        if (s > 0 && sides[s] == sides[s - 1]) { //@symmetric
+            continue;
+        }
+        sides[s] += sticks[i]; //@place
+        if (back(sticks, i + 1)) { //@recurse
+            return true; //@propagate
+        }
+        sides[s] -= sticks[i]; //@undo
+    }
+    return false; //@no
+}
+
+static boolean makesquare(int[] matchsticks) {
+    int total = 0; //@sum
+    for (int m : matchsticks) total += m;
+    if (total % 4 != 0) { //@divisible
+        return false;
+    }
+    sideLen = total / 4; //@side
+    Integer[] boxed = new Integer[matchsticks.length];
+    for (int i = 0; i < matchsticks.length; i++) boxed[i] = matchsticks[i];
+    Arrays.sort(boxed, Collections.reverseOrder()); //@sort
+    for (int i = 0; i < boxed.length; i++) matchsticks[i] = boxed[i];
+    if (matchsticks[0] > sideLen) { //@tooLong
+        return false;
+    }
+    sides = new int[4];
+    return back(matchsticks, 0); //@call
+}

@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+string encode(vector<string>& strs) {
+    string encoded = "";
+    for (auto& s : strs) {
+        encoded += to_string(s.size()) + "#" + s;
+    }
+    return encoded;
+}
+
+vector<string> decode(string s) {
+    vector<string> res;
+    int i = 0;
+    while (i < (int)s.size()) {
+        int j = i;
+        while (s[j] != '#') j++;
+        int length = stoi(s.substr(i, j - i));
+        string word = s.substr(j + 1, length);
+        res.push_back(word);
+        i = j + 1 + length;
+    }
+    return res;
+}
+
+int main() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<string> words;
+    string w;
+    while (ss >> w) words.push_back(w);
+    string encoded = encode(words);
+    vector<string> decoded = decode(encoded);
+    for (size_t k = 0; k < decoded.size(); k++) {
+        if (k) cout << " ";
+        cout << decoded[k];
+    }
+    cout << endl;
+}

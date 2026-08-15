@@ -1,0 +1,35 @@
+slug = 'surrounded-regions'
+title = 'Surrounded Regions'
+category = 'Graphs'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '130'
+complexity = 'O(rows · cols) time · O(rows · cols) space'
+
+description = "Flip every region of 'O' that is completely surrounded by 'X'. A region touching the border is not surrounded."
+approach = "Invert the question. Finding surrounded regions means proving a negative for each one; finding *un*surrounded ones is a plain flood fill from the border, because those are exactly the regions reachable from an edge. Mark them temporarily, then a single sweep flips everything still marked 'O' and restores the rest."
+
+[[inputs]]
+name = 'board'
+label = 'board'
+type = 'grid'
+max_len = 200
+help = 'X or O per cell'
+
+[default_input]
+board = 'XXXX XOOX XXOX XOXX'
+
+[[tests]]
+expected = 'XXXX XXXX XXXX XOXX'
+[tests.input]
+board = 'XXXX XOOX XXOX XOXX'
+
+[[tests]]
+expected = 'X'
+[tests.input]
+board = 'X'
+
+[[tests]]
+expected = 'OOO OXO OOO'
+[tests.input]
+board = 'OOO OXO OOO'

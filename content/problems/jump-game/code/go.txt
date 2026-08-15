@@ -1,0 +1,12 @@
+func canJump(nums []int) bool {
+    reach := 0 //@init
+    for i := 0; i < len(nums); i++ { //@loop
+        if i > reach { //@check
+            return false //@bad
+        }
+        if i+nums[i] > reach { //@cmp
+            reach = i + nums[i] //@update
+        }
+    }
+    return true //@ret
+}

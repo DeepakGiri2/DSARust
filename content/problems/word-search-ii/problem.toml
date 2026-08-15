@@ -1,0 +1,40 @@
+slug = 'word-search-ii'
+title = 'Word Search II'
+category = 'Tries'
+difficulty = 'Hard'
+tier = '150'
+leetcode = '212'
+complexity = 'O(cells · 4^maxWord) time · O(total characters) space'
+
+description = 'Find every word from a dictionary that can be spelled by walking through adjacent cells of a board without reusing a cell.'
+approach = "Searching for each word separately re-walks the same board paths over and over. Putting the whole dictionary into a trie and walking the board *once* alongside it searches for all of them at the same time — and the trie prunes brutally: the moment the letters spelled so far are not a prefix of any word, the branch dies. Clearing a word's flag once found prevents duplicates without any set of results."
+
+[[inputs]]
+name = 'board'
+label = 'board'
+type = 'grid'
+max_len = 200
+help = 'one letter per cell'
+
+[[inputs]]
+name = 'words'
+label = 'words'
+type = 'string'
+max_len = 60
+help = 'words separated by spaces'
+
+[default_input]
+board = 'oaan etae ihkr iflv'
+words = 'oath pea eat rain'
+
+[[tests]]
+expected = 'oath eat'
+[tests.input]
+board = 'oaan etae ihkr iflv'
+words = 'oath pea eat rain'
+
+[[tests]]
+expected = 'ab'
+[tests.input]
+board = 'ab cd'
+words = 'ab abcd'

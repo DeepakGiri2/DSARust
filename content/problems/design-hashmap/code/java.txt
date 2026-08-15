@@ -1,0 +1,36 @@
+static List<List<int[]>> buckets = new ArrayList<>(); //@init
+
+static int hash(int key) {
+    return key % buckets.size(); //@hash
+}
+
+static void put(int key, int value) {
+    int b = hash(key); //@putHash
+    for (int[] e : buckets.get(b)) { //@scanPut
+        if (e[0] == key) { //@existing
+            e[1] = value; //@update
+            return;
+        }
+    }
+    buckets.get(b).add(new int[]{key, value}); //@append
+}
+
+static int get(int key) {
+    int b = hash(key); //@getHash
+    for (int[] e : buckets.get(b)) { //@scanGet
+        if (e[0] == key) { //@hit
+            return e[1];
+        }
+    }
+    return -1; //@miss
+}
+
+static void remove(int key) {
+    int b = hash(key); //@removeHash
+    for (int i = 0; i < buckets.get(b).size(); i++) { //@scanRemove
+        if (buckets.get(b).get(i)[0] == key) { //@found
+            buckets.get(b).remove(i); //@unlink
+            return;
+        }
+    }
+}

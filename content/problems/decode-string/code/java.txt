@@ -1,0 +1,22 @@
+static String decodeString(String s) {
+    Deque<Integer> counts = new ArrayDeque<>(); //@init
+    Deque<String> parts = new ArrayDeque<>(); //@parts
+    StringBuilder cur = new StringBuilder(); //@cur
+    int n = 0; //@num
+    for (char ch : s.toCharArray()) { //@loop
+        if (ch >= '0' && ch <= '9') { //@isDigit
+            n = n * 10 + (ch - '0'); //@accum
+        } else if (ch == '[') { //@isOpen
+            counts.push(n); //@pushCount
+            parts.push(cur.toString()); //@pushStr
+            n = 0; cur = new StringBuilder(); //@reset
+        } else if (ch == ']') { //@isClose
+            int k = counts.pop(); //@popCount
+            String prev = parts.pop(); //@popStr
+            cur = new StringBuilder(prev + cur.toString().repeat(k)); //@expand
+        } else { //@isLetter
+            cur.append(ch); //@append
+        }
+    }
+    return cur.toString(); //@ret
+}

@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int lastStoneWeight(vector<int>& stones) {
+    priority_queue<int> h;
+    for (int s : stones) h.push(s);
+    while (h.size() > 1) {
+        int y = h.top(); h.pop();
+        int x = h.top(); h.pop();
+        if (x != y) {
+            h.push(y - x);
+        }
+    }
+    if (h.empty()) {
+        return 0;
+    }
+    return h.top();
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> stones = readInts();
+    cout << lastStoneWeight(stones) << endl;
+}

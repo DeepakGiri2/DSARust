@@ -1,0 +1,21 @@
+static int minEatingSpeed(int[] piles, int h) {
+    int lo = 1, hi = 0; //@init
+    for (int p : piles) { //@maxLoop
+        if (p > hi) {
+            hi = p; //@setMax
+        }
+    }
+    while (lo < hi) { //@loop
+        int k = lo + (hi - lo) / 2; //@mid
+        long hours = 0; //@count
+        for (int p : piles) { //@sum
+            hours += (p + k - 1) / k; //@add
+        }
+        if (hours <= h) { //@feasible
+            hi = k; //@shrink
+        } else {
+            lo = k + 1; //@grow
+        }
+    }
+    return lo; //@ret
+}

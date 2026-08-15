@@ -1,0 +1,40 @@
+slug = 'n-th-tribonacci-number'
+title = 'N-th Tribonacci Number'
+category = '1-D Dynamic Programming'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '1137'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Return the nth Tribonacci number: T(0) = 0, T(1) = T(2) = 1, and every later term is the sum of the three before it.'
+approach = 'Exactly the Fibonacci pattern with a wider window. Because a term reaches back three places instead of two, the rolling state is three variables rather than two — the depth of the recurrence is what sets the size of the window, and nothing else changes.'
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 0
+max = 30
+
+[default_input]
+n = 8
+
+[[tests]]
+expected = '44'
+[tests.input]
+n = 8
+
+[[tests]]
+expected = '4'
+[tests.input]
+n = 4
+
+[[tests]]
+expected = '1389537'
+[tests.input]
+n = 25
+
+[[tests]]
+expected = '0'
+[tests.input]
+n = 0

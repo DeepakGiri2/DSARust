@@ -1,0 +1,34 @@
+class MyHashSet {
+    vector<vector<int>> buckets; //@init
+    int hash(int key) { return key % (int)buckets.size(); } //@hash
+public:
+    MyHashSet() : buckets(8) {}
+
+    void add(int key) {
+        int b = hash(key); //@addHash
+        for (int v : buckets[b]) { //@scanAdd
+            if (v == key) { //@present
+                return;
+            }
+        }
+        buckets[b].push_back(key); //@append
+    }
+    void remove(int key) {
+        int b = hash(key); //@removeHash
+        for (size_t i = 0; i < buckets[b].size(); i++) { //@scanRemove
+            if (buckets[b][i] == key) { //@found
+                buckets[b].erase(buckets[b].begin() + i); //@unlink
+                return;
+            }
+        }
+    }
+    bool contains(int key) {
+        int b = hash(key); //@containsHash
+        for (int v : buckets[b]) { //@scanContains
+            if (v == key) { //@hit
+                return true;
+            }
+        }
+        return false; //@miss
+    }
+};

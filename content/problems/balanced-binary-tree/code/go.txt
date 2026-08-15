@@ -1,0 +1,18 @@
+func isBalanced(root *TreeNode) bool {
+    return dfs(root) != -1 //@top
+}
+
+func dfs(root *TreeNode) int {
+    if root == nil { //@base
+        return 0 //@ret0
+    }
+    left := dfs(root.Left) //@recL
+    right := dfs(root.Right) //@recR
+    if left == -1 || right == -1 { //@propagate
+        return -1 //@retProp
+    }
+    if left-right > 1 || right-left > 1 { //@check
+        return -1 //@retBad
+    }
+    return 1 + max(left, right) //@ret
+}

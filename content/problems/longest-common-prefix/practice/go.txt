@@ -1,0 +1,29 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strings"
+)
+
+func longestCommonPrefix(strs []string) string {
+    prefix := ""
+    for j := 0; j < len(strs[0]); j++ {
+        c := strs[0][j]
+        for k := 1; k < len(strs); k++ {
+            if j >= len(strs[k]) || strs[k][j] != c {
+                return prefix
+            }
+        }
+        prefix += string(c)
+    }
+    return prefix
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    strs := strings.Fields(line)
+    fmt.Println(longestCommonPrefix(strs))
+}

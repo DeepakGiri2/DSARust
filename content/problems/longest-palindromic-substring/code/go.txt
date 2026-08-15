@@ -1,0 +1,22 @@
+func longestPalindrome(s string) string {
+    best := "" //@init
+    for i := 0; i < len(s); i++ { //@loop
+        odd := expand(s, i, i) //@odd
+        if len(odd) > len(best) { //@cmpOdd
+            best = odd //@setOdd
+        }
+        even := expand(s, i, i+1) //@even
+        if len(even) > len(best) { //@cmpEven
+            best = even //@setEven
+        }
+    }
+    return best //@ret
+}
+
+func expand(s string, l, r int) string {
+    for l >= 0 && r < len(s) && s[l] == s[r] { //@grow
+        l--
+        r++
+    }
+    return s[l+1 : r]
+}

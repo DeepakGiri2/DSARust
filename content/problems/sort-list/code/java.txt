@@ -1,0 +1,36 @@
+static ListNode sortList(ListNode head) {
+    if (head == null || head.next == null) { //@base
+        return head; //@trivial
+    }
+    ListNode slow = head, fast = head.next; //@find
+    while (fast != null && fast.next != null) { //@advance
+        slow = slow.next;
+        fast = fast.next.next; //@hop
+    }
+    ListNode mid = slow.next; //@mid
+    slow.next = null; //@cut
+    ListNode left = sortList(head); //@left
+    ListNode right = sortList(mid); //@right
+    return merge(left, right); //@merge
+}
+
+static ListNode merge(ListNode a, ListNode b) {
+    ListNode dummy = new ListNode(); //@dummy
+    ListNode tail = dummy;
+    while (a != null && b != null) { //@both
+        if (a.val <= b.val) { //@pick
+            tail.next = a; //@takea
+            a = a.next;
+        } else {
+            tail.next = b; //@takeb
+            b = b.next;
+        }
+        tail = tail.next; //@advtail
+    }
+    if (a != null) { //@rest
+        tail.next = a; //@resta
+    } else {
+        tail.next = b; //@restb
+    }
+    return dummy.next; //@done
+}

@@ -1,0 +1,36 @@
+const int INF = 1 << 30;
+
+int swimInWater(vector<vector<int>>& grid) {
+    int n = grid.size();
+    vector<vector<int>> best(n, vector<int>(n, INF)); //@init
+    vector<vector<bool>> visited(n, vector<bool>(n, false)); //@visited
+    best[0][0] = grid[0][0]; //@seed
+    int dirs[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    for (int iter = 0; iter < n * n; iter++) { //@loop
+        int br = -1, bc = -1; //@pick
+        for (int r = 0; r < n; r++) { //@scan
+            for (int c = 0; c < n; c++) {
+                if (!visited[r][c] && best[r][c] != INF && (br < 0 || best[r][c] < best[br][bc])) {
+                    br = r; bc = c; //@lowest
+                }
+            }
+        }
+        if (br < 0) { //@stuck
+            break;
+        }
+        if (br == n - 1 && bc == n - 1) { //@arrived
+            return best[br][bc]; //@ret
+        }
+        visited[br][bc] = true; //@settle
+        for (auto& d : dirs) { //@relax
+            int nr = br + d[0], nc = bc + d[1];
+            if (nr >= 0 && nr < n && nc >= 0 && nc < n && !visited[nr][nc]) {
+                int t = max(best[br][bc], grid[nr][nc]); //@level
+                if (t < best[nr][nc]) { //@better
+                    best[nr][nc] = t; //@update
+                }
+            }
+        }
+    }
+    return -1; //@none
+}

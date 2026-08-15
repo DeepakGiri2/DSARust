@@ -1,0 +1,17 @@
+func stoneGame(piles []int) bool {
+    n := len(piles)
+    dp := make([]int, n) //@init
+    copy(dp, piles) //@seed
+    for length := 2; length <= n; length++ { //@len
+        for i := 0; i+length <= n; i++ { //@start
+            takeLeft := piles[i] - dp[i+1] //@takeLeft
+            takeRight := piles[i+length-1] - dp[i] //@takeRight
+            if takeLeft > takeRight { //@choose
+                dp[i] = takeLeft //@storeLeft
+            } else {
+                dp[i] = takeRight //@storeRight
+            }
+        }
+    }
+    return dp[0] > 0 //@ret
+}

@@ -1,0 +1,45 @@
+slug = 'factorial-trailing-zeroes'
+title = 'Factorial Trailing Zeroes'
+category = 'Math & Geometry'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '172'
+complexity = 'O(log₅ n) time · O(1) space'
+
+description = 'Return the number of trailing zeroes in n! — without computing n!, which overflows almost immediately.'
+approach = 'A trailing zero is a factor of 10, and 10 = 2 × 5. Twos are far more plentiful than fives in a factorial, so the number of zeroes is the number of fives. Counting them is n/5 (multiples of 5) plus n/25 (which contribute a second five) plus n/125, and so on — each term counting one *extra* five per number, not re-counting.'
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 0
+max = 10000
+
+[default_input]
+n = 100
+
+[[tests]]
+expected = '24'
+[tests.input]
+n = 100
+
+[[tests]]
+expected = '0'
+[tests.input]
+n = 3
+
+[[tests]]
+expected = '1'
+[tests.input]
+n = 5
+
+[[tests]]
+expected = '6'
+[tests.input]
+n = 25
+
+[[tests]]
+expected = '7'
+[tests.input]
+n = 30

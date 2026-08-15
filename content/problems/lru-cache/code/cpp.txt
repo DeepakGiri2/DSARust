@@ -1,0 +1,31 @@
+class LRUCache {
+    int cap;
+    list<pair<int, int>> order;
+    unordered_map<int, list<pair<int, int>>::iterator> m; //@init
+public:
+    int get(int key) {
+        auto it = m.find(key); //@lookup
+        if (it == m.end()) { //@miss
+            return -1; //@retMiss
+        }
+        order.splice(order.begin(), order, it->second); //@touch
+        return it->second->second; //@retHit
+    }
+    void put(int key, int value) {
+        auto it = m.find(key);
+        if (it != m.end()) { //@exists
+            it->second->second = value; //@update
+            order.splice(order.begin(), order, it->second); //@touchPut
+            return;
+        }
+        if ((int)m.size() == cap) { //@full
+            auto lru = prev(order.end()); //@victim
+            int k = lru->first;
+            order.erase(lru); //@unlink
+            m.erase(k); //@evict
+        }
+        order.push_front({key, value}); //@newNode
+        m[key] = order.begin(); //@insert
+        // order.begin() is now the most recently used entry //@front
+    }
+};

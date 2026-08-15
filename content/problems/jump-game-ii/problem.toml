@@ -1,0 +1,30 @@
+slug = 'jump-game-ii'
+title = 'Jump Game II'
+category = 'Greedy'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Each value is the maximum jump length from that index. Return the fewest jumps needed to reach the last index.'
+approach = 'Think in levels, like a breadth-first search on a line. Everything reachable in j jumps forms a window; while scanning it, track the furthest index any of its members can reach. Hitting the end of the window means one more jump was needed.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+min = 0
+max = 20
+
+[default_input]
+nums = [2, 3, 1, 1, 4]
+
+[[tests]]
+expected = '2'
+[tests.input]
+nums = [2, 3, 1, 1, 4]
+
+[[tests]]
+expected = '2'
+[tests.input]
+nums = [2, 3, 0, 1, 4]

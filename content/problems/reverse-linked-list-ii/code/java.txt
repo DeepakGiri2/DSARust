@@ -1,0 +1,15 @@
+static ListNode reverseBetween(ListNode head, int left, int right) {
+    ListNode dummy = new ListNode(0, head); //@dummy
+    ListNode prev = dummy; //@prev
+    for (int i = 0; i < left - 1; i++) { //@walk
+        prev = prev.next; //@hop
+    }
+    ListNode curr = prev.next; //@curr
+    for (int i = 0; i < right - left; i++) { //@loop
+        ListNode next = curr.next; //@save
+        curr.next = next.next; //@unlink
+        next.next = prev.next; //@front
+        prev.next = next; //@attach
+    }
+    return dummy.next; //@ret
+}

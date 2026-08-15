@@ -1,0 +1,78 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+type TreeNode struct {
+    Val   int
+    Left  *TreeNode
+    Right *TreeNode
+}
+
+func isSubtree(root *TreeNode, subRoot *TreeNode) bool {
+    if root == nil {
+        return false
+    }
+    if isSameTree(root, subRoot) {
+        return true
+    }
+    return isSubtree(root.Left, subRoot) || isSubtree(root.Right, subRoot)
+}
+
+func isSameTree(p *TreeNode, q *TreeNode) bool {
+    if p == nil && q == nil {
+        return true
+    }
+    if p == nil || q == nil {
+        return false
+    }
+    if p.Val != q.Val {
+        return false
+    }
+    return isSameTree(p.Left, q.Left) && isSameTree(p.Right, q.Right)
+}
+
+func buildTree(tokens []string) *TreeNode {
+    if len(tokens) == 0 || tokens[0] == "n" {
+        return nil
+    }
+    v, _ := strconv.Atoi(tokens[0])
+    root := &TreeNode{Val: v}
+    queue := []*TreeNode{root}
+    i := 1
+    for len(queue) > 0 && i < len(tokens) {
+        cur := queue[0]
+        queue = queue[1:]
+        if i < len(tokens) {
+            if tokens[i] != "n" {
+                v, _ := strconv.Atoi(tokens[i])
+                cur.Left = &TreeNode{Val: v}
+                queue = append(queue, cur.Left)
+            }
+            i++
+        }
+        if i < len(tokens) {
+            if tokens[i] != "n" {
+                v, _ := strconv.Atoi(tokens[i])
+                cur.Right = &TreeNode{Val: v}
+                queue = append(queue, cur.Right)
+            }
+            i++
+        }
+    }
+    return root
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    l1, _ := reader.ReadString('\n')
+    l2, _ := reader.ReadString('\n')
+    root := buildTree(strings.Fields(l1))
+    subRoot := buildTree(strings.Fields(l2))
+    fmt.Println(isSubtree(root, subRoot))
+}

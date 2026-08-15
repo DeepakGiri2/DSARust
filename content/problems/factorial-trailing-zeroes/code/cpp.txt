@@ -1,0 +1,7 @@
+int trailingZeroes(int n) {
+    int count = 0; //@init
+    for (long p = 5; p <= n; p *= 5) { //@loop
+        count += n / p; //@add
+    }
+    return count; //@ret
+}

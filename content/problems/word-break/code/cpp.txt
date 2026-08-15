@@ -1,0 +1,14 @@
+bool wordBreak(string s, vector<string>& wordDict) {
+    vector<bool> dp(s.size() + 1, false); //@init
+    dp[0] = true; //@base
+    for (int i = 1; i <= (int)s.size(); i++) { //@outer
+        for (auto& w : wordDict) { //@inner
+            int m = w.size();
+            if (i >= m && dp[i - m] && s.substr(i - m, m) == w) { //@check
+                dp[i] = true; //@set
+                break; //@brk
+            }
+        }
+    }
+    return dp[s.size()]; //@ret
+}

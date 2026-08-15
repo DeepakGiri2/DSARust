@@ -1,0 +1,12 @@
+static int lengthOfLastWord(String s) {
+    int i = s.length() - 1; //@start
+    int length = 0; //@len0
+    while (i >= 0 && s.charAt(i) == ' ') { //@skip
+        i--; //@dec
+    }
+    while (i >= 0 && s.charAt(i) != ' ') { //@count
+        length++; //@inc
+        i--;
+    }
+    return length; //@ret
+}

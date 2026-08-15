@@ -1,0 +1,40 @@
+slug = 'perfect-squares'
+title = 'Perfect Squares'
+category = '1-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '279'
+complexity = 'O(n · √n) time · O(n) space'
+
+description = 'Return the fewest perfect squares that sum to n.'
+approach = 'Greedily taking the largest square is wrong — 12 would become 9 + 1 + 1 + 1 rather than 4 + 4 + 4 — so every square has to be tried. Build the answers upwards: the best for i is one more than the best for i minus some square. Each subproblem is solved once, and only the √i squares that fit are ever considered.'
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 1
+max = 40
+
+[default_input]
+n = 12
+
+[[tests]]
+expected = '3'
+[tests.input]
+n = 12
+
+[[tests]]
+expected = '2'
+[tests.input]
+n = 13
+
+[[tests]]
+expected = '1'
+[tests.input]
+n = 1
+
+[[tests]]
+expected = '1'
+[tests.input]
+n = 16

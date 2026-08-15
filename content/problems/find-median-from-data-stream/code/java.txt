@@ -1,0 +1,17 @@
+static PriorityQueue<Integer> low = new PriorityQueue<>(Collections.reverseOrder()); //@init
+static PriorityQueue<Integer> high = new PriorityQueue<>();
+
+static void addNum(int num) {
+    low.add(num); //@pushLow
+    high.add(low.poll()); //@shift
+    if (high.size() > low.size()) { //@rebalance
+        low.add(high.poll()); //@moveBack
+    }
+}
+
+static double findMedian() {
+    if (low.size() > high.size()) { //@odd
+        return low.peek(); //@retOdd
+    }
+    return (low.peek() + high.peek()) / 2.0; //@retEven
+}

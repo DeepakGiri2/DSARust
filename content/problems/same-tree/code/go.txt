@@ -1,0 +1,14 @@
+func isSameTree(p *TreeNode, q *TreeNode) bool {
+    if p == nil && q == nil { //@bothNil
+        return true //@rettrue
+    }
+    if p == nil || q == nil { //@oneNil
+        return false //@retNil
+    }
+    if p.Val != q.Val { //@valDiff
+        return false //@retDiff
+    }
+    left := isSameTree(p.Left, q.Left) //@recL
+    right := isSameTree(p.Right, q.Right) //@recR
+    return left && right //@ret
+}

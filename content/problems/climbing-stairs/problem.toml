@@ -1,0 +1,29 @@
+slug = 'climbing-stairs'
+title = 'Climbing Stairs'
+category = '1-D Dynamic Programming'
+difficulty = 'Easy'
+tier = '50'
+complexity = 'O(n) time · O(n) space'
+
+description = 'You are climbing a staircase with n steps. Each move you can climb 1 or 2 steps. In how many distinct ways can you reach the top? A perfect problem for watching recursion + memoization — use Step In / Out and watch the memo map fill up.'
+approach = 'ways(n) = ways(n−1) + ways(n−2) — the last move was either 1 or 2 steps. Naively this recomputes the same subproblems exponentially many times; the memo map caches each answer so every n is computed exactly once.'
+
+[[inputs]]
+name = 'n'
+label = 'n (steps)'
+type = 'int'
+min = 1
+max = 12
+
+[default_input]
+n = 6
+
+[[tests]]
+expected = '13'
+[tests.input]
+n = 6
+
+[[tests]]
+expected = '3'
+[tests.input]
+n = 3

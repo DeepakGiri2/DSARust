@@ -1,0 +1,46 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func productExceptSelf(nums []int) []int {
+    n := len(nums)
+    res := make([]int, n)
+    prefix := 1
+    for i := 0; i < n; i++ {
+        res[i] = prefix
+        prefix *= nums[i]
+    }
+    postfix := 1
+    for i := n - 1; i >= 0; i-- {
+        res[i] *= postfix
+        postfix *= nums[i]
+    }
+    return res
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    nums := readInts(reader)
+    res := productExceptSelf(nums)
+    out := make([]string, len(res))
+    for i, v := range res {
+        out[i] = strconv.Itoa(v)
+    }
+    fmt.Println(strings.Join(out, " "))
+}

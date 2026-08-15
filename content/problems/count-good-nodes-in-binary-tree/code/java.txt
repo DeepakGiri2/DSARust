@@ -1,0 +1,17 @@
+static int goodNodes(TreeNode root) {
+    return dfs(root, Integer.MIN_VALUE); //@call
+}
+
+static int dfs(TreeNode node, int maxSoFar) {
+    if (node == null) { //@base
+        return 0; //@ret0
+    }
+    int count = 0; //@init
+    if (node.val >= maxSoFar) { //@check
+        count = 1; //@good
+    }
+    maxSoFar = Math.max(maxSoFar, node.val); //@upd
+    count += dfs(node.left, maxSoFar); //@recL
+    count += dfs(node.right, maxSoFar); //@recR
+    return count; //@ret
+}

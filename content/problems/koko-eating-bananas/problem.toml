@@ -1,0 +1,40 @@
+slug = 'koko-eating-bananas'
+title = 'Koko Eating Bananas'
+category = 'Binary Search'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n log m) time · O(1) space'
+
+description = 'Koko eats bananas at k per hour, finishing at most one pile each hour. Find the smallest k that clears every pile within h hours.'
+approach = 'Binary search over the *answer* rather than the input. Feasibility is monotone — if speed k works then so does k+1 — so the speeds split into a block that fails and a block that works, and the boundary between them is the answer.'
+
+[[inputs]]
+name = 'piles'
+label = 'piles'
+type = 'int-array'
+max_len = 40
+min = 1
+max = 40
+
+[[inputs]]
+name = 'h'
+label = 'h'
+type = 'int'
+min = 1
+max = 60
+
+[default_input]
+piles = [3, 6, 7, 11]
+h = 8
+
+[[tests]]
+expected = '4'
+[tests.input]
+piles = [3, 6, 7, 11]
+h = 8
+
+[[tests]]
+expected = '23'
+[tests.input]
+piles = [30, 11, 23, 4, 20]
+h = 6

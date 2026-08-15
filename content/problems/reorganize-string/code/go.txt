@@ -1,0 +1,26 @@
+func reorganizeString(s string) string {
+    count := map[byte]int{} //@count
+    for i := 0; i < len(s); i++ {
+        count[s[i]]++
+    }
+    h := &MaxHeap{} //@init
+    for c, n := range count {
+        h.Push([2]int{n, int(c)})
+    }
+    out := []byte{} //@out
+    var prev [2]int //@prev
+    hasPrev := false
+    for h.Len() > 0 { //@loop
+        top := h.Pop() //@pop
+        out = append(out, byte(top[1])) //@emit
+        top[0]-- //@spend
+        if hasPrev && prev[0] > 0 { //@restore
+            h.Push(prev) //@back
+        }
+        prev, hasPrev = top, true //@hold
+    }
+    if len(out) < len(s) { //@check
+        return "" //@fail
+    }
+    return string(out) //@ret
+}

@@ -1,0 +1,15 @@
+int maxProduct(vector<int>& nums) {
+    int best = nums[0], curMax = nums[0], curMin = nums[0]; //@init
+    for (int i = 1; i < (int)nums.size(); i++) { //@loop
+        int v = nums[i];
+        if (v < 0) { //@negative
+            swap(curMax, curMin); //@swap
+        }
+        curMax = max(v, curMax * v); //@setMax
+        curMin = min(v, curMin * v); //@setMin
+        if (curMax > best) { //@cmp
+            best = curMax; //@setBest
+        }
+    }
+    return best; //@ret
+}

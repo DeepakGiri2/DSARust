@@ -1,0 +1,45 @@
+slug = 'basic-calculator-ii'
+title = 'Basic Calculator II'
+category = 'Stack'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '227'
+complexity = 'O(n) time · O(n) space'
+
+description = 'Evaluate a string expression containing non-negative integers and the operators + − * / separated by spaces. Integer division truncates toward zero.'
+approach = 'Precedence without a parser: keep a stack of terms that only ever need to be added at the end. A + pushes the number, a − pushes its negation, and * or / reach back and fold into the top of the stack immediately — which is exactly what higher precedence means. The pending operator is remembered from the previous token, so each number is handled when the *next* operator (or the end of the string) is reached.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 24
+help = 'e.g. 3+2*2'
+
+[default_input]
+s = '3+5 / 2 - 4'
+
+[[tests]]
+expected = '1'
+[tests.input]
+s = '3+5 / 2 - 4'
+
+[[tests]]
+expected = '7'
+[tests.input]
+s = '3+2*2'
+
+[[tests]]
+expected = '1'
+[tests.input]
+s = ' 3/2 '
+
+[[tests]]
+expected = '10'
+[tests.input]
+s = '2*3+4'
+
+[[tests]]
+expected = '13'
+[tests.input]
+s = '14-3/2'

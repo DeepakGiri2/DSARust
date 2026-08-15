@@ -1,0 +1,10 @@
+func invertTree(root *TreeNode) *TreeNode {
+    if root == nil { //@base
+        return nil //@retnil
+    }
+    left := invertTree(root.Left) //@recL
+    right := invertTree(root.Right) //@recR
+    root.Left = right //@setL
+    root.Right = left //@setR
+    return root //@ret
+}

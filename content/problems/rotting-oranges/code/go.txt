@@ -1,0 +1,35 @@
+func orangesRotting(grid [][]int) int {
+    rows, cols := len(grid), len(grid[0])
+    queue := [][2]int{} //@init
+    fresh := 0
+    for r := 0; r < rows; r++ { //@scan
+        for c := 0; c < cols; c++ {
+            if grid[r][c] == 2 {
+                queue = append(queue, [2]int{r, c})
+            } else if grid[r][c] == 1 {
+                fresh++
+            }
+        }
+    }
+    minutes := 0 //@min0
+    dirs := [4][2]int{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}
+    for len(queue) > 0 && fresh > 0 { //@wave
+        minutes++ //@tick
+        next := [][2]int{}
+        for _, cell := range queue { //@spread
+            for _, d := range dirs {
+                nr, nc := cell[0]+d[0], cell[1]+d[1]
+                if nr >= 0 && nr < rows && nc >= 0 && nc < cols && grid[nr][nc] == 1 { //@check
+                    grid[nr][nc] = 2 //@rot
+                    fresh--
+                    next = append(next, [2]int{nr, nc})
+                }
+            }
+        }
+        queue = next
+    }
+    if fresh > 0 { //@chk
+        return -1 //@bad
+    }
+    return minutes //@ret
+}

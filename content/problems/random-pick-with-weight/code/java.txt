@@ -1,0 +1,27 @@
+class Solution {
+    private final int[] prefix;
+    private final Random rng = new Random();
+
+    Solution(int[] w) {
+        prefix = new int[w.length]; //@init
+        int sum = 0; //@zero
+        for (int i = 0; i < w.length; i++) { //@build
+            sum += w[i];
+            prefix[i] = sum; //@add
+        }
+    } //@ready
+
+    int pickIndex() { //@pick
+        int target = rng.nextInt(prefix[prefix.length - 1]) + 1; //@draw
+        int lo = 0, hi = prefix.length - 1; //@bounds
+        while (lo < hi) { //@search
+            int mid = (lo + hi) / 2; //@mid
+            if (prefix[mid] < target) { //@cmp
+                lo = mid + 1; //@right
+            } else {
+                hi = mid; //@left
+            }
+        }
+        return lo; //@ret
+    }
+}

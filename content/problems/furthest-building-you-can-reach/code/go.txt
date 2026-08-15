@@ -1,0 +1,17 @@
+func furthestBuilding(heights []int, bricks int, ladders int) int {
+    h := &MinHeap{} //@init
+    for i := 0; i+1 < len(heights); i++ { //@loop
+        diff := heights[i+1] - heights[i] //@diff
+        if diff <= 0 { //@downhill
+            continue
+        }
+        h.Push(diff) //@ladder
+        if h.Len() > ladders { //@tooMany
+            bricks -= h.Pop() //@swap
+        }
+        if bricks < 0 { //@broke
+            return i //@ret
+        }
+    }
+    return len(heights) - 1 //@end
+}

@@ -1,0 +1,39 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func maxProfit(prices []int) int {
+    minPrice, best := prices[0], 0
+    for day := 1; day < len(prices); day++ {
+        profit := prices[day] - minPrice
+        if profit > best {
+            best = profit
+        }
+        if prices[day] < minPrice {
+            minPrice = prices[day]
+        }
+    }
+    return best
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    prices := readInts(reader)
+    fmt.Println(maxProfit(prices))
+}

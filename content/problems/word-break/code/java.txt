@@ -1,0 +1,14 @@
+static boolean wordBreak(String s, List<String> wordDict) {
+    boolean[] dp = new boolean[s.length() + 1]; //@init
+    dp[0] = true; //@base
+    for (int i = 1; i <= s.length(); i++) { //@outer
+        for (String w : wordDict) { //@inner
+            int m = w.length();
+            if (i >= m && dp[i - m] && s.startsWith(w, i - m)) { //@check
+                dp[i] = true; //@set
+                break; //@brk
+            }
+        }
+    }
+    return dp[s.length()]; //@ret
+}

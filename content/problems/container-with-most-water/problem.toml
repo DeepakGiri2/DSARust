@@ -1,0 +1,33 @@
+slug = 'container-with-most-water'
+title = 'Container With Most Water'
+category = 'Two Pointers'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Given n non-negative heights representing vertical walls, pick two walls that together with the x-axis form a container holding the most water. Return that maximum area.'
+approach = 'Two pointers at the far ends give the widest container. The shorter wall caps the area, so move it inward — that is the only pointer whose replacement can possibly raise the height. Track the best area seen.'
+
+[[inputs]]
+name = 'heights'
+label = 'heights'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+heights = [1, 8, 6, 2, 5, 4, 8, 3]
+
+[[tests]]
+expected = '40'
+[tests.input]
+heights = [1, 8, 6, 2, 5, 4, 8, 3]
+
+[[tests]]
+expected = '1'
+[tests.input]
+heights = [1, 1]
+
+[[tests]]
+expected = '16'
+[tests.input]
+heights = [4, 3, 2, 1, 4]

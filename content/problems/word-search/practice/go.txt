@@ -1,0 +1,49 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strings"
+)
+
+func exist(board [][]byte, word string) bool {
+    rows, cols := len(board), len(board[0])
+    for r := 0; r < rows; r++ {
+        for c := 0; c < cols; c++ {
+            if dfs(board, word, r, c, 0) {
+                return true
+            }
+        }
+    }
+    return false
+}
+
+func dfs(board [][]byte, word string, r, c, k int) bool {
+    if k == len(word) {
+        return true
+    }
+    if r < 0 || r >= len(board) || c < 0 || c >= len(board[0]) || board[r][c] != word[k] {
+        return false
+    }
+    board[r][c] = '#'
+    found := dfs(board, word, r+1, c, k+1) ||
+        dfs(board, word, r-1, c, k+1) ||
+        dfs(board, word, r, c+1, k+1) ||
+        dfs(board, word, r, c-1, k+1)
+    board[r][c] = word[k]
+    return found
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    board := make([][]byte, len(fields))
+    for i, row := range fields {
+        board[i] = []byte(row)
+    }
+    wline, _ := reader.ReadString('\n')
+    word := strings.TrimSpace(wline)
+    fmt.Println(exist(board, word))
+}

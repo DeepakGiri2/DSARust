@@ -1,0 +1,40 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static int longestConsecutive(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int n : nums) {
+            set.add(n);
+        }
+        int best = 0;
+        for (int n : set) {
+            if (!set.contains(n - 1)) {
+                int length = 1;
+                while (set.contains(n + length)) {
+                    length++;
+                }
+                if (length > best) {
+                    best = length;
+                }
+            }
+        }
+        return best;
+    }
+
+    static int[] readInts(BufferedReader br) throws Exception {
+        String line = br.readLine();
+        if (line == null || line.trim().isEmpty()) return new int[0];
+        String[] parts = line.trim().split("\\s+");
+        int[] nums = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);
+        return nums;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] nums = readInts(br);
+        System.out.println(longestConsecutive(nums));
+    }
+}

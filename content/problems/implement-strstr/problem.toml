@@ -1,0 +1,50 @@
+slug = 'implement-strstr'
+title = 'Find the Index of the First Occurrence in a String'
+category = 'String Algorithms'
+difficulty = 'Easy'
+tier = 'extra'
+leetcode = '28'
+complexity = 'O(n + m) time · O(m) space'
+
+description = 'Return the index of the first occurrence of needle in haystack, or -1 if it does not occur.'
+approach = 'Knuth–Morris–Pratt. First build the LPS table: lps[i] is the length of the longest proper prefix of the needle that is also a suffix of needle[0..i]. Then scan the haystack once. On a mismatch the naive algorithm restarts the needle and re-reads the haystack; KMP instead slides the needle to lps[j-1] and never moves the haystack pointer backwards — which is why the scan is linear.'
+
+[[inputs]]
+name = 'haystack'
+label = 'haystack'
+type = 'string'
+max_len = 30
+
+[[inputs]]
+name = 'needle'
+label = 'needle'
+type = 'string'
+max_len = 12
+
+[default_input]
+haystack = 'aabaabaaf'
+needle = 'aabaaf'
+
+[[tests]]
+expected = '3'
+[tests.input]
+haystack = 'aabaabaaf'
+needle = 'aabaaf'
+
+[[tests]]
+expected = '0'
+[tests.input]
+haystack = 'sadbutsad'
+needle = 'sad'
+
+[[tests]]
+expected = '-1'
+[tests.input]
+haystack = 'leetcode'
+needle = 'leeto'
+
+[[tests]]
+expected = '4'
+[tests.input]
+haystack = 'mississippi'
+needle = 'issip'

@@ -1,0 +1,14 @@
+vector<int> corpFlightBookings(vector<vector<int>>& bookings, int n) {
+    vector<int> diff(n + 1, 0); //@init
+    for (auto& b : bookings) { //@loop
+        diff[b[0] - 1] += b[2]; //@open
+        diff[b[1]] -= b[2]; //@close
+    }
+    vector<int> ans(n); //@alloc
+    int run = 0; //@zero
+    for (int i = 0; i < n; i++) { //@sweep
+        run += diff[i]; //@run
+        ans[i] = run; //@fill
+    }
+    return ans; //@ret
+}

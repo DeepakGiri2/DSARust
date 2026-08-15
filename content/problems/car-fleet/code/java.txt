@@ -1,0 +1,14 @@
+static int carFleet(int target, int[] position, int[] speed) {
+    int n = position.length;
+    Integer[] idx = new Integer[n]; //@order
+    for (int i = 0; i < n; i++) idx[i] = i;
+    Arrays.sort(idx, (a, b) -> position[b] - position[a]); //@sort
+    Deque<Double> stack = new ArrayDeque<>(); //@init
+    for (int i : idx) { //@loop
+        double t = (double) (target - position[i]) / speed[i]; //@time
+        if (stack.isEmpty() || t > stack.peek()) { //@check
+            stack.push(t); //@push
+        }
+    }
+    return stack.size(); //@ret
+}

@@ -1,0 +1,11 @@
+func twoSum(nums []int, target int) []int {
+    seen := map[int]int{} //@init
+    for i, x := range nums { //@loop
+        need := target - x //@need
+        if j, ok := seen[need]; ok { //@check
+            return []int{j, i} //@found
+        }
+        seen[x] = i //@store
+    }
+    return nil //@none
+}

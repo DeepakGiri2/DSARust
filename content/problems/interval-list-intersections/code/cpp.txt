@@ -1,0 +1,17 @@
+vector<vector<int>> intervalIntersection(vector<vector<int>>& a, vector<vector<int>>& b) {
+    vector<vector<int>> res; //@init
+    size_t i = 0, j = 0; //@cursors
+    while (i < a.size() && j < b.size()) { //@loop
+        int lo = max(a[i][0], b[j][0]); //@lo
+        int hi = min(a[i][1], b[j][1]); //@hi
+        if (lo <= hi) { //@overlap
+            res.push_back({lo, hi}); //@record
+        }
+        if (a[i][1] < b[j][1]) { //@advanceA
+            i++;
+        } else { //@advanceB
+            j++;
+        }
+    }
+    return res; //@ret
+}

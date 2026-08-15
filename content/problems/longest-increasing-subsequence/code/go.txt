@@ -1,0 +1,17 @@
+func lengthOfLIS(nums []int) int {
+    n := len(nums) //@init
+    dp := make([]int, n) //@dp
+    best := 0 //@best0
+    for i := 0; i < n; i++ { //@outer
+        dp[i] = 1 //@seed
+        for j := 0; j < i; j++ { //@inner
+            if nums[j] < nums[i] && dp[j]+1 > dp[i] { //@check
+                dp[i] = dp[j] + 1 //@extend
+            }
+        }
+        if dp[i] > best { //@cmp
+            best = dp[i] //@newbest
+        }
+    }
+    return best //@ret
+}

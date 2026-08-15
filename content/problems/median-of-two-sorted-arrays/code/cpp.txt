@@ -1,0 +1,27 @@
+double findMedianSortedArrays(vector<int>& x, vector<int>& y) {
+    vector<int> a = x, b = y;
+    if (a.size() > b.size()) { //@swap
+        swap(a, b);
+    }
+    int m = a.size(), n = b.size(); //@sizes
+    int half = (m + n + 1) / 2; //@half
+    int lo = 0, hi = m; //@bounds
+    while (lo <= hi) { //@loop
+        int i = lo + (hi - lo) / 2; //@mid
+        int j = half - i; //@partner
+        long aLeft = i > 0 ? a[i - 1] : LONG_MIN, aRight = i < m ? a[i] : LONG_MAX; //@edges
+        long bLeft = j > 0 ? b[j - 1] : LONG_MIN, bRight = j < n ? b[j] : LONG_MAX;
+        if (aLeft <= bRight && bLeft <= aRight) { //@check
+            if ((m + n) % 2 == 1) { //@odd
+                return (double)max(aLeft, bLeft); //@retOdd
+            }
+            return (max(aLeft, bLeft) + min(aRight, bRight)) / 2.0; //@retEven
+        }
+        if (aLeft > bRight) { //@tooBig
+            hi = i - 1; //@shrink
+        } else { //@tooSmall
+            lo = i + 1; //@grow
+        }
+    }
+    return 0;
+}

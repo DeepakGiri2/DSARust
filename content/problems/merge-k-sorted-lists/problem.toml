@@ -1,0 +1,29 @@
+slug = 'merge-k-sorted-lists'
+title = 'Merge K Sorted Lists'
+category = 'Linked List'
+difficulty = 'Hard'
+tier = '150'
+complexity = 'O(n log k) time · O(1) extra space'
+
+description = 'Merge k sorted linked lists into one sorted list.'
+approach = 'Merge them in pairs, halving the number of lists each round. Every element moves once per round and there are log k rounds, which beats merging one list at a time into an accumulator (that would touch early elements k times).'
+
+[[inputs]]
+name = 'lists'
+label = 'lists'
+type = 'string'
+max_len = 60
+help = 'lists separated by spaces, values by commas'
+
+[default_input]
+lists = '1,4,5 1,3,4 2,6'
+
+[[tests]]
+expected = '1 1 2 3 4 4 5 6'
+[tests.input]
+lists = '1,4,5 1,3,4 2,6'
+
+[[tests]]
+expected = '1 2'
+[tests.input]
+lists = '2 1'

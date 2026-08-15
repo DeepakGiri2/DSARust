@@ -1,0 +1,70 @@
+slug = 'ipo'
+title = 'IPO'
+category = 'Heap / Priority Queue'
+difficulty = 'Hard'
+tier = '250'
+leetcode = '502'
+complexity = 'O(n log n) time · O(n) space'
+
+description = 'Given projects with a capital requirement and a profit, and a limit on how many can be taken, maximise the final capital.'
+approach = 'Affordability only ever grows, since capital never decreases — so a project that becomes affordable stays affordable. That lets the projects be sorted by capital once and released by a cursor into a max-heap of profits. Each round, take the most profitable thing currently affordable; greedy is safe precisely because taking a bigger profit now can only widen the choice later.'
+
+[[inputs]]
+name = 'k'
+label = 'projects to take'
+type = 'int'
+min = 1
+max = 6
+
+[[inputs]]
+name = 'w'
+label = 'starting capital'
+type = 'int'
+min = 0
+max = 50
+
+[[inputs]]
+name = 'profits'
+label = 'profits'
+type = 'int-array'
+max_len = 8
+min = 0
+max = 50
+
+[[inputs]]
+name = 'capital'
+label = 'capital'
+type = 'int-array'
+max_len = 8
+min = 0
+max = 50
+
+[default_input]
+k = 2
+w = 0
+profits = [1, 2, 3]
+capital = [0, 1, 1]
+
+[[tests]]
+expected = '4'
+[tests.input]
+k = 2
+w = 0
+profits = [1, 2, 3]
+capital = [0, 1, 1]
+
+[[tests]]
+expected = '6'
+[tests.input]
+k = 3
+w = 0
+profits = [1, 2, 3]
+capital = [0, 1, 2]
+
+[[tests]]
+expected = '5'
+[tests.input]
+k = 1
+w = 2
+profits = [1, 2, 3]
+capital = [1, 1, 2]

@@ -1,0 +1,21 @@
+string encode(vector<string>& strs) {
+    string encoded = ""; //@einit
+    for (auto& s : strs) { //@eloop
+        encoded += to_string(s.size()) + "#" + s; //@eappend
+    }
+    return encoded; //@eret
+}
+
+vector<string> decode(string s) {
+    vector<string> res; //@dinit
+    int i = 0; //@di0
+    while (i < (int)s.size()) { //@dloop
+        int j = i; //@dj
+        while (s[j] != '#') j++; //@dscan
+        int length = stoi(s.substr(i, j - i)); //@dlen
+        string word = s.substr(j + 1, length); //@dword
+        res.push_back(word); //@dadd
+        i = j + 1 + length; //@dnext
+    }
+    return res; //@dret
+}

@@ -1,0 +1,40 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static int minSubArrayLen(int target, int[] nums) {
+        int minLen = nums.length + 1;
+        int sum = 0, left = 0;
+        for (int right = 0; right < nums.length; right++) {
+            sum += nums[right];
+            while (sum >= target) {
+                if (right - left + 1 < minLen) {
+                    minLen = right - left + 1;
+                }
+                sum -= nums[left];
+                left++;
+            }
+        }
+        if (minLen == nums.length + 1) {
+            return 0;
+        }
+        return minLen;
+    }
+
+    static int[] readInts(BufferedReader br) throws Exception {
+        String line = br.readLine();
+        if (line == null || line.trim().isEmpty()) return new int[0];
+        String[] parts = line.trim().split("\\s+");
+        int[] nums = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);
+        return nums;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int target = readInts(br)[0];
+        int[] nums = readInts(br);
+        System.out.println(minSubArrayLen(target, nums));
+    }
+}

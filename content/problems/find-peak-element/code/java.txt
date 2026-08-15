@@ -1,0 +1,12 @@
+static int findPeakElement(int[] nums) {
+    int lo = 0, hi = nums.length - 1; //@bounds
+    while (lo < hi) { //@loop
+        int mid = lo + (hi - lo) / 2; //@mid
+        if (nums[mid] < nums[mid + 1]) { //@rising
+            lo = mid + 1; //@goRight
+        } else { //@falling
+            hi = mid; //@goLeft
+        }
+    }
+    return lo; //@ret
+}

@@ -1,0 +1,44 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "sort"
+    "strings"
+)
+
+func sortKey(w string) string {
+    b := []byte(w)
+    sort.Slice(b, func(i, j int) bool { return b[i] < b[j] })
+    return string(b)
+}
+
+func groupAnagrams(words []string) [][]string {
+    groups := map[string][]string{}
+    order := []string{}
+    for _, w := range words {
+        key := sortKey(w)
+        if _, ok := groups[key]; !ok {
+            order = append(order, key)
+        }
+        groups[key] = append(groups[key], w)
+    }
+    res := [][]string{}
+    for _, k := range order {
+        res = append(res, groups[k])
+    }
+    return res
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    words := strings.Fields(line)
+    groups := groupAnagrams(words)
+    out := []string{}
+    for _, g := range groups {
+        out = append(out, strings.Join(g, " "))
+    }
+    fmt.Println(strings.Join(out, "\n"))
+}

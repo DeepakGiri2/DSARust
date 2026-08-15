@@ -1,0 +1,75 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "math"
+    "os"
+    "strconv"
+    "strings"
+)
+
+type TreeNode struct {
+    Val   int
+    Left  *TreeNode
+    Right *TreeNode
+}
+
+func isValidBST(root *TreeNode) bool {
+    return valid(root, math.MinInt64, math.MaxInt64)
+}
+
+func valid(node *TreeNode, low int64, high int64) bool {
+    if node == nil {
+        return true
+    }
+    v := int64(node.Val)
+    if v <= low || v >= high {
+        return false
+    }
+    if !valid(node.Left, low, v) {
+        return false
+    }
+    if !valid(node.Right, v, high) {
+        return false
+    }
+    return true
+}
+
+func buildTree(tokens []string) *TreeNode {
+    if len(tokens) == 0 || tokens[0] == "n" {
+        return nil
+    }
+    v, _ := strconv.Atoi(tokens[0])
+    root := &TreeNode{Val: v}
+    queue := []*TreeNode{root}
+    i := 1
+    for len(queue) > 0 && i < len(tokens) {
+        cur := queue[0]
+        queue = queue[1:]
+        if i < len(tokens) {
+            if tokens[i] != "n" {
+                v, _ := strconv.Atoi(tokens[i])
+                cur.Left = &TreeNode{Val: v}
+                queue = append(queue, cur.Left)
+            }
+            i++
+        }
+        if i < len(tokens) {
+            if tokens[i] != "n" {
+                v, _ := strconv.Atoi(tokens[i])
+                cur.Right = &TreeNode{Val: v}
+                queue = append(queue, cur.Right)
+            }
+            i++
+        }
+    }
+    return root
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    root := buildTree(strings.Fields(line))
+    fmt.Println(isValidBST(root))
+}

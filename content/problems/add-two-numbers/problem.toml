@@ -1,0 +1,41 @@
+slug = 'add-two-numbers'
+title = 'Add Two Numbers'
+category = 'Linked List'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(max(m, n)) time · O(max(m, n)) space'
+
+description = 'Two numbers are stored as linked lists with their digits in reverse order. Add them and return the sum in the same form.'
+approach = 'Reverse order is a gift: the heads are the ones digits, so walking forwards is walking from least significant to most, which is the direction addition carries in. One pass with a carry, treating a finished list as zeros.'
+
+[[inputs]]
+name = 'l1'
+label = 'l1'
+type = 'int-array'
+max_len = 40
+min = 0
+max = 9
+
+[[inputs]]
+name = 'l2'
+label = 'l2'
+type = 'int-array'
+max_len = 40
+min = 0
+max = 9
+
+[default_input]
+l1 = [2, 4, 3]
+l2 = [5, 6, 4]
+
+[[tests]]
+expected = '7 0 8'
+[tests.input]
+l1 = [2, 4, 3]
+l2 = [5, 6, 4]
+
+[[tests]]
+expected = '0 0 1'
+[tests.input]
+l1 = [9, 9]
+l2 = [1]

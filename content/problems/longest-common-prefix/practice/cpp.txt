@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+string longestCommonPrefix(vector<string>& strs) {
+    string prefix = "";
+    for (int j = 0; j < (int)strs[0].size(); j++) {
+        char c = strs[0][j];
+        for (int k = 1; k < (int)strs.size(); k++) {
+            if (j >= (int)strs[k].size() || strs[k][j] != c) {
+                return prefix;
+            }
+        }
+        prefix += c;
+    }
+    return prefix;
+}
+
+int main() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<string> strs;
+    string w;
+    while (ss >> w) strs.push_back(w);
+    cout << longestCommonPrefix(strs) << endl;
+}

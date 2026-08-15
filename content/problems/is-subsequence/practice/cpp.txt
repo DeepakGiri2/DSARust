@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isSubsequence(string s, string t) {
+    int i = 0, j = 0;
+    while (i < (int)s.size() && j < (int)t.size()) {
+        if (s[i] == t[j]) {
+            i++;
+        }
+        j++;
+    }
+    return i == (int)s.size();
+}
+
+int main() {
+    string s, t;
+    getline(cin, s);
+    getline(cin, t);
+    if (!s.empty() && s.back() == '\r') s.pop_back();
+    if (!t.empty() && t.back() == '\r') t.pop_back();
+    cout << (isSubsequence(s, t) ? "true" : "false") << endl;
+}

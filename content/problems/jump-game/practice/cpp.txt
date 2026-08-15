@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool canJump(vector<int>& nums) {
+    int reach = 0;
+    for (int i = 0; i < (int)nums.size(); i++) {
+        if (i > reach) {
+            return false;
+        }
+        if (i + nums[i] > reach) {
+            reach = i + nums[i];
+        }
+    }
+    return true;
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> nums = readInts();
+    cout << (canJump(nums) ? "true" : "false") << endl;
+}

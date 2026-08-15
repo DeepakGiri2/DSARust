@@ -1,0 +1,13 @@
+static int removeDuplicates(int[] nums) {
+    if (nums.length == 0) { //@empty
+        return 0; //@ret0
+    }
+    int slow = 0; //@init
+    for (int fast = 1; fast < nums.length; fast++) { //@loop
+        if (nums[fast] != nums[slow]) { //@cmp
+            slow++; //@incS
+            nums[slow] = nums[fast]; //@write
+        }
+    }
+    return slow + 1; //@ret
+}

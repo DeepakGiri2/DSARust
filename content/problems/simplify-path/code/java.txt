@@ -1,0 +1,16 @@
+static String simplifyPath(String path) {
+    Deque<String> stack = new ArrayDeque<>(); //@init
+    for (String part : path.split("/")) { //@loop
+        if (part.isEmpty() || part.equals(".")) { //@skip
+            continue;
+        }
+        if (part.equals("..")) { //@up
+            if (!stack.isEmpty()) { //@canPop
+                stack.pollLast(); //@pop
+            }
+            continue;
+        }
+        stack.addLast(part); //@push
+    }
+    return "/" + String.join("/", stack); //@ret
+}

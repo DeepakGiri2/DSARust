@@ -1,0 +1,19 @@
+vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+    vector<int> res; //@res
+    deque<int> dq; //@deque
+    int left = 0; //@left
+    for (int right = 0; right < (int)nums.size(); right++) { //@loop
+        while (!dq.empty() && nums[dq.back()] < nums[right]) { //@pop
+            dq.pop_back(); //@popBack
+        }
+        dq.push_back(right); //@push
+        if (dq.front() < left) { //@expire
+            dq.pop_front(); //@popFront
+        }
+        if (right + 1 >= k) { //@ready
+            res.push_back(nums[dq.front()]); //@record
+            left++; //@advance
+        }
+    }
+    return res; //@ret
+}

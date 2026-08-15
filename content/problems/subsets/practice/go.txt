@@ -1,0 +1,52 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func subsets(nums []int) [][]int {
+    res := [][]int{}
+    subset := []int{}
+    backtrack(0, nums, subset, &res)
+    return res
+}
+
+func backtrack(i int, nums []int, subset []int, res *[][]int) {
+    if i == len(nums) {
+        cp := make([]int, len(subset))
+        copy(cp, subset)
+        *res = append(*res, cp)
+        return
+    }
+    subset = append(subset, nums[i])
+    backtrack(i+1, nums, subset, res)
+    subset = subset[:len(subset)-1]
+    backtrack(i+1, nums, subset, res)
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    nums := readInts(reader)
+    res := subsets(nums)
+    for _, s := range res {
+        parts := make([]string, len(s))
+        for i, v := range s {
+            parts[i] = strconv.Itoa(v)
+        }
+        fmt.Println(strings.Join(parts, " "))
+    }
+}

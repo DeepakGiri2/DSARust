@@ -1,0 +1,8 @@
+ListNode* middleNode(ListNode* head) {
+    ListNode *slow = head, *fast = head; //@init
+    while (fast != nullptr && fast->next != nullptr) { //@loop
+        slow = slow->next; //@slow
+        fast = fast->next->next; //@fast
+    }
+    return slow; //@ret
+}

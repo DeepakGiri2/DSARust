@@ -1,0 +1,46 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static class KthLargest {
+        int k;
+        PriorityQueue<Integer> h;
+
+        KthLargest(int k, int[] nums) {
+            this.k = k;
+            this.h = new PriorityQueue<>();
+            for (int n : nums) {
+                add(n);
+            }
+        }
+
+        int add(int val) {
+            h.offer(val);
+            if (h.size() > k) {
+                h.poll();
+            }
+            return h.peek();
+        }
+    }
+
+    static int[] readInts(BufferedReader br) throws Exception {
+        String line = br.readLine();
+        if (line == null || line.trim().isEmpty()) return new int[0];
+        String[] parts = line.trim().split("\\s+");
+        int[] nums = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);
+        return nums;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int k = readInts(br)[0];
+        int[] nums = readInts(br);
+        int[] adds = readInts(br);
+        KthLargest kl = new KthLargest(k, nums);
+        StringBuilder sb = new StringBuilder();
+        for (int v : adds) sb.append(kl.add(v)).append('\n');
+        System.out.print(sb);
+    }
+}

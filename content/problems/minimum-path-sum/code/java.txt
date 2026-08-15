@@ -1,0 +1,22 @@
+static int minPathSum(int[][] grid) {
+    int rows = grid.length, cols = grid[0].length;
+    int[][] dp = new int[rows][cols]; //@init
+    for (int r = 0; r < rows; r++) { //@rowLoop
+        for (int c = 0; c < cols; c++) { //@colLoop
+            if (r == 0 && c == 0) { //@start
+                dp[r][c] = grid[r][c]; //@seed
+            } else if (r == 0) { //@topRow
+                dp[r][c] = dp[r][c - 1] + grid[r][c]; //@fromLeft
+            } else if (c == 0) { //@leftCol
+                dp[r][c] = dp[r - 1][c] + grid[r][c]; //@fromAbove
+            } else { //@inner
+                int best = dp[r - 1][c]; //@pick
+                if (dp[r][c - 1] < best) {
+                    best = dp[r][c - 1]; //@pickLeft
+                }
+                dp[r][c] = best + grid[r][c]; //@store
+            }
+        }
+    }
+    return dp[rows - 1][cols - 1]; //@ret
+}

@@ -1,0 +1,50 @@
+type MyCircularQueue struct {
+    buf   []int
+    head  int
+    count int
+}
+
+func Constructor(k int) MyCircularQueue { //@init
+    return MyCircularQueue{buf: make([]int, k)}
+}
+
+func (q *MyCircularQueue) EnQueue(value int) bool { //@enq
+    if q.count == len(q.buf) { //@full
+        return false //@nofit
+    }
+    tail := (q.head + q.count) % len(q.buf) //@tail
+    q.buf[tail] = value //@store
+    q.count++ //@grew
+    return true
+}
+
+func (q *MyCircularQueue) DeQueue() bool { //@deq
+    if q.count == 0 { //@empty
+        return false //@noitem
+    }
+    q.head = (q.head + 1) % len(q.buf) //@advance
+    q.count-- //@shrank
+    return true
+}
+
+func (q *MyCircularQueue) Front() int { //@front
+    if q.count == 0 {
+        return -1 //@fnone
+    }
+    return q.buf[q.head] //@fval
+}
+
+func (q *MyCircularQueue) Rear() int { //@rear
+    if q.count == 0 {
+        return -1 //@rnone
+    }
+    return q.buf[(q.head+q.count-1)%len(q.buf)] //@rval
+}
+
+func (q *MyCircularQueue) IsEmpty() bool { //@isempty
+    return q.count == 0
+}
+
+func (q *MyCircularQueue) IsFull() bool { //@isfull
+    return q.count == len(q.buf)
+}

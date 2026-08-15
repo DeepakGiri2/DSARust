@@ -1,0 +1,44 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func coinChange(coins []int, amount int) int {
+    dp := make([]int, amount+1)
+    for a := 1; a <= amount; a++ {
+        dp[a] = amount + 1
+    }
+    for a := 1; a <= amount; a++ {
+        for _, c := range coins {
+            if c <= a && dp[a-c]+1 < dp[a] {
+                dp[a] = dp[a-c] + 1
+            }
+        }
+    }
+    if dp[amount] > amount {
+        return -1
+    }
+    return dp[amount]
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    coins := readInts(reader)
+    amount := readInts(reader)[0]
+    fmt.Println(coinChange(coins, amount))
+}

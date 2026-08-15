@@ -1,0 +1,35 @@
+slug = 'minimum-path-sum'
+title = 'Minimum Path Sum'
+category = '2-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '64'
+complexity = 'O(rows · cols) time · O(rows · cols) space'
+
+description = 'Find the smallest possible sum of values along a path from the top-left to the bottom-right of a grid, moving only right or down.'
+approach = "The cheapest way into a cell is the cheaper of its two possible predecessors, plus the cell's own cost. That works because the choice is *local*: whatever happened before arriving at the cell above cannot change what happens after, so only the best route into each predecessor need be remembered. The edges have a single predecessor and so no choice at all."
+
+[[inputs]]
+name = 'grid'
+label = 'grid'
+type = 'string'
+max_len = 60
+help = 'rows separated by spaces, values by commas'
+
+[default_input]
+grid = '1,3,1 1,5,1 4,2,1'
+
+[[tests]]
+expected = '7'
+[tests.input]
+grid = '1,3,1 1,5,1 4,2,1'
+
+[[tests]]
+expected = '12'
+[tests.input]
+grid = '1,2,3 4,5,6'
+
+[[tests]]
+expected = '5'
+[tests.input]
+grid = '5'

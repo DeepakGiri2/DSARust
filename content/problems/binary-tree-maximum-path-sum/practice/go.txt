@@ -1,0 +1,72 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "math"
+    "os"
+    "strconv"
+    "strings"
+)
+
+type TreeNode struct {
+    Val   int
+    Left  *TreeNode
+    Right *TreeNode
+}
+
+var best int
+
+func gain(node *TreeNode) int {
+    if node == nil {
+        return 0
+    }
+    left := max(0, gain(node.Left))
+    right := max(0, gain(node.Right))
+    best = max(best, node.Val+left+right)
+    return node.Val + max(left, right)
+}
+
+func maxPathSum(root *TreeNode) int {
+    best = math.MinInt
+    gain(root)
+    return best
+}
+
+func buildTree(tokens []string) *TreeNode {
+    if len(tokens) == 0 || tokens[0] == "n" {
+        return nil
+    }
+    v, _ := strconv.Atoi(tokens[0])
+    root := &TreeNode{Val: v}
+    queue := []*TreeNode{root}
+    i := 1
+    for len(queue) > 0 && i < len(tokens) {
+        cur := queue[0]
+        queue = queue[1:]
+        if i < len(tokens) {
+            if tokens[i] != "n" {
+                v, _ := strconv.Atoi(tokens[i])
+                cur.Left = &TreeNode{Val: v}
+                queue = append(queue, cur.Left)
+            }
+            i++
+        }
+        if i < len(tokens) {
+            if tokens[i] != "n" {
+                v, _ := strconv.Atoi(tokens[i])
+                cur.Right = &TreeNode{Val: v}
+                queue = append(queue, cur.Right)
+            }
+            i++
+        }
+    }
+    return root
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    root := buildTree(strings.Fields(line))
+    fmt.Println(maxPathSum(root))
+}

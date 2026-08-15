@@ -1,0 +1,19 @@
+func maxSlidingWindow(nums []int, k int) []int {
+    res := []int{} //@res
+    deque := []int{} //@deque
+    left := 0 //@left
+    for right := 0; right < len(nums); right++ { //@loop
+        for len(deque) > 0 && nums[deque[len(deque)-1]] < nums[right] { //@pop
+            deque = deque[:len(deque)-1] //@popBack
+        }
+        deque = append(deque, right) //@push
+        if deque[0] < left { //@expire
+            deque = deque[1:] //@popFront
+        }
+        if right+1 >= k { //@ready
+            res = append(res, nums[deque[0]]) //@record
+            left++ //@advance
+        }
+    }
+    return res //@ret
+}

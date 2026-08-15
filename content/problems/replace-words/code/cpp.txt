@@ -1,0 +1,30 @@
+string shortestRoot(Node* root, const string& word) {
+    Node* node = root; //@start
+    for (int i = 0; i < (int)word.size(); i++) { //@walk
+        char c = word[i];
+        if (!node->children.count(c)) { //@absent
+            break;
+        }
+        node = node->children[c]; //@descend
+        if (node->isWord) { //@isRoot
+            return word.substr(0, i + 1); //@shortest
+        }
+    }
+    return word; //@whole
+}
+
+string replaceWords(vector<string>& dictionary, string sentence) {
+    Node* root = buildTrie(dictionary); //@build
+    vector<string> out; //@init
+    stringstream ss(sentence);
+    string w;
+    while (ss >> w) { //@loop
+        out.push_back(shortestRoot(root, w)); //@replace
+    }
+    string res;
+    for (size_t i = 0; i < out.size(); i++) {
+        if (i) res += " ";
+        res += out[i];
+    }
+    return res; //@ret
+}

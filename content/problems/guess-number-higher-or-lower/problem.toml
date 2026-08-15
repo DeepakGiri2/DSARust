@@ -1,0 +1,47 @@
+slug = 'guess-number-higher-or-lower'
+title = 'Guess Number Higher or Lower'
+category = 'Binary Search'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '374'
+complexity = 'O(log n) time · O(1) space'
+
+description = "A number is picked between 1 and n. An oracle answers each guess with 'too high', 'too low' or 'correct'. Find the number in as few guesses as possible."
+approach = "The oracle's answer eliminates one side of the guess entirely, which is the only property binary search ever needs — there is no array here at all, just a range of integers. Guessing the midpoint halves the range every time, so n possibilities are pinned down in about log2(n) guesses."
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 1
+max = 1000
+
+[[inputs]]
+name = 'pick'
+label = 'the number the oracle picked'
+type = 'int'
+min = 1
+max = 1000
+help = 'hidden from the algorithm; shown here so the animation can answer'
+
+[default_input]
+n = 10
+pick = 6
+
+[[tests]]
+expected = '6'
+[tests.input]
+n = 10
+pick = 6
+
+[[tests]]
+expected = '1'
+[tests.input]
+n = 1
+pick = 1
+
+[[tests]]
+expected = '37'
+[tests.input]
+n = 100
+pick = 37

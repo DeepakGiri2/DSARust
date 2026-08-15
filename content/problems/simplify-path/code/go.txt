@@ -1,0 +1,16 @@
+func simplifyPath(path string) string {
+    stack := []string{} //@init
+    for _, part := range strings.Split(path, "/") { //@loop
+        if part == "" || part == "." { //@skip
+            continue
+        }
+        if part == ".." { //@up
+            if len(stack) > 0 { //@canPop
+                stack = stack[:len(stack)-1] //@pop
+            }
+            continue
+        }
+        stack = append(stack, part) //@push
+    }
+    return "/" + strings.Join(stack, "/") //@ret
+}

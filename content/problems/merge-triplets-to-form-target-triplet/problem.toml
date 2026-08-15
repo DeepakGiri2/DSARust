@@ -1,0 +1,46 @@
+slug = 'merge-triplets-to-form-target-triplet'
+title = 'Merge Triplets to Form Target Triplet'
+category = 'Greedy'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '1899'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Merging two triplets keeps the larger value in each position. Return true if some sequence of merges can produce a given target.'
+approach = "Merging never decreases anything, so a triplet with any value above the target is permanently poisonous — using it would overshoot in that position with no way back. Discard those, and every remaining triplet is harmless. The only question left is whether each position's target value appears somewhere among the survivors: if so, merging all of them achieves it, and one pass is enough."
+
+[[inputs]]
+name = 'triplets'
+label = 'triplets'
+type = 'string'
+max_len = 60
+help = "'a b c' triples, comma separated"
+
+[[inputs]]
+name = 'target'
+label = 'target'
+type = 'string'
+max_len = 60
+help = 'three values, space separated'
+
+[default_input]
+triplets = '2 5 3, 1 8 4, 1 7 5'
+target = '2 7 5'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+triplets = '2 5 3, 1 8 4, 1 7 5'
+target = '2 7 5'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+triplets = '3 4 5, 4 5 6'
+target = '3 2 5'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+triplets = '2 5 3, 2 3 4, 1 2 5, 5 2 3'
+target = '5 5 5'

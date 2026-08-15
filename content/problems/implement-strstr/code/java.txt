@@ -1,0 +1,31 @@
+static int strStr(String haystack, String needle) {
+    int m = needle.length();
+    int[] lps = new int[m]; //@lps
+    for (int i = 1, length = 0; i < m; ) { //@build
+        if (needle.charAt(i) == needle.charAt(length)) { //@match
+            length++;
+            lps[i] = length; //@set
+            i++;
+        } else if (length > 0) { //@fall
+            length = lps[length - 1]; //@back
+        } else {
+            lps[i] = 0; //@zero
+            i++;
+        }
+    }
+
+    for (int i = 0, j = 0; i < haystack.length(); ) { //@scan
+        if (haystack.charAt(i) == needle.charAt(j)) { //@cmp
+            i++;
+            j++; //@adv
+            if (j == m) { //@done
+                return i - j; //@found
+            }
+        } else if (j > 0) { //@shift
+            j = lps[j - 1]; //@jump
+        } else {
+            i++; //@next
+        }
+    }
+    return -1; //@none
+}

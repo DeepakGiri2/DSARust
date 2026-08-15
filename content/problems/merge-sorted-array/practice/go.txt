@@ -1,0 +1,48 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func merge(nums1 []int, m int, nums2 []int, n int) {
+    i, j, k := m-1, n-1, m+n-1
+    for j >= 0 {
+        if i >= 0 && nums1[i] > nums2[j] {
+            nums1[k] = nums1[i]
+            i--
+        } else {
+            nums1[k] = nums2[j]
+            j--
+        }
+        k--
+    }
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    nums1vals := readInts(reader)
+    nums2 := readInts(reader)
+    m, n := len(nums1vals), len(nums2)
+    nums1 := make([]int, m+n)
+    copy(nums1, nums1vals)
+    merge(nums1, m, nums2, n)
+    parts := make([]string, len(nums1))
+    for idx, x := range nums1 {
+        parts[idx] = strconv.Itoa(x)
+    }
+    fmt.Println(strings.Join(parts, " "))
+}

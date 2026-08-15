@@ -1,0 +1,28 @@
+slug = 'best-time-to-buy-and-sell-stock'
+title = 'Best Time to Buy & Sell Stock'
+category = 'Sliding Window'
+difficulty = 'Easy'
+tier = '50'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Given prices where prices[i] is the stock price on day i, choose one day to buy and a later day to sell to maximize profit. Return the max profit (0 if none).'
+approach = 'Sweep left to right keeping the cheapest price seen so far. Each day, the best deal ending today is price − minPrice; track the best across all days.'
+
+[[inputs]]
+name = 'prices'
+label = 'prices'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+prices = [7, 1, 5, 3, 6, 4]
+
+[[tests]]
+expected = '5'
+[tests.input]
+prices = [7, 1, 5, 3, 6, 4]
+
+[[tests]]
+expected = '0'
+[tests.input]
+prices = [7, 6, 4, 3, 1]

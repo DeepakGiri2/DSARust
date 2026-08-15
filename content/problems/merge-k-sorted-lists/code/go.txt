@@ -1,0 +1,17 @@
+func mergeKLists(lists []*ListNode) *ListNode {
+    if len(lists) == 0 { //@empty
+        return nil //@retNil
+    }
+    for len(lists) > 1 { //@round
+        merged := []*ListNode{} //@newRound
+        for i := 0; i < len(lists); i += 2 { //@pairs
+            var b *ListNode
+            if i+1 < len(lists) { //@hasPair
+                b = lists[i+1]
+            }
+            merged = append(merged, mergeTwo(lists[i], b)) //@merge
+        }
+        lists = merged //@replace
+    }
+    return lists[0] //@ret
+}

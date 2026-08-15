@@ -1,0 +1,12 @@
+static List<int[]> generate(int numRows) {
+    List<int[]> res = new ArrayList<>(); //@init
+    for (int i = 0; i < numRows; i++) { //@row
+        int[] row = new int[i + 1]; //@newrow
+        row[0] = row[i] = 1; //@ends
+        for (int j = 1; j < i; j++) { //@mid
+            row[j] = res.get(i-1)[j-1] + res.get(i-1)[j]; //@sum
+        }
+        res.add(row); //@push
+    }
+    return res; //@ret
+}

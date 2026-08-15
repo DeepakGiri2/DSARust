@@ -1,0 +1,10 @@
+static String convertToTitle(int columnNumber) {
+    StringBuilder out = new StringBuilder(); //@init
+    while (columnNumber > 0) { //@loop
+        columnNumber--; //@shift
+        int r = columnNumber % 26; //@digit
+        out.insert(0, (char) ('A' + r)); //@prepend
+        columnNumber /= 26; //@divide
+    }
+    return out.toString(); //@ret
+}

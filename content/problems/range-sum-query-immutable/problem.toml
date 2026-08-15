@@ -1,0 +1,47 @@
+slug = 'range-sum-query-immutable'
+title = 'Range Sum Query — Immutable'
+category = 'Prefix Sums'
+difficulty = 'Easy'
+tier = 'extra'
+leetcode = '303'
+complexity = 'O(n) build · O(1) per query · O(n) space'
+
+description = 'Design a structure over a fixed array that answers many sumRange(left, right) queries — the sum of nums[left..right] inclusive.'
+approach = 'Precompute prefix[i] = sum of the first i values, so prefix[0] = 0. Then any range sum is one subtraction: sum(left..right) = prefix[right+1] − prefix[left]. The +1 offset is what lets left = 0 work without a special case. Build once in O(n), answer every query in O(1).'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 20
+min = -50
+max = 50
+
+[[inputs]]
+name = 'queries'
+label = 'queries'
+type = 'string'
+max_len = 60
+help = 'left right pairs, comma separated: 0 2, 2 5, 0 5'
+
+[default_input]
+nums = [-2, 0, 3, -5, 2, -1]
+queries = '0 2, 2 5, 0 5'
+
+[[tests]]
+expected = '1 -1 -3'
+[tests.input]
+nums = [-2, 0, 3, -5, 2, -1]
+queries = '0 2, 2 5, 0 5'
+
+[[tests]]
+expected = '1 4 5'
+[tests.input]
+nums = [1, 2, 3, 4]
+queries = '0 0, 3 3, 1 2'
+
+[[tests]]
+expected = '5'
+[tests.input]
+nums = [5]
+queries = '0 0'

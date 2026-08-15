@@ -1,0 +1,12 @@
+func subarraySum(nums []int, k int) int {
+    seen := map[int]int{0: 1} //@init
+    sum, count := 0, 0 //@running
+    for _, v := range nums { //@loop
+        sum += v //@add
+        if c, ok := seen[sum-k]; ok { //@lookup
+            count += c //@bump
+        }
+        seen[sum]++ //@record
+    }
+    return count //@ret
+}

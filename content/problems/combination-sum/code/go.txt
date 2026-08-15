@@ -1,0 +1,22 @@
+func combinationSum(candidates []int, target int) [][]int {
+    res := [][]int{} //@init
+    cur := []int{} //@cur
+    backtrack(0, target, candidates, cur, &res) //@call
+    return res //@done
+}
+
+func backtrack(i int, remaining int, candidates []int, cur []int, res *[][]int) {
+    if remaining == 0 { //@base
+        cp := make([]int, len(cur)) //@add
+        copy(cp, cur)
+        *res = append(*res, cp)
+        return //@ret
+    }
+    if remaining < 0 || i == len(candidates) { //@prune
+        return //@pret
+    }
+    cur = append(cur, candidates[i]) //@include
+    backtrack(i, remaining-candidates[i], candidates, cur, res) //@recIn
+    cur = cur[:len(cur)-1] //@exclude
+    backtrack(i+1, remaining, candidates, cur, res) //@recEx
+}

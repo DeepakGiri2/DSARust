@@ -1,0 +1,33 @@
+slug = 'count-good-nodes-in-binary-tree'
+title = 'Count Good Nodes in Binary Tree'
+category = 'Trees'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n) time · O(h) space (recursion stack, h = height)'
+
+description = 'A node X in a binary tree is "good" if no node on the path from the root down to X has a value greater than X. Return how many good nodes the tree contains. Watch a pre-order DFS carry maxSoFar — the largest value seen on the current path — and light up each good node green as it is found.'
+approach = 'Pre-order DFS carrying maxSoFar, the maximum value on the path from the root to the current node. A node is good exactly when its value is ≥ maxSoFar. Update maxSoFar before descending, then sum the good counts of both subtrees. The root, seeded with maxSoFar = -∞, is always good.'
+
+[[inputs]]
+name = 'root'
+label = "tree (level-order, 'n' = null)"
+type = 'tree'
+max_len = 40
+
+[default_input]
+root = '3 1 4 3 n 1 5'
+
+[[tests]]
+expected = '4'
+[tests.input]
+root = '3 1 4 3 n 1 5'
+
+[[tests]]
+expected = '3'
+[tests.input]
+root = '3 3 n 4 2'
+
+[[tests]]
+expected = '1'
+[tests.input]
+root = '1'

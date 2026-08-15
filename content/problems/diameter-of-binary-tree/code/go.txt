@@ -1,0 +1,15 @@
+func diameterOfBinaryTree(root *TreeNode) int {
+    best := 0 //@init
+    var height func(node *TreeNode) int
+    height = func(node *TreeNode) int {
+        if node == nil { //@base
+            return 0 //@ret0
+        }
+        leftH := height(node.Left) //@recL
+        rightH := height(node.Right) //@recR
+        best = max(best, leftH+rightH) //@update
+        return 1 + max(leftH, rightH) //@ret
+    }
+    height(root)
+    return best //@result
+}

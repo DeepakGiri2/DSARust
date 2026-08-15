@@ -1,0 +1,31 @@
+int strStr(string haystack, string needle) {
+    int m = needle.size();
+    vector<int> lps(m, 0); //@lps
+    for (int i = 1, length = 0; i < m; ) { //@build
+        if (needle[i] == needle[length]) { //@match
+            length++;
+            lps[i] = length; //@set
+            i++;
+        } else if (length > 0) { //@fall
+            length = lps[length - 1]; //@back
+        } else {
+            lps[i] = 0; //@zero
+            i++;
+        }
+    }
+
+    for (int i = 0, j = 0; i < (int)haystack.size(); ) { //@scan
+        if (haystack[i] == needle[j]) { //@cmp
+            i++;
+            j++; //@adv
+            if (j == m) { //@done
+                return i - j; //@found
+            }
+        } else if (j > 0) { //@shift
+            j = lps[j - 1]; //@jump
+        } else {
+            i++; //@next
+        }
+    }
+    return -1; //@none
+}

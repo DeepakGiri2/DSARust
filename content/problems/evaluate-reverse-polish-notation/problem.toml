@@ -1,0 +1,28 @@
+slug = 'evaluate-reverse-polish-notation'
+title = 'Evaluate Reverse Polish Notation'
+category = 'Stack'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n) time · O(n) space'
+
+description = 'Evaluate an arithmetic expression written in Reverse Polish Notation, where each operator follows its operands. Valid operators are +, -, * and /; division truncates toward zero.'
+approach = 'A stack of operands. Push every number; on an operator pop the two most recent values, apply it, and push the result back. RPN needs no parentheses because an operator always applies to the two values immediately before it.'
+
+[[inputs]]
+name = 'tokens'
+label = 'tokens'
+type = 'string'
+max_len = 60
+
+[default_input]
+tokens = '2 1 + 3 *'
+
+[[tests]]
+expected = '9'
+[tests.input]
+tokens = '2 1 + 3 *'
+
+[[tests]]
+expected = '6'
+[tests.input]
+tokens = '4 13 5 / +'

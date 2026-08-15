@@ -1,0 +1,29 @@
+var dirs = [][2]int{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}
+
+func countSubIslands(grid1 [][]int, grid2 [][]int) int {
+    count := 0 //@init
+    for r := range grid2 { //@rowLoop
+        for c := range grid2[r] { //@colLoop
+            if grid2[r][c] == 1 { //@land
+                if sink(grid1, grid2, r, c) { //@check
+                    count++ //@bump
+                }
+            }
+        }
+    }
+    return count //@ret
+}
+
+func sink(g1, g2 [][]int, r, c int) bool {
+    if r < 0 || r >= len(g2) || c < 0 || c >= len(g2[0]) || g2[r][c] == 0 { //@bounds
+        return true
+    }
+    g2[r][c] = 0 //@visit
+    ok := g1[r][c] == 1 //@overlap
+    for _, d := range dirs { //@neighbours
+        if !sink(g1, g2, r+d[0], c+d[1]) { //@recurse
+            ok = false //@fail
+        }
+    }
+    return ok //@verdict
+}

@@ -1,0 +1,44 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static void merge(int[] nums1, int m, int[] nums2, int n) {
+        int i = m - 1, j = n - 1, k = m + n - 1;
+        while (j >= 0) {
+            if (i >= 0 && nums1[i] > nums2[j]) {
+                nums1[k] = nums1[i];
+                i--;
+            } else {
+                nums1[k] = nums2[j];
+                j--;
+            }
+            k--;
+        }
+    }
+
+    static int[] readInts(BufferedReader br) throws Exception {
+        String line = br.readLine();
+        if (line == null || line.trim().isEmpty()) return new int[0];
+        String[] parts = line.trim().split("\\s+");
+        int[] nums = new int[parts.length];
+        for (int idx = 0; idx < parts.length; idx++) nums[idx] = Integer.parseInt(parts[idx]);
+        return nums;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] nums1vals = readInts(br);
+        int[] nums2 = readInts(br);
+        int m = nums1vals.length, n = nums2.length;
+        int[] nums1 = new int[m + n];
+        for (int idx = 0; idx < m; idx++) nums1[idx] = nums1vals[idx];
+        merge(nums1, m, nums2, n);
+        StringBuilder sb = new StringBuilder();
+        for (int idx = 0; idx < nums1.length; idx++) {
+            if (idx > 0) sb.append(' ');
+            sb.append(nums1[idx]);
+        }
+        System.out.println(sb.toString());
+    }
+}

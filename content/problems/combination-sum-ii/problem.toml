@@ -1,0 +1,47 @@
+slug = 'combination-sum-ii'
+title = 'Combination Sum II'
+category = 'Backtracking'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '40'
+complexity = 'O(2^n · n) time · O(n) space'
+
+description = 'Find every unique combination of the given numbers that adds up to a target. Each number may be used at most once, and the input may contain duplicates.'
+approach = "Sorting does two jobs at once. Equal values become adjacent, so 'skip this value if it is the same as the previous one *at this level*' removes duplicate combinations without any set of seen results — the first copy already explored everything that later copies would. And values arrive in increasing order, so once one exceeds the remaining target the loop can break rather than continue, since nothing after it can fit either."
+
+[[inputs]]
+name = 'candidates'
+label = 'candidates'
+type = 'int-array'
+max_len = 8
+min = 1
+max = 20
+
+[[inputs]]
+name = 'target'
+label = 'target'
+type = 'int'
+min = 1
+max = 30
+
+[default_input]
+candidates = [10, 1, 2, 7, 6, 1, 5]
+target = 8
+
+[[tests]]
+expected = '1,1,6 1,2,5 1,7 2,6'
+[tests.input]
+candidates = [10, 1, 2, 7, 6, 1, 5]
+target = 8
+
+[[tests]]
+expected = '1,2,2 5'
+[tests.input]
+candidates = [2, 5, 2, 1, 2]
+target = 5
+
+[[tests]]
+expected = '3'
+[tests.input]
+candidates = [3]
+target = 3

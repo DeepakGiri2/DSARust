@@ -1,0 +1,33 @@
+slug = 'valid-palindrome-ii'
+title = 'Valid Palindrome II'
+category = 'Two Pointers'
+difficulty = 'Easy'
+tier = '250'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Given a string s, return true if it can be a palindrome after deleting at most one character. Two pointers walk inward, and on the first mismatch they branch to test skipping the left or the right character.'
+approach = 'Walk two pointers from the ends. While characters match, keep closing in. At the first mismatch you have one deletion to spend: check whether the substring with the left character removed OR the right character removed is a plain palindrome.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 24
+
+[default_input]
+s = 'abcbea'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = 'abca'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = 'abc'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = 'racecar'

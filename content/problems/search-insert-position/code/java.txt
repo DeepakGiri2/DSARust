@@ -1,0 +1,12 @@
+static int searchInsert(int[] nums, int target) {
+    int lo = 0, hi = nums.length; //@bounds
+    while (lo < hi) { //@loop
+        int mid = lo + (hi - lo) / 2; //@mid
+        if (nums[mid] < target) { //@cmp
+            lo = mid + 1; //@right
+        } else { //@notLess
+            hi = mid; //@left
+        }
+    }
+    return lo; //@ret
+}

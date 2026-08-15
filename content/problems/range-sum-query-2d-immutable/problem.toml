@@ -1,0 +1,46 @@
+slug = 'range-sum-query-2d-immutable'
+title = 'Range Sum Query 2D — Immutable'
+category = 'Prefix Sums'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '304'
+complexity = 'O(m·n) build · O(1) per query · O(m·n) space'
+
+description = 'Design a structure over a fixed matrix that answers many sumRegion(r1, c1, r2, c2) queries — the sum of the rectangle with those corners, inclusive.'
+approach = 'Same idea as 1-D, one dimension up. pre[r][c] is the sum of the rectangle from the origin to (r-1, c-1), built with inclusion–exclusion: cell + above + left − the overlap counted twice. A query is the same identity read backwards: big − top strip − left strip + the corner that was subtracted twice.'
+
+[[inputs]]
+name = 'matrix'
+label = 'matrix'
+type = 'grid'
+max_len = 60
+help = 'single digits, rows space-separated'
+
+[[inputs]]
+name = 'queries'
+label = 'queries'
+type = 'string'
+max_len = 80
+help = 'r1 c1 r2 c2 rectangles, comma separated'
+
+[default_input]
+matrix = '3025 5612 1532'
+queries = '1 1 2 3, 0 0 1 1'
+
+[[tests]]
+expected = '19 14'
+[tests.input]
+matrix = '3025 5612 1532'
+queries = '1 1 2 3, 0 0 1 1'
+
+[[tests]]
+expected = '10 7'
+[tests.input]
+matrix = '12 34'
+queries = '0 0 1 1, 1 0 1 1'
+
+[[tests]]
+expected = '5'
+[tests.input]
+matrix = '5'
+queries = '0 0 0 0'

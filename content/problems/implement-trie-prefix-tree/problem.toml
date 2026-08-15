@@ -1,0 +1,33 @@
+slug = 'implement-trie-prefix-tree'
+title = 'Implement Trie (Prefix Tree)'
+category = 'Tries'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(L) per operation (L = word length) · O(total chars) space'
+
+description = 'Design a trie (prefix tree) supporting insert(word), search(word) and startsWith(prefix). Each node owns up to 26 children (one per letter) and a flag marking the end of a stored word. This driver processes a comma-separated list of operations and prints each search / startsWith result.'
+approach = 'Every word is a path from the root, one node per character. insert walks the path, creating missing nodes, and flags the last node as end-of-word. search walks the path and checks that flag; startsWith walks the path and only checks that it exists.'
+
+[[inputs]]
+name = 'ops'
+label = 'ops (insert W | search W | startsWith W), comma-separated'
+type = 'string'
+max_len = 160
+
+[default_input]
+ops = 'insert apple, search apple, search app, startsWith app, insert app, search app'
+
+[[tests]]
+expected = "true\nfalse\ntrue\ntrue"
+[tests.input]
+ops = 'insert apple, search apple, search app, startsWith app, insert app, search app'
+
+[[tests]]
+expected = "true\ntrue\nfalse"
+[tests.input]
+ops = 'insert app, insert apple, search app, startsWith appl, search appl'
+
+[[tests]]
+expected = "false\ntrue"
+[tests.input]
+ops = 'insert a, search b, startsWith a'

@@ -1,0 +1,45 @@
+static List<List<String>> accountsMerge(List<List<String>> accounts) {
+    Map<String, Integer> id = new HashMap<>(); //@init
+    List<String> owner = new ArrayList<>();
+    List<Integer> parentList = new ArrayList<>();
+    for (List<String> acc : accounts) { //@scan
+        for (int k = 1; k < acc.size(); k++) { //@each
+            if (!id.containsKey(acc.get(k))) { //@new
+                id.put(acc.get(k), parentList.size());
+                parentList.add(parentList.size());
+                owner.add(acc.get(0));
+            }
+            int[] parent = toArray(parentList);
+            int a = find(parent, id.get(acc.get(1))), b = find(parent, id.get(acc.get(k))); //@roots
+            parentList.set(a, b); //@union
+        }
+    }
+
+    int[] parent = toArray(parentList);
+    Map<Integer, List<String>> groups = new TreeMap<>(); //@group
+    for (Map.Entry<String, Integer> e : id.entrySet()) { //@collect
+        groups.computeIfAbsent(find(parent, e.getValue()), k -> new ArrayList<>()).add(e.getKey()); //@bucket
+    }
+    List<List<String>> out = new ArrayList<>();
+    for (Map.Entry<Integer, List<String>> g : groups.entrySet()) { //@build
+        Collections.sort(g.getValue()); //@sort
+        List<String> row = new ArrayList<>(List.of(owner.get(g.getKey())));
+        row.addAll(g.getValue()); //@row
+        out.add(row);
+    }
+    return out; //@ret
+}
+
+static int[] toArray(List<Integer> xs) {
+    int[] a = new int[xs.size()];
+    for (int i = 0; i < a.length; i++) a[i] = xs.get(i);
+    return a;
+}
+
+static int find(int[] parent, int x) {
+    while (parent[x] != x) { //@walk
+        parent[x] = parent[parent[x]]; //@compress
+        x = parent[x]; //@up
+    }
+    return x; //@root
+}

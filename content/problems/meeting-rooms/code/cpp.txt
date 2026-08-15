@@ -1,0 +1,12 @@
+bool canAttendMeetings(vector<vector<int>>& intervals) {
+    sort(intervals.begin(), intervals.end(), [](auto& a, auto& b) { //@sort
+        return a[0] < b[0];
+    });
+    for (size_t i = 1; i < intervals.size(); i++) { //@loop
+        int prevEnd = intervals[i - 1][1]; //@prev
+        if (intervals[i][0] < prevEnd) { //@overlap
+            return false; //@no
+        }
+    }
+    return true; //@yes
+}

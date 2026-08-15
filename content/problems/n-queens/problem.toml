@@ -1,0 +1,35 @@
+slug = 'n-queens'
+title = 'N-Queens'
+category = 'Backtracking'
+difficulty = 'Hard'
+tier = '150'
+leetcode = '51'
+complexity = 'O(n!) time · O(n) space'
+
+description = 'Place n queens on an n × n board so that none attacks another, and list every arrangement.'
+approach = 'Place one queen per row, so no two can ever share a row without any check being needed. The other three attacks reduce to three sets: the column, the difference row − column (one diagonal), and the sum row + column (the other). Those two arithmetic identities are what make an attack test a constant-time lookup rather than a scan across the board.'
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 1
+max = 6
+
+[default_input]
+n = 4
+
+[[tests]]
+expected = '1,3,0,2 2,0,3,1'
+[tests.input]
+n = 4
+
+[[tests]]
+expected = '0'
+[tests.input]
+n = 1
+
+[[tests]]
+expected = '1,3,5,0,2,4 2,5,1,4,0,3 3,0,4,1,5,2 4,2,0,5,3,1'
+[tests.input]
+n = 6

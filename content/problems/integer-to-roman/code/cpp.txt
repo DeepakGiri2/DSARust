@@ -1,0 +1,13 @@
+int values[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1}; //@table
+string symbols[] = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+
+string intToRoman(int num) {
+    string out = ""; //@init
+    for (int i = 0; i < 13; i++) { //@loop
+        while (num >= values[i]) { //@fits
+            out += symbols[i]; //@append
+            num -= values[i]; //@subtract
+        }
+    }
+    return out; //@ret
+}

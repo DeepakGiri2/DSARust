@@ -1,0 +1,33 @@
+slug = 'replace-elements-with-greatest-element-on-right-side'
+title = 'Replace Elements With Greatest Element on Right Side'
+category = 'Arrays & Hashing'
+difficulty = 'Easy'
+tier = '250'
+complexity = 'O(n) time · O(1) extra space'
+
+description = 'Replace every element of the array with the greatest element among the elements to its right. The last element has nothing to its right, so it becomes -1.'
+approach = 'Walk the array from right to left, carrying the maximum seen so far (starting at -1). Overwrite each cell with that running max, then fold the original value into the max for the cells further left.'
+
+[[inputs]]
+name = 'arr'
+label = 'arr'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+arr = [17, 18, 5, 4, 6, 1]
+
+[[tests]]
+expected = '18 6 6 6 1 -1'
+[tests.input]
+arr = [17, 18, 5, 4, 6, 1]
+
+[[tests]]
+expected = '-1'
+[tests.input]
+arr = [400]
+
+[[tests]]
+expected = '4 4 4 -1'
+[tests.input]
+arr = [1, 2, 3, 4]

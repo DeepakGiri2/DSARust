@@ -1,0 +1,28 @@
+slug = 'contains-duplicate'
+title = 'Contains Duplicate'
+category = 'Arrays & Hashing'
+difficulty = 'Easy'
+tier = '50'
+complexity = 'O(n) time · O(n) space'
+
+description = 'Given an integer array nums, return true if any value appears at least twice, and false if every element is distinct.'
+approach = 'Walk the array once, keeping a hash set of everything seen so far. The moment the current value is already in the set, we found a duplicate.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+nums = [1, 2, 3, 4, 2, 9]
+
+[[tests]]
+expected = 'true'
+[tests.input]
+nums = [1, 2, 3, 4, 2, 9]
+
+[[tests]]
+expected = 'false'
+[tests.input]
+nums = [1, 2, 3, 4]

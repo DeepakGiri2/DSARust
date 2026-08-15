@@ -1,0 +1,18 @@
+func characterReplacement(s string, k int) int {
+    count := map[byte]int{} //@init
+    res, left, maxf := 0, 0, 0 //@init2
+    for right := 0; right < len(s); right++ { //@loop
+        count[s[right]]++ //@add
+        if count[s[right]] > maxf { //@max
+            maxf = count[s[right]] //@setmax
+        }
+        for (right-left+1)-maxf > k { //@while
+            count[s[left]]-- //@dec
+            left++ //@advance
+        }
+        if right-left+1 > res { //@cmp
+            res = right - left + 1 //@newBest
+        }
+    }
+    return res //@ret
+}

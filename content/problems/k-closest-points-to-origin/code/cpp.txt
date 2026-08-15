@@ -1,0 +1,13 @@
+vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+    priority_queue<pair<int, vector<int>>> h; //@init
+    for (auto& p : points) { //@loop
+        int d = p[0] * p[0] + p[1] * p[1]; //@dist
+        h.push({d, p}); //@push
+        if ((int)h.size() > k) { //@check
+            h.pop(); //@pop
+        }
+    }
+    vector<vector<int>> res; //@ret
+    while (!h.empty()) { res.push_back(h.top().second); h.pop(); }
+    return res;
+}

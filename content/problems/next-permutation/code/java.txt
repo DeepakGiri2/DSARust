@@ -1,0 +1,17 @@
+static void nextPermutation(int[] nums) {
+    int n = nums.length;
+    int i = n - 2; //@start
+    while (i >= 0 && nums[i] >= nums[i + 1]) { //@descend
+        i--; //@back
+    }
+    if (i >= 0) { //@pivot
+        int j = n - 1; //@scan
+        while (nums[j] <= nums[i]) { //@bigger
+            j--; //@downj
+        }
+        int t = nums[i]; nums[i] = nums[j]; nums[j] = t; //@swap
+    }
+    for (int lo = i + 1, hi = n - 1; lo < hi; lo++, hi--) { //@flip
+        int t = nums[lo]; nums[lo] = nums[hi]; nums[hi] = t; //@mirror
+    }
+}

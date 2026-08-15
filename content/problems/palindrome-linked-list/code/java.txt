@@ -1,0 +1,23 @@
+static boolean isPalindrome(ListNode head) {
+    ListNode slow = head, fast = head; //@mid
+    while (fast != null && fast.next != null) { //@midLoop
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    ListNode prev = null; //@revInit
+    while (slow != null) { //@revLoop
+        ListNode next = slow.next;
+        slow.next = prev; //@flip
+        prev = slow;
+        slow = next;
+    }
+    ListNode left = head, right = prev; //@cmpInit
+    while (right != null) { //@cmpLoop
+        if (left.val != right.val) { //@cmp
+            return false; //@no
+        }
+        left = left.next; //@advance
+        right = right.next;
+    }
+    return true; //@yes
+}

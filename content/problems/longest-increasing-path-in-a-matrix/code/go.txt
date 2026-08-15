@@ -1,0 +1,38 @@
+var dirs = [][2]int{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}
+
+func longestIncreasingPath(matrix [][]int) int {
+    rows, cols := len(matrix), len(matrix[0])
+    memo := make([][]int, rows) //@init
+    for r := range memo {
+        memo[r] = make([]int, cols)
+    }
+    best := 0 //@best
+    for r := 0; r < rows; r++ { //@rowLoop
+        for c := 0; c < cols; c++ { //@colLoop
+            l := dfs(matrix, memo, r, c) //@call
+            if l > best { //@cmp
+                best = l //@update
+            }
+        }
+    }
+    return best //@ret
+}
+
+func dfs(matrix, memo [][]int, r, c int) int {
+    if memo[r][c] != 0 { //@cached
+        return memo[r][c] //@retCached
+    }
+    best := 1 //@start
+    for _, d := range dirs { //@neighbours
+        nr, nc := r+d[0], c+d[1]
+        if nr >= 0 && nr < len(matrix) && nc >= 0 && nc < len(matrix[0]) &&
+            matrix[nr][nc] > matrix[r][c] { //@higher
+            l := 1 + dfs(matrix, memo, nr, nc) //@recurse
+            if l > best { //@better
+                best = l //@take
+            }
+        }
+    }
+    memo[r][c] = best //@memo
+    return best //@retBest
+}

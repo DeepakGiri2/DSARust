@@ -1,0 +1,46 @@
+const INF = 1 << 30
+
+func swimInWater(grid [][]int) int {
+    n := len(grid)
+    best := make([][]int, n) //@init
+    visited := make([][]bool, n) //@visited
+    for r := range best {
+        best[r] = make([]int, n)
+        visited[r] = make([]bool, n)
+        for c := range best[r] {
+            best[r][c] = INF
+        }
+    }
+    best[0][0] = grid[0][0] //@seed
+    dirs := [][2]int{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}
+    for iter := 0; iter < n*n; iter++ { //@loop
+        br, bc := -1, -1 //@pick
+        for r := 0; r < n; r++ { //@scan
+            for c := 0; c < n; c++ {
+                if !visited[r][c] && best[r][c] != INF && (br < 0 || best[r][c] < best[br][bc]) {
+                    br, bc = r, c //@lowest
+                }
+            }
+        }
+        if br < 0 { //@stuck
+            break
+        }
+        if br == n-1 && bc == n-1 { //@arrived
+            return best[br][bc] //@ret
+        }
+        visited[br][bc] = true //@settle
+        for _, d := range dirs { //@relax
+            nr, nc := br+d[0], bc+d[1]
+            if nr >= 0 && nr < n && nc >= 0 && nc < n && !visited[nr][nc] {
+                t := best[br][bc] //@level
+                if grid[nr][nc] > t {
+                    t = grid[nr][nc]
+                }
+                if t < best[nr][nc] { //@better
+                    best[nr][nc] = t //@update
+                }
+            }
+        }
+    }
+    return -1 //@none
+}

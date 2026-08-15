@@ -1,0 +1,46 @@
+slug = 'corporate-flight-bookings'
+title = 'Corporate Flight Bookings'
+category = 'Prefix Sums'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '1109'
+complexity = 'O(n + bookings) time · O(n) space'
+
+description = 'Flights are numbered 1…n. Each booking [first, last, seats] reserves that many seats on every flight from first to last inclusive. Return the total seats reserved on each flight.'
+approach = "A difference array is a prefix sum run backwards. Instead of adding seats to every flight in the range (O(range) per booking), record only the two places where the total changes: +seats where the range opens and −seats one past where it closes. A single running sum over that array then reconstructs every flight's total in one pass."
+
+[[inputs]]
+name = 'bookings'
+label = 'bookings'
+type = 'string'
+max_len = 80
+help = 'first last seats triples, comma separated'
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 1
+max = 20
+
+[default_input]
+bookings = '1 2 10, 2 3 20, 2 5 25'
+n = 5
+
+[[tests]]
+expected = '10 55 45 25 25'
+[tests.input]
+bookings = '1 2 10, 2 3 20, 2 5 25'
+n = 5
+
+[[tests]]
+expected = '10 25'
+[tests.input]
+bookings = '1 2 10, 2 2 15'
+n = 2
+
+[[tests]]
+expected = '7 0 0'
+[tests.input]
+bookings = '1 1 7'
+n = 3

@@ -1,0 +1,34 @@
+func serialize(root *TreeNode) string {
+    out := []string{} //@sinit
+    var dfs func(node *TreeNode)
+    dfs = func(node *TreeNode) {
+        if node == nil { //@snull
+            out = append(out, "N") //@sapnull
+            return
+        }
+        out = append(out, strconv.Itoa(node.Val)) //@sapval
+        dfs(node.Left) //@sleft
+        dfs(node.Right) //@sright
+    }
+    dfs(root)
+    return strings.Join(out, ",") //@sjoin
+}
+
+func deserialize(data string) *TreeNode {
+    tokens := strings.Split(data, ",") //@dsplit
+    idx := 0
+    var dfs func() *TreeNode
+    dfs = func() *TreeNode {
+        tok := tokens[idx] //@dread
+        idx++
+        if tok == "N" { //@dnull
+            return nil
+        }
+        v, _ := strconv.Atoi(tok)
+        node := &TreeNode{Val: v} //@dnode
+        node.Left = dfs() //@dleft
+        node.Right = dfs() //@dright
+        return node //@dret
+    }
+    return dfs()
+}

@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void backtrack(int i, int remaining, vector<int>& candidates, vector<int>& cur, vector<vector<int>>& res);
+
+vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+    vector<vector<int>> res;
+    vector<int> cur;
+    backtrack(0, target, candidates, cur, res);
+    return res;
+}
+
+void backtrack(int i, int remaining, vector<int>& candidates, vector<int>& cur, vector<vector<int>>& res) {
+    if (remaining == 0) {
+        res.push_back(cur);
+        return;
+    }
+    if (remaining < 0 || i == (int)candidates.size()) {
+        return;
+    }
+    cur.push_back(candidates[i]);
+    backtrack(i, remaining - candidates[i], candidates, cur, res);
+    cur.pop_back();
+    backtrack(i + 1, remaining, candidates, cur, res);
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> candidates = readInts();
+    string line;
+    getline(cin, line);
+    int target = stoi(line);
+    vector<vector<int>> res = combinationSum(candidates, target);
+    for (auto& s : res) {
+        for (size_t i = 0; i < s.size(); i++) {
+            if (i) cout << " ";
+            cout << s[i];
+        }
+        cout << "\n";
+    }
+}

@@ -1,0 +1,16 @@
+class HitCounter {
+    private final Deque<Integer> q = new ArrayDeque<>();
+
+    HitCounter() {} //@init
+
+    void hit(int timestamp) { //@hit
+        q.addLast(timestamp); //@push
+    }
+
+    int getHits(int timestamp) { //@get
+        while (!q.isEmpty() && q.peekFirst() <= timestamp - 300) { //@stale
+            q.pollFirst(); //@drop
+        }
+        return q.size(); //@count
+    }
+}

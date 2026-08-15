@@ -1,0 +1,21 @@
+func reverseWords(s string) string {
+    var b strings.Builder //@init
+    i := len(s) - 1 //@start
+    for i >= 0 { //@loop
+        for i >= 0 && s[i] == ' ' { //@skip
+            i--
+        }
+        if i < 0 { //@stop
+            break
+        }
+        end := i //@end
+        for i >= 0 && s[i] != ' ' { //@word
+            i--
+        }
+        if b.Len() > 0 { //@sep
+            b.WriteByte(' ')
+        }
+        b.WriteString(s[i+1 : end+1]) //@take
+    }
+    return b.String() //@ret
+}

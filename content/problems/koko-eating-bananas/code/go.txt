@@ -1,0 +1,21 @@
+func minEatingSpeed(piles []int, h int) int {
+    lo, hi := 1, 0 //@init
+    for _, p := range piles { //@maxLoop
+        if p > hi {
+            hi = p //@setMax
+        }
+    }
+    for lo < hi { //@loop
+        k := lo + (hi-lo)/2 //@mid
+        hours := 0 //@count
+        for _, p := range piles { //@sum
+            hours += (p + k - 1) / k //@add
+        }
+        if hours <= h { //@feasible
+            hi = k //@shrink
+        } else {
+            lo = k + 1 //@grow
+        }
+    }
+    return lo //@ret
+}

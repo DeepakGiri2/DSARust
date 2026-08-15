@@ -1,0 +1,40 @@
+func calcEquation(equations [][]string, values []float64, queries [][]string) []float64 {
+    graph := map[string]map[string]float64{} //@build
+    for i, e := range equations { //@edge
+        a, b := e[0], e[1]
+        if graph[a] == nil {
+            graph[a] = map[string]float64{}
+        }
+        if graph[b] == nil {
+            graph[b] = map[string]float64{}
+        }
+        graph[a][b] = values[i] //@fwd
+        graph[b][a] = 1 / values[i] //@rev
+    }
+
+    ans := make([]float64, len(queries)) //@ans
+    for i, q := range queries { //@query
+        if graph[q[0]] == nil || graph[q[1]] == nil { //@unknown
+            ans[i] = -1 //@nope
+            continue
+        }
+        ans[i] = dfs(graph, q[0], q[1], 1, map[string]bool{}) //@search
+    }
+    return ans //@ret
+}
+
+func dfs(graph map[string]map[string]float64, cur, target string, acc float64, seen map[string]bool) float64 {
+    if cur == target { //@arrive
+        return acc //@hit
+    }
+    seen[cur] = true //@mark
+    for next, w := range graph[cur] { //@neighbor
+        if seen[next] { //@skip
+            continue
+        }
+        if got := dfs(graph, next, target, acc*w, seen); got != -1 { //@recurse
+            return got //@bubble
+        }
+    }
+    return -1 //@dead
+}

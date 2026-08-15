@@ -1,0 +1,30 @@
+slug = 'maximum-product-subarray'
+title = 'Maximum Product Subarray'
+category = '1-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Find the contiguous subarray with the largest product.'
+approach = 'Track the minimum as well as the maximum. A negative number turns the smallest running product into the largest, so the minimum is not junk — it is the best candidate the moment a negative arrives, and the two swap roles.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+min = -10
+max = 10
+
+[default_input]
+nums = [2, 3, -2, 4]
+
+[[tests]]
+expected = '6'
+[tests.input]
+nums = [2, 3, -2, 4]
+
+[[tests]]
+expected = '0'
+[tests.input]
+nums = [-2, 0, -1]

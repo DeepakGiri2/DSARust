@@ -1,0 +1,28 @@
+slug = 'max-area-of-island'
+title = 'Max Area of Island'
+category = 'Graphs'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(rows · cols) time · O(rows · cols) space'
+
+description = 'Return the size of the largest connected group of 1s in a binary grid, counting only up/down/left/right connections.'
+approach = 'The same flood fill as counting islands, but the recursion returns a size instead of nothing: 1 for this cell plus whatever the four neighbours report. Sinking each visited cell keeps every cell counted exactly once.'
+
+[[inputs]]
+name = 'grid'
+label = 'grid'
+type = 'grid'
+max_len = 200
+
+[default_input]
+grid = '11000 11000 00100 00011'
+
+[[tests]]
+expected = '4'
+[tests.input]
+grid = '11000 11000 00100 00011'
+
+[[tests]]
+expected = '0'
+[tests.input]
+grid = '000 000'

@@ -1,0 +1,23 @@
+static Map<String, List<int[]>> stamps = new HashMap<>(); //@init
+static Map<String, List<String>> values = new HashMap<>();
+
+static void set(String key, String value, int stamp) {
+    stamps.computeIfAbsent(key, k -> new ArrayList<>()).add(new int[]{stamp}); //@set
+    values.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
+}
+
+static String get(String key, int stamp) {
+    List<int[]> hist = stamps.getOrDefault(key, new ArrayList<>()); //@hist
+    int lo = 0, hi = hist.size() - 1; //@bounds
+    String best = ""; //@best
+    while (lo <= hi) { //@loop
+        int mid = lo + (hi - lo) / 2; //@mid
+        if (hist.get(mid)[0] <= stamp) { //@cmp
+            best = values.get(key).get(mid); //@keep
+            lo = mid + 1; //@later
+        } else {
+            hi = mid - 1; //@earlier
+        }
+    }
+    return best; //@ret
+}

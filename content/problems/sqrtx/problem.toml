@@ -1,0 +1,40 @@
+slug = 'sqrtx'
+title = 'Sqrt(x)'
+category = 'Binary Search'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '69'
+complexity = 'O(log x) time · O(1) space'
+
+description = 'Return the integer square root of a non-negative integer — the largest k with k · k ≤ x.'
+approach = "Squaring is increasing, so 'k · k ≤ x' is true for every k up to the answer and false after it. That single switch-over is what binary search needs: test the midpoint, and either it qualifies (remember it and reach higher) or it does not (everything above is worse too). Remembering the last qualifying k is what makes this the *largest* one rather than merely one that fits."
+
+[[inputs]]
+name = 'x'
+label = 'x'
+type = 'int'
+min = 0
+max = 1000000
+
+[default_input]
+x = 8
+
+[[tests]]
+expected = '2'
+[tests.input]
+x = 8
+
+[[tests]]
+expected = '2'
+[tests.input]
+x = 4
+
+[[tests]]
+expected = '10'
+[tests.input]
+x = 100
+
+[[tests]]
+expected = '0'
+[tests.input]
+x = 0

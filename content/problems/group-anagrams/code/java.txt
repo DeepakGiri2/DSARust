@@ -1,0 +1,22 @@
+static String sortKey(String w) {
+    char[] a = w.toCharArray();
+    Arrays.sort(a);
+    return new String(a);
+}
+
+static List<List<String>> groupAnagrams(String[] words) {
+    Map<String, List<String>> groups = new HashMap<>(); //@init
+    List<String> order = new ArrayList<>(); //@order
+    for (String w : words) { //@loop
+        String key = sortKey(w); //@key
+        if (!groups.containsKey(key)) { //@new
+            order.add(key); //@addorder
+        }
+        groups.computeIfAbsent(key, x -> new ArrayList<>()).add(w); //@add
+    }
+    List<List<String>> res = new ArrayList<>(); //@res
+    for (String k : order) { //@collect
+        res.add(groups.get(k)); //@push
+    }
+    return res; //@return
+}

@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isValid(string s) {
+    map<char, char> pairs = {{')','('}, {']','['}, {'}','{'}};
+    vector<char> stack;
+    for (int i = 0; i < (int)s.size(); i++) {
+        char c = s[i];
+        if (c == '(' || c == '[' || c == '{') {
+            stack.push_back(c);
+        } else {
+            if (stack.empty()) {
+                return false;
+            }
+            char top = stack.back();
+            if (top != pairs[c]) {
+                return false;
+            }
+            stack.pop_back();
+        }
+    }
+    return stack.empty();
+}
+
+int main() {
+    string s;
+    getline(cin, s);
+    while (!s.empty() && (s.back() == '\n' || s.back() == '\r' || s.back() == ' ')) s.pop_back();
+    cout << (isValid(s) ? "true" : "false") << endl;
+}

@@ -1,0 +1,22 @@
+func validPalindrome(s string) bool {
+    l, r := 0, len(s)-1 //@init
+    for l < r { //@loop
+        if s[l] != s[r] { //@cmp
+            return isRange(s, l+1, r) || isRange(s, l, r-1) //@branch
+        }
+        l++ //@moveL
+        r-- //@moveR
+    }
+    return true //@good
+}
+
+func isRange(s string, i, j int) bool {
+    for i < j { //@rloop
+        if s[i] != s[j] { //@rcmp
+            return false //@rbad
+        }
+        i++ //@rmoveL
+        j-- //@rmoveR
+    }
+    return true //@rgood
+}

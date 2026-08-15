@@ -1,0 +1,23 @@
+func reorderList(head *ListNode) {
+    slow, fast := head, head.Next //@mid
+    for fast != nil && fast.Next != nil { //@midLoop
+        slow = slow.Next
+        fast = fast.Next.Next
+    }
+    second := slow.Next //@split
+    slow.Next = nil //@cut
+    var prev *ListNode //@revInit
+    for second != nil { //@revLoop
+        next := second.Next
+        second.Next = prev //@flip
+        prev = second
+        second = next
+    }
+    first, sec := head, prev //@weaveInit
+    for sec != nil { //@weave
+        f, s := first.Next, sec.Next //@save
+        first.Next = sec //@linkA
+        sec.Next = f //@linkB
+        first, sec = f, s //@advance
+    }
+}

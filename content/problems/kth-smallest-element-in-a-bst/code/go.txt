@@ -1,0 +1,18 @@
+func kthSmallest(root *TreeNode, k int) int {
+    stack := []*TreeNode{} //@init
+    cur := root //@setcur
+    for cur != nil || len(stack) > 0 { //@loop
+        for cur != nil { //@dive
+            stack = append(stack, cur) //@push
+            cur = cur.Left //@left
+        }
+        cur = stack[len(stack)-1] //@pop
+        stack = stack[:len(stack)-1]
+        k-- //@dec
+        if k == 0 { //@check
+            return cur.Val //@found
+        }
+        cur = cur.Right //@right
+    }
+    return -1 //@notfound
+}

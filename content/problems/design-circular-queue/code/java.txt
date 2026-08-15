@@ -1,0 +1,49 @@
+class MyCircularQueue {
+    private final int[] buf;
+    private int head = 0, count = 0;
+
+    MyCircularQueue(int k) { //@init
+        buf = new int[k];
+    }
+
+    boolean enQueue(int value) { //@enq
+        if (count == buf.length) { //@full
+            return false; //@nofit
+        }
+        int tail = (head + count) % buf.length; //@tail
+        buf[tail] = value; //@store
+        count++; //@grew
+        return true;
+    }
+
+    boolean deQueue() { //@deq
+        if (count == 0) { //@empty
+            return false; //@noitem
+        }
+        head = (head + 1) % buf.length; //@advance
+        count--; //@shrank
+        return true;
+    }
+
+    int Front() { //@front
+        if (count == 0) {
+            return -1; //@fnone
+        }
+        return buf[head]; //@fval
+    }
+
+    int Rear() { //@rear
+        if (count == 0) {
+            return -1; //@rnone
+        }
+        return buf[(head + count - 1) % buf.length]; //@rval
+    }
+
+    boolean isEmpty() { //@isempty
+        return count == 0;
+    }
+
+    boolean isFull() { //@isfull
+        return count == buf.length;
+    }
+}

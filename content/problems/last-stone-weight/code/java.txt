@@ -1,0 +1,15 @@
+static int lastStoneWeight(int[] stones) {
+    PriorityQueue<Integer> h = new PriorityQueue<>(Collections.reverseOrder()); //@init
+    for (int s : stones) h.offer(s); //@build
+    while (h.size() > 1) { //@loop
+        int y = h.poll(); //@pop1
+        int x = h.poll(); //@pop2
+        if (x != y) { //@check
+            h.offer(y - x); //@push
+        }
+    }
+    if (h.isEmpty()) { //@empty
+        return 0;
+    }
+    return h.peek(); //@return
+}

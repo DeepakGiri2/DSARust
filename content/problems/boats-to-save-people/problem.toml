@@ -1,0 +1,43 @@
+slug = 'boats-to-save-people'
+title = 'Boats to Save People'
+category = 'Two Pointers'
+difficulty = 'Medium'
+tier = '250'
+complexity = 'O(n log n) time · O(1) space'
+
+description = 'Each boat carries at most two people and a total weight of at most limit. Return the minimum number of boats to carry everyone. The array is sorted so two pointers can pair the lightest person with the heaviest.'
+approach = 'Sort by weight. The heaviest person must board; try to seat the lightest remaining person alongside them if the pair fits under the limit. Either way the heaviest is placed and one boat launches, so move r inward and count a boat each round.'
+
+[[inputs]]
+name = 'people'
+label = 'people'
+type = 'int-array'
+max_len = 40
+
+[[inputs]]
+name = 'limit'
+label = 'limit'
+type = 'int'
+min = 1
+
+[default_input]
+people = [3, 2, 2, 1]
+limit = 3
+
+[[tests]]
+expected = '1'
+[tests.input]
+people = [1, 2]
+limit = 3
+
+[[tests]]
+expected = '3'
+[tests.input]
+people = [3, 2, 2, 1]
+limit = 3
+
+[[tests]]
+expected = '4'
+[tests.input]
+people = [3, 5, 3, 4]
+limit = 5

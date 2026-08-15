@@ -1,0 +1,53 @@
+slug = 'max-consecutive-ones-iii'
+title = 'Max Consecutive Ones III'
+category = 'Sliding Window'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '1004'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Given a binary array and an integer k, return the length of the longest run of 1s obtainable by flipping at most k zeros.'
+approach = 'Rephrase it as "the longest window containing at most k zeros" and it becomes a standard sliding window: grow the right edge always, and when the window holds too many zeros, walk the left edge forward until it does not. Each index enters and leaves the window once, so the two nested loops are linear together.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 16
+min = 0
+max = 1
+
+[[inputs]]
+name = 'k'
+label = 'k'
+type = 'int'
+min = 0
+max = 5
+
+[default_input]
+nums = [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0]
+k = 2
+
+[[tests]]
+expected = '6'
+[tests.input]
+nums = [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0]
+k = 2
+
+[[tests]]
+expected = '10'
+[tests.input]
+nums = [0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1]
+k = 3
+
+[[tests]]
+expected = '0'
+[tests.input]
+nums = [0, 0, 0]
+k = 0
+
+[[tests]]
+expected = '3'
+[tests.input]
+nums = [1, 1, 1]
+k = 2

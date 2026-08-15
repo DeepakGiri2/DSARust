@@ -1,0 +1,30 @@
+slug = 'design-add-and-search-words-data-structure'
+title = 'Design Add and Search Words Data Structure'
+category = 'Tries'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '211'
+complexity = 'O(word) to add · O(26^dots · word) to search · O(total characters) space'
+
+description = "Store words and search for them, where a '.' in a query matches any single character."
+approach = "A trie stores words by shared prefix, so an ordinary search is one step per character. The wildcard is what forces recursion: at a '.', any child could be the right one, so every child is tried and the first success wins. Crucially the wildcard only branches at that one position — the rest of the query still walks deterministically, which is why a query with few dots stays cheap."
+
+[[inputs]]
+name = 'ops'
+label = 'ops'
+type = 'string'
+max_len = 73
+help = 'add <word> / search <pattern>, comma separated'
+
+[default_input]
+ops = 'add bad, add dad, add mad, search pad, search bad, search .ad, search b..'
+
+[[tests]]
+expected = 'false true true true'
+[tests.input]
+ops = 'add bad, add dad, add mad, search pad, search bad, search .ad, search b..'
+
+[[tests]]
+expected = 'true false'
+[tests.input]
+ops = 'add a, search ., search b'

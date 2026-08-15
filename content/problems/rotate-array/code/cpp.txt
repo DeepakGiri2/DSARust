@@ -1,0 +1,15 @@
+void rotate(vector<int>& nums, int k) {
+    int n = nums.size();
+    k %= n; //@norm
+    rev(nums, 0, n - 1); //@rev1
+    rev(nums, 0, k - 1); //@rev2
+    rev(nums, k, n - 1); //@rev3
+}
+
+void rev(vector<int>& nums, int lo, int hi) {
+    while (lo < hi) { //@loop
+        swap(nums[lo], nums[hi]); //@swap
+        lo++;
+        hi--; //@move
+    }
+}

@@ -1,0 +1,16 @@
+int guessNumber(int n) {
+    int lo = 1, hi = n; //@bounds
+    while (lo <= hi) { //@loop
+        int mid = lo + (hi - lo) / 2; //@mid
+        int r = guess(mid); //@ask
+        if (r == 0) { //@hit
+            return mid; //@ret
+        }
+        if (r < 0) { //@lower
+            hi = mid - 1; //@shrinkHi
+        } else { //@higher
+            lo = mid + 1; //@shrinkLo
+        }
+    }
+    return -1; //@miss
+}

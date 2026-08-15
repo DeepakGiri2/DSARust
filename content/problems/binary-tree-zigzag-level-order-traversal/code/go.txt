@@ -1,0 +1,30 @@
+func zigzagLevelOrder(root *TreeNode) [][]int {
+    if root == nil { //@empty
+        return nil //@noroot
+    }
+    res := [][]int{} //@init
+    queue := []*TreeNode{root} //@seed
+    leftToRight := true //@flag
+    for len(queue) > 0 { //@while
+        size := len(queue) //@size
+        level := make([]int, size) //@level
+        for i := 0; i < size; i++ { //@pop
+            node := queue[0]
+            queue = queue[1:]
+            pos := i //@pos
+            if !leftToRight { //@flip
+                pos = size - 1 - i
+            }
+            level[pos] = node.Val //@place
+            if node.Left != nil { //@left
+                queue = append(queue, node.Left)
+            }
+            if node.Right != nil { //@right
+                queue = append(queue, node.Right)
+            }
+        }
+        res = append(res, level) //@row
+        leftToRight = !leftToRight //@toggle
+    }
+    return res //@ret
+}

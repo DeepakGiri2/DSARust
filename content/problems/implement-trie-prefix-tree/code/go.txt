@@ -1,0 +1,44 @@
+type Trie struct {
+    children map[byte]*Trie
+    end      bool
+}
+
+func Constructor() Trie {
+    return Trie{children: map[byte]*Trie{}}
+}
+
+func (t *Trie) Insert(word string) {
+    cur := t
+    for i := 0; i < len(word); i++ { //@insLoop
+        c := word[i]
+        if cur.children[c] == nil { //@insMiss
+            cur.children[c] = &Trie{children: map[byte]*Trie{}}
+        }
+        cur = cur.children[c] //@insDown
+    }
+    cur.end = true //@insEnd
+}
+
+func (t *Trie) Search(word string) bool {
+    cur := t
+    for i := 0; i < len(word); i++ { //@srchLoop
+        c := word[i]
+        if cur.children[c] == nil { //@srchMiss
+            return false //@srchFail
+        }
+        cur = cur.children[c] //@srchDown
+    }
+    return cur.end //@srchEnd
+}
+
+func (t *Trie) StartsWith(prefix string) bool {
+    cur := t
+    for i := 0; i < len(prefix); i++ { //@swLoop
+        c := prefix[i]
+        if cur.children[c] == nil { //@swMiss
+            return false //@swFail
+        }
+        cur = cur.children[c] //@swDown
+    }
+    return true //@swEnd
+}

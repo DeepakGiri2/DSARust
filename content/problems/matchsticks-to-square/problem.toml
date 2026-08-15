@@ -1,0 +1,36 @@
+slug = 'matchsticks-to-square'
+title = 'Matchsticks to Square'
+category = 'Backtracking'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '473'
+complexity = 'O(4^n) time · O(n) space'
+
+description = 'Use every matchstick, unbroken, as part of the perimeter of a square. Return whether that is possible.'
+approach = 'Assign each matchstick to one of four sides and recurse. Three prunings make it tractable: reject immediately if the total is not divisible by four or any stick is longer than a side; place the longest sticks first, so failures surface near the root instead of deep in the tree; and skip a side whose current length equals one already tried, since two identical sides give identical subproblems.'
+
+[[inputs]]
+name = 'matchsticks'
+label = 'matchsticks'
+type = 'int-array'
+max_len = 8
+min = 1
+max = 20
+
+[default_input]
+matchsticks = [1, 1, 2, 2, 2]
+
+[[tests]]
+expected = 'true'
+[tests.input]
+matchsticks = [1, 1, 2, 2, 2]
+
+[[tests]]
+expected = 'false'
+[tests.input]
+matchsticks = [3, 3, 3, 3, 4]
+
+[[tests]]
+expected = 'true'
+[tests.input]
+matchsticks = [5, 5, 5, 5]

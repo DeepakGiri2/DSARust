@@ -1,0 +1,35 @@
+slug = 'path-with-minimum-effort'
+title = 'Path With Minimum Effort'
+category = 'Advanced Graphs'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '1631'
+complexity = 'O(rows · cols · log(rows · cols)) time · O(rows · cols) space'
+
+description = "A route's effort is the largest height difference between consecutive cells along it. Find the minimum possible effort from the top-left to the bottom-right."
+approach = "Same shape as swimming in rising water: a route costs its worst single step, not the sum of its steps, so Dijkstra works with max in place of plus. The only difference is what an edge weighs — here the absolute height difference between two neighbouring cells rather than the cell's own elevation."
+
+[[inputs]]
+name = 'heights'
+label = 'heights'
+type = 'string'
+max_len = 60
+help = 'rows separated by spaces, values by commas'
+
+[default_input]
+heights = '1,2,2 3,8,2 5,3,5'
+
+[[tests]]
+expected = '2'
+[tests.input]
+heights = '1,2,2 3,8,2 5,3,5'
+
+[[tests]]
+expected = '1'
+[tests.input]
+heights = '1,2,3 3,8,4 5,3,5'
+
+[[tests]]
+expected = '0'
+[tests.input]
+heights = '1,2,1,1,1 1,2,1,2,1 1,2,1,2,1 1,2,1,2,1 1,1,1,2,1'

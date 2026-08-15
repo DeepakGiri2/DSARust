@@ -1,0 +1,43 @@
+slug = 'linked-list-cycle'
+title = 'Linked List Cycle'
+category = 'Linked List'
+difficulty = 'Easy'
+tier = '50'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Given the head of a linked list, determine if the list has a cycle in it (some node can be reached again by following next pointers).'
+approach = "Floyd's tortoise & hare: move slow one step and fast two steps each iteration. If there is a cycle the fast pointer eventually laps and meets slow; if fast reaches nil there is no cycle."
+
+[[inputs]]
+name = 'list'
+label = 'list values'
+type = 'int-array'
+max_len = 40
+
+[[inputs]]
+name = 'pos'
+label = 'cycle index (tail connects to; -1 = none)'
+type = 'int'
+min = -1
+
+[default_input]
+list = [3, 2, 0, -4]
+pos = 1
+
+[[tests]]
+expected = 'true'
+[tests.input]
+list = [3, 2, 0, -4]
+pos = 1
+
+[[tests]]
+expected = 'true'
+[tests.input]
+list = [1, 2]
+pos = 0
+
+[[tests]]
+expected = 'false'
+[tests.input]
+list = [1]
+pos = -1

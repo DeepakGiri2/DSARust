@@ -1,0 +1,10 @@
+func isSubsequence(s string, t string) bool {
+    i, j := 0, 0 //@init
+    for i < len(s) && j < len(t) { //@loop
+        if s[i] == t[j] { //@match
+            i++ //@advI
+        }
+        j++ //@advJ
+    }
+    return i == len(s) //@ret
+}

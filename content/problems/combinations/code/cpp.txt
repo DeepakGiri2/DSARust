@@ -1,0 +1,20 @@
+vector<vector<int>> res; //@init
+vector<int> cur; //@cur
+
+void back(int start, int n, int k) {
+    if ((int)cur.size() == k) { //@complete
+        res.push_back(cur); //@record
+        return; //@retDone
+    }
+    for (int v = start; v <= n - (k - (int)cur.size()) + 1; v++) { //@loop
+        cur.push_back(v); //@choose
+        back(v + 1, n, k); //@recurse
+        cur.pop_back(); //@undo
+    }
+}
+
+vector<vector<int>> combine(int n, int k) {
+    res.clear(); cur.clear();
+    back(1, n, k); //@call
+    return res; //@ret
+}

@@ -1,0 +1,13 @@
+vector<vector<int>> merge(vector<vector<int>>& intervals) {
+    sort(intervals.begin(), intervals.end()); //@sort
+    vector<vector<int>> merged; //@init
+    for (int i = 0; i < (int)intervals.size(); i++) { //@loop
+        vector<int> cur = intervals[i];
+        if (merged.empty() || merged.back()[1] < cur[0]) { //@disjoint
+            merged.push_back(cur); //@append
+        } else if (cur[1] > merged.back()[1]) { //@overlap
+            merged.back()[1] = cur[1]; //@extend
+        }
+    }
+    return merged; //@ret
+}

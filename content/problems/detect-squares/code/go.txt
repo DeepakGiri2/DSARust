@@ -1,0 +1,22 @@
+type DetectSquares struct {
+    count map[[2]int]int //@init
+    pts   [][2]int //@list
+}
+
+func (d *DetectSquares) Add(p []int) {
+    d.count[[2]int{p[0], p[1]}]++ //@add
+    d.pts = append(d.pts, [2]int{p[0], p[1]}) //@remember
+}
+
+func (d *DetectSquares) Count(p []int) int {
+    x, y := p[0], p[1] //@query
+    total := 0 //@total
+    for _, q := range d.pts { //@scan
+        px, py := q[0], q[1]
+        if abs(px-x) != abs(py-y) || px == x || py == y { //@diagonal
+            continue
+        }
+        total += d.count[[2]int{px, y}] * d.count[[2]int{x, py}] //@corners
+    }
+    return total //@ret
+}

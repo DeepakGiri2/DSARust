@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Trie {
+    unordered_map<char, Trie*> children;
+    bool end = false;
+
+    void insert(string word) {
+        Trie* cur = this;
+        for (int i = 0; i < (int)word.size(); i++) {
+            char c = word[i];
+            if (cur->children.find(c) == cur->children.end()) {
+                cur->children[c] = new Trie();
+            }
+            cur = cur->children[c];
+        }
+        cur->end = true;
+    }
+
+    bool search(string word) {
+        Trie* cur = this;
+        for (int i = 0; i < (int)word.size(); i++) {
+            char c = word[i];
+            if (cur->children.find(c) == cur->children.end()) {
+                return false;
+            }
+            cur = cur->children[c];
+        }
+        return cur->end;
+    }
+
+    bool startsWith(string prefix) {
+        Trie* cur = this;
+        for (int i = 0; i < (int)prefix.size(); i++) {
+            char c = prefix[i];
+            if (cur->children.find(c) == cur->children.end()) {
+                return false;
+            }
+            cur = cur->children[c];
+        }
+        return true;
+    }
+};
+
+int main() {
+    string line;
+    getline(cin, line);
+    Trie trie;
+    stringstream ss(line);
+    string part;
+    while (getline(ss, part, ',')) {
+        stringstream ps(part);
+        string cmd, arg;
+        ps >> cmd >> arg;
+        if (cmd == "insert") {
+            trie.insert(arg);
+        } else if (cmd == "search") {
+            cout << (trie.search(arg) ? "true" : "false") << "\n";
+        } else if (cmd == "startsWith") {
+            cout << (trie.startsWith(arg) ? "true" : "false") << "\n";
+        }
+    }
+}

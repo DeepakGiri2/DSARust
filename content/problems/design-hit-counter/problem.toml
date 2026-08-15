@@ -1,0 +1,35 @@
+slug = 'design-hit-counter'
+title = 'Design Hit Counter'
+category = 'Design'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '362'
+complexity = 'O(1) amortized per hit · O(hits in the window) space'
+
+description = 'Count the hits received in the past 300 seconds. hit(t) records a hit at timestamp t; getHits(t) returns how many hits happened in (t − 300, t]. Timestamps arrive in non-decreasing order.'
+approach = "Keep the timestamps in a queue. Because they arrive in order, everything that has expired sits at the front, so getHits only has to drop from the front until the oldest survivor is inside the window — and each timestamp is dropped at most once across the whole run, which is what makes the amortized cost constant. The queue's length is the answer."
+
+[[inputs]]
+name = 'ops'
+label = 'ops'
+type = 'string'
+max_len = 90
+help = 'hit t · getHits t — timestamps must not decrease'
+
+[default_input]
+ops = 'hit 1, hit 2, hit 3, getHits 4, hit 300, getHits 300, getHits 301'
+
+[[tests]]
+expected = '3 4 3'
+[tests.input]
+ops = 'hit 1, hit 2, hit 3, getHits 4, hit 300, getHits 300, getHits 301'
+
+[[tests]]
+expected = '0 1'
+[tests.input]
+ops = 'getHits 1, hit 1, getHits 1'
+
+[[tests]]
+expected = '0'
+[tests.input]
+ops = 'hit 1, hit 1, hit 1, getHits 302'

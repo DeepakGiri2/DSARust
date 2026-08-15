@@ -1,0 +1,26 @@
+class BSTIterator {
+    vector<TreeNode*> stk;
+
+    void pushLeft(TreeNode* node) { //@push
+        while (node) { //@descend
+            stk.push_back(node); //@stack
+            node = node->left; //@goleft
+        }
+    }
+
+public:
+    BSTIterator(TreeNode* root) { //@init
+        pushLeft(root); //@seed
+    }
+
+    int next() { //@next
+        TreeNode* node = stk.back(); //@top
+        stk.pop_back(); //@pop
+        pushLeft(node->right); //@right
+        return node->val; //@val
+    }
+
+    bool hasNext() { //@hasnext
+        return !stk.empty(); //@any
+    }
+};

@@ -1,0 +1,35 @@
+slug = 'valid-perfect-square'
+title = 'Valid Perfect Square'
+category = 'Binary Search'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '367'
+complexity = 'O(log n) time · O(1) space'
+
+description = 'Return true if a positive integer is a perfect square, without using any square-root function.'
+approach = 'Same monotone ladder as the integer square root, but the question is exact rather than best-effort, so the loop can stop the moment mid · mid equals the target. Every other comparison discards a half: too small means nothing below mid is worth trying, too large means nothing above it is.'
+
+[[inputs]]
+name = 'num'
+label = 'num'
+type = 'int'
+min = 1
+max = 1000000
+
+[default_input]
+num = 16
+
+[[tests]]
+expected = 'true'
+[tests.input]
+num = 16
+
+[[tests]]
+expected = 'false'
+[tests.input]
+num = 14
+
+[[tests]]
+expected = 'true'
+[tests.input]
+num = 1

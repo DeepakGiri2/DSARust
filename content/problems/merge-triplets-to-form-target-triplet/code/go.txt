@@ -1,0 +1,14 @@
+func mergeTriplets(triplets [][]int, target []int) bool {
+    found := [3]bool{} //@init
+    for _, t := range triplets { //@loop
+        if t[0] > target[0] || t[1] > target[1] || t[2] > target[2] { //@tooBig
+            continue
+        }
+        for i := 0; i < 3; i++ { //@check
+            if t[i] == target[i] { //@match
+                found[i] = true //@mark
+            }
+        }
+    }
+    return found[0] && found[1] && found[2] //@ret
+}

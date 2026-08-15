@@ -1,0 +1,33 @@
+slug = 'serialize-and-deserialize-binary-tree'
+title = 'Serialize and Deserialize Binary Tree'
+category = 'Trees'
+difficulty = 'Hard'
+tier = '150'
+complexity = 'O(n) time · O(n) space'
+
+description = "Design an algorithm to encode a binary tree into a single string, then decode that string back into the identical tree. Here we serialize with a pre-order DFS, writing 'N' for every missing child, and deserialize by consuming those tokens left to right."
+approach = "Pre-order DFS. To serialize, visit root then left then right, emitting each value and a sentinel 'N' for null links, joined by commas. To deserialize, walk the tokens with a moving cursor: the next token is always the next node in pre-order — build it, then recursively build its left subtree, then its right."
+
+[[inputs]]
+name = 'root'
+label = "tree (level-order, 'n' = null)"
+type = 'tree'
+max_len = 40
+
+[default_input]
+root = '1 2 3 n n 4 5'
+
+[[tests]]
+expected = '1,2,N,N,3,4,N,N,5,N,N'
+[tests.input]
+root = '1 2 3 n n 4 5'
+
+[[tests]]
+expected = '1,N,N'
+[tests.input]
+root = '1'
+
+[[tests]]
+expected = '1,2,N,N,3,N,N'
+[tests.input]
+root = '1 2 3'

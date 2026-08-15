@@ -1,0 +1,27 @@
+func solveNQueens(n int) [][]string {
+    res := [][]string{} //@init
+    cols := map[int]bool{} //@cols
+    diag := map[int]bool{} //@diag
+    anti := map[int]bool{} //@anti
+    board := make([]int, n) //@board
+    var back func(row int)
+    back = func(row int) {
+        if row == n { //@complete
+            res = append(res, render(board)) //@record
+            return //@retDone
+        }
+        for c := 0; c < n; c++ { //@loop
+            if cols[c] || diag[row-c] || anti[row+c] { //@attacked
+                continue
+            }
+            cols[c], diag[row-c], anti[row+c] = true, true, true //@place
+            board[row] = c
+            back(row + 1) //@recurse
+            delete(cols, c) //@undo
+            delete(diag, row-c)
+            delete(anti, row+c)
+        }
+    }
+    back(0) //@call
+    return res //@ret
+}

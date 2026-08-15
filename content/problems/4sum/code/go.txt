@@ -1,0 +1,35 @@
+func fourSum(nums []int, target int) [][]int {
+    sort.Ints(nums) //@sort
+    res := [][]int{} //@init
+    n := len(nums)
+    for i := 0; i < n-3; i++ { //@loopI
+        if i > 0 && nums[i] == nums[i-1] { //@dupI
+            continue
+        }
+        for j := i + 1; j < n-2; j++ { //@loopJ
+            if j > i+1 && nums[j] == nums[j-1] { //@dupJ
+                continue
+            }
+            lo, hi := j+1, n-1 //@pointers
+            for lo < hi { //@squeeze
+                sum := nums[i] + nums[j] + nums[lo] + nums[hi] //@sum
+                if sum < target { //@tooSmall
+                    lo++
+                } else if sum > target { //@tooBig
+                    hi--
+                } else { //@hit
+                    res = append(res, []int{nums[i], nums[j], nums[lo], nums[hi]}) //@record
+                    lo++ //@skipLo
+                    for lo < hi && nums[lo] == nums[lo-1] {
+                        lo++
+                    }
+                    hi-- //@skipHi
+                    for lo < hi && nums[hi] == nums[hi+1] {
+                        hi--
+                    }
+                }
+            }
+        }
+    }
+    return res //@ret
+}

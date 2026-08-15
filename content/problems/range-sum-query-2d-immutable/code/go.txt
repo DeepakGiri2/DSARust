@@ -1,0 +1,19 @@
+type NumMatrix struct{ pre [][]int }
+
+func Constructor(matrix [][]int) NumMatrix {
+    m, n := len(matrix), len(matrix[0])
+    pre := make([][]int, m+1) //@init
+    for i := range pre {
+        pre[i] = make([]int, n+1)
+    }
+    for r := 0; r < m; r++ { //@row
+        for c := 0; c < n; c++ { //@col
+            pre[r+1][c+1] = matrix[r][c] + pre[r][c+1] + pre[r+1][c] - pre[r][c] //@cell
+        }
+    }
+    return NumMatrix{pre} //@ready
+}
+
+func (nm *NumMatrix) SumRegion(r1, c1, r2, c2 int) int { //@query
+    return nm.pre[r2+1][c2+1] - nm.pre[r1][c2+1] - nm.pre[r2+1][c1] + nm.pre[r1][c1] //@answer
+}

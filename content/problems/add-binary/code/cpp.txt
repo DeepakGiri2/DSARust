@@ -1,0 +1,20 @@
+string addBinary(string a, string b) {
+    int i = a.size() - 1, j = b.size() - 1; //@init
+    int carry = 0; //@carry
+    string out; //@out
+    while (i >= 0 || j >= 0 || carry > 0) { //@loop
+        int sum = carry; //@start
+        if (i >= 0) { //@takeA
+            sum += a[i] - '0';
+            i--;
+        }
+        if (j >= 0) { //@takeB
+            sum += b[j] - '0';
+            j--;
+        }
+        out += char('0' + sum % 2); //@bit
+        carry = sum / 2; //@nextCarry
+    }
+    reverse(out.begin(), out.end()); //@reverse
+    return out; //@ret
+}

@@ -1,0 +1,33 @@
+slug = 'longest-increasing-subsequence'
+title = 'Longest Increasing Subsequence'
+category = '1-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n²) time · O(n) space'
+
+description = 'Return the length of the longest strictly-increasing subsequence (elements need not be contiguous). Watch dp[i] — the length of the best increasing subsequence that ENDS at index i — fill left to right.'
+approach = 'dp[i] = 1 + max(dp[j]) over all j < i with nums[j] < nums[i] (or 1 if none). Every element can start its own length-1 chain; extending a smaller earlier element grows it. The answer is the largest dp value.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+nums = [10, 9, 2, 5, 3, 7, 101, 18]
+
+[[tests]]
+expected = '4'
+[tests.input]
+nums = [10, 9, 2, 5, 3, 7, 101, 18]
+
+[[tests]]
+expected = '4'
+[tests.input]
+nums = [0, 1, 0, 3, 2, 3]
+
+[[tests]]
+expected = '1'
+[tests.input]
+nums = [7, 7, 7, 7]

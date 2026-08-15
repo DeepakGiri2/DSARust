@@ -1,0 +1,40 @@
+slug = 'valid-parenthesis-string'
+title = 'Valid Parenthesis String'
+category = 'Greedy'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '678'
+complexity = 'O(n) time · O(1) space'
+
+description = "Return true if a string of '(', ')' and '*' can be made valid, where each '*' may act as '(', ')' or an empty string."
+approach = 'Rather than deciding what each star is, track the *range* of open-bracket counts still achievable: a low bound assuming every star closes, and a high bound assuming every star opens. If the high bound ever goes negative there are more closers than anything could match, so the string is dead. Clamping the low bound at zero is what keeps the range honest — a negative count is not a real possibility, only an over-eager assumption.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 20
+help = '( ) and * only'
+
+[default_input]
+s = '(*))'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = '(*))'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = '(*()'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = '((('
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = ')('

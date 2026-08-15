@@ -1,0 +1,14 @@
+static int removeCoveredIntervals(int[][] intervals) {
+    Arrays.sort(intervals, (a, b) -> //@sort
+        a[0] != b[0] ? a[0] - b[0] : b[1] - a[1]);
+    int count = 0, reach = 0; //@init
+    for (int[] iv : intervals) { //@loop
+        if (iv[1] > reach) { //@extends
+            count++; //@keep
+            reach = iv[1]; //@extend
+        } else { //@covered
+            continue;
+        }
+    }
+    return count; //@ret
+}

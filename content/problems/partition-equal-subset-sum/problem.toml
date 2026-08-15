@@ -1,0 +1,36 @@
+slug = 'partition-equal-subset-sum'
+title = 'Partition Equal Subset Sum'
+category = '1-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '416'
+complexity = 'O(n · sum) time · O(sum) space'
+
+description = 'Return true if an array can be split into two groups with equal sums.'
+approach = 'Equal halves means one group must total exactly half the whole, so the question reduces to subset-sum: is that target reachable? Keep a boolean per total and let each number extend every total already reachable. The one trick that matters is iterating the totals *downwards*, which prevents a single number from being spent twice in the same pass.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 8
+min = 1
+max = 20
+
+[default_input]
+nums = [1, 5, 11, 5]
+
+[[tests]]
+expected = 'true'
+[tests.input]
+nums = [1, 5, 11, 5]
+
+[[tests]]
+expected = 'false'
+[tests.input]
+nums = [1, 2, 3, 5]
+
+[[tests]]
+expected = 'true'
+[tests.input]
+nums = [1, 1]

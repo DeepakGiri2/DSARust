@@ -1,0 +1,29 @@
+slug = 'reverse-bits'
+title = 'Reverse Bits'
+category = 'Bit Manipulation'
+difficulty = 'Easy'
+tier = '150'
+complexity = 'O(1) time · O(1) space'
+
+description = 'Reverse the bits of a 32-bit unsigned integer.'
+approach = 'Shift the result left to open a slot, take the lowest bit of the input, drop it in, and shift the input right. After one pass the first bit read has been pushed all the way to the top.'
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 0
+max = 255
+
+[default_input]
+n = 43
+
+[[tests]]
+expected = '212'
+[tests.input]
+n = 43
+
+[[tests]]
+expected = '128'
+[tests.input]
+n = 1

@@ -1,0 +1,43 @@
+slug = 'longest-common-subsequence'
+title = 'Longest Common Subsequence'
+category = '2-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(m · n) time · O(m · n) space'
+
+description = 'Given two strings, return the length of their longest common subsequence (characters appearing in both, in order, not necessarily contiguous). Watch the dp table fill, where dp[i][j] is the LCS of the first i chars of text1 and first j chars of text2.'
+approach = 'If the current characters match, dp[i][j] = dp[i-1][j-1] + 1 (extend the diagonal). Otherwise dp[i][j] = max(dp[i-1][j], dp[i][j-1]) — drop one character from whichever string helps more. Row 0 and column 0 (empty prefix) are all 0.'
+
+[[inputs]]
+name = 'text1'
+label = 'text1'
+type = 'string'
+max_len = 8
+
+[[inputs]]
+name = 'text2'
+label = 'text2'
+type = 'string'
+max_len = 8
+
+[default_input]
+text1 = 'abcde'
+text2 = 'ace'
+
+[[tests]]
+expected = '3'
+[tests.input]
+text1 = 'abcde'
+text2 = 'ace'
+
+[[tests]]
+expected = '3'
+[tests.input]
+text1 = 'abc'
+text2 = 'abc'
+
+[[tests]]
+expected = '0'
+[tests.input]
+text1 = 'abc'
+text2 = 'def'

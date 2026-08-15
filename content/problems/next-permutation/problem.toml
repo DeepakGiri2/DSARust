@@ -1,0 +1,46 @@
+slug = 'next-permutation'
+title = 'Next Permutation'
+category = 'Arrays & Hashing'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '31'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Rearrange the numbers into the lexicographically next greater permutation. If no greater permutation exists, rearrange into the smallest (sorted ascending). Do it in place.'
+approach = "A suffix that is non-increasing is already the largest arrangement of its own values, so the change must happen at the last index i whose value is smaller than its neighbour — the pivot. Swap it with the smallest value to its right that still beats it, then reverse the suffix: it was non-increasing before the swap and stays so after, and reversing turns it into the smallest arrangement, which is exactly what 'next' requires."
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 10
+min = 0
+max = 20
+
+[default_input]
+nums = [1, 3, 5, 4, 2]
+
+[[tests]]
+expected = '1 4 2 3 5'
+[tests.input]
+nums = [1, 3, 5, 4, 2]
+
+[[tests]]
+expected = '1 3 2'
+[tests.input]
+nums = [1, 2, 3]
+
+[[tests]]
+expected = '1 2 3'
+[tests.input]
+nums = [3, 2, 1]
+
+[[tests]]
+expected = '1 5 1'
+[tests.input]
+nums = [1, 1, 5]
+
+[[tests]]
+expected = '3 1 2'
+[tests.input]
+nums = [2, 3, 1]

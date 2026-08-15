@@ -1,0 +1,35 @@
+func accountsMerge(accounts [][]string) [][]string {
+    id := map[string]int{} //@init
+    owner := []string{}
+    parent := []int{}
+    for _, acc := range accounts { //@scan
+        for _, e := range acc[1:] { //@each
+            if _, ok := id[e]; !ok { //@new
+                id[e] = len(parent)
+                parent = append(parent, len(parent))
+                owner = append(owner, acc[0])
+            }
+            a, b := find(parent, id[acc[1]]), find(parent, id[e]) //@roots
+            parent[a] = b //@union
+        }
+    }
+
+    groups := map[int][]string{} //@group
+    for e, i := range id { //@collect
+        groups[find(parent, i)] = append(groups[find(parent, i)], e) //@bucket
+    }
+    out := [][]string{}
+    for r, emails := range groups { //@build
+        sort.Strings(emails) //@sort
+        out = append(out, append([]string{owner[r]}, emails...)) //@row
+    }
+    return out //@ret
+}
+
+func find(parent []int, x int) int {
+    for parent[x] != x { //@walk
+        parent[x] = parent[parent[x]] //@compress
+        x = parent[x] //@up
+    }
+    return x //@root
+}

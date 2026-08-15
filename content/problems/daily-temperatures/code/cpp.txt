@@ -1,0 +1,14 @@
+vector<int> dailyTemperatures(vector<int>& temps) {
+    int n = temps.size();
+    vector<int> answer(n, 0); //@init
+    vector<int> stack; //@initStack
+    for (int i = 0; i < n; i++) { //@loop
+        while (!stack.empty() && temps[i] > temps[stack.back()]) { //@while
+            int j = stack.back(); //@peek
+            stack.pop_back(); //@pop
+            answer[j] = i - j; //@set
+        }
+        stack.push_back(i); //@push
+    }
+    return answer; //@ret
+}

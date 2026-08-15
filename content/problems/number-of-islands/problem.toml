@@ -1,0 +1,33 @@
+slug = 'number-of-islands'
+title = 'Number of Islands'
+category = 'Graphs'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(m·n) time · O(m·n) space (recursion stack in the worst case)'
+
+description = "Given an m × n grid of '1's (land) and '0's (water), count the number of islands. An island is a group of land cells connected horizontally or vertically."
+approach = 'Scan every cell. When you hit an unvisited land cell, that is a new island — increment the count and flood-fill (DFS) all connected land, sinking it so it is never counted twice. Watch the recursion stack grow and shrink as the flood spreads.'
+
+[[inputs]]
+name = 'grid'
+label = 'grid (rows space-separated, 1=land 0=water)'
+type = 'grid'
+max_len = 40
+
+[default_input]
+grid = '11000 11000 00100 00011'
+
+[[tests]]
+expected = '3'
+[tests.input]
+grid = '11000 11000 00100 00011'
+
+[[tests]]
+expected = '3'
+[tests.input]
+grid = '100 010 001'
+
+[[tests]]
+expected = '1'
+[tests.input]
+grid = '111 111 111'

@@ -1,0 +1,26 @@
+static int calculate(String s) {
+    Deque<Integer> stack = new ArrayDeque<>(); //@init
+    int num = 0;
+    char op = '+'; //@state
+    for (int i = 0; i < s.length(); i++) {
+        char c = s.charAt(i); //@ch
+        if (Character.isDigit(c)) { //@digit
+            num = num * 10 + (c - '0'); //@build
+        }
+        if ((c != ' ' && !Character.isDigit(c)) || i == s.length() - 1) { //@flush
+            switch (op) { //@apply
+                case '+' -> stack.push(num); //@plus
+                case '-' -> stack.push(-num); //@minus
+                case '*' -> stack.push(stack.pop() * num); //@times
+                case '/' -> stack.push(stack.pop() / num); //@divide
+            }
+            op = c; //@remember
+            num = 0;
+        }
+    }
+    int sum = 0; //@sum
+    for (int v : stack) { //@add
+        sum += v;
+    }
+    return sum; //@ret
+}

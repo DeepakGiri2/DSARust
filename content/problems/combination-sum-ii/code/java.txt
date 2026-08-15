@@ -1,0 +1,27 @@
+static List<List<Integer>> res = new ArrayList<>(); //@init
+static List<Integer> cur = new ArrayList<>();
+
+static void back(int[] candidates, int start, int remain) {
+    if (remain == 0) { //@hit
+        res.add(new ArrayList<>(cur)); //@record
+        return; //@retHit
+    }
+    for (int i = start; i < candidates.length; i++) { //@loop
+        if (i > start && candidates[i] == candidates[i - 1]) { //@dup
+            continue;
+        }
+        if (candidates[i] > remain) { //@tooBig
+            break;
+        }
+        cur.add(candidates[i]); //@choose
+        back(candidates, i + 1, remain - candidates[i]); //@recurse
+        cur.remove(cur.size() - 1); //@undo
+    }
+}
+
+static List<List<Integer>> combinationSum2(int[] candidates, int target) {
+    Arrays.sort(candidates); //@sort
+    res.clear(); cur.clear();
+    back(candidates, 0, target); //@call
+    return res; //@ret
+}

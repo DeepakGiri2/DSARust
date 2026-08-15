@@ -1,0 +1,15 @@
+bool isIsomorphic(string s, string t) {
+    unordered_map<char, char> st, ts; //@init
+    for (int i = 0; i < (int)s.size(); i++) { //@loop
+        char a = s[i], b = t[i]; //@pair
+        if (st.count(a) && st[a] != b) { //@fwd
+            return false; //@no
+        }
+        if (ts.count(b) && ts[b] != a) { //@back
+            return false; //@no2
+        }
+        st[a] = b; //@map1
+        ts[b] = a; //@map2
+    }
+    return true; //@yes
+}

@@ -1,0 +1,28 @@
+func findCircleNum(isConnected [][]int) int {
+    n := len(isConnected)
+    parent := make([]int, n) //@init
+    for i := range parent {
+        parent[i] = i //@seed
+    }
+    count := n //@count
+    for i := 0; i < n; i++ { //@row
+        for j := i + 1; j < n; j++ { //@col
+            if isConnected[i][j] == 1 { //@edge
+                a, b := find(parent, i), find(parent, j) //@find
+                if a != b { //@same
+                    parent[a] = b //@union
+                    count-- //@shrink
+                }
+            }
+        }
+    }
+    return count //@ret
+}
+
+func find(parent []int, x int) int {
+    for parent[x] != x { //@walk
+        parent[x] = parent[parent[x]] //@compress
+        x = parent[x] //@up
+    }
+    return x //@root
+}

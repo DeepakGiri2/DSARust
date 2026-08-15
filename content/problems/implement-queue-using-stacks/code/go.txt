@@ -1,0 +1,33 @@
+type MyQueue struct {
+    inbox, outbox []int //@init
+}
+
+func (q *MyQueue) Push(x int) {
+    q.inbox = append(q.inbox, x) //@push
+}
+
+func (q *MyQueue) transfer() {
+    if len(q.outbox) == 0 { //@needTransfer
+        for len(q.inbox) > 0 { //@drain
+            v := q.inbox[len(q.inbox)-1] //@move
+            q.inbox = q.inbox[:len(q.inbox)-1]
+            q.outbox = append(q.outbox, v) //@onto
+        }
+    }
+}
+
+func (q *MyQueue) Pop() int {
+    q.transfer() //@callPop
+    v := q.outbox[len(q.outbox)-1] //@pop
+    q.outbox = q.outbox[:len(q.outbox)-1]
+    return v //@retPop
+}
+
+func (q *MyQueue) Peek() int {
+    q.transfer() //@callPeek
+    return q.outbox[len(q.outbox)-1] //@peek
+}
+
+func (q *MyQueue) Empty() bool {
+    return len(q.inbox) == 0 && len(q.outbox) == 0 //@empty
+}

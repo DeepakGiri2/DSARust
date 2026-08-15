@@ -1,0 +1,13 @@
+static int[][] merge(int[][] intervals) {
+    Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0])); //@sort
+    List<int[]> merged = new ArrayList<>(); //@init
+    for (int i = 0; i < intervals.length; i++) { //@loop
+        int[] cur = intervals[i];
+        if (merged.isEmpty() || merged.get(merged.size() - 1)[1] < cur[0]) { //@disjoint
+            merged.add(cur); //@append
+        } else if (cur[1] > merged.get(merged.size() - 1)[1]) { //@overlap
+            merged.get(merged.size() - 1)[1] = cur[1]; //@extend
+        }
+    }
+    return merged.toArray(new int[merged.size()][]); //@ret
+}

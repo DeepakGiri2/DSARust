@@ -1,0 +1,39 @@
+var dirs = [][2]int{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}
+
+func pacificAtlantic(heights [][]int) [][]int {
+    rows, cols := len(heights), len(heights[0])
+    pac := make([][]bool, rows) //@init
+    atl := make([][]bool, rows)
+    for r := range pac {
+        pac[r] = make([]bool, cols)
+        atl[r] = make([]bool, cols)
+    }
+    for r := 0; r < rows; r++ { //@leftRight
+        flow(heights, pac, r, 0)
+        flow(heights, atl, r, cols-1)
+    }
+    for c := 0; c < cols; c++ { //@topBottom
+        flow(heights, pac, 0, c)
+        flow(heights, atl, rows-1, c)
+    }
+    res := [][]int{} //@collect
+    for r := 0; r < rows; r++ { //@rowLoop
+        for c := 0; c < cols; c++ { //@colLoop
+            if pac[r][c] && atl[r][c] { //@both
+                res = append(res, []int{r, c}) //@add
+            }
+        }
+    }
+    return res //@ret
+}
+
+func flow(h [][]int, seen [][]bool, r, c int) {
+    seen[r][c] = true //@mark
+    for _, d := range dirs { //@neighbours
+        nr, nc := r+d[0], c+d[1]
+        if nr >= 0 && nr < len(h) && nc >= 0 && nc < len(h[0]) &&
+            !seen[nr][nc] && h[nr][nc] >= h[r][c] { //@uphill
+            flow(h, seen, nr, nc) //@recurse
+        }
+    }
+}

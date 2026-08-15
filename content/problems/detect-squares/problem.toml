@@ -1,0 +1,30 @@
+slug = 'detect-squares'
+title = 'Detect Squares'
+category = 'Math & Geometry'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '2013'
+complexity = 'O(1) add · O(n) count · O(n) space'
+
+description = 'Points are added one at a time, possibly repeating. Given a query point, count how many axis-aligned squares can be formed using three previously added points plus the query point.'
+approach = 'Pick the diagonal, not the square. For a query point, any stored point that is neither in the same row nor the same column but is an equal distance away in both is the opposite corner of exactly one candidate square — and the other two corners are then fully determined. So the count for that diagonal is simply how many copies of each of those two corners exist, multiplied together. Duplicates matter, which is why counts are stored rather than a set.'
+
+[[inputs]]
+name = 'ops'
+label = 'ops'
+type = 'string'
+max_len = 120
+help = 'add <x> <y> / count <x> <y>, comma separated'
+
+[default_input]
+ops = 'add 3 10, add 11 2, add 3 2, count 11 10, count 14 8, add 11 2, count 11 10'
+
+[[tests]]
+expected = '1 0 2'
+[tests.input]
+ops = 'add 3 10, add 11 2, add 3 2, count 11 10, count 14 8, add 11 2, count 11 10'
+
+[[tests]]
+expected = '1'
+[tests.input]
+ops = 'add 0 0, add 0 2, add 2 0, count 2 2'

@@ -1,0 +1,16 @@
+static int climbStairs(int n) {
+    Map<Integer, Integer> memo = new HashMap<>(); //@init
+    return climb(n, memo); //@call
+}
+
+static int climb(int n, Map<Integer, Integer> memo) {
+    if (n <= 2) { //@base
+        return n; //@retbase
+    }
+    if (memo.containsKey(n)) { //@memo
+        return memo.get(n); //@retmemo
+    }
+    int result = climb(n - 1, memo) + climb(n - 2, memo); //@rec
+    memo.put(n, result); //@store
+    return result; //@ret
+}

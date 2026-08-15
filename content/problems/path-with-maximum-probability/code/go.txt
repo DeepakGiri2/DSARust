@@ -1,0 +1,33 @@
+func maxProbability(n int, edges [][]int, succProb []float64, start int, end int) float64 {
+    type link struct {
+        to int
+        p  float64
+    }
+    adj := make([][]link, n) //@build
+    for i, e := range edges {
+        adj[e[0]] = append(adj[e[0]], link{e[1], succProb[i]})
+        adj[e[1]] = append(adj[e[1]], link{e[0], succProb[i]})
+    }
+    prob := make([]float64, n) //@init
+    prob[start] = 1.0 //@seed
+    visited := make([]bool, n) //@visited
+    for iter := 0; iter < n; iter++ { //@loop
+        u := -1 //@pick
+        for v := 0; v < n; v++ { //@scan
+            if !visited[v] && (u == -1 || prob[v] > prob[u]) {
+                u = v //@highest
+            }
+        }
+        if prob[u] == 0 { //@stuck
+            break
+        }
+        visited[u] = true //@settle
+        for _, e := range adj[u] { //@relax
+            p := prob[u] * e.p //@multiply
+            if p > prob[e.to] { //@better
+                prob[e.to] = p //@update
+            }
+        }
+    }
+    return prob[end] //@ret
+}

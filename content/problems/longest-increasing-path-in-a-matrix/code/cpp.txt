@@ -1,0 +1,35 @@
+int dirs[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+int dfs(vector<vector<int>>& m, vector<vector<int>>& memo, int r, int c) {
+    if (memo[r][c] != 0) { //@cached
+        return memo[r][c]; //@retCached
+    }
+    int best = 1; //@start
+    for (auto& d : dirs) { //@neighbours
+        int nr = r + d[0], nc = c + d[1];
+        if (nr >= 0 && nr < (int)m.size() && nc >= 0 && nc < (int)m[0].size() &&
+            m[nr][nc] > m[r][c]) { //@higher
+            int l = 1 + dfs(m, memo, nr, nc); //@recurse
+            if (l > best) { //@better
+                best = l; //@take
+            }
+        }
+    }
+    memo[r][c] = best; //@memo
+    return best; //@retBest
+}
+
+int longestIncreasingPath(vector<vector<int>>& matrix) {
+    int rows = matrix.size(), cols = matrix[0].size();
+    vector<vector<int>> memo(rows, vector<int>(cols, 0)); //@init
+    int best = 0; //@best
+    for (int r = 0; r < rows; r++) { //@rowLoop
+        for (int c = 0; c < cols; c++) { //@colLoop
+            int l = dfs(matrix, memo, r, c); //@call
+            if (l > best) { //@cmp
+                best = l; //@update
+            }
+        }
+    }
+    return best; //@ret
+}

@@ -1,0 +1,12 @@
+func canAttendMeetings(intervals [][]int) bool {
+    sort.Slice(intervals, func(a, b int) bool { //@sort
+        return intervals[a][0] < intervals[b][0]
+    })
+    for i := 1; i < len(intervals); i++ { //@loop
+        prevEnd := intervals[i-1][1] //@prev
+        if intervals[i][0] < prevEnd { //@overlap
+            return false //@no
+        }
+    }
+    return true //@yes
+}

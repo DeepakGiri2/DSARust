@@ -1,0 +1,43 @@
+slug = 'remove-nth-node-from-end-of-list'
+title = 'Remove Nth Node From End of List'
+category = 'Linked List'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Given the head of a linked list, remove the nth node from the end of the list and return its head.'
+approach = 'Use a dummy head and two pointers. Advance fast n steps to open an n-node gap, then move slow and fast together until fast hits the last node. slow now sits just before the target, so slow.next can skip over it.'
+
+[[inputs]]
+name = 'list'
+label = 'list values'
+type = 'int-array'
+max_len = 40
+
+[[inputs]]
+name = 'n'
+label = 'n (from the end)'
+type = 'int'
+min = 1
+
+[default_input]
+list = [1, 2, 3, 4, 5]
+n = 2
+
+[[tests]]
+expected = '1 2 3 5'
+[tests.input]
+list = [1, 2, 3, 4, 5]
+n = 2
+
+[[tests]]
+expected = ''
+[tests.input]
+list = [1]
+n = 1
+
+[[tests]]
+expected = '1'
+[tests.input]
+list = [1, 2]
+n = 1

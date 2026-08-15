@@ -1,0 +1,35 @@
+slug = 'simplify-path'
+title = 'Simplify Path'
+category = 'Stack'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '71'
+complexity = 'O(n) time · O(n) space'
+
+description = "Convert a Unix-style absolute path into its canonical form: no trailing slash, no repeated slashes, and no '.' or '..' components."
+approach = "Split on slashes and treat the result as a stack of directories. An empty piece or '.' changes nothing, '..' pops the directory just entered, and anything else is entered. Popping is exactly what 'go up one level' means, so the canonical path is just the surviving stack joined back together."
+
+[[inputs]]
+name = 'path'
+label = 'path'
+type = 'string'
+max_len = 60
+help = 'an absolute Unix path'
+
+[default_input]
+path = '/home//foo/'
+
+[[tests]]
+expected = '/home/foo'
+[tests.input]
+path = '/home//foo/'
+
+[[tests]]
+expected = '/c'
+[tests.input]
+path = '/a/./b/../../c/'
+
+[[tests]]
+expected = '/'
+[tests.input]
+path = '/../'

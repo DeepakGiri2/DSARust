@@ -1,0 +1,25 @@
+class BSTIterator {
+    private final Deque<TreeNode> stack = new ArrayDeque<>();
+
+    BSTIterator(TreeNode root) { //@init
+        pushLeft(root); //@seed
+    }
+
+    private void pushLeft(TreeNode node) { //@push
+        while (node != null) { //@descend
+            stack.push(node); //@stack
+            node = node.left; //@goleft
+        }
+    }
+
+    int next() { //@next
+        TreeNode node = stack.peek(); //@top
+        stack.pop(); //@pop
+        pushLeft(node.right); //@right
+        return node.val; //@val
+    }
+
+    boolean hasNext() { //@hasnext
+        return !stack.isEmpty(); //@any
+    }
+}

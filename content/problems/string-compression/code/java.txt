@@ -1,0 +1,18 @@
+static int compress(char[] chars) {
+    int write = 0, read = 0; //@init
+    while (read < chars.length) { //@loop
+        char ch = chars[read]; //@char
+        int count = 0; //@count
+        while (read < chars.length && chars[read] == ch) { //@run
+            read++;
+            count++; //@grow
+        }
+        chars[write++] = ch; //@put
+        if (count > 1) { //@many
+            for (char d : String.valueOf(count).toCharArray()) { //@digits
+                chars[write++] = d; //@digit
+            }
+        }
+    }
+    return write; //@ret
+}

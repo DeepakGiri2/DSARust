@@ -1,0 +1,46 @@
+slug = 'find-the-town-judge'
+title = 'Find the Town Judge'
+category = 'Graphs'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '997'
+complexity = 'O(n + edges) time · O(n) space'
+
+description = 'In a town of n people exactly one may be the judge: they trust nobody, and everybody else trusts them. Find them, or return -1.'
+approach = 'Trust is a directed edge, and the judge is defined purely by degrees — in-degree n-1 and out-degree 0. Combining them into one score per person, minus one for each person trusted and plus one for each truster, makes the judge the only person who can reach n-1, since anyone who trusts even once loses a point they can never get back.'
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 1
+max = 8
+
+[[inputs]]
+name = 'trust'
+label = 'trust'
+type = 'string'
+max_len = 60
+help = "pairs 'a b' meaning a trusts b, comma separated"
+
+[default_input]
+n = 3
+trust = '1 3, 2 3'
+
+[[tests]]
+expected = '3'
+[tests.input]
+n = 3
+trust = '1 3, 2 3'
+
+[[tests]]
+expected = '-1'
+[tests.input]
+n = 3
+trust = '1 3, 2 3, 3 1'
+
+[[tests]]
+expected = '2'
+[tests.input]
+n = 2
+trust = '1 2'

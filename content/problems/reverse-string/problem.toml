@@ -1,0 +1,33 @@
+slug = 'reverse-string'
+title = 'Reverse String'
+category = 'Two Pointers'
+difficulty = 'Easy'
+tier = '250'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Reverse a string in place using O(1) extra space. Two pointers start at the ends and swap characters as they walk toward the middle.'
+approach = 'Put one pointer at each end and repeatedly swap the two characters they point at, then step both inward. When the pointers meet, every character has been mirrored to its final position.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 24
+
+[default_input]
+s = 'hello'
+
+[[tests]]
+expected = 'olleh'
+[tests.input]
+s = 'hello'
+
+[[tests]]
+expected = 'hannaH'
+[tests.input]
+s = 'Hannah'
+
+[[tests]]
+expected = 'ba'
+[tests.input]
+s = 'ab'

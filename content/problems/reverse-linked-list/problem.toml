@@ -1,0 +1,28 @@
+slug = 'reverse-linked-list'
+title = 'Reverse Linked List'
+category = 'Linked List'
+difficulty = 'Easy'
+tier = '50'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Given the head of a singly linked list, reverse the list and return the new head.'
+approach = 'Walk the list with three pointers: prev (already-reversed part), curr (node being flipped), next (saved so we don’t lose the rest). Flip curr.next to point backwards, then slide all three forward.'
+
+[[inputs]]
+name = 'list'
+label = 'list values'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+list = [1, 2, 3, 4, 5]
+
+[[tests]]
+expected = '5 4 3 2 1'
+[tests.input]
+list = [1, 2, 3, 4, 5]
+
+[[tests]]
+expected = '7'
+[tests.input]
+list = [7]

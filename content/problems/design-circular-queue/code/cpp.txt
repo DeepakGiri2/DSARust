@@ -1,0 +1,47 @@
+class MyCircularQueue {
+    vector<int> buf;
+    int head = 0, count = 0;
+public:
+    MyCircularQueue(int k) : buf(k) {} //@init
+
+    bool enQueue(int value) { //@enq
+        if (count == (int)buf.size()) { //@full
+            return false; //@nofit
+        }
+        int tail = (head + count) % buf.size(); //@tail
+        buf[tail] = value; //@store
+        count++; //@grew
+        return true;
+    }
+
+    bool deQueue() { //@deq
+        if (count == 0) { //@empty
+            return false; //@noitem
+        }
+        head = (head + 1) % buf.size(); //@advance
+        count--; //@shrank
+        return true;
+    }
+
+    int Front() { //@front
+        if (count == 0) {
+            return -1; //@fnone
+        }
+        return buf[head]; //@fval
+    }
+
+    int Rear() { //@rear
+        if (count == 0) {
+            return -1; //@rnone
+        }
+        return buf[(head + count - 1) % buf.size()]; //@rval
+    }
+
+    bool isEmpty() { //@isempty
+        return count == 0;
+    }
+
+    bool isFull() { //@isfull
+        return count == (int)buf.size();
+    }
+};

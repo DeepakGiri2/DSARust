@@ -1,0 +1,18 @@
+static int rob(int[] nums) {
+    if (nums.length == 1) { //@single
+        return nums[0]; //@retSingle
+    }
+    int a = robLine(nums, 0, nums.length - 1); //@dropLast
+    int b = robLine(nums, 1, nums.length); //@dropFirst
+    return Math.max(a, b); //@ret
+}
+
+static int robLine(int[] nums, int from, int to) {
+    int prev = 0, cur = 0; //@lineInit
+    for (int i = from; i < to; i++) { //@lineLoop
+        int next = Math.max(cur, prev + nums[i]); //@lineStep
+        prev = cur;
+        cur = next;
+    }
+    return cur; //@lineRet
+}

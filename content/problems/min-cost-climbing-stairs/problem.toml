@@ -1,0 +1,30 @@
+slug = 'min-cost-climbing-stairs'
+title = 'Min Cost Climbing Stairs'
+category = '1-D Dynamic Programming'
+difficulty = 'Easy'
+tier = '150'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Each step has a cost. From a step you may climb one or two. Starting from step 0 or 1, reach the top for the least total cost.'
+approach = 'Work backwards. The cost of standing on step i is its own cost plus the cheaper of the two steps you could go on to, both of which are already known. Only two values are ever needed, so the table collapses to two variables.'
+
+[[inputs]]
+name = 'cost'
+label = 'cost'
+type = 'int-array'
+max_len = 40
+min = 0
+max = 100
+
+[default_input]
+cost = [10, 15, 20]
+
+[[tests]]
+expected = '15'
+[tests.input]
+cost = [10, 15, 20]
+
+[[tests]]
+expected = '4'
+[tests.input]
+cost = [1, 100, 1, 1, 1, 100, 1]

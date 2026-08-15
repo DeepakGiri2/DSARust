@@ -1,0 +1,10 @@
+func findKthLargest(nums []int, k int) int {
+    h := &IntHeap{} //@init
+    for _, n := range nums { //@loop
+        heap.Push(h, n) //@push
+        if h.Len() > k { //@check
+            heap.Pop(h) //@pop
+        }
+    }
+    return (*h)[0] //@return
+}

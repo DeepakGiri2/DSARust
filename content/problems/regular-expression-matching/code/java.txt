@@ -1,0 +1,23 @@
+static boolean isMatch(String s, String p) {
+    int m = s.length(), n = p.length();
+    boolean[][] dp = new boolean[m + 1][n + 1]; //@init
+    dp[0][0] = true; //@seed
+    for (int j = 1; j <= n; j++) { //@emptyRow
+        if (p.charAt(j - 1) == '*') { //@starEmpty
+            dp[0][j] = dp[0][j - 2]; //@copyEmpty
+        }
+    }
+    for (int i = 1; i <= m; i++) { //@rowLoop
+        for (int j = 1; j <= n; j++) { //@colLoop
+            if (p.charAt(j - 1) == '*') { //@isStar
+                dp[i][j] = dp[i][j - 2]; //@zeroUse
+                if (p.charAt(j - 2) == '.' || p.charAt(j - 2) == s.charAt(i - 1)) { //@canRepeat
+                    dp[i][j] = dp[i][j] || dp[i - 1][j]; //@moreUse
+                }
+            } else if (p.charAt(j - 1) == '.' || p.charAt(j - 1) == s.charAt(i - 1)) { //@single
+                dp[i][j] = dp[i - 1][j - 1]; //@shift
+            }
+        }
+    }
+    return dp[m][n]; //@ret
+}

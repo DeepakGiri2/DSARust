@@ -1,0 +1,56 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static int best;
+
+    static int gain(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        int left = Math.max(0, gain(node.left));
+        int right = Math.max(0, gain(node.right));
+        best = Math.max(best, node.val + left + right);
+        return node.val + Math.max(left, right);
+    }
+
+    static int maxPathSum(TreeNode root) {
+        best = Integer.MIN_VALUE;
+        gain(root);
+        return best;
+    }
+
+    static class TreeNode {
+        int val;
+        TreeNode left, right;
+        TreeNode(int v) { val = v; }
+    }
+
+    static TreeNode buildTree(String[] tokens) {
+        if (tokens.length == 0 || tokens[0].equals("n")) return null;
+        TreeNode root = new TreeNode(Integer.parseInt(tokens[0]));
+        Queue<TreeNode> q = new ArrayDeque<>();
+        q.add(root);
+        int i = 1;
+        while (!q.isEmpty() && i < tokens.length) {
+            TreeNode cur = q.poll();
+            if (i < tokens.length) {
+                if (!tokens[i].equals("n")) { cur.left = new TreeNode(Integer.parseInt(tokens[i])); q.add(cur.left); }
+                i++;
+            }
+            if (i < tokens.length) {
+                if (!tokens[i].equals("n")) { cur.right = new TreeNode(Integer.parseInt(tokens[i])); q.add(cur.right); }
+                i++;
+            }
+        }
+        return root;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] tokens = br.readLine().trim().split("\\s+");
+        TreeNode root = buildTree(tokens);
+        System.out.println(maxPathSum(root));
+    }
+}

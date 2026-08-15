@@ -1,0 +1,24 @@
+static List<String> pages = new ArrayList<>(); //@init
+static int cur = 0; //@cur
+
+static void visit(String url) {
+    while (pages.size() > cur + 1) pages.remove(pages.size() - 1); //@truncate
+    pages.add(url); //@append
+    cur++; //@moveCur
+}
+
+static String back(int steps) {
+    if (steps > cur) { //@clampBack
+        steps = cur;
+    }
+    cur -= steps; //@stepBack
+    return pages.get(cur); //@retBack
+}
+
+static String forward(int steps) {
+    if (cur + steps >= pages.size()) { //@clampFwd
+        steps = pages.size() - 1 - cur;
+    }
+    cur += steps; //@stepFwd
+    return pages.get(cur); //@retFwd
+}

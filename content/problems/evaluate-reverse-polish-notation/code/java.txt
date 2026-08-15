@@ -1,0 +1,14 @@
+static int evalRPN(String[] tokens) {
+    Deque<Integer> stack = new ArrayDeque<>(); //@init
+    for (String t : tokens) { //@loop
+        if (isOp(t)) { //@isop
+            int b = stack.pop(); //@popB
+            int a = stack.pop(); //@popA
+            stack.push(apply(a, b, t)); //@push
+        } else {
+            int n = Integer.parseInt(t); //@parse
+            stack.push(n); //@pushNum
+        }
+    }
+    return stack.pop(); //@ret
+}

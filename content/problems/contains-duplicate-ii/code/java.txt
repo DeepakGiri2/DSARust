@@ -1,0 +1,13 @@
+static boolean containsNearbyDuplicate(int[] nums, int k) {
+    Set<Integer> seen = new HashSet<>(); //@init
+    for (int i = 0; i < nums.length; i++) { //@loop
+        if (i > k) { //@evict
+            seen.remove(nums[i-k-1]); //@remove
+        }
+        if (seen.contains(nums[i])) { //@check
+            return true; //@dup
+        }
+        seen.add(nums[i]); //@store
+    }
+    return false; //@none
+}

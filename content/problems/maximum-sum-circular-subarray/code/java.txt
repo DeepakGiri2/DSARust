@@ -1,0 +1,16 @@
+static int maxSubarraySumCircular(int[] nums) {
+    int total = 0;
+    int maxSum = nums[0], curMax = 0;
+    int minSum = nums[0], curMin = 0; //@init
+    for (int x : nums) { //@loop
+        curMax = Math.max(curMax + x, x); //@grow
+        maxSum = Math.max(maxSum, curMax); //@best
+        curMin = Math.min(curMin + x, x); //@shrink
+        minSum = Math.min(minSum, curMin); //@worst
+        total += x; //@total
+    }
+    if (maxSum > 0) { //@check
+        return Math.max(maxSum, total - minSum); //@wrap
+    }
+    return maxSum; //@allneg
+}

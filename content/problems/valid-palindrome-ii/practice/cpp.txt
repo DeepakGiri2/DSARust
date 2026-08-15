@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isRange(string& s, int i, int j) {
+    while (i < j) {
+        if (s[i] != s[j]) {
+            return false;
+        }
+        i++;
+        j--;
+    }
+    return true;
+}
+
+bool validPalindrome(string s) {
+    int l = 0, r = (int)s.size() - 1;
+    while (l < r) {
+        if (s[l] != s[r]) {
+            return isRange(s, l + 1, r) || isRange(s, l, r - 1);
+        }
+        l++;
+        r--;
+    }
+    return true;
+}
+
+int main() {
+    string s;
+    getline(cin, s);
+    while (!s.empty() && (s.back() == '\n' || s.back() == '\r')) s.pop_back();
+    cout << (validPalindrome(s) ? "true" : "false") << endl;
+}

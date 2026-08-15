@@ -1,0 +1,33 @@
+slug = 'subsets'
+title = 'Subsets'
+category = 'Backtracking'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n · 2^n) time · O(n) space (recursion depth)'
+
+description = 'Given an array of distinct integers nums, return all possible subsets (the power set). The solution set must not contain duplicate subsets. A perfect first backtracking problem — every element is a yes/no decision, so the recursion tree is a clean binary tree.'
+approach = 'For each index we make one of two choices: INCLUDE nums[i] in the current subset, or EXCLUDE it. Recurse on the next index after each choice. When we have decided every element (i == n) the current subset is complete — record a copy. Watch the call stack grow to depth n and the include/exclude branches unfold.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums (distinct)'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+nums = [1, 2, 3]
+
+[[tests]]
+expected = "1 2 3\n1 2\n1 3\n1\n2 3\n2\n3"
+[tests.input]
+nums = [1, 2, 3]
+
+[[tests]]
+expected = "1 2\n1\n2"
+[tests.input]
+nums = [1, 2]
+
+[[tests]]
+expected = '5'
+[tests.input]
+nums = [5]

@@ -1,0 +1,50 @@
+slug = 'powx-n'
+title = 'Pow(x, n)'
+category = 'Math & Geometry'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '50'
+complexity = 'O(log n) time · O(1) space'
+
+description = 'Compute x raised to the power n, where n may be negative.'
+approach = 'Read n in binary. Squaring the base repeatedly gives x^1, x^2, x^4, x^8, ..., and every exponent is a sum of those powers of two — so multiply in exactly the ones whose bit is set. That turns n multiplications into about log2(n). A negative exponent is handled once at the start by inverting x, so the loop never has to think about it.'
+
+[[inputs]]
+name = 'x'
+label = 'x'
+type = 'float'
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = -20
+max = 20
+
+[default_input]
+x = 2.0
+n = 10
+
+[[tests]]
+expected = '1024'
+[tests.input]
+x = 2.0
+n = 10
+
+[[tests]]
+expected = '0.25'
+[tests.input]
+x = 2.0
+n = -2
+
+[[tests]]
+expected = '1'
+[tests.input]
+x = 2.0
+n = 0
+
+[[tests]]
+expected = '0.0625'
+[tests.input]
+x = 0.5
+n = 4

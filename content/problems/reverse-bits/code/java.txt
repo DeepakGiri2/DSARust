@@ -1,0 +1,9 @@
+static int reverseBits(int n) {
+    int res = 0; //@init
+    for (int i = 0; i < 8; i++) { //@loop
+        res <<= 1; //@shiftRes
+        res |= n & 1; //@take
+        n >>>= 1; //@shiftN
+    }
+    return res; //@ret
+}

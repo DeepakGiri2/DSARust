@@ -1,0 +1,29 @@
+static int cap;
+static Map<Integer, Node> m = new HashMap<>(); //@init
+static Node head, tail;
+
+static int get(int key) {
+    Node n = m.get(key); //@lookup
+    if (n == null) { //@miss
+        return -1; //@retMiss
+    }
+    moveToFront(n); //@touch
+    return n.val; //@retHit
+}
+
+static void put(int key, int value) {
+    Node n = m.get(key);
+    if (n != null) { //@exists
+        n.val = value; //@update
+        moveToFront(n); //@touchPut
+        return;
+    }
+    if (m.size() == cap) { //@full
+        Node lru = tail.prev; //@victim
+        unlink(lru); //@unlink
+        m.remove(lru.key); //@evict
+    }
+    Node fresh = new Node(key, value); //@newNode
+    m.put(key, fresh); //@insert
+    pushFront(fresh); //@front
+}

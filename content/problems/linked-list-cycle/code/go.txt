@@ -1,0 +1,12 @@
+func hasCycle(head *ListNode) bool {
+    slow := head //@init
+    fast := head //@init2
+    for fast != nil && fast.Next != nil { //@loop
+        slow = slow.Next //@slow
+        fast = fast.Next.Next //@fast
+        if slow == fast { //@check
+            return true //@true
+        }
+    }
+    return false //@false
+}

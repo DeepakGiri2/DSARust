@@ -1,0 +1,39 @@
+slug = 'task-scheduler'
+title = 'Task Scheduler'
+category = 'Heap / Priority Queue'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Identical tasks must be separated by at least n intervals. Each task takes one interval; idles are allowed. Return the least time to finish them all.'
+approach = 'Only the most frequent task matters. It forces (maxCount - 1) full gaps of size n+1, plus one final slot for each task tied at that frequency. If there are enough other tasks to fill the gaps, no idling is needed and the answer is simply the number of tasks.'
+
+[[inputs]]
+name = 'tasks'
+label = 'tasks'
+type = 'string'
+max_len = 60
+help = "letters, e.g. 'A A A B B B'"
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 0
+max = 5
+
+[default_input]
+tasks = 'A A A B B B'
+n = 2
+
+[[tests]]
+expected = '8'
+[tests.input]
+tasks = 'A A A B B B'
+n = 2
+
+[[tests]]
+expected = '6'
+[tests.input]
+tasks = 'A A A B B B'
+n = 0

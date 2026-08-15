@@ -1,0 +1,28 @@
+static int findCircleNum(int[][] isConnected) {
+    int n = isConnected.length;
+    int[] parent = new int[n]; //@init
+    for (int i = 0; i < n; i++) {
+        parent[i] = i; //@seed
+    }
+    int count = n; //@count
+    for (int i = 0; i < n; i++) { //@row
+        for (int j = i + 1; j < n; j++) { //@col
+            if (isConnected[i][j] == 1) { //@edge
+                int a = find(parent, i), b = find(parent, j); //@find
+                if (a != b) { //@same
+                    parent[a] = b; //@union
+                    count--; //@shrink
+                }
+            }
+        }
+    }
+    return count; //@ret
+}
+
+static int find(int[] parent, int x) {
+    while (parent[x] != x) { //@walk
+        parent[x] = parent[parent[x]]; //@compress
+        x = parent[x]; //@up
+    }
+    return x; //@root
+}

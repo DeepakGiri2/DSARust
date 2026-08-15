@@ -1,0 +1,15 @@
+func removeNthFromEnd(head *ListNode, n int) *ListNode {
+    dummy := &ListNode{} //@dummy
+    dummy.Next = head //@link
+    slow := dummy //@slow0
+    fast := dummy //@fast0
+    for i := 0; i < n; i++ { //@gap
+        fast = fast.Next //@gapAdv
+    }
+    for fast.Next != nil { //@loop
+        slow = slow.Next //@advS
+        fast = fast.Next //@advF
+    }
+    slow.Next = slow.Next.Next //@unlink
+    return dummy.Next //@ret
+}

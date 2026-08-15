@@ -1,0 +1,15 @@
+static int maxFrequency(int[] nums, int k) {
+    Arrays.sort(nums); //@sort
+    int best = 1, left = 0, windowSum = 0; //@init
+    for (int right = 0; right < nums.length; right++) { //@loop
+        windowSum += nums[right]; //@add
+        while ((long) nums[right] * (right - left + 1) - windowSum > k) { //@shrink
+            windowSum -= nums[left]; //@sub
+            left++; //@advance
+        }
+        if (right - left + 1 > best) { //@cmp
+            best = right - left + 1; //@newBest
+        }
+    }
+    return best; //@ret
+}

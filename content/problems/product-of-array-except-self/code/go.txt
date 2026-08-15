@@ -1,0 +1,15 @@
+func productExceptSelf(nums []int) []int {
+    n := len(nums) //@n
+    res := make([]int, n) //@res
+    prefix := 1 //@pre
+    for i := 0; i < n; i++ { //@fwd
+        res[i] = prefix //@setpre
+        prefix *= nums[i] //@mulpre
+    }
+    postfix := 1 //@post
+    for i := n - 1; i >= 0; i-- { //@bwd
+        res[i] *= postfix //@setpost
+        postfix *= nums[i] //@mulpost
+    }
+    return res //@return
+}

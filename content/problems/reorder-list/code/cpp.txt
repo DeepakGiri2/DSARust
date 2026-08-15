@@ -1,0 +1,23 @@
+void reorderList(ListNode* head) {
+    ListNode *slow = head, *fast = head->next; //@mid
+    while (fast && fast->next) { //@midLoop
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    ListNode* second = slow->next; //@split
+    slow->next = nullptr; //@cut
+    ListNode* prev = nullptr; //@revInit
+    while (second) { //@revLoop
+        ListNode* next = second->next;
+        second->next = prev; //@flip
+        prev = second;
+        second = next;
+    }
+    ListNode *first = head, *sec = prev; //@weaveInit
+    while (sec) { //@weave
+        ListNode *f = first->next, *s = sec->next; //@save
+        first->next = sec; //@linkA
+        sec->next = f; //@linkB
+        first = f; sec = s; //@advance
+    }
+}

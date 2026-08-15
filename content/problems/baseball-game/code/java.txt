@@ -1,0 +1,20 @@
+static int calPoints(String[] operations) {
+    List<Integer> record = new ArrayList<>(); //@init
+    for (String op : operations) { //@loop
+        if (op.equals("C")) { //@isC
+            record.remove(record.size() - 1); //@popC
+        } else if (op.equals("D")) { //@isD
+            record.add(2 * record.get(record.size() - 1)); //@pushD
+        } else if (op.equals("+")) { //@isPlus
+            int n = record.size();
+            record.add(record.get(n - 1) + record.get(n - 2)); //@pushPlus
+        } else { //@isNum
+            record.add(Integer.parseInt(op)); //@pushNum
+        }
+    }
+    int total = 0; //@sum
+    for (int v : record) { //@add
+        total += v;
+    }
+    return total; //@ret
+}

@@ -1,0 +1,52 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func maxSlidingWindow(nums []int, k int) []int {
+    res := []int{}
+    deque := []int{}
+    left := 0
+    for right := 0; right < len(nums); right++ {
+        for len(deque) > 0 && nums[deque[len(deque)-1]] < nums[right] {
+            deque = deque[:len(deque)-1]
+        }
+        deque = append(deque, right)
+        if deque[0] < left {
+            deque = deque[1:]
+        }
+        if right+1 >= k {
+            res = append(res, nums[deque[0]])
+            left++
+        }
+    }
+    return res
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    nums := readInts(reader)
+    line, _ := reader.ReadString('\n')
+    k, _ := strconv.Atoi(strings.TrimSpace(line))
+    res := maxSlidingWindow(nums, k)
+    out := make([]string, len(res))
+    for i, v := range res {
+        out[i] = strconv.Itoa(v)
+    }
+    fmt.Println(strings.Join(out, " "))
+}

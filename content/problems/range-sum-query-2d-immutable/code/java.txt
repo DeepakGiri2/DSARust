@@ -1,0 +1,17 @@
+class NumMatrix {
+    private final int[][] pre;
+
+    NumMatrix(int[][] matrix) {
+        int m = matrix.length, n = matrix[0].length;
+        pre = new int[m + 1][n + 1]; //@init
+        for (int r = 0; r < m; r++) { //@row
+            for (int c = 0; c < n; c++) { //@col
+                pre[r + 1][c + 1] = matrix[r][c] + pre[r][c + 1] + pre[r + 1][c] - pre[r][c]; //@cell
+            }
+        }
+    } //@ready
+
+    int sumRegion(int r1, int c1, int r2, int c2) { //@query
+        return pre[r2 + 1][c2 + 1] - pre[r1][c2 + 1] - pre[r2 + 1][c1] + pre[r1][c1]; //@answer
+    }
+}

@@ -1,0 +1,29 @@
+slug = 'counting-bits'
+title = 'Counting Bits'
+category = 'Bit Manipulation'
+difficulty = 'Easy'
+tier = '150'
+complexity = 'O(n) time · O(n) space'
+
+description = 'For every number from 0 to n, count how many 1 bits it has.'
+approach = 'Dynamic programming on bits. Dropping the lowest bit of i gives i >> 1, a number already solved, so ones(i) = ones(i >> 1) + (i & 1). Each answer costs one lookup instead of a fresh count.'
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 0
+max = 16
+
+[default_input]
+n = 8
+
+[[tests]]
+expected = '0 1 1 2 1 2'
+[tests.input]
+n = 5
+
+[[tests]]
+expected = '0 1 1'
+[tests.input]
+n = 2

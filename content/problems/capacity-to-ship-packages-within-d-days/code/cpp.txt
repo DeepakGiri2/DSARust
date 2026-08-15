@@ -1,0 +1,28 @@
+bool feasible(vector<int>& weights, int days, int capacity) {
+    int need = 1, load = 0; //@start
+    for (int w : weights) { //@scan
+        if (load + w > capacity) { //@overflow
+            need++; //@newDay
+            load = 0;
+        }
+        load += w; //@add
+    }
+    return need <= days; //@verdict
+}
+
+int shipWithinDays(vector<int>& weights, int days) {
+    int lo = 0, hi = 0; //@bounds
+    for (int w : weights) { //@span
+        lo = max(lo, w);
+        hi += w;
+    }
+    while (lo < hi) { //@loop
+        int mid = lo + (hi - lo) / 2; //@mid
+        if (feasible(weights, days, mid)) { //@check
+            hi = mid; //@smaller
+        } else { //@fail
+            lo = mid + 1; //@larger
+        }
+    }
+    return lo; //@ret
+}

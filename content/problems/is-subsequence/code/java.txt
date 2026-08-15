@@ -1,0 +1,10 @@
+static boolean isSubsequence(String s, String t) {
+    int i = 0, j = 0; //@init
+    while (i < s.length() && j < t.length()) { //@loop
+        if (s.charAt(i) == t.charAt(j)) { //@match
+            i++; //@advI
+        }
+        j++; //@advJ
+    }
+    return i == s.length(); //@ret
+}

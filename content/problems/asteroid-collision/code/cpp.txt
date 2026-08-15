@@ -1,0 +1,21 @@
+vector<int> asteroidCollision(vector<int>& asteroids) {
+    vector<int> stack; //@init
+    for (int a : asteroids) { //@loop
+        bool alive = true; //@alive
+        while (alive && a < 0 && !stack.empty() && stack.back() > 0) { //@collide
+            int top = stack.back(); //@peek
+            if (top < -a) { //@smaller
+                stack.pop_back(); //@popTop
+            } else if (top == -a) { //@equal
+                stack.pop_back(); //@popBoth
+                alive = false;
+            } else { //@bigger
+                alive = false; //@die
+            }
+        }
+        if (alive) { //@survives
+            stack.push_back(a); //@push
+        }
+    }
+    return stack; //@ret
+}

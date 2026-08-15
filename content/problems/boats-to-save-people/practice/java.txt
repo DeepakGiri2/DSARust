@@ -1,0 +1,35 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static int numRescueBoats(int[] people, int limit) {
+        Arrays.sort(people);
+        int l = 0, r = people.length - 1;
+        int boats = 0;
+        while (l <= r) {
+            if (people[l] + people[r] <= limit) {
+                l++;
+            }
+            r--;
+            boats++;
+        }
+        return boats;
+    }
+
+    static int[] readInts(BufferedReader br) throws Exception {
+        String line = br.readLine();
+        if (line == null || line.trim().isEmpty()) return new int[0];
+        String[] parts = line.trim().split("\\s+");
+        int[] nums = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);
+        return nums;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] people = readInts(br);
+        int limit = Integer.parseInt(br.readLine().trim());
+        System.out.println(numRescueBoats(people, limit));
+    }
+}

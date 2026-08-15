@@ -1,0 +1,33 @@
+slug = 'house-robber'
+title = 'House Robber'
+category = '1-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n) time · O(n) space'
+
+description = 'Houses in a row each hold some money, but you cannot rob two adjacent houses (the alarms are linked). Return the maximum money you can rob. Watch the dp array fill left to right, each cell holding the best loot for the prefix ending there.'
+approach = 'dp[i] = max(dp[i-1], dp[i-2] + nums[i]). At each house you either SKIP it (keep the best up to i-1) or ROB it (take its money plus the best up to i-2, since i-1 is now off-limits).'
+
+[[inputs]]
+name = 'nums'
+label = 'nums (money in each house)'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+nums = [2, 7, 9, 3, 1]
+
+[[tests]]
+expected = '12'
+[tests.input]
+nums = [2, 7, 9, 3, 1]
+
+[[tests]]
+expected = '4'
+[tests.input]
+nums = [1, 2, 3, 1]
+
+[[tests]]
+expected = '5'
+[tests.input]
+nums = [5]

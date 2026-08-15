@@ -1,0 +1,12 @@
+func numSquares(n int) int {
+    dp := make([]int, n+1) //@init
+    for i := 1; i <= n; i++ { //@loop
+        dp[i] = i //@worst
+        for k := 1; k*k <= i; k++ { //@inner
+            if dp[i-k*k]+1 < dp[i] { //@better
+                dp[i] = dp[i-k*k] + 1 //@update
+            }
+        }
+    }
+    return dp[n] //@ret
+}

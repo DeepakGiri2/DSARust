@@ -1,0 +1,56 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "sort"
+    "strconv"
+    "strings"
+)
+
+func threeSum(nums []int) [][]int {
+    sort.Ints(nums)
+    res := [][]int{}
+    for i := 0; i < len(nums)-2; i++ {
+        if i > 0 && nums[i] == nums[i-1] {
+            continue
+        }
+        l, r := i+1, len(nums)-1
+        for l < r {
+            sum := nums[i] + nums[l] + nums[r]
+            if sum == 0 {
+                res = append(res, []int{nums[i], nums[l], nums[r]})
+                l++
+                r--
+                for l < r && nums[l] == nums[l-1] {
+                    l++
+                }
+            } else if sum < 0 {
+                l++
+            } else {
+                r--
+            }
+        }
+    }
+    return res
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    nums := readInts(reader)
+    res := threeSum(nums)
+    for _, tr := range res {
+        fmt.Printf("%d %d %d\n", tr[0], tr[1], tr[2])
+    }
+}

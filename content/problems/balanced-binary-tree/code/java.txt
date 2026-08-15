@@ -1,0 +1,18 @@
+static boolean isBalanced(TreeNode root) {
+    return dfs(root) != -1; //@top
+}
+
+static int dfs(TreeNode root) {
+    if (root == null) { //@base
+        return 0; //@ret0
+    }
+    int left = dfs(root.left); //@recL
+    int right = dfs(root.right); //@recR
+    if (left == -1 || right == -1) { //@propagate
+        return -1; //@retProp
+    }
+    if (Math.abs(left - right) > 1) { //@check
+        return -1; //@retBad
+    }
+    return 1 + Math.max(left, right); //@ret
+}

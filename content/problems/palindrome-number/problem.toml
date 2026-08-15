@@ -1,0 +1,40 @@
+slug = 'palindrome-number'
+title = 'Palindrome Number'
+category = 'Math & Geometry'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '9'
+complexity = 'O(log n) time · O(1) space'
+
+description = 'Return true if an integer reads the same forwards and backwards, without converting it to a string.'
+approach = 'Reverse only half of it. Peel digits off the back of the number and glue them onto a growing reversed value; when the reversed half catches up with what is left, the two halves are exactly the front and the back. Stopping halfway avoids overflowing on a full reversal, and the odd-length case is handled by dropping the middle digit with one integer division.'
+
+[[inputs]]
+name = 'x'
+label = 'x'
+type = 'int'
+min = -100000
+max = 100000
+
+[default_input]
+x = 121
+
+[[tests]]
+expected = 'true'
+[tests.input]
+x = 121
+
+[[tests]]
+expected = 'true'
+[tests.input]
+x = 1221
+
+[[tests]]
+expected = 'false'
+[tests.input]
+x = -121
+
+[[tests]]
+expected = 'false'
+[tests.input]
+x = 10

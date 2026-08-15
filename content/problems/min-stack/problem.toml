@@ -1,0 +1,33 @@
+slug = 'min-stack'
+title = 'Min Stack'
+category = 'Stack'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(1) per operation · O(n) space'
+
+description = 'Design a stack that supports push, pop, top and retrieving the minimum element — all in O(1) time. This driver processes a space-separated sequence of operations (push X, pop, top, getMin) and returns the value produced by each pop / top / getMin, in order.'
+approach = 'Keep a second, parallel "min-stack". Every push also pushes the minimum of the new value and the current minimum, so the min-stack top is always the overall minimum. Pop both together; getMin just reads the min-stack top.'
+
+[[inputs]]
+name = 'ops'
+label = 'ops (push X | pop | top | getMin)'
+type = 'string'
+max_len = 120
+
+[default_input]
+ops = 'push 3 push 5 pop getMin top'
+
+[[tests]]
+expected = '5 3 3'
+[tests.input]
+ops = 'push 3 push 5 pop getMin top'
+
+[[tests]]
+expected = '0 3 0'
+[tests.input]
+ops = 'push 2 push 0 push 3 getMin pop getMin'
+
+[[tests]]
+expected = '5 5 5'
+[tests.input]
+ops = 'push 5 top getMin pop'

@@ -1,0 +1,17 @@
+static int furthestBuilding(int[] heights, int bricks, int ladders) {
+    PriorityQueue<Integer> h = new PriorityQueue<>(); //@init
+    for (int i = 0; i + 1 < heights.length; i++) { //@loop
+        int diff = heights[i + 1] - heights[i]; //@diff
+        if (diff <= 0) { //@downhill
+            continue;
+        }
+        h.add(diff); //@ladder
+        if (h.size() > ladders) { //@tooMany
+            bricks -= h.poll(); //@swap
+        }
+        if (bricks < 0) { //@broke
+            return i; //@ret
+        }
+    }
+    return heights.length - 1; //@end
+}

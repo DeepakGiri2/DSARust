@@ -1,0 +1,21 @@
+static String[] keypad = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+static List<String> res = new ArrayList<>(); //@init
+
+static List<String> letterCombinations(String digits) {
+    if (digits.isEmpty()) { //@empty
+        return new ArrayList<>(); //@retEmpty
+    }
+    res.clear();
+    back(digits, 0, ""); //@call
+    return res; //@done
+}
+
+static void back(String digits, int i, String cur) {
+    if (i == digits.length()) { //@base
+        res.add(cur); //@add
+        return; //@ret
+    }
+    for (char ch : keypad[digits.charAt(i) - '0'].toCharArray()) { //@loop
+        back(digits, i + 1, cur + ch); //@rec
+    }
+}

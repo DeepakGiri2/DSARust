@@ -1,0 +1,38 @@
+type Twitter struct {
+    clock   int //@init
+    tweets  map[int][][2]int //@tweets
+    follows map[int]map[int]bool //@follows
+}
+
+func (t *Twitter) PostTweet(userId, tweetId int) {
+    t.clock++ //@clock
+    t.tweets[userId] = append(t.tweets[userId], [2]int{t.clock, tweetId}) //@post
+}
+
+func (t *Twitter) Follow(a, b int) {
+    t.follows[a][b] = true //@follow
+}
+
+func (t *Twitter) Unfollow(a, b int) {
+    delete(t.follows[a], b) //@unfollow
+}
+
+func (t *Twitter) GetNewsFeed(userId int) []int {
+    h := &MaxHeap{} //@heapInit
+    sources := []int{userId} //@self
+    for f := range t.follows[userId] { //@followed
+        sources = append(sources, f)
+    }
+    for _, s := range sources { //@collect
+        list := t.tweets[s]
+        for i := len(list) - 1; i >= 0 && i >= len(list)-10; i-- { //@recent
+            h.Push(list[i]) //@push
+        }
+    }
+    out := []int{} //@out
+    for len(out) < 10 && h.Len() > 0 { //@drain
+        top := h.Pop() //@pop
+        out = append(out, top[1]) //@emit
+    }
+    return out //@ret
+}

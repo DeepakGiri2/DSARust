@@ -1,0 +1,44 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strings"
+)
+
+func isPalindrome(s string) bool {
+    l, r := 0, len(s)-1
+    for l < r {
+        for l < r && !alnum(s[l]) {
+            l++
+        }
+        for l < r && !alnum(s[r]) {
+            r--
+        }
+        if lower(s[l]) != lower(s[r]) {
+            return false
+        }
+        l++
+        r--
+    }
+    return true
+}
+
+func alnum(c byte) bool {
+    return c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z'
+}
+
+func lower(c byte) byte {
+    if c >= 'A' && c <= 'Z' {
+        return c + 32
+    }
+    return c
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    s := strings.TrimRight(line, "\r\n")
+    fmt.Println(isPalindrome(s))
+}

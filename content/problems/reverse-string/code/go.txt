@@ -1,0 +1,10 @@
+func reverseString(s string) string {
+    chars := []byte(s) //@init
+    l, r := 0, len(chars)-1 //@bounds
+    for l < r { //@loop
+        chars[l], chars[r] = chars[r], chars[l] //@swap
+        l++ //@moveL
+        r-- //@moveR
+    }
+    return string(chars) //@ret
+}

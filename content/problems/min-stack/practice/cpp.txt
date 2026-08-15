@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+string minStackOps(string ops) {
+    istringstream ss(ops);
+    vector<string> tokens;
+    string tk;
+    while (ss >> tk) tokens.push_back(tk);
+    vector<int> stack;
+    vector<int> mins;
+    vector<string> out;
+    for (int i = 0; i < (int)tokens.size(); i++) {
+        string op = tokens[i];
+        if (op == "push") {
+            i++;
+            int x = stoi(tokens[i]);
+            stack.push_back(x);
+            int m = x;
+            if (!mins.empty() && mins.back() < m) {
+                m = mins.back();
+            }
+            mins.push_back(m);
+        } else if (op == "pop") {
+            int v = stack.back();
+            stack.pop_back();
+            mins.pop_back();
+            out.push_back(to_string(v));
+        } else if (op == "top") {
+            out.push_back(to_string(stack.back()));
+        } else {
+            out.push_back(to_string(mins.back()));
+        }
+    }
+    string res;
+    for (int i = 0; i < (int)out.size(); i++) { if (i) res += " "; res += out[i]; }
+    return res;
+}
+
+int main() {
+    string ops;
+    getline(cin, ops);
+    while (!ops.empty() && (ops.back() == '\n' || ops.back() == '\r' || ops.back() == ' ')) ops.pop_back();
+    cout << minStackOps(ops) << endl;
+}

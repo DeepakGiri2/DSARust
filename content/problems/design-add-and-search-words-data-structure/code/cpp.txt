@@ -1,0 +1,38 @@
+struct WordDictionary {
+    map<char, WordDictionary*> children; //@init
+    bool isWord = false; //@flag
+
+    void addWord(string word) {
+        WordDictionary* node = this; //@addStart
+        for (char c : word) { //@addLoop
+            if (!node->children.count(c)) { //@missing
+                node->children[c] = new WordDictionary(); //@create
+            }
+            node = node->children[c]; //@descend
+        }
+        node->isWord = true; //@mark
+    }
+
+    bool search(string word) {
+        return match(word, 0); //@searchStart
+    }
+
+    bool match(const string& word, int i) {
+        if (i == (int)word.size()) { //@end
+            return isWord; //@atWord
+        }
+        char c = word[i]; //@char
+        if (c == '.') { //@wildcard
+            for (auto& kv : children) { //@tryAll
+                if (kv.second->match(word, i + 1)) { //@branch
+                    return true;
+                }
+            }
+            return false; //@noBranch
+        }
+        if (!children.count(c)) { //@exact
+            return false; //@dead
+        }
+        return children[c]->match(word, i + 1); //@recurse
+    }
+};

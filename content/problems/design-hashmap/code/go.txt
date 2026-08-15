@@ -1,0 +1,40 @@
+type entry struct{ key, value int }
+
+type MyHashMap struct {
+    buckets [][]entry //@init
+}
+
+func (m *MyHashMap) hash(key int) int {
+    return key % len(m.buckets) //@hash
+}
+
+func (m *MyHashMap) Put(key, value int) {
+    b := m.hash(key) //@putHash
+    for i := range m.buckets[b] { //@scanPut
+        if m.buckets[b][i].key == key { //@existing
+            m.buckets[b][i].value = value //@update
+            return
+        }
+    }
+    m.buckets[b] = append(m.buckets[b], entry{key, value}) //@append
+}
+
+func (m *MyHashMap) Get(key int) int {
+    b := m.hash(key) //@getHash
+    for _, e := range m.buckets[b] { //@scanGet
+        if e.key == key { //@hit
+            return e.value
+        }
+    }
+    return -1 //@miss
+}
+
+func (m *MyHashMap) Remove(key int) {
+    b := m.hash(key) //@removeHash
+    for i, e := range m.buckets[b] { //@scanRemove
+        if e.key == key { //@found
+            m.buckets[b] = append(m.buckets[b][:i], m.buckets[b][i+1:]...) //@unlink
+            return
+        }
+    }
+}

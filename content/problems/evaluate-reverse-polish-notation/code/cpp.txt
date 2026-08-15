@@ -1,0 +1,14 @@
+int evalRPN(vector<string>& tokens) {
+    vector<int> stack; //@init
+    for (auto& t : tokens) { //@loop
+        if (isOp(t)) { //@isop
+            int b = stack.back(); stack.pop_back(); //@popB
+            int a = stack.back(); stack.pop_back(); //@popA
+            stack.push_back(apply(a, b, t)); //@push
+        } else {
+            int n = stoi(t); //@parse
+            stack.push_back(n); //@pushNum
+        }
+    }
+    return stack[0]; //@ret
+}

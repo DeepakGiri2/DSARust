@@ -1,0 +1,20 @@
+static List<List<Integer>> res = new ArrayList<>(); //@init
+static List<Integer> cur = new ArrayList<>(); //@cur
+
+static void back(int start, int n, int k) {
+    if (cur.size() == k) { //@complete
+        res.add(new ArrayList<>(cur)); //@record
+        return; //@retDone
+    }
+    for (int v = start; v <= n - (k - cur.size()) + 1; v++) { //@loop
+        cur.add(v); //@choose
+        back(v + 1, n, k); //@recurse
+        cur.remove(cur.size() - 1); //@undo
+    }
+}
+
+static List<List<Integer>> combine(int n, int k) {
+    res.clear(); cur.clear();
+    back(1, n, k); //@call
+    return res; //@ret
+}

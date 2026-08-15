@@ -1,0 +1,23 @@
+func checkValidString(s string) bool {
+    lo, hi := 0, 0 //@init
+    for i := 0; i < len(s); i++ { //@loop
+        c := s[i]
+        if c == '(' { //@open
+            lo++
+            hi++
+        } else if c == ')' { //@close
+            lo--
+            hi--
+        } else { //@star
+            lo--
+            hi++
+        }
+        if hi < 0 { //@impossible
+            return false //@no
+        }
+        if lo < 0 { //@clamp
+            lo = 0
+        }
+    }
+    return lo == 0 //@ret
+}

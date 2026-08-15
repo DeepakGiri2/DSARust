@@ -1,0 +1,15 @@
+int eliminateMaximum(vector<int>& dist, vector<int>& speed) {
+    int n = dist.size();
+    vector<int> idx(n); //@order
+    iota(idx.begin(), idx.end(), 0);
+    sort(idx.begin(), idx.end(), [&](int a, int b) { //@sort
+        return (long long)dist[a] * speed[b] < (long long)dist[b] * speed[a];
+    });
+    for (int i = 0; i < n; i++) { //@loop
+        int m = idx[i]; //@next
+        if (dist[m] <= (long long)i * speed[m]) { //@late
+            return i; //@ret
+        }
+    }
+    return n; //@all
+}

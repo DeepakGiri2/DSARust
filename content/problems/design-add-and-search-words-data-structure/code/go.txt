@@ -1,0 +1,40 @@
+type WordDictionary struct {
+    children map[byte]*WordDictionary //@init
+    isWord   bool //@flag
+}
+
+func (d *WordDictionary) AddWord(word string) {
+    node := d //@addStart
+    for i := 0; i < len(word); i++ { //@addLoop
+        c := word[i]
+        if node.children[c] == nil { //@missing
+            node.children[c] = newNode() //@create
+        }
+        node = node.children[c] //@descend
+    }
+    node.isWord = true //@mark
+}
+
+func (d *WordDictionary) Search(word string) bool {
+    return d.match(word, 0) //@searchStart
+}
+
+func (d *WordDictionary) match(word string, i int) bool {
+    if i == len(word) { //@end
+        return d.isWord //@atWord
+    }
+    c := word[i] //@char
+    if c == '.' { //@wildcard
+        for _, child := range d.children { //@tryAll
+            if child.match(word, i+1) { //@branch
+                return true
+            }
+        }
+        return false //@noBranch
+    }
+    child := d.children[c] //@exact
+    if child == nil { //@dead
+        return false
+    }
+    return child.match(word, i+1) //@recurse
+}

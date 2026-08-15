@@ -1,0 +1,9 @@
+int hammingDistance(int x, int y) {
+    int diff = x ^ y; //@xor
+    int count = 0; //@init
+    while (diff > 0) { //@loop
+        diff &= diff - 1; //@clear
+        count++; //@bump
+    }
+    return count; //@ret
+}

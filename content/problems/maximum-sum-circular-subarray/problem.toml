@@ -1,0 +1,46 @@
+slug = 'maximum-sum-circular-subarray'
+title = 'Maximum Sum Circular Subarray'
+category = '1-D Dynamic Programming'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '918'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Find the maximum possible sum of a non-empty subarray of a circular array, where a subarray may wrap around the end at most once and may not use any element twice.'
+approach = 'A wrapping subarray is the whole array minus a contiguous middle piece, so its best value is total − (minimum subarray sum). Run Kadane twice in the same pass — once for the maximum, once for the minimum — and take the better of the two answers. The one trap: if every element is negative the minimum subarray is the whole array, making the wrapped candidate an empty subarray, so that case must return the plain Kadane answer.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 12
+min = -30
+max = 30
+
+[default_input]
+nums = [5, -3, 5]
+
+[[tests]]
+expected = '10'
+[tests.input]
+nums = [5, -3, 5]
+
+[[tests]]
+expected = '3'
+[tests.input]
+nums = [1, -2, 3, -2]
+
+[[tests]]
+expected = '-2'
+[tests.input]
+nums = [-3, -2, -3]
+
+[[tests]]
+expected = '4'
+[tests.input]
+nums = [3, -1, 2, -1]
+
+[[tests]]
+expected = '15'
+[tests.input]
+nums = [-2, 4, -5, 4, -5, 9, 4]

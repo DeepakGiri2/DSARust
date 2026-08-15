@@ -1,0 +1,39 @@
+slug = 'insert-interval'
+title = 'Insert Interval'
+category = 'Intervals'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n) time · O(n) space'
+
+description = 'Insert a new interval into a list of non-overlapping intervals sorted by start, merging where necessary.'
+approach = 'Three phases in one pass: copy every interval that ends before the new one starts, absorb every interval that overlaps it into one widened interval, then copy the rest. Because the input is sorted, each phase is a contiguous run.'
+
+[[inputs]]
+name = 'intervals'
+label = 'intervals'
+type = 'string'
+max_len = 60
+help = "pairs like '1,3 6,9'"
+
+[[inputs]]
+name = 'newInterval'
+label = 'newInterval'
+type = 'string'
+max_len = 60
+help = "one pair like '2,5'"
+
+[default_input]
+intervals = '1,3 6,9'
+newInterval = '2,5'
+
+[[tests]]
+expected = '1-5 6-9'
+[tests.input]
+intervals = '1,3 6,9'
+newInterval = '2,5'
+
+[[tests]]
+expected = '1-2 3-10 12-16'
+[tests.input]
+intervals = '1,2 3,5 6,7 8,10 12,16'
+newInterval = '4,8'

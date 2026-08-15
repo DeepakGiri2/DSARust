@@ -1,0 +1,18 @@
+static int maximalSquare(char[][] matrix) {
+    int rows = matrix.length, cols = matrix[0].length;
+    int[][] dp = new int[rows + 1][cols + 1]; //@init
+    int best = 0; //@best
+    for (int r = 1; r <= rows; r++) { //@rowLoop
+        for (int c = 1; c <= cols; c++) { //@colLoop
+            if (matrix[r - 1][c - 1] == '0') { //@zero
+                continue;
+            }
+            int side = Math.min(dp[r - 1][c], Math.min(dp[r][c - 1], dp[r - 1][c - 1])); //@side
+            dp[r][c] = side + 1; //@store
+            if (dp[r][c] > best) { //@improve
+                best = dp[r][c]; //@update
+            }
+        }
+    }
+    return best * best; //@ret
+}

@@ -1,0 +1,78 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strings"
+)
+
+type Trie struct {
+    children map[byte]*Trie
+    end      bool
+}
+
+func Constructor() Trie {
+    return Trie{children: map[byte]*Trie{}}
+}
+
+func (t *Trie) Insert(word string) {
+    cur := t
+    for i := 0; i < len(word); i++ {
+        c := word[i]
+        if cur.children[c] == nil {
+            cur.children[c] = &Trie{children: map[byte]*Trie{}}
+        }
+        cur = cur.children[c]
+    }
+    cur.end = true
+}
+
+func (t *Trie) Search(word string) bool {
+    cur := t
+    for i := 0; i < len(word); i++ {
+        c := word[i]
+        if cur.children[c] == nil {
+            return false
+        }
+        cur = cur.children[c]
+    }
+    return cur.end
+}
+
+func (t *Trie) StartsWith(prefix string) bool {
+    cur := t
+    for i := 0; i < len(prefix); i++ {
+        c := prefix[i]
+        if cur.children[c] == nil {
+            return false
+        }
+        cur = cur.children[c]
+    }
+    return true
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    line = strings.TrimSpace(line)
+    trie := Constructor()
+    for _, part := range strings.Split(line, ",") {
+        f := strings.Fields(part)
+        if len(f) == 0 {
+            continue
+        }
+        arg := ""
+        if len(f) > 1 {
+            arg = f[1]
+        }
+        switch f[0] {
+        case "insert":
+            trie.Insert(arg)
+        case "search":
+            fmt.Println(trie.Search(arg))
+        case "startsWith":
+            fmt.Println(trie.StartsWith(arg))
+        }
+    }
+}

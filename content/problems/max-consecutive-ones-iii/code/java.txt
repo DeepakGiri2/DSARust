@@ -1,0 +1,18 @@
+static int longestOnes(int[] nums, int k) {
+    int left = 0, zeros = 0, best = 0; //@init
+    for (int right = 0; right < nums.length; right++) { //@grow
+        if (nums[right] == 0) { //@iszero
+            zeros++; //@count
+        }
+        while (zeros > k) { //@shrink
+            if (nums[left] == 0) { //@leftzero
+                zeros--; //@give
+            }
+            left++; //@move
+        }
+        if (right - left + 1 > best) { //@best
+            best = right - left + 1; //@set
+        }
+    }
+    return best; //@ret
+}

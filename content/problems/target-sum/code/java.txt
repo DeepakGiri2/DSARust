@@ -1,0 +1,13 @@
+static int findTargetSumWays(int[] nums, int target) {
+    Map<Integer, Integer> ways = new HashMap<>(); //@init
+    ways.put(0, 1);
+    for (int v : nums) { //@loop
+        Map<Integer, Integer> next = new HashMap<>(); //@fresh
+        for (Map.Entry<Integer, Integer> e : ways.entrySet()) { //@scan
+            next.merge(e.getKey() + v, e.getValue(), Integer::sum); //@plus
+            next.merge(e.getKey() - v, e.getValue(), Integer::sum); //@minus
+        }
+        ways = next; //@swap
+    }
+    return ways.getOrDefault(target, 0); //@ret
+}

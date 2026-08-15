@@ -1,0 +1,21 @@
+static int leastInterval(char[] tasks, int n) {
+    Map<Character, Integer> count = new HashMap<>(); //@count
+    int maxCount = 0; //@maxInit
+    for (char t : tasks) { //@tally
+        count.merge(t, 1, Integer::sum); //@inc
+        if (count.get(t) > maxCount) { //@cmpMax
+            maxCount = count.get(t); //@setMax
+        }
+    }
+    int ties = 0; //@ties
+    for (int c : count.values()) { //@tieLoop
+        if (c == maxCount) { //@isTie
+            ties++; //@addTie
+        }
+    }
+    int slots = (maxCount - 1) * (n + 1) + ties; //@formula
+    if (slots < tasks.length) { //@compare
+        return tasks.length; //@noIdle
+    }
+    return slots; //@ret
+}

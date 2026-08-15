@@ -1,0 +1,46 @@
+slug = 'first-missing-positive'
+title = 'First Missing Positive'
+category = 'Arrays & Hashing'
+difficulty = 'Hard'
+tier = 'extra'
+leetcode = '41'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Find the smallest positive integer that does not appear in the array, in linear time and constant extra space.'
+approach = 'Cyclic sort. The answer is somewhere in 1…n+1, so the array itself can be the hash table: put every value v in 1…n at index v−1. Swapping into place — rather than shifting — means each swap fixes one element permanently, so the total work is linear even though there is a loop inside a loop. Then the first index whose value is not i+1 names the missing number.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 12
+min = -20
+max = 40
+
+[default_input]
+nums = [3, 4, -1, 1]
+
+[[tests]]
+expected = '2'
+[tests.input]
+nums = [3, 4, -1, 1]
+
+[[tests]]
+expected = '3'
+[tests.input]
+nums = [1, 2, 0]
+
+[[tests]]
+expected = '1'
+[tests.input]
+nums = [7, 8, 9, 11, 12]
+
+[[tests]]
+expected = '4'
+[tests.input]
+nums = [1, 2, 3]
+
+[[tests]]
+expected = '3'
+[tests.input]
+nums = [2, 2, 1]

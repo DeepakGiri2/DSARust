@@ -1,0 +1,13 @@
+static int subarraySum(int[] nums, int k) {
+    Map<Integer, Integer> seen = new LinkedHashMap<>(); //@init
+    seen.put(0, 1);
+    int sum = 0, count = 0; //@running
+    for (int v : nums) { //@loop
+        sum += v; //@add
+        if (seen.containsKey(sum - k)) { //@lookup
+            count += seen.get(sum - k); //@bump
+        }
+        seen.merge(sum, 1, Integer::sum); //@record
+    }
+    return count; //@ret
+}

@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void backtrack(vector<int>& nums, vector<int>& current, vector<bool>& used, vector<vector<int>>& res);
+
+vector<vector<int>> permute(vector<int>& nums) {
+    vector<vector<int>> res;
+    vector<int> current;
+    vector<bool> used(nums.size(), false);
+    backtrack(nums, current, used, res);
+    return res;
+}
+
+void backtrack(vector<int>& nums, vector<int>& current, vector<bool>& used, vector<vector<int>>& res) {
+    if (current.size() == nums.size()) {
+        res.push_back(current);
+        return;
+    }
+    for (int i = 0; i < (int)nums.size(); i++) {
+        if (used[i]) {
+            continue;
+        }
+        used[i] = true;
+        current.push_back(nums[i]);
+        backtrack(nums, current, used, res);
+        current.pop_back();
+        used[i] = false;
+    }
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> nums = readInts();
+    vector<vector<int>> res = permute(nums);
+    for (auto& p : res) {
+        for (size_t i = 0; i < p.size(); i++) {
+            if (i) cout << " ";
+            cout << p[i];
+        }
+        cout << "\n";
+    }
+}

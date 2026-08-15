@@ -1,0 +1,17 @@
+static boolean stoneGame(int[] piles) {
+    int n = piles.length;
+    int[] dp = new int[n]; //@init
+    System.arraycopy(piles, 0, dp, 0, n); //@seed
+    for (int length = 2; length <= n; length++) { //@len
+        for (int i = 0; i + length <= n; i++) { //@start
+            int takeLeft = piles[i] - dp[i + 1]; //@takeLeft
+            int takeRight = piles[i + length - 1] - dp[i]; //@takeRight
+            if (takeLeft > takeRight) { //@choose
+                dp[i] = takeLeft; //@storeLeft
+            } else {
+                dp[i] = takeRight; //@storeRight
+            }
+        }
+    }
+    return dp[0] > 0; //@ret
+}

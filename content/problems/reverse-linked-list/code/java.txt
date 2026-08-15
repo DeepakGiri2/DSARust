@@ -1,0 +1,11 @@
+static ListNode reverseList(ListNode head) {
+    ListNode prev = null; //@init
+    ListNode curr = head; //@init2
+    while (curr != null) { //@loop
+        ListNode next = curr.next; //@save
+        curr.next = prev; //@flip
+        prev = curr; //@advP
+        curr = next; //@advC
+    }
+    return prev; //@ret
+}

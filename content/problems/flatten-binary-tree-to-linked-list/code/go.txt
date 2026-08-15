@@ -1,0 +1,15 @@
+func flatten(root *TreeNode) {
+    curr := root //@init
+    for curr != nil { //@loop
+        if curr.Left != nil { //@hasleft
+            pred := curr.Left //@pred
+            for pred.Right != nil { //@rightmost
+                pred = pred.Right //@down
+            }
+            pred.Right = curr.Right //@graft
+            curr.Right = curr.Left //@promote
+            curr.Left = nil //@clear
+        }
+        curr = curr.Right //@next
+    }
+}

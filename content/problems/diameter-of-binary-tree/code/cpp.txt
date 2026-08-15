@@ -1,0 +1,15 @@
+int diameterOfBinaryTree(TreeNode* root) {
+    int best = 0; //@init
+    height(root, best);
+    return best; //@result
+}
+
+int height(TreeNode* node, int& best) {
+    if (node == nullptr) { //@base
+        return 0; //@ret0
+    }
+    int leftH = height(node->left, best); //@recL
+    int rightH = height(node->right, best); //@recR
+    best = max(best, leftH + rightH); //@update
+    return 1 + max(leftH, rightH); //@ret
+}

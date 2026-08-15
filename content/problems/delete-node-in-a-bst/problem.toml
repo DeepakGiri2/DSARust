@@ -1,0 +1,39 @@
+slug = 'delete-node-in-a-bst'
+title = 'Delete Node in a BST'
+category = 'Trees'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '450'
+complexity = 'O(h) time · O(h) space (h = height)'
+
+description = 'Remove a value from a binary search tree and return the new root, keeping the tree a valid BST.'
+approach = 'Finding the node is an ordinary BST descent. Removing it splits into three cases: with at most one child the child is simply lifted into its place, and with two children nothing can be lifted — so instead copy in the in-order successor (the leftmost node of the right subtree, the smallest value still larger than the key) and delete *that* node, which by construction has no left child and therefore falls into an easy case.'
+
+[[inputs]]
+name = 'root'
+label = "tree (level-order, 'n' = null)"
+type = 'tree'
+max_len = 80
+
+[[inputs]]
+name = 'key'
+label = 'key'
+type = 'int'
+min = -100
+max = 100
+
+[default_input]
+root = '5 3 6 2 4 n 7'
+key = 3
+
+[[tests]]
+expected = '5 4 6 2 n n 7'
+[tests.input]
+root = '5 3 6 2 4 n 7'
+key = 3
+
+[[tests]]
+expected = '5 3 6 2 4 n 7'
+[tests.input]
+root = '5 3 6 2 4 n 7'
+key = 0

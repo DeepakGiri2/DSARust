@@ -1,0 +1,39 @@
+slug = 'reverse-words-in-a-string'
+title = 'Reverse Words in a String'
+category = 'String Algorithms'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '151'
+complexity = 'O(n) time · O(n) space for the output'
+
+description = 'Return the words of s in reverse order, separated by a single space. The input may have leading, trailing and repeated spaces; the output must have none.'
+approach = 'Walk from the right. Skip any run of spaces, mark the end of a word, walk left to its start, and append that slice. Reading backwards means words come out reversed without ever building an intermediate list, and the space handling is two small loops rather than a split-and-filter.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 40
+
+[default_input]
+s = '  the sky   is blue '
+
+[[tests]]
+expected = 'blue is sky the'
+[tests.input]
+s = '  the sky   is blue '
+
+[[tests]]
+expected = 'world hello'
+[tests.input]
+s = 'hello world'
+
+[[tests]]
+expected = 'a'
+[tests.input]
+s = '  a  '
+
+[[tests]]
+expected = 'three two one'
+[tests.input]
+s = 'one two three'

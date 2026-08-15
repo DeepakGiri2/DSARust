@@ -1,0 +1,52 @@
+slug = 'bitwise-and-of-numbers-range'
+title = 'Bitwise AND of Numbers Range'
+category = 'Bit Manipulation'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '201'
+complexity = 'O(log n) time · O(1) space'
+
+description = 'Return the bitwise AND of every integer in an inclusive range.'
+approach = 'Any bit that changes anywhere inside the range must be 0 somewhere, so the AND keeps only the bits shared by the whole range — which is exactly the common binary prefix of the two endpoints. Shifting both ends right until they meet finds that prefix, and shifting back the same number of places restores it. The range is never enumerated.'
+
+[[inputs]]
+name = 'left'
+label = 'left'
+type = 'int'
+min = 0
+max = 100000
+
+[[inputs]]
+name = 'right'
+label = 'right'
+type = 'int'
+min = 0
+max = 100000
+
+[default_input]
+left = 5
+right = 7
+
+[[tests]]
+expected = '4'
+[tests.input]
+left = 5
+right = 7
+
+[[tests]]
+expected = '0'
+[tests.input]
+left = 0
+right = 0
+
+[[tests]]
+expected = '0'
+[tests.input]
+left = 1
+right = 6
+
+[[tests]]
+expected = '12'
+[tests.input]
+left = 12
+right = 15

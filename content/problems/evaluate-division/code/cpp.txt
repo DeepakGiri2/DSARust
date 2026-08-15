@@ -1,0 +1,38 @@
+unordered_map<string, unordered_map<string, double>> graph;
+
+double dfs(const string& cur, const string& target, double acc, unordered_set<string>& seen) {
+    if (cur == target) { //@arrive
+        return acc; //@hit
+    }
+    seen.insert(cur); //@mark
+    for (auto& [next, w] : graph[cur]) { //@neighbor
+        if (seen.count(next)) { //@skip
+            continue;
+        }
+        double got = dfs(next, target, acc * w, seen); //@recurse
+        if (got != -1) {
+            return got; //@bubble
+        }
+    }
+    return -1; //@dead
+}
+
+vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values,
+                            vector<vector<string>>& queries) {
+    graph.clear(); //@build
+    for (int i = 0; i < (int)equations.size(); i++) { //@edge
+        graph[equations[i][0]][equations[i][1]] = values[i]; //@fwd
+        graph[equations[i][1]][equations[i][0]] = 1 / values[i]; //@rev
+    }
+
+    vector<double> ans; //@ans
+    for (auto& q : queries) { //@query
+        if (!graph.count(q[0]) || !graph.count(q[1])) { //@unknown
+            ans.push_back(-1); //@nope
+            continue;
+        }
+        unordered_set<string> seen;
+        ans.push_back(dfs(q[0], q[1], 1.0, seen)); //@search
+    }
+    return ans; //@ret
+}

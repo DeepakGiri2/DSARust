@@ -1,0 +1,36 @@
+string serialize(TreeNode* root) {
+    vector<string> out; //@sinit
+    function<void(TreeNode*)> dfs = [&](TreeNode* node) {
+        if (node == nullptr) { //@snull
+            out.push_back("N"); //@sapnull
+            return;
+        }
+        out.push_back(to_string(node->val)); //@sapval
+        dfs(node->left); //@sleft
+        dfs(node->right); //@sright
+    };
+    dfs(root);
+    string res; //@sjoin
+    for (size_t i = 0; i < out.size(); i++) { if (i) res += ","; res += out[i]; }
+    return res;
+}
+
+TreeNode* deserialize(string data) {
+    vector<string> tokens; //@dsplit
+    stringstream ss(data);
+    string tk;
+    while (getline(ss, tk, ',')) tokens.push_back(tk);
+    int idx = 0;
+    function<TreeNode*()> dfs = [&]() -> TreeNode* {
+        string tok = tokens[idx]; //@dread
+        idx++;
+        if (tok == "N") { //@dnull
+            return nullptr;
+        }
+        TreeNode* node = new TreeNode(stoi(tok)); //@dnode
+        node->left = dfs(); //@dleft
+        node->right = dfs(); //@dright
+        return node; //@dret
+    };
+    return dfs();
+}

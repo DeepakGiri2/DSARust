@@ -1,0 +1,20 @@
+ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+    ListNode* dummy = new ListNode(0); //@dummy
+    ListNode* tail = dummy; //@tail0
+    while (list1 != nullptr && list2 != nullptr) { //@loop
+        if (list1->val <= list2->val) { //@cmp
+            tail->next = list1; //@take1
+            list1 = list1->next; //@adv1
+        } else {
+            tail->next = list2; //@take2
+            list2 = list2->next; //@adv2
+        }
+        tail = tail->next; //@advtail
+    }
+    if (list1 != nullptr) { //@rest
+        tail->next = list1; //@attach1
+    } else {
+        tail->next = list2; //@attach2
+    }
+    return dummy->next; //@ret
+}

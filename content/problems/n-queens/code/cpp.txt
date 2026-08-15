@@ -1,0 +1,30 @@
+vector<vector<string>> res; //@init
+set<int> cols; //@cols
+set<int> diag; //@diag
+set<int> anti; //@anti
+vector<int> board; //@board
+
+void back(int row, int n) {
+    if (row == n) { //@complete
+        res.push_back(render(board)); //@record
+        return; //@retDone
+    }
+    for (int c = 0; c < n; c++) { //@loop
+        if (cols.count(c) || diag.count(row - c) || anti.count(row + c)) { //@attacked
+            continue;
+        }
+        cols.insert(c); diag.insert(row - c); anti.insert(row + c); //@place
+        board[row] = c;
+        back(row + 1, n); //@recurse
+        cols.erase(c); //@undo
+        diag.erase(row - c);
+        anti.erase(row + c);
+    }
+}
+
+vector<vector<string>> solveNQueens(int n) {
+    res.clear(); cols.clear(); diag.clear(); anti.clear();
+    board.assign(n, 0);
+    back(0, n); //@call
+    return res; //@ret
+}

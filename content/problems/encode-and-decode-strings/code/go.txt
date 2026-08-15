@@ -1,0 +1,23 @@
+func encode(strs []string) string {
+    encoded := "" //@einit
+    for _, s := range strs { //@eloop
+        encoded += fmt.Sprintf("%d#%s", len(s), s) //@eappend
+    }
+    return encoded //@eret
+}
+
+func decode(s string) []string {
+    res := []string{} //@dinit
+    i := 0 //@di0
+    for i < len(s) { //@dloop
+        j := i //@dj
+        for s[j] != '#' { //@dscan
+            j++
+        }
+        length, _ := strconv.Atoi(s[i:j]) //@dlen
+        word := s[j+1 : j+1+length] //@dword
+        res = append(res, word) //@dadd
+        i = j + 1 + length //@dnext
+    }
+    return res //@dret
+}

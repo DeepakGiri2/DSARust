@@ -1,0 +1,16 @@
+func rob(nums []int) int {
+    if len(nums) == 1 { //@single
+        return nums[0] //@retSingle
+    }
+    a := robLine(nums[:len(nums)-1]) //@dropLast
+    b := robLine(nums[1:]) //@dropFirst
+    return max(a, b) //@ret
+}
+
+func robLine(nums []int) int {
+    prev, cur := 0, 0 //@lineInit
+    for _, v := range nums { //@lineLoop
+        prev, cur = cur, max(cur, prev+v) //@lineStep
+    }
+    return cur //@lineRet
+}

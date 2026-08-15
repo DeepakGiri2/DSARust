@@ -1,0 +1,21 @@
+static String encode(List<String> strs) {
+    StringBuilder encoded = new StringBuilder(); //@einit
+    for (String s : strs) { //@eloop
+        encoded.append(s.length()).append('#').append(s); //@eappend
+    }
+    return encoded.toString(); //@eret
+}
+
+static List<String> decode(String s) {
+    List<String> res = new ArrayList<>(); //@dinit
+    int i = 0; //@di0
+    while (i < s.length()) { //@dloop
+        int j = i; //@dj
+        while (s.charAt(j) != '#') j++; //@dscan
+        int length = Integer.parseInt(s.substring(i, j)); //@dlen
+        String word = s.substring(j + 1, j + 1 + length); //@dword
+        res.add(word); //@dadd
+        i = j + 1 + length; //@dnext
+    }
+    return res; //@dret
+}

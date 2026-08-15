@@ -1,0 +1,16 @@
+func maxSubarraySumCircular(nums []int) int {
+    total := 0
+    maxSum, curMax := nums[0], 0
+    minSum, curMin := nums[0], 0 //@init
+    for _, x := range nums { //@loop
+        curMax = max(curMax+x, x) //@grow
+        maxSum = max(maxSum, curMax) //@best
+        curMin = min(curMin+x, x) //@shrink
+        minSum = min(minSum, curMin) //@worst
+        total += x //@total
+    }
+    if maxSum > 0 { //@check
+        return max(maxSum, total-minSum) //@wrap
+    }
+    return maxSum //@allneg
+}

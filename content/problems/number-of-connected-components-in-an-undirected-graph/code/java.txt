@@ -1,0 +1,15 @@
+static int countComponents(int n, int[][] edges) {
+    int[] parent = new int[n]; //@init
+    for (int i = 0; i < n; i++) { //@seed
+        parent[i] = i; //@self
+    }
+    int count = n; //@count
+    for (int[] e : edges) { //@loop
+        int a = find(parent, e[0]), b = find(parent, e[1]); //@find
+        if (a != b) { //@check
+            parent[a] = b; //@union
+            count--; //@merge
+        }
+    }
+    return count; //@ret
+}

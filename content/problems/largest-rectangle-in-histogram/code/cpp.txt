@@ -1,0 +1,18 @@
+int largestRectangleArea(vector<int>& heights) {
+    int best = 0; //@init
+    vector<pair<int, int>> stack; //@stack
+    for (int i = 0; i < (int)heights.size(); i++) { //@loop
+        int start = i; //@start
+        while (!stack.empty() && stack.back().second > heights[i]) { //@while
+            auto top = stack.back(); //@peek
+            stack.pop_back(); //@pop
+            best = max(best, top.second * (i - top.first)); //@area
+            start = top.first; //@inherit
+        }
+        stack.push_back({start, heights[i]}); //@push
+    }
+    for (auto& b : stack) { //@drain
+        best = max(best, b.second * ((int)heights.size() - b.first)); //@tail
+    }
+    return best; //@ret
+}

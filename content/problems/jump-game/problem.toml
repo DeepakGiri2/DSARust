@@ -1,0 +1,33 @@
+slug = 'jump-game'
+title = 'Jump Game'
+category = 'Greedy'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n) time · O(1) space'
+
+description = 'You are given an integer array nums. You start at index 0, and nums[i] is the maximum jump length from index i. Return true if you can reach the last index, otherwise false.'
+approach = 'Track the farthest index reachable so far (reach). Sweep left to right: if the current index is beyond reach, it is unreachable → false. Otherwise extend reach to max(reach, i + nums[i]). Survive the whole array → true.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums (jump lengths)'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+nums = [2, 3, 1, 1, 4]
+
+[[tests]]
+expected = 'true'
+[tests.input]
+nums = [2, 3, 1, 1, 4]
+
+[[tests]]
+expected = 'false'
+[tests.input]
+nums = [3, 2, 1, 0, 4]
+
+[[tests]]
+expected = 'true'
+[tests.input]
+nums = [0]

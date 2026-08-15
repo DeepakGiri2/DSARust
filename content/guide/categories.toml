@@ -1,0 +1,30 @@
+# Which topics the helper offers first for each problem category.
+# Anything not listed still shows under "everything else" — which is where the
+# two universal topics, `complexity` and `interview`, live, since they apply
+# everywhere rather than to any one category.
+
+[categories]
+'Arrays & Hashing' = ['array', 'hashmap', 'hashset', 'string', 'prefixsum']
+'Two Pointers' = ['twopointers', 'array', 'string', 'sorting']
+'Sliding Window' = ['slidingwindow', 'hashmap', 'monotonic', 'array', 'string']
+'Stack' = ['stack', 'monotonic', 'string', 'array']
+'Binary Search' = ['binarysearch', 'array', 'sorting']
+'Linked List' = ['linkedlist', 'twopointers', 'design']
+'Trees' = ['tree', 'queue', 'stack', 'memo']
+'Heap / Priority Queue' = ['heap', 'sorting', 'array', 'hashmap']
+'Backtracking' = ['backtracking', 'memo', 'array', 'grid']
+'Tries' = ['trie', 'string', 'matching', 'hashmap']
+'Graphs' = ['graph', 'grid', 'queue', 'toposort', 'hashset']
+'Advanced Graphs' = ['graph', 'shortestpath', 'unionfind', 'heap', 'queue']
+'1-D Dynamic Programming' = ['dp', 'memo', 'array']
+'2-D Dynamic Programming' = ['dp', 'memo', 'grid', 'string']
+'Greedy' = ['greedy', 'sorting', 'array', 'heap']
+'Intervals' = ['intervals', 'sorting', 'array']
+'Math & Geometry' = ['math', 'matrix', 'grid', 'array', 'bits']
+'Bit Manipulation' = ['bits', 'math']
+
+# The Interview Extra categories.
+'Prefix Sums' = ['prefixsum', 'array', 'hashmap']
+'Union Find' = ['unionfind', 'graph', 'array']
+'String Algorithms' = ['matching', 'string', 'twopointers']
+'Design' = ['design', 'hashmap', 'linkedlist', 'queue', 'heap']

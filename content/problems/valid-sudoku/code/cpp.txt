@@ -1,0 +1,20 @@
+bool isValidSudoku(vector<string>& board) {
+    set<string> seen; //@init
+    for (int r = 0; r < 9; r++) { //@rowloop
+        for (int c = 0; c < 9; c++) { //@colloop
+            char v = board[r][c]; //@read
+            if (v == '.') { //@empty
+                continue;
+            }
+            int b = (r / 3) * 3 + c / 3;
+            vector<string> keys = {"r" + to_string(r) + "#" + string(1, v), "c" + to_string(c) + "#" + string(1, v), "b" + to_string(b) + "#" + string(1, v)}; //@keys
+            for (auto& k : keys) { //@each
+                if (seen.count(k)) { //@check
+                    return false; //@bad
+                }
+                seen.insert(k); //@mark
+            }
+        }
+    }
+    return true; //@ok
+}

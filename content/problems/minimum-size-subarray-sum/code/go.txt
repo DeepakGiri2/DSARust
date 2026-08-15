@@ -1,0 +1,18 @@
+func minSubArrayLen(target int, nums []int) int {
+    minLen := len(nums) + 1 //@init
+    sum, left := 0, 0 //@init2
+    for right := 0; right < len(nums); right++ { //@loop
+        sum += nums[right] //@add
+        for sum >= target { //@shrink
+            if right-left+1 < minLen { //@cmp
+                minLen = right - left + 1 //@newMin
+            }
+            sum -= nums[left] //@sub
+            left++ //@advance
+        }
+    }
+    if minLen == len(nums)+1 { //@test
+        return 0 //@none
+    }
+    return minLen //@ret
+}

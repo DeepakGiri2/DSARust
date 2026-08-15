@@ -1,0 +1,32 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static boolean isValid(String s) {
+        Map<Character, Character> pairs = Map.of(')', '(', ']', '[', '}', '{');
+        Deque<Character> stack = new ArrayDeque<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '(' || c == '[' || c == '{') {
+                stack.push(c);
+            } else {
+                if (stack.isEmpty()) {
+                    return false;
+                }
+                char top = stack.peek();
+                if (top != pairs.get(c)) {
+                    return false;
+                }
+                stack.pop();
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String s = br.readLine().trim();
+        System.out.println(isValid(s));
+    }
+}

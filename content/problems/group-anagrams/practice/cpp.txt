@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+string sortKey(string w) {
+    sort(w.begin(), w.end());
+    return w;
+}
+
+vector<vector<string>> groupAnagrams(vector<string>& words) {
+    unordered_map<string, vector<string>> groups;
+    vector<string> order;
+    for (string& w : words) {
+        string key = sortKey(w);
+        if (groups.find(key) == groups.end()) {
+            order.push_back(key);
+        }
+        groups[key].push_back(w);
+    }
+    vector<vector<string>> res;
+    for (string& k : order) {
+        res.push_back(groups[k]);
+    }
+    return res;
+}
+
+int main() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<string> words;
+    string w;
+    while (ss >> w) words.push_back(w);
+    vector<vector<string>> groups = groupAnagrams(words);
+    for (size_t i = 0; i < groups.size(); i++) {
+        for (size_t j = 0; j < groups[i].size(); j++) {
+            if (j) cout << " ";
+            cout << groups[i][j];
+        }
+        cout << "\n";
+    }
+}

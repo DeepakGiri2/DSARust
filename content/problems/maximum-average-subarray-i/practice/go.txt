@@ -1,0 +1,41 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func findMaxAverage(nums []int, k int) float64 {
+    windowSum := 0
+    for i := 0; i < k; i++ {
+        windowSum += nums[i]
+    }
+    maxSum := windowSum
+    for r := k; r < len(nums); r++ {
+        windowSum += nums[r] - nums[r-k]
+        if windowSum > maxSum {
+            maxSum = windowSum
+        }
+    }
+    return float64(maxSum) / float64(k)
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    nums := readInts(reader)
+    k := readInts(reader)[0]
+    fmt.Println(findMaxAverage(nums, k))
+}

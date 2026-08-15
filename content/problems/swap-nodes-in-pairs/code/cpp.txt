@@ -1,0 +1,13 @@
+ListNode* swapPairs(ListNode* head) {
+    ListNode dummy(0, head); //@dummy
+    ListNode* prev = &dummy; //@prev
+    while (prev->next != nullptr && prev->next->next != nullptr) { //@loop
+        ListNode* first = prev->next; //@first
+        ListNode* second = first->next; //@second
+        first->next = second->next; //@relinkFirst
+        second->next = first; //@relinkSecond
+        prev->next = second; //@relinkPrev
+        prev = first; //@advance
+    }
+    return dummy.next; //@ret
+}

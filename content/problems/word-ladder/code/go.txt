@@ -1,0 +1,47 @@
+func ladderLength(beginWord string, endWord string, wordList []string) int {
+    used := make([]bool, len(wordList)) //@init
+    target := -1 //@target
+    for i, w := range wordList { //@findTarget
+        if w == endWord {
+            target = i
+        }
+    }
+    if target < 0 { //@absent
+        return 0
+    }
+    q := []string{beginWord} //@seed
+    steps := 1 //@steps
+    for len(q) > 0 { //@loop
+        next := []string{} //@level
+        for _, w := range q { //@scan
+            if w == endWord { //@found
+                return steps //@ret
+            }
+            for i, cand := range wordList { //@candidates
+                if used[i] { //@skip
+                    continue
+                }
+                if differsByOne(w, cand) { //@adjacent
+                    used[i] = true //@consume
+                    next = append(next, cand) //@enqueue
+                }
+            }
+        }
+        q = next //@advance
+        steps++ //@bump
+    }
+    return 0 //@fail
+}
+
+func differsByOne(a, b string) bool {
+    if len(a) != len(b) {
+        return false
+    }
+    diff := 0
+    for i := range a {
+        if a[i] != b[i] {
+            diff++
+        }
+    }
+    return diff == 1
+}

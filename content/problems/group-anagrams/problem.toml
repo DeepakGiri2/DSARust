@@ -1,0 +1,33 @@
+slug = 'group-anagrams'
+title = 'Group Anagrams'
+category = 'Arrays & Hashing'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n · k log k) time · O(n · k) space (n words of length k)'
+
+description = 'Given a list of words (entered space-separated), group together the ones that are anagrams of each other. Return the groups; the order of groups follows the order each group first appears.'
+approach = 'Two words are anagrams exactly when their sorted letters match. Use that sorted string as a map key: every word drops into the bucket for its sorted key. Track the order buckets first appear so the output is stable.'
+
+[[inputs]]
+name = 'words'
+label = 'words (space-separated)'
+type = 'string'
+max_len = 40
+
+[default_input]
+words = 'eat tea tan ate nat bat'
+
+[[tests]]
+expected = "eat tea ate\ntan nat\nbat"
+[tests.input]
+words = 'eat tea tan ate nat bat'
+
+[[tests]]
+expected = 'abc bca cab'
+[tests.input]
+words = 'abc bca cab'
+
+[[tests]]
+expected = 'a'
+[tests.input]
+words = 'a'

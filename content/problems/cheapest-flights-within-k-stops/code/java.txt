@@ -1,0 +1,23 @@
+static final int INF = 1 << 30;
+
+static int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+    int[] dist = new int[n]; //@init
+    Arrays.fill(dist, INF);
+    dist[src] = 0; //@seed
+    for (int round = 0; round <= k; round++) { //@rounds
+        int[] next = dist.clone(); //@copy
+        for (int[] f : flights) { //@edges
+            if (dist[f[0]] == INF) { //@unreached
+                continue;
+            }
+            if (dist[f[0]] + f[2] < next[f[1]]) { //@cheaper
+                next[f[1]] = dist[f[0]] + f[2]; //@update
+            }
+        }
+        dist = next; //@commit
+    }
+    if (dist[dst] == INF) { //@check
+        return -1; //@fail
+    }
+    return dist[dst]; //@ret
+}

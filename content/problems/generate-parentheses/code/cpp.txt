@@ -1,0 +1,17 @@
+vector<string> generateParenthesis(int n) {
+    vector<string> res; //@init
+    function<void(string, int, int)> back = [&](string cur, int open, int close) {
+        if ((int)cur.size() == 2 * n) { //@base
+            res.push_back(cur); //@add
+            return; //@ret
+        }
+        if (open < n) { //@canOpen
+            back(cur + "(", open + 1, close); //@recOpen
+        }
+        if (close < open) { //@canClose
+            back(cur + ")", open, close + 1); //@recClose
+        }
+    };
+    back("", 0, 0); //@call
+    return res; //@done
+}

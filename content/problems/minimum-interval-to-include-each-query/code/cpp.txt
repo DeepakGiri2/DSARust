@@ -1,0 +1,27 @@
+vector<int> minInterval(vector<vector<int>>& intervals, vector<int>& queries) {
+    sort(intervals.begin(), intervals.end(), [](auto& a, auto& b) { //@sortIntervals
+        return a[0] < b[0];
+    });
+    vector<int> order(queries.size()); //@sortQueries
+    iota(order.begin(), order.end(), 0);
+    sort(order.begin(), order.end(), [&](int a, int b) { return queries[a] < queries[b]; });
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> h; //@init
+    vector<int> res(queries.size()); //@out
+    size_t i = 0; //@cursor
+    for (int qi : order) { //@loop
+        int q = queries[qi]; //@query
+        while (i < intervals.size() && intervals[i][0] <= q) { //@admit
+            h.push({intervals[i][1] - intervals[i][0] + 1, intervals[i][1]}); //@push
+            i++;
+        }
+        while (!h.empty() && h.top().second < q) { //@expire
+            h.pop(); //@drop
+        }
+        if (h.empty()) { //@none
+            res[qi] = -1; //@miss
+        } else {
+            res[qi] = h.top().first; //@hit
+        }
+    }
+    return res; //@ret
+}

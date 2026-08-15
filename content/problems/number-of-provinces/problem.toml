@@ -1,0 +1,40 @@
+slug = 'number-of-provinces'
+title = 'Number of Provinces'
+category = 'Union Find'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '547'
+complexity = 'O(n² · α(n)) time · O(n) space'
+
+description = 'Given an n × n matrix where isConnected[i][j] = 1 means city i and city j are directly connected, return the number of provinces — groups of cities connected directly or indirectly.'
+approach = 'Start with n components, one per city, and merge whenever an edge joins two that are still separate. Each successful merge drops the component count by exactly one, so the answer needs no second pass over the structure — it is a counter maintained during the scan. find() flattens the tree as it walks, which is why repeated queries stay effectively constant time.'
+
+[[inputs]]
+name = 'isConnected'
+label = 'isConnected'
+type = 'grid'
+max_len = 60
+help = 'n rows of n digits: 1 = directly connected'
+
+[default_input]
+isConnected = '1100 1100 0011 0011'
+
+[[tests]]
+expected = '2'
+[tests.input]
+isConnected = '1100 1100 0011 0011'
+
+[[tests]]
+expected = '2'
+[tests.input]
+isConnected = '110 110 001'
+
+[[tests]]
+expected = '3'
+[tests.input]
+isConnected = '100 010 001'
+
+[[tests]]
+expected = '2'
+[tests.input]
+isConnected = '1100 1110 0110 0001'

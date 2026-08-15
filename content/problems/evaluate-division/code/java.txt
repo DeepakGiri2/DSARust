@@ -1,0 +1,39 @@
+static Map<String, Map<String, Double>> graph = new HashMap<>();
+
+static double[] calcEquation(List<List<String>> equations, double[] values,
+                             List<List<String>> queries) {
+    graph.clear(); //@build
+    for (int i = 0; i < equations.size(); i++) { //@edge
+        String a = equations.get(i).get(0), b = equations.get(i).get(1);
+        graph.computeIfAbsent(a, k -> new HashMap<>()).put(b, values[i]); //@fwd
+        graph.computeIfAbsent(b, k -> new HashMap<>()).put(a, 1 / values[i]); //@rev
+    }
+
+    double[] ans = new double[queries.size()]; //@ans
+    for (int i = 0; i < queries.size(); i++) { //@query
+        String a = queries.get(i).get(0), b = queries.get(i).get(1);
+        if (!graph.containsKey(a) || !graph.containsKey(b)) { //@unknown
+            ans[i] = -1; //@nope
+            continue;
+        }
+        ans[i] = dfs(a, b, 1.0, new HashSet<>()); //@search
+    }
+    return ans; //@ret
+}
+
+static double dfs(String cur, String target, double acc, Set<String> seen) {
+    if (cur.equals(target)) { //@arrive
+        return acc; //@hit
+    }
+    seen.add(cur); //@mark
+    for (Map.Entry<String, Double> e : graph.get(cur).entrySet()) { //@neighbor
+        if (seen.contains(e.getKey())) { //@skip
+            continue;
+        }
+        double got = dfs(e.getKey(), target, acc * e.getValue(), seen); //@recurse
+        if (got != -1) {
+            return got; //@bubble
+        }
+    }
+    return -1; //@dead
+}

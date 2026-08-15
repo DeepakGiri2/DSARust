@@ -1,0 +1,37 @@
+vector<int> sides(4, 0); //@sides
+int sideLen;
+
+bool back(vector<int>& sticks, int i) {
+    if (i == (int)sticks.size()) { //@placedAll
+        return true; //@yes
+    }
+    for (int s = 0; s < 4; s++) { //@loop
+        if (sides[s] + sticks[i] > sideLen) { //@overflow
+            continue;
+        }
+        if (s > 0 && sides[s] == sides[s - 1]) { //@symmetric
+            continue;
+        }
+        sides[s] += sticks[i]; //@place
+        if (back(sticks, i + 1)) { //@recurse
+            return true; //@propagate
+        }
+        sides[s] -= sticks[i]; //@undo
+    }
+    return false; //@no
+}
+
+bool makesquare(vector<int>& matchsticks) {
+    int total = 0; //@sum
+    for (int m : matchsticks) total += m;
+    if (total % 4 != 0) { //@divisible
+        return false;
+    }
+    sideLen = total / 4; //@side
+    sort(matchsticks.rbegin(), matchsticks.rend()); //@sort
+    if (matchsticks[0] > sideLen) { //@tooLong
+        return false;
+    }
+    sides.assign(4, 0);
+    return back(matchsticks, 0); //@call
+}

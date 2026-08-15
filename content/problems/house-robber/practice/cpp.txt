@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int rob(vector<int>& nums) {
+    int n = nums.size();
+    vector<int> dp(n);
+    dp[0] = nums[0];
+    for (int i = 1; i < n; i++) {
+        int skip = dp[i-1];
+        int rob = nums[i];
+        if (i >= 2) {
+            rob += dp[i-2];
+        }
+        if (rob > skip) {
+            dp[i] = rob;
+        } else {
+            dp[i] = skip;
+        }
+    }
+    return dp[n-1];
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> nums = readInts();
+    cout << rob(nums) << endl;
+}

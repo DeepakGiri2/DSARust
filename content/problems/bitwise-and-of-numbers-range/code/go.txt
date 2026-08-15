@@ -1,0 +1,9 @@
+func rangeBitwiseAnd(left int, right int) int {
+    shift := 0 //@init
+    for left < right { //@loop
+        left >>= 1 //@shiftLeft
+        right >>= 1 //@shiftRight
+        shift++ //@count
+    }
+    return left << shift //@ret
+}

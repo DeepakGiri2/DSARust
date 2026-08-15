@@ -1,0 +1,9 @@
+func minimumTotal(triangle [][]int) int {
+    dp := append([]int{}, triangle[len(triangle)-1]...) //@init
+    for r := len(triangle) - 2; r >= 0; r-- { //@row
+        for c := 0; c <= r; c++ { //@col
+            dp[c] = triangle[r][c] + min(dp[c], dp[c+1]) //@relax
+        }
+    }
+    return dp[0] //@ret
+}

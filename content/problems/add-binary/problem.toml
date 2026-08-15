@@ -1,0 +1,46 @@
+slug = 'add-binary'
+title = 'Add Binary'
+category = 'Bit Manipulation'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '67'
+complexity = 'O(max(m, n)) time · O(max(m, n)) space'
+
+description = 'Add two binary numbers given as strings and return the sum as a string.'
+approach = 'Column addition from the right, exactly as on paper. The loop condition is what removes every special case: continuing while either string has digits left *or* a carry is outstanding means unequal lengths and a final carry are handled by the same code as everything else, with no padding and no post-processing.'
+
+[[inputs]]
+name = 'a'
+label = 'a'
+type = 'string'
+max_len = 12
+help = 'binary digits'
+
+[[inputs]]
+name = 'b'
+label = 'b'
+type = 'string'
+max_len = 12
+help = 'binary digits'
+
+[default_input]
+a = '1010'
+b = '1011'
+
+[[tests]]
+expected = '10101'
+[tests.input]
+a = '1010'
+b = '1011'
+
+[[tests]]
+expected = '100'
+[tests.input]
+a = '11'
+b = '1'
+
+[[tests]]
+expected = '0'
+[tests.input]
+a = '0'
+b = '0'

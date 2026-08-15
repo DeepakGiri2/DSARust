@@ -1,0 +1,23 @@
+string multiply(string num1, string num2) {
+    if (num1 == "0" || num2 == "0") { //@zero
+        return "0";
+    }
+    int m = num1.size(), n = num2.size();
+    vector<int> res(m + n, 0); //@init
+    for (int i = m - 1; i >= 0; i--) { //@outer
+        for (int j = n - 1; j >= 0; j--) { //@inner
+            int p = (num1[i] - '0') * (num2[j] - '0'); //@mul
+            int sum = p + res[i + j + 1]; //@place
+            res[i + j + 1] = sum % 10; //@digit
+            res[i + j] += sum / 10; //@carry
+        }
+    }
+    string out = ""; //@build
+    for (int k = 0; k < (int)res.size(); k++) { //@trim
+        if (out.empty() && res[k] == 0 && k + 1 < (int)res.size()) {
+            continue;
+        }
+        out += char('0' + res[k]);
+    }
+    return out; //@ret
+}

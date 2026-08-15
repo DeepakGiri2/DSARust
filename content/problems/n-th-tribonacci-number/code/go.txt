@@ -1,0 +1,14 @@
+func tribonacci(n int) int {
+    if n == 0 { //@zero
+        return 0
+    }
+    if n < 3 { //@small
+        return 1
+    }
+    a, b, c := 0, 1, 1 //@init
+    for i := 3; i <= n; i++ { //@loop
+        next := a + b + c //@add
+        a, b, c = b, c, next //@shift
+    }
+    return c //@ret
+}

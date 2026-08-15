@@ -1,0 +1,36 @@
+func sortList(head *ListNode) *ListNode {
+    if head == nil || head.Next == nil { //@base
+        return head //@trivial
+    }
+    slow, fast := head, head.Next //@find
+    for fast != nil && fast.Next != nil { //@advance
+        slow = slow.Next
+        fast = fast.Next.Next //@hop
+    }
+    mid := slow.Next //@mid
+    slow.Next = nil //@cut
+    left := sortList(head) //@left
+    right := sortList(mid) //@right
+    return merge(left, right) //@merge
+}
+
+func merge(a, b *ListNode) *ListNode {
+    dummy := &ListNode{} //@dummy
+    tail := dummy
+    for a != nil && b != nil { //@both
+        if a.Val <= b.Val { //@pick
+            tail.Next = a //@takea
+            a = a.Next
+        } else {
+            tail.Next = b //@takeb
+            b = b.Next
+        }
+        tail = tail.Next //@advtail
+    }
+    if a != nil { //@rest
+        tail.Next = a //@resta
+    } else {
+        tail.Next = b //@restb
+    }
+    return dummy.Next //@done
+}

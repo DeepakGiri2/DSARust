@@ -1,0 +1,18 @@
+static int characterReplacement(String s, int k) {
+    Map<Character, Integer> count = new HashMap<>(); //@init
+    int res = 0, left = 0, maxf = 0; //@init2
+    for (int right = 0; right < s.length(); right++) { //@loop
+        count.merge(s.charAt(right), 1, Integer::sum); //@add
+        if (count.get(s.charAt(right)) > maxf) { //@max
+            maxf = count.get(s.charAt(right)); //@setmax
+        }
+        while ((right - left + 1) - maxf > k) { //@while
+            count.merge(s.charAt(left), -1, Integer::sum); //@dec
+            left++; //@advance
+        }
+        if (right - left + 1 > res) { //@cmp
+            res = right - left + 1; //@newBest
+        }
+    }
+    return res; //@ret
+}

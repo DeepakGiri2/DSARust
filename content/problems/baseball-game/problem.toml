@@ -1,0 +1,30 @@
+slug = 'baseball-game'
+title = 'Baseball Game'
+category = 'Stack'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '682'
+complexity = 'O(n) time · O(n) space'
+
+description = "Keep a running record of scores. An integer records that score, '+' records the sum of the previous two, 'D' records double the previous one, and 'C' cancels the previous one. Return the total of everything still on the record."
+approach = "Every operation talks about the *most recent* entries and 'C' undoes one, which is the definition of a stack. Because the record is only ever appended to or truncated at the end, nothing needs re-computing — the total is a single pass over what survives."
+
+[[inputs]]
+name = 'operations'
+label = 'operations'
+type = 'string'
+max_len = 60
+help = 'tokens separated by spaces: a number, +, D or C'
+
+[default_input]
+operations = '5 2 C D +'
+
+[[tests]]
+expected = '30'
+[tests.input]
+operations = '5 2 C D +'
+
+[[tests]]
+expected = '27'
+[tests.input]
+operations = '5 -2 4 C D 9 + +'

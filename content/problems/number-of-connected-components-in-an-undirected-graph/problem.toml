@@ -1,0 +1,39 @@
+slug = 'number-of-connected-components-in-an-undirected-graph'
+title = 'Number of Connected Components in an Undirected Graph'
+category = 'Graphs'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(E · α(V)) time · O(V) space'
+
+description = 'Given n nodes and a list of undirected edges, count the connected components.'
+approach = 'Union-find. Start with n components and union the endpoints of each edge; a union that actually joins two different groups reduces the count by one. Path compression keeps each find nearly constant.'
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 1
+max = 10
+
+[[inputs]]
+name = 'edges'
+label = 'edges'
+type = 'string'
+max_len = 60
+help = "pairs like '0,1 1,2 3,4'"
+
+[default_input]
+n = 5
+edges = '0,1 1,2 3,4'
+
+[[tests]]
+expected = '2'
+[tests.input]
+n = 5
+edges = '0,1 1,2 3,4'
+
+[[tests]]
+expected = '1'
+[tests.input]
+n = 5
+edges = '0,1 1,2 2,3 3,4'

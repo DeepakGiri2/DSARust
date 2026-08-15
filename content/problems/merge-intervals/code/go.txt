@@ -1,0 +1,15 @@
+func merge(intervals [][]int) [][]int {
+    sort.Slice(intervals, func(a, b int) bool { //@sort
+        return intervals[a][0] < intervals[b][0]
+    })
+    merged := [][]int{} //@init
+    for i := 0; i < len(intervals); i++ { //@loop
+        cur := intervals[i]
+        if len(merged) == 0 || merged[len(merged)-1][1] < cur[0] { //@disjoint
+            merged = append(merged, cur) //@append
+        } else if cur[1] > merged[len(merged)-1][1] { //@overlap
+            merged[len(merged)-1][1] = cur[1] //@extend
+        }
+    }
+    return merged //@ret
+}

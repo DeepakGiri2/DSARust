@@ -1,0 +1,41 @@
+import java.io.*;
+
+class Main {
+
+    static boolean checkInclusion(String s1, String s2) {
+        int n = s1.length();
+        if (n > s2.length()) {
+            return false;
+        }
+        int[] need = new int[26];
+        int[] win = new int[26];
+        for (int i = 0; i < n; i++) {
+            need[s1.charAt(i) - 'a']++;
+            win[s2.charAt(i) - 'a']++;
+        }
+        for (int right = n - 1; right < s2.length(); right++) {
+            if (right >= n) {
+                win[s2.charAt(right) - 'a']++;
+                win[s2.charAt(right - n) - 'a']--;
+            }
+            boolean ok = true;
+            for (int c = 0; c < 26; c++) {
+                if (win[c] != need[c]) {
+                    ok = false;
+                    break;
+                }
+            }
+            if (ok) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String s1 = br.readLine().trim();
+        String s2 = br.readLine().trim();
+        System.out.println(checkInclusion(s1, s2));
+    }
+}

@@ -1,0 +1,45 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func longestConsecutive(nums []int) int {
+    set := map[int]bool{}
+    for _, n := range nums {
+        set[n] = true
+    }
+    best := 0
+    for n := range set {
+        if !set[n-1] {
+            length := 1
+            for set[n+length] {
+                length++
+            }
+            if length > best {
+                best = length
+            }
+        }
+    }
+    return best
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    nums := readInts(reader)
+    fmt.Println(longestConsecutive(nums))
+}

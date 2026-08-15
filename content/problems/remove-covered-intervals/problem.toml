@@ -1,0 +1,35 @@
+slug = 'remove-covered-intervals'
+title = 'Remove Covered Intervals'
+category = 'Intervals'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '1288'
+complexity = 'O(n log n) time · O(1) extra space'
+
+description = 'Remove every interval that is entirely contained in another, and return how many remain.'
+approach = "Sort by start ascending and, crucially, by end *descending* when starts tie. Then any interval whose end does not exceed the furthest end seen so far is covered — its start is already at or after some kept interval's start, and its end is at or before that interval's end. The descending tie-break is what makes the longer of two intervals sharing a start come first, so it does the covering rather than being covered."
+
+[[inputs]]
+name = 'intervals'
+label = 'intervals'
+type = 'string'
+max_len = 60
+help = "'start end' pairs, comma separated"
+
+[default_input]
+intervals = '1 4, 3 6, 2 8'
+
+[[tests]]
+expected = '2'
+[tests.input]
+intervals = '1 4, 3 6, 2 8'
+
+[[tests]]
+expected = '1'
+[tests.input]
+intervals = '1 4, 2 3'
+
+[[tests]]
+expected = '1'
+[tests.input]
+intervals = '1 2, 1 4, 3 4'

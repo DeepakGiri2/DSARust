@@ -1,0 +1,29 @@
+slug = 'binary-tree-preorder-traversal'
+title = 'Binary Tree Preorder Traversal'
+category = 'Trees'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '144'
+complexity = 'O(n) time · O(h) space (h = height)'
+
+description = "Return the values of a binary tree's nodes in preorder — node, left subtree, right subtree."
+approach = 'Preorder records a node the moment it is reached, so no ancestor ever has to be revisited and one stack of pending subtrees is enough. The only trick is pushing the right child *before* the left, because a stack hands back what went in last and left must come out first.'
+
+[[inputs]]
+name = 'root'
+label = "tree (level-order, 'n' = null)"
+type = 'tree'
+max_len = 80
+
+[default_input]
+root = '4 2 7 1 3 6 9'
+
+[[tests]]
+expected = '4 2 1 3 7 6 9'
+[tests.input]
+root = '4 2 7 1 3 6 9'
+
+[[tests]]
+expected = '1 2 3'
+[tests.input]
+root = '1 n 2 3'

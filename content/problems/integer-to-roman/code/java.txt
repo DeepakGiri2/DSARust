@@ -1,0 +1,13 @@
+static int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1}; //@table
+static String[] symbols = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+
+static String intToRoman(int num) {
+    StringBuilder out = new StringBuilder(); //@init
+    for (int i = 0; i < values.length; i++) { //@loop
+        while (num >= values[i]) { //@fits
+            out.append(symbols[i]); //@append
+            num -= values[i]; //@subtract
+        }
+    }
+    return out.toString(); //@ret
+}

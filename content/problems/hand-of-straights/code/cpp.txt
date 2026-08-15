@@ -1,0 +1,22 @@
+bool isNStraightHand(vector<int>& hand, int groupSize) {
+    if (hand.size() % groupSize != 0) { //@divisible
+        return false;
+    }
+    map<int, int> count; //@count
+    for (int c : hand) count[c]++;
+    vector<int> keys; //@sort
+    for (auto& kv : count) keys.push_back(kv.first);
+    for (int c : keys) { //@loop
+        int n = count[c]; //@need
+        if (n == 0) { //@spent
+            continue;
+        }
+        for (int k = 0; k < groupSize; k++) { //@build
+            if (count[c + k] < n) { //@missing
+                return false; //@no
+            }
+            count[c + k] -= n; //@consume
+        }
+    }
+    return true; //@yes
+}

@@ -1,0 +1,7 @@
+func singleNumber(nums []int) int {
+    acc := 0 //@init
+    for i := 0; i < len(nums); i++ { //@loop
+        acc ^= nums[i] //@xor
+    }
+    return acc //@done
+}

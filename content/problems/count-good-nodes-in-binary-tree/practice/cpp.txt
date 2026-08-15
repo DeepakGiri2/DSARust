@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int v) : val(v), left(nullptr), right(nullptr) {}
+};
+
+int dfs(TreeNode* node, int maxSoFar);
+
+int goodNodes(TreeNode* root) {
+    return dfs(root, INT_MIN);
+}
+
+int dfs(TreeNode* node, int maxSoFar) {
+    if (node == nullptr) {
+        return 0;
+    }
+    int count = 0;
+    if (node->val >= maxSoFar) {
+        count = 1;
+    }
+    maxSoFar = max(maxSoFar, node->val);
+    count += dfs(node->left, maxSoFar);
+    count += dfs(node->right, maxSoFar);
+    return count;
+}
+
+TreeNode* buildTree(vector<string>& tokens) {
+    if (tokens.empty() || tokens[0] == "n") return nullptr;
+    TreeNode* root = new TreeNode(stoi(tokens[0]));
+    queue<TreeNode*> q;
+    q.push(root);
+    size_t i = 1;
+    while (!q.empty() && i < tokens.size()) {
+        TreeNode* cur = q.front(); q.pop();
+        if (i < tokens.size()) {
+            if (tokens[i] != "n") { cur->left = new TreeNode(stoi(tokens[i])); q.push(cur->left); }
+            i++;
+        }
+        if (i < tokens.size()) {
+            if (tokens[i] != "n") { cur->right = new TreeNode(stoi(tokens[i])); q.push(cur->right); }
+            i++;
+        }
+    }
+    return root;
+}
+
+int main() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<string> tokens;
+    string tk;
+    while (ss >> tk) tokens.push_back(tk);
+    TreeNode* root = buildTree(tokens);
+    cout << goodNodes(root) << endl;
+}

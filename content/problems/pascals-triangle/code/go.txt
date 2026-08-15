@@ -1,0 +1,12 @@
+func generate(numRows int) [][]int {
+    res := [][]int{} //@init
+    for i := 0; i < numRows; i++ { //@row
+        row := make([]int, i+1) //@newrow
+        row[0], row[i] = 1, 1 //@ends
+        for j := 1; j < i; j++ { //@mid
+            row[j] = res[i-1][j-1] + res[i-1][j] //@sum
+        }
+        res = append(res, row) //@push
+    }
+    return res //@ret
+}

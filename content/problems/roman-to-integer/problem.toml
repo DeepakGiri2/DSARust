@@ -1,0 +1,35 @@
+slug = 'roman-to-integer'
+title = 'Roman to Integer'
+category = 'Math & Geometry'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '13'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Convert a Roman numeral to an integer. Subtractive pairs such as IV and CM count as one value.'
+approach = 'No pair table is needed. A subtractive pair is exactly the situation where a symbol is smaller than the one after it — that is the only time Roman numerals ever go up — so subtract in that case and add otherwise. One left-to-right pass, one comparison per symbol.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 15
+help = 'a Roman numeral'
+
+[default_input]
+s = 'MCMXCIV'
+
+[[tests]]
+expected = '1994'
+[tests.input]
+s = 'MCMXCIV'
+
+[[tests]]
+expected = '58'
+[tests.input]
+s = 'LVIII'
+
+[[tests]]
+expected = '3'
+[tests.input]
+s = 'III'

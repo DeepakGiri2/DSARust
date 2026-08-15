@@ -1,0 +1,30 @@
+slug = 'implement-queue-using-stacks'
+title = 'Implement Queue Using Stacks'
+category = 'Stack'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '232'
+complexity = 'O(1) amortised per operation · O(n) space'
+
+description = 'Build a first-in-first-out queue whose only storage is two last-in-first-out stacks.'
+approach = 'Pouring a stack into another stack reverses it, and a reversed stack is a queue. Keep an in-stack for arrivals and an out-stack for departures, and pour only when the out-stack runs dry. Each element is moved exactly once across its whole lifetime, so despite the occasional expensive pour every operation is O(1) amortised.'
+
+[[inputs]]
+name = 'ops'
+label = 'ops'
+type = 'string'
+max_len = 60
+help = 'push <x> / pop / peek / empty, comma separated'
+
+[default_input]
+ops = 'push 1, push 2, peek, pop, empty'
+
+[[tests]]
+expected = '1 1 false'
+[tests.input]
+ops = 'push 1, push 2, peek, pop, empty'
+
+[[tests]]
+expected = '1 2 3'
+[tests.input]
+ops = 'push 1, push 2, push 3, pop, pop, peek'

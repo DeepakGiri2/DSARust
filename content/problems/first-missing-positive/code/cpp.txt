@@ -1,0 +1,15 @@
+int firstMissingPositive(vector<int>& nums) {
+    int n = nums.size(); //@n
+    for (int i = 0; i < n; i++) { //@loop
+        while (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) { //@can
+            int j = nums[i] - 1; //@home
+            swap(nums[i], nums[j]); //@swap
+        }
+    }
+    for (int i = 0; i < n; i++) { //@check
+        if (nums[i] != i + 1) { //@gap
+            return i + 1; //@ret
+        }
+    }
+    return n + 1; //@all
+}

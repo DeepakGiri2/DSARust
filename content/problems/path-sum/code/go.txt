@@ -1,0 +1,13 @@
+func hasPathSum(root *TreeNode, targetSum int) bool {
+    if root == nil { //@base
+        return false
+    }
+    rem := targetSum - root.Val //@sub
+    if root.Left == nil && root.Right == nil { //@leaf
+        return rem == 0 //@check
+    }
+    if hasPathSum(root.Left, rem) { //@recL
+        return true //@foundL
+    }
+    return hasPathSum(root.Right, rem) //@recR
+}

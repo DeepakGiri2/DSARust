@@ -1,0 +1,52 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        for (int i = 0; i + 2 < nums.length; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            int l = i + 1, r = nums.length - 1;
+            while (l < r) {
+                int sum = nums[i] + nums[l] + nums[r];
+                if (sum == 0) {
+                    res.add(Arrays.asList(nums[i], nums[l], nums[r]));
+                    l++;
+                    r--;
+                    while (l < r && nums[l] == nums[l - 1]) {
+                        l++;
+                    }
+                } else if (sum < 0) {
+                    l++;
+                } else {
+                    r--;
+                }
+            }
+        }
+        return res;
+    }
+
+    static int[] readInts(BufferedReader br) throws Exception {
+        String line = br.readLine();
+        if (line == null || line.trim().isEmpty()) return new int[0];
+        String[] parts = line.trim().split("\\s+");
+        int[] nums = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);
+        return nums;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] nums = readInts(br);
+        List<List<Integer>> res = threeSum(nums);
+        StringBuilder sb = new StringBuilder();
+        for (List<Integer> tr : res) {
+            sb.append(tr.get(0)).append(' ').append(tr.get(1)).append(' ').append(tr.get(2)).append('\n');
+        }
+        System.out.print(sb);
+    }
+}

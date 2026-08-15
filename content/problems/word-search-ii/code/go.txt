@@ -1,0 +1,32 @@
+func findWords(board [][]byte, words []string) []string {
+    root := buildTrie(words) //@build
+    res := []string{} //@init
+    for r := range board { //@rowLoop
+        for c := range board[r] { //@colLoop
+            dfs(board, r, c, root, "", &res) //@call
+        }
+    }
+    return res //@ret
+}
+
+func dfs(board [][]byte, r, c int, node *Node, prefix string, res *[]string) {
+    if r < 0 || r >= len(board) || c < 0 || c >= len(board[0]) { //@bounds
+        return
+    }
+    ch := board[r][c] //@cell
+    if ch == '#' || node.children[ch] == nil { //@prune
+        return
+    }
+    node = node.children[ch] //@advance
+    prefix += string(ch)
+    if node.word { //@found
+        *res = append(*res, prefix) //@record
+        node.word = false //@dedup
+    }
+    board[r][c] = '#' //@mark
+    dfs(board, r+1, c, node, prefix, res) //@down
+    dfs(board, r-1, c, node, prefix, res) //@up
+    dfs(board, r, c+1, node, prefix, res) //@right
+    dfs(board, r, c-1, node, prefix, res) //@left
+    board[r][c] = ch //@restore
+}

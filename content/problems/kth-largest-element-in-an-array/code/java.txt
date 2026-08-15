@@ -1,0 +1,10 @@
+static int findKthLargest(int[] nums, int k) {
+    PriorityQueue<Integer> h = new PriorityQueue<>(); //@init
+    for (int n : nums) { //@loop
+        h.offer(n); //@push
+        if (h.size() > k) { //@check
+            h.poll(); //@pop
+        }
+    }
+    return h.peek(); //@return
+}

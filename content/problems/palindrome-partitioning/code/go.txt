@@ -1,0 +1,32 @@
+func partition(s string) [][]string {
+    res := [][]string{} //@init
+    cur := []string{} //@cur
+    var back func(start int)
+    back = func(start int) {
+        if start == len(s) { //@complete
+            res = append(res, append([]string{}, cur...)) //@record
+            return //@retDone
+        }
+        for end := start; end < len(s); end++ { //@loop
+            if !isPalindrome(s, start, end) { //@check
+                continue
+            }
+            cur = append(cur, s[start:end+1]) //@choose
+            back(end + 1) //@recurse
+            cur = cur[:len(cur)-1] //@undo
+        }
+    }
+    back(0) //@call
+    return res //@ret
+}
+
+func isPalindrome(s string, lo, hi int) bool {
+    for lo < hi {
+        if s[lo] != s[hi] {
+            return false
+        }
+        lo++
+        hi--
+    }
+    return true
+}

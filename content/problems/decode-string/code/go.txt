@@ -1,0 +1,24 @@
+func decodeString(s string) string {
+    counts := []int{} //@init
+    parts := []string{} //@parts
+    cur := "" //@cur
+    n := 0 //@num
+    for _, ch := range s { //@loop
+        if ch >= '0' && ch <= '9' { //@isDigit
+            n = n*10 + int(ch-'0') //@accum
+        } else if ch == '[' { //@isOpen
+            counts = append(counts, n) //@pushCount
+            parts = append(parts, cur) //@pushStr
+            n, cur = 0, "" //@reset
+        } else if ch == ']' { //@isClose
+            k := counts[len(counts)-1] //@popCount
+            counts = counts[:len(counts)-1]
+            prev := parts[len(parts)-1] //@popStr
+            parts = parts[:len(parts)-1]
+            cur = prev + strings.Repeat(cur, k) //@expand
+        } else { //@isLetter
+            cur += string(ch) //@append
+        }
+    }
+    return cur //@ret
+}

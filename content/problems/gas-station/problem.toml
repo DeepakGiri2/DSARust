@@ -1,0 +1,41 @@
+slug = 'gas-station'
+title = 'Gas Station'
+category = 'Greedy'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Driving clockwise between stations costs cost[i] and gains gas[i]. Return the starting station from which the whole circuit can be completed, or -1.'
+approach = 'If the total gas is at least the total cost a solution exists. And if the tank goes negative somewhere, no station between the current start and that failure can be the answer either — so the start jumps past the whole run instead of retrying each one.'
+
+[[inputs]]
+name = 'gas'
+label = 'gas'
+type = 'int-array'
+max_len = 40
+min = 0
+max = 20
+
+[[inputs]]
+name = 'cost'
+label = 'cost'
+type = 'int-array'
+max_len = 40
+min = 0
+max = 20
+
+[default_input]
+gas = [1, 2, 3, 4, 5]
+cost = [3, 4, 5, 1, 2]
+
+[[tests]]
+expected = '3'
+[tests.input]
+gas = [1, 2, 3, 4, 5]
+cost = [3, 4, 5, 1, 2]
+
+[[tests]]
+expected = '-1'
+[tests.input]
+gas = [2, 3, 4]
+cost = [3, 4, 3]

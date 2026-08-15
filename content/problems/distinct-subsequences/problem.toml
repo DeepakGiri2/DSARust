@@ -1,0 +1,44 @@
+slug = 'distinct-subsequences'
+title = 'Distinct Subsequences'
+category = '2-D Dynamic Programming'
+difficulty = 'Hard'
+tier = '150'
+leetcode = '115'
+complexity = 'O(m · n) time · O(m · n) space'
+
+description = 'Count how many distinct subsequences of one string equal another.'
+approach = "Two choices at every character of the source: ignore it, or — when it matches the target's current character — use it. Ignoring is always allowed, so every cell inherits the count from the row above. A match adds the count from up-left, which is the number of ways the *rest* of the target was already matched. Adding rather than replacing is what counts every distinct way separately."
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 12
+
+[[inputs]]
+name = 't'
+label = 't'
+type = 'string'
+max_len = 8
+
+[default_input]
+s = 'babgbag'
+t = 'bag'
+
+[[tests]]
+expected = '5'
+[tests.input]
+s = 'babgbag'
+t = 'bag'
+
+[[tests]]
+expected = '3'
+[tests.input]
+s = 'rabbbit'
+t = 'rabbit'
+
+[[tests]]
+expected = '1'
+[tests.input]
+s = 'abc'
+t = 'abc'

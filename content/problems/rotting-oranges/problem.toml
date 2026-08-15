@@ -1,0 +1,33 @@
+slug = 'rotting-oranges'
+title = 'Rotting Oranges'
+category = 'Graphs'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(m·n) time · O(m·n) space'
+
+description = 'In a grid, each cell is 0 (empty), 1 (fresh orange) or 2 (rotten orange). Every minute, any fresh orange 4-directionally adjacent to a rotten one becomes rotten. Return the minutes until no cell has a fresh orange, or -1 if that is impossible.'
+approach = 'Multi-source BFS. Start with every rotten orange in the queue at the same time and spread outward one minute (one BFS layer) at a time, counting fresh oranges as they rot. If any fresh orange is left unreachable, the answer is -1.'
+
+[[inputs]]
+name = 'grid'
+label = 'grid (rows space-separated · 0=empty 1=fresh 2=rotten)'
+type = 'grid'
+max_len = 40
+
+[default_input]
+grid = '211 110 011'
+
+[[tests]]
+expected = '4'
+[tests.input]
+grid = '211 110 011'
+
+[[tests]]
+expected = '-1'
+[tests.input]
+grid = '211 011 101'
+
+[[tests]]
+expected = '0'
+[tests.input]
+grid = '000'

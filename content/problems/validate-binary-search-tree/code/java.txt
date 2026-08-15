@@ -1,0 +1,20 @@
+static boolean isValidBST(TreeNode root) {
+    return valid(root, Long.MIN_VALUE, Long.MAX_VALUE); //@call
+}
+
+static boolean valid(TreeNode node, long low, long high) {
+    if (node == null) { //@base
+        return true; //@rettrue
+    }
+    long v = node.val; //@read
+    if (v <= low || v >= high) { //@check
+        return false; //@retfalse
+    }
+    if (!valid(node.left, low, v)) { //@recL
+        return false; //@badL
+    }
+    if (!valid(node.right, v, high)) { //@recR
+        return false; //@badR
+    }
+    return true; //@ret
+}

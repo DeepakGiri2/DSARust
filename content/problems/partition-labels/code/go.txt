@@ -1,0 +1,18 @@
+func partitionLabels(s string) []int {
+    last := map[byte]int{} //@last
+    for i := 0; i < len(s); i++ { //@scan
+        last[s[i]] = i //@record
+    }
+    res := []int{} //@init
+    start, end := 0, 0 //@bounds
+    for i := 0; i < len(s); i++ { //@loop
+        if last[s[i]] > end { //@extend
+            end = last[s[i]] //@setEnd
+        }
+        if i == end { //@cut
+            res = append(res, end-start+1) //@emit
+            start = i + 1 //@next
+        }
+    }
+    return res //@ret
+}

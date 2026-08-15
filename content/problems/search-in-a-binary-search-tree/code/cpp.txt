@@ -1,0 +1,14 @@
+TreeNode* searchBST(TreeNode* root, int val) {
+    TreeNode* cur = root; //@cur
+    while (cur != nullptr) { //@loop
+        if (val == cur->val) { //@hit
+            return cur; //@ret
+        }
+        if (val < cur->val) { //@less
+            cur = cur->left; //@goL
+        } else { //@greater
+            cur = cur->right; //@goR
+        }
+    }
+    return nullptr; //@miss
+}

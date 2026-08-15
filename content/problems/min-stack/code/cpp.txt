@@ -1,0 +1,34 @@
+string minStackOps(string ops) {
+    istringstream ss(ops);
+    vector<string> tokens;
+    string tk;
+    while (ss >> tk) tokens.push_back(tk);
+    vector<int> stack; //@initS
+    vector<int> mins; //@initM
+    vector<string> out; //@initOut
+    for (int i = 0; i < (int)tokens.size(); i++) { //@loop
+        string op = tokens[i];
+        if (op == "push") { //@isPush
+            i++;
+            int x = stoi(tokens[i]);
+            stack.push_back(x); //@push
+            int m = x;
+            if (!mins.empty() && mins.back() < m) { //@cmpMin
+                m = mins.back();
+            }
+            mins.push_back(m); //@pushMin
+        } else if (op == "pop") { //@isPop
+            int v = stack.back();
+            stack.pop_back(); //@pop
+            mins.pop_back(); //@popMin
+            out.push_back(to_string(v)); //@emit
+        } else if (op == "top") { //@isTop
+            out.push_back(to_string(stack.back())); //@emit2
+        } else { //@isMin
+            out.push_back(to_string(mins.back())); //@emit3
+        }
+    }
+    string res;
+    for (int i = 0; i < (int)out.size(); i++) { if (i) res += " "; res += out[i]; }
+    return res; //@ret
+}

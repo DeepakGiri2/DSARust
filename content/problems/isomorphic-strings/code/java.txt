@@ -1,0 +1,15 @@
+static boolean isIsomorphic(String s, String t) {
+    Map<Character, Character> st = new HashMap<>(), ts = new HashMap<>(); //@init
+    for (int i = 0; i < s.length(); i++) { //@loop
+        char a = s.charAt(i), b = t.charAt(i); //@pair
+        if (st.containsKey(a) && st.get(a) != b) { //@fwd
+            return false; //@no
+        }
+        if (ts.containsKey(b) && ts.get(b) != a) { //@back
+            return false; //@no2
+        }
+        st.put(a, b); //@map1
+        ts.put(b, a); //@map2
+    }
+    return true; //@yes
+}

@@ -1,0 +1,21 @@
+static Deque<Integer> q = new ArrayDeque<>(); //@init
+
+static void push(int x) {
+    q.addLast(x); //@enqueue
+    for (int i = 0; i + 1 < q.size(); i++) { //@rotate
+        q.addLast(q.pollFirst()); //@moveBack
+    }
+}
+
+static int pop() {
+    int v = q.pollFirst(); //@pop
+    return v; //@retPop
+}
+
+static int top() {
+    return q.peekFirst(); //@top
+}
+
+static boolean empty() {
+    return q.isEmpty(); //@empty
+}

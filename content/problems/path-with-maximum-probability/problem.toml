@@ -1,0 +1,79 @@
+slug = 'path-with-maximum-probability'
+title = 'Path With Maximum Probability'
+category = 'Advanced Graphs'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '1514'
+complexity = 'O(n² + edges) time · O(n + edges) space'
+
+description = 'Each edge succeeds with a given probability. Find the highest probability of getting from one node to another, taking the product along the path.'
+approach = "Dijkstra upside down. Path cost is a product of numbers in [0, 1], which only ever shrinks as a path grows — exactly the monotonicity Dijkstra needs, with the direction reversed. So settle the *highest*-probability unsettled node each round and relax by multiplying. Nothing about the argument changes; only 'smallest, added' becomes 'largest, multiplied'."
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 2
+max = 8
+
+[[inputs]]
+name = 'edges'
+label = 'edges'
+type = 'string'
+max_len = 60
+help = "'a b' pairs, comma separated"
+
+[[inputs]]
+name = 'succProb'
+label = 'succProb'
+type = 'string'
+max_len = 60
+help = 'one probability per edge, space separated'
+
+[[inputs]]
+name = 'start'
+label = 'start'
+type = 'int'
+min = 0
+max = 7
+
+[[inputs]]
+name = 'end'
+label = 'end'
+type = 'int'
+min = 0
+max = 7
+
+[default_input]
+n = 3
+edges = '0 1, 1 2, 0 2'
+succProb = '0.5 0.5 0.2'
+start = 0
+end = 2
+
+[[tests]]
+expected = '0.25'
+[tests.input]
+n = 3
+edges = '0 1, 1 2, 0 2'
+succProb = '0.5 0.5 0.2'
+start = 0
+end = 2
+
+[[tests]]
+expected = '0.3'
+[tests.input]
+n = 3
+edges = '0 1, 1 2, 0 2'
+succProb = '0.5 0.5 0.3'
+start = 0
+end = 2
+
+[[tests]]
+expected = '0'
+[tests.input]
+n = 3
+edges = '0 1'
+succProb = '0.5'
+start = 0
+end = 2

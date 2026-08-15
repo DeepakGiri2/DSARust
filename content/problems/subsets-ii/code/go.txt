@@ -1,0 +1,16 @@
+func subsetsWithDup(nums []int) [][]int {
+    sort.Ints(nums) //@sort
+    res := [][]int{} //@init
+    var back func(start int, cur []int)
+    back = func(start int, cur []int) {
+        res = append(res, append([]int{}, cur...)) //@record
+        for i := start; i < len(nums); i++ { //@loop
+            if i > start && nums[i] == nums[i-1] { //@dup
+                continue //@skip
+            }
+            back(i+1, append(cur, nums[i])) //@rec
+        }
+    }
+    back(0, []int{}) //@call
+    return res //@ret
+}

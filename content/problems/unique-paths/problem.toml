@@ -1,0 +1,45 @@
+slug = 'unique-paths'
+title = 'Unique Paths'
+category = '2-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(m · n) time · O(m · n) space'
+
+description = 'A robot in the top-left of an m×n grid may only move right or down, and wants to reach the bottom-right. Count the distinct paths. Watch a dp table fill where each cell holds the number of ways to reach it.'
+approach = 'dp[r][c] = ways to reach cell (r,c) = dp[r-1][c] + dp[r][c-1] (arrive from above or from the left). The whole first row and first column are 1 — there is exactly one straight-line path to them.'
+
+[[inputs]]
+name = 'm'
+label = 'm (rows)'
+type = 'int'
+min = 1
+max = 6
+
+[[inputs]]
+name = 'n'
+label = 'n (cols)'
+type = 'int'
+min = 1
+max = 7
+
+[default_input]
+m = 3
+n = 3
+
+[[tests]]
+expected = '6'
+[tests.input]
+m = 3
+n = 3
+
+[[tests]]
+expected = '28'
+[tests.input]
+m = 3
+n = 7
+
+[[tests]]
+expected = '1'
+[tests.input]
+m = 1
+n = 1

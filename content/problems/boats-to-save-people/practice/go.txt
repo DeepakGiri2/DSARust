@@ -1,0 +1,42 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "sort"
+    "strconv"
+    "strings"
+)
+
+func numRescueBoats(people []int, limit int) int {
+    sort.Ints(people)
+    l, r := 0, len(people)-1
+    boats := 0
+    for l <= r {
+        if people[l]+people[r] <= limit {
+            l++
+        }
+        r--
+        boats++
+    }
+    return boats
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    people := readInts(reader)
+    line, _ := reader.ReadString('\n')
+    limit, _ := strconv.Atoi(strings.TrimSpace(line))
+    fmt.Println(numRescueBoats(people, limit))
+}

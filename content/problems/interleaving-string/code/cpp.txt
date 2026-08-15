@@ -1,0 +1,24 @@
+bool isInterleave(string s1, string s2, string s3) {
+    int m = s1.size(), n = s2.size();
+    if (m + n != (int)s3.size()) { //@length
+        return false;
+    }
+    vector<vector<bool>> dp(m + 1, vector<bool>(n + 1, false)); //@init
+    dp[0][0] = true; //@seed
+    for (int i = 0; i <= m; i++) { //@rowLoop
+        for (int j = 0; j <= n; j++) { //@colLoop
+            if (i == 0 && j == 0) { //@origin
+                continue;
+            }
+            bool ok = false; //@ok
+            if (i > 0 && s1[i - 1] == s3[i + j - 1] && dp[i - 1][j]) { //@fromS1
+                ok = true; //@takeS1
+            }
+            if (j > 0 && s2[j - 1] == s3[i + j - 1] && dp[i][j - 1]) { //@fromS2
+                ok = true; //@takeS2
+            }
+            dp[i][j] = ok; //@store
+        }
+    }
+    return dp[m][n]; //@ret
+}

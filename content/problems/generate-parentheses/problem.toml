@@ -1,0 +1,29 @@
+slug = 'generate-parentheses'
+title = 'Generate Parentheses'
+category = 'Stack'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(4^n / sqrt(n)) time · O(n) space'
+
+description = 'Given n pairs of parentheses, generate every combination of well-formed parentheses.'
+approach = 'Backtracking with two counters. An opening bracket is allowed while fewer than n have been used; a closing one only while it would not outnumber the opens. Those two rules are the definition of well-formed, so nothing ever needs validating afterwards.'
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 1
+max = 5
+
+[default_input]
+n = 3
+
+[[tests]]
+expected = '(()) ()()'
+[tests.input]
+n = 2
+
+[[tests]]
+expected = '()'
+[tests.input]
+n = 1

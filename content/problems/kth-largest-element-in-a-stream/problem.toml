@@ -1,0 +1,53 @@
+slug = 'kth-largest-element-in-a-stream'
+title = 'Kth Largest Element in a Stream'
+category = 'Heap / Priority Queue'
+difficulty = 'Easy'
+tier = '150'
+complexity = 'O(log k) per add · O(k) space'
+
+description = 'Design a class KthLargest that is initialized with an integer k and an array of numbers. Each call to add(val) inserts a new value into the stream and returns the kth largest element seen so far (in sorted order, not the kth distinct).'
+approach = 'Keep a min-heap holding only the k largest values seen so far. Every add pushes the new value, then pops the smallest whenever the heap grows past k. The root (the smallest of the k largest) is exactly the kth largest, so add just returns it.'
+
+[[inputs]]
+name = 'k'
+label = 'k'
+type = 'int'
+min = 1
+
+[[inputs]]
+name = 'nums'
+label = 'initial nums'
+type = 'int-array'
+max_len = 40
+
+[[inputs]]
+name = 'adds'
+label = 'add() values'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+k = 3
+nums = [4, 5, 8, 2]
+adds = [3, 5, 10, 9, 4]
+
+[[tests]]
+expected = "4\n5\n5\n8\n8"
+[tests.input]
+k = 3
+nums = [4, 5, 8, 2]
+adds = [3, 5, 10, 9, 4]
+
+[[tests]]
+expected = "-1\n0\n0\n0\n1"
+[tests.input]
+k = 2
+nums = [0]
+adds = [-1, 1, -2, -4, 3]
+
+[[tests]]
+expected = "5\n5\n10"
+[tests.input]
+k = 1
+nums = [3]
+adds = [5, 2, 10]

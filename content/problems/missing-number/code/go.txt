@@ -1,0 +1,8 @@
+func missingNumber(nums []int) int {
+    acc := len(nums) //@init
+    for i, v := range nums { //@loop
+        acc ^= i //@xorIdx
+        acc ^= v //@xorVal
+    }
+    return acc //@ret
+}

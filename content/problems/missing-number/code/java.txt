@@ -1,0 +1,8 @@
+static int missingNumber(int[] nums) {
+    int acc = nums.length; //@init
+    for (int i = 0; i < nums.length; i++) { //@loop
+        acc ^= i; //@xorIdx
+        acc ^= nums[i]; //@xorVal
+    }
+    return acc; //@ret
+}

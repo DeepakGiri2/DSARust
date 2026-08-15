@@ -1,0 +1,19 @@
+static int[] maxSlidingWindow(int[] nums, int k) {
+    List<Integer> res = new ArrayList<>(); //@res
+    Deque<Integer> dq = new ArrayDeque<>(); //@deque
+    int left = 0; //@left
+    for (int right = 0; right < nums.length; right++) { //@loop
+        while (!dq.isEmpty() && nums[dq.peekLast()] < nums[right]) { //@pop
+            dq.pollLast(); //@popBack
+        }
+        dq.addLast(right); //@push
+        if (dq.peekFirst() < left) { //@expire
+            dq.pollFirst(); //@popFront
+        }
+        if (right + 1 >= k) { //@ready
+            res.add(nums[dq.peekFirst()]); //@record
+            left++; //@advance
+        }
+    }
+    return res.stream().mapToInt(Integer::intValue).toArray(); //@ret
+}

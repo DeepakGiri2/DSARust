@@ -1,0 +1,15 @@
+static int diameterOfBinaryTree(TreeNode root) {
+    int[] best = {0}; //@init
+    height(root, best);
+    return best[0]; //@result
+}
+
+static int height(TreeNode node, int[] best) {
+    if (node == null) { //@base
+        return 0; //@ret0
+    }
+    int leftH = height(node.left, best); //@recL
+    int rightH = height(node.right, best); //@recR
+    best[0] = Math.max(best[0], leftH + rightH); //@update
+    return 1 + Math.max(leftH, rightH); //@ret
+}

@@ -1,0 +1,35 @@
+slug = 'triangle'
+title = 'Triangle'
+category = '2-D Dynamic Programming'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '120'
+complexity = 'O(n²) time · O(n) space'
+
+description = 'Given a triangle of numbers, find the minimum path sum from top to bottom, where each step may move to one of the two adjacent numbers on the row below.'
+approach = 'Work upwards. Bottom-up removes the awkward part of the top-down version — at the top you do not yet know which way is better — because from the last row the best cost of every cell is simply its own value plus the cheaper of the two cells beneath it. One row of state suffices, overwritten left to right, since dp[c] and dp[c+1] are both still the row below when they are read.'
+
+[[inputs]]
+name = 'triangle'
+label = 'triangle'
+type = 'string'
+max_len = 60
+help = 'rows comma separated: 2, 3 4, 6 5 7, 4 1 8 3'
+
+[default_input]
+triangle = '2, 3 4, 6 5 7, 4 1 8 3'
+
+[[tests]]
+expected = '11'
+[tests.input]
+triangle = '2, 3 4, 6 5 7, 4 1 8 3'
+
+[[tests]]
+expected = '-10'
+[tests.input]
+triangle = '-10'
+
+[[tests]]
+expected = '7'
+[tests.input]
+triangle = '1, 2 3, 4 5 6'

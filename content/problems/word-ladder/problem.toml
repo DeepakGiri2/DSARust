@@ -1,0 +1,55 @@
+slug = 'word-ladder'
+title = 'Word Ladder'
+category = 'Graphs'
+difficulty = 'Hard'
+tier = '150'
+leetcode = '127'
+complexity = 'O(words² · length) time · O(words) space'
+
+description = 'Transform one word into another by changing a single letter at a time, where every intermediate word must be in the given list. Return the length of the shortest such sequence, or 0 if none exists.'
+approach = 'Words are nodes and a one-letter difference is an edge, so this is a shortest path on an unweighted graph — which is breadth-first search. Expanding level by level means the first time the target is reached is via the fewest transformations. Removing a word from the pool the moment it is queued is what keeps the search linear rather than revisiting words through longer routes.'
+
+[[inputs]]
+name = 'beginWord'
+label = 'beginWord'
+type = 'string'
+max_len = 8
+
+[[inputs]]
+name = 'endWord'
+label = 'endWord'
+type = 'string'
+max_len = 8
+
+[[inputs]]
+name = 'wordList'
+label = 'wordList'
+type = 'string'
+max_len = 60
+help = 'words separated by spaces'
+
+[default_input]
+beginWord = 'hit'
+endWord = 'cog'
+wordList = 'hot dot dog lot log cog'
+
+[[tests]]
+expected = '5'
+[tests.input]
+beginWord = 'hit'
+endWord = 'cog'
+wordList = 'hot dot dog lot log cog'
+
+[[tests]]
+expected = '0'
+[tests.input]
+beginWord = 'hit'
+endWord = 'cog'
+wordList = 'hot dot dog lot log'
+
+[[tests]]
+expected = '2'
+[tests.input]
+beginWord = 'a'
+endWord = 'c'
+wordList = 'a b c'

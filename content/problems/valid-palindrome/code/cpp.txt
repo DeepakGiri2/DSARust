@@ -1,0 +1,17 @@
+bool isPalindrome(string s) {
+    int l = 0, r = (int)s.size() - 1; //@init
+    while (l < r) { //@loop
+        while (l < r && !isalnum((unsigned char)s[l])) { //@skipL
+            l++; //@incL
+        }
+        while (l < r && !isalnum((unsigned char)s[r])) { //@skipR
+            r--; //@decR
+        }
+        if (tolower((unsigned char)s[l]) != tolower((unsigned char)s[r])) { //@cmp
+            return false; //@bad
+        }
+        l++; //@moveL
+        r--; //@moveR
+    }
+    return true; //@good
+}

@@ -1,0 +1,27 @@
+func exist(board [][]byte, word string) bool {
+    rows, cols := len(board), len(board[0])
+    for r := 0; r < rows; r++ { //@rowloop
+        for c := 0; c < cols; c++ { //@colloop
+            if dfs(board, word, r, c, 0) { //@calldfs
+                return true //@rettrue
+            }
+        }
+    }
+    return false //@retfalse
+}
+
+func dfs(board [][]byte, word string, r, c, k int) bool {
+    if k == len(word) { //@found
+        return true //@retok
+    }
+    if r < 0 || r >= len(board) || c < 0 || c >= len(board[0]) || board[r][c] != word[k] { //@bounds
+        return false //@retbad
+    }
+    board[r][c] = '#' //@mark
+    found := dfs(board, word, r+1, c, k+1) || //@down
+        dfs(board, word, r-1, c, k+1) || //@up
+        dfs(board, word, r, c+1, k+1) || //@right
+        dfs(board, word, r, c-1, k+1) //@left
+    board[r][c] = word[k] //@restore
+    return found //@retback
+}

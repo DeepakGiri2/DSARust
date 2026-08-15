@@ -1,0 +1,18 @@
+func islandPerimeter(grid [][]int) int {
+    total := 0 //@init
+    for r := range grid { //@rowLoop
+        for c := range grid[r] { //@colLoop
+            if grid[r][c] == 0 { //@water
+                continue
+            }
+            total += 4 //@four
+            if r > 0 && grid[r-1][c] == 1 { //@up
+                total -= 2 //@shareUp
+            }
+            if c > 0 && grid[r][c-1] == 1 { //@left
+                total -= 2 //@shareLeft
+            }
+        }
+    }
+    return total //@ret
+}

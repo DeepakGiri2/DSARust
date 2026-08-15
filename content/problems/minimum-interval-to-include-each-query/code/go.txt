@@ -1,0 +1,26 @@
+func minInterval(intervals [][]int, queries []int) []int {
+    sort.Slice(intervals, func(a, b int) bool { //@sortIntervals
+        return intervals[a][0] < intervals[b][0]
+    })
+    order := argsortQueries(queries) //@sortQueries
+    h := &MinHeap{} //@init
+    res := make([]int, len(queries)) //@out
+    i := 0 //@cursor
+    for _, qi := range order { //@loop
+        q := queries[qi] //@query
+        for i < len(intervals) && intervals[i][0] <= q { //@admit
+            size := intervals[i][1] - intervals[i][0] + 1
+            h.Push([2]int{size, intervals[i][1]}) //@push
+            i++
+        }
+        for h.Len() > 0 && h.Peek()[1] < q { //@expire
+            h.Pop() //@drop
+        }
+        if h.Len() == 0 { //@none
+            res[qi] = -1 //@miss
+        } else {
+            res[qi] = h.Peek()[0] //@hit
+        }
+    }
+    return res //@ret
+}

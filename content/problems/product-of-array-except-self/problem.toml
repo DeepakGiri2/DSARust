@@ -1,0 +1,33 @@
+slug = 'product-of-array-except-self'
+title = 'Product of Array Except Self'
+category = 'Arrays & Hashing'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n) time · O(1) extra space (output aside)'
+
+description = 'Given an integer array nums, return an array where output[i] is the product of every element of nums except nums[i]. Solve it without division.'
+approach = 'Do two sweeps. Forward, keep a running prefix product of everything to the LEFT and store it in res[i]. Backward, keep a running postfix product of everything to the RIGHT and multiply it into res[i]. Each res[i] then holds left · right = product of all others.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+nums = [1, 2, 3, 4]
+
+[[tests]]
+expected = '24 12 8 6'
+[tests.input]
+nums = [1, 2, 3, 4]
+
+[[tests]]
+expected = '0 0 9 0 0'
+[tests.input]
+nums = [-1, 1, 0, -3, 3]
+
+[[tests]]
+expected = '3 2'
+[tests.input]
+nums = [2, 3]

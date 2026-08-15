@@ -1,0 +1,36 @@
+slug = 'lemonade-change'
+title = 'Lemonade Change'
+category = 'Greedy'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '860'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Customers pay for a $5 lemonade with a $5, $10 or $20 bill and you must give exact change from what you have already taken. Return true if you can serve everyone.'
+approach = 'Only one decision is ever real: change for $20 can be a $10 plus a $5, or three $5s. Prefer the $10, because a $5 is strictly more useful — it is the only bill that can make change for a $10 — so hoarding $5s can never hurt and spending a $10 can never cost anything. Every other case is forced.'
+
+[[inputs]]
+name = 'bills'
+label = 'bills'
+type = 'int-array'
+max_len = 12
+min = 5
+max = 20
+
+[default_input]
+bills = [5, 5, 5, 10, 20]
+
+[[tests]]
+expected = 'true'
+[tests.input]
+bills = [5, 5, 5, 10, 20]
+
+[[tests]]
+expected = 'false'
+[tests.input]
+bills = [5, 5, 10, 10, 20]
+
+[[tests]]
+expected = 'true'
+[tests.input]
+bills = [5, 5, 10]

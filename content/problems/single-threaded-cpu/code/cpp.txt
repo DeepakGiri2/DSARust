@@ -1,0 +1,24 @@
+vector<int> getOrder(vector<vector<int>>& tasks) {
+    int n = tasks.size();
+    vector<int> idx(n); //@sort
+    iota(idx.begin(), idx.end(), 0);
+    sort(idx.begin(), idx.end(), [&](int a, int b) { return tasks[a][0] < tasks[b][0]; });
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> h; //@init
+    long long time = 0; //@clock
+    vector<int> order; //@order
+    int i = 0; //@cursor
+    while ((int)order.size() < n) { //@loop
+        while (i < n && tasks[idx[i]][0] <= time) { //@arrive
+            h.push({tasks[idx[i]][1], idx[i]}); //@enqueue
+            i++;
+        }
+        if (h.empty()) { //@idle
+            time = tasks[idx[i]][0]; //@jump
+            continue;
+        }
+        auto t = h.top(); h.pop(); //@pick
+        time += t.first; //@run
+        order.push_back(t.second); //@append
+    }
+    return order; //@ret
+}

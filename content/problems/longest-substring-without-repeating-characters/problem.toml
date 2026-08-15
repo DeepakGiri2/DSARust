@@ -1,0 +1,33 @@
+slug = 'longest-substring-without-repeating-characters'
+title = 'Longest Substring Without Repeating Characters'
+category = 'Sliding Window'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n) time · O(min(n, alphabet)) space'
+
+description = 'Given a string s, find the length of the longest substring that contains no repeated characters.'
+approach = 'Sliding window [left..right] that never contains a repeat, plus a map of each character’s last position. When s[right] was already seen inside the window, jump left past that old occurrence.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 20
+
+[default_input]
+s = 'abcabcbb'
+
+[[tests]]
+expected = '3'
+[tests.input]
+s = 'abcabcbb'
+
+[[tests]]
+expected = '3'
+[tests.input]
+s = 'pwwkew'
+
+[[tests]]
+expected = '1'
+[tests.input]
+s = 'bbbbb'

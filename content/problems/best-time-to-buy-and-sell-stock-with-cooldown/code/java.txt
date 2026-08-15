@@ -1,0 +1,10 @@
+static int maxProfit(int[] prices) {
+    int hold = -prices[0], sold = 0, rest = 0; //@init
+    for (int i = 1; i < prices.length; i++) { //@loop
+        int prevHold = hold, prevSold = sold, prevRest = rest; //@snapshot
+        hold = Math.max(prevHold, prevRest - prices[i]); //@hold
+        sold = prevHold + prices[i]; //@sold
+        rest = Math.max(prevRest, prevSold); //@rest
+    }
+    return Math.max(sold, rest); //@ret
+}

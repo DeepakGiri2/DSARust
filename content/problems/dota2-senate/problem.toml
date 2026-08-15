@@ -1,0 +1,35 @@
+slug = 'dota2-senate'
+title = 'Dota2 Senate'
+category = 'Greedy'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '649'
+complexity = 'O(n) time · O(n) space'
+
+description = 'Senators of two parties vote in rounds; each senator may ban one senator from the other party. Everyone acts optimally. Return which party wins.'
+approach = "A senator's only sensible target is the next opposing senator to act, because that one is the immediate threat and every other is further away. So keep one queue of indices per party and repeatedly compare the two fronts: whoever comes first bans the other and re-joins the queue with their index pushed a full round ahead. The party whose queue empties has lost."
+
+[[inputs]]
+name = 'senate'
+label = 'senate'
+type = 'string'
+max_len = 16
+help = 'R and D characters'
+
+[default_input]
+senate = 'RD'
+
+[[tests]]
+expected = 'Radiant'
+[tests.input]
+senate = 'RD'
+
+[[tests]]
+expected = 'Dire'
+[tests.input]
+senate = 'RDD'
+
+[[tests]]
+expected = 'Radiant'
+[tests.input]
+senate = 'RRDDD'

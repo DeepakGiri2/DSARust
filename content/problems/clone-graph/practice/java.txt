@@ -1,0 +1,74 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static Node cloneGraph(Node node) {
+        if (node == null) {
+            return null;
+        }
+        Map<Node, Node> cloned = new HashMap<>();
+        return dfs(node, cloned);
+    }
+
+    static Node dfs(Node cur, Map<Node, Node> cloned) {
+        if (cloned.containsKey(cur)) {
+            return cloned.get(cur);
+        }
+        Node clone = new Node(cur.val);
+        cloned.put(cur, clone);
+        for (Node nb : cur.neighbors) {
+            clone.neighbors.add(dfs(nb, cloned));
+        }
+        return clone;
+    }
+
+    static class Node {
+        int val;
+        List<Node> neighbors;
+        Node(int v) { val = v; neighbors = new ArrayList<>(); }
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String line = br.readLine();
+        if (line == null) line = "";
+        line = line.trim();
+        Map<Integer, Node> nodes = new HashMap<>();
+        if (!line.isEmpty()) {
+            for (String tok : line.split("\\s+")) {
+                String[] parts = tok.split(",");
+                int a = Integer.parseInt(parts[0]);
+                int b = Integer.parseInt(parts[1]);
+                Node na = nodes.computeIfAbsent(a, k -> new Node(k));
+                Node nb = nodes.computeIfAbsent(b, k -> new Node(k));
+                na.neighbors.add(nb);
+                nb.neighbors.add(na);
+            }
+        }
+        if (nodes.isEmpty()) return;
+        int start = Integer.MAX_VALUE;
+        for (int v : nodes.keySet()) start = Math.min(start, v);
+        Node clone = cloneGraph(nodes.get(start));
+        Map<Integer, List<Integer>> result = new TreeMap<>();
+        Set<Node> seen = new HashSet<>();
+        Deque<Node> dq = new ArrayDeque<>();
+        dq.push(clone);
+        while (!dq.isEmpty()) {
+            Node n = dq.pop();
+            if (n == null || seen.contains(n)) continue;
+            seen.add(n);
+            List<Integer> nbs = new ArrayList<>();
+            for (Node x : n.neighbors) nbs.add(x.val);
+            Collections.sort(nbs);
+            result.put(n.val, nbs);
+            for (Node x : n.neighbors) dq.push(x);
+        }
+        for (Map.Entry<Integer, List<Integer>> e : result.entrySet()) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(e.getKey()).append(":");
+            for (int x : e.getValue()) sb.append(" ").append(x);
+            System.out.println(sb.toString());
+        }
+    }
+}

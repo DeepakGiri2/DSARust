@@ -1,0 +1,24 @@
+static List<List<Integer>> levelOrder(TreeNode root) {
+    List<List<Integer>> res = new ArrayList<>(); //@init
+    if (root == null) { //@empty
+        return res; //@retempty
+    }
+    Queue<TreeNode> q = new ArrayDeque<>(); //@enq
+    q.add(root);
+    while (!q.isEmpty()) { //@while
+        int size = q.size(); //@size
+        List<Integer> level = new ArrayList<>(); //@newlevel
+        for (int i = 0; i < size; i++) { //@front
+            TreeNode node = q.poll(); //@pop
+            level.add(node.val); //@visit
+            if (node.left != null) { //@left
+                q.add(node.left);
+            }
+            if (node.right != null) { //@right
+                q.add(node.right);
+            }
+        }
+        res.add(level); //@pushlevel
+    }
+    return res; //@ret
+}

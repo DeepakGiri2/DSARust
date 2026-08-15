@@ -1,0 +1,43 @@
+slug = 'minimum-size-subarray-sum'
+title = 'Minimum Size Subarray Sum'
+category = 'Sliding Window'
+difficulty = 'Medium'
+tier = '250'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Given a target and an array of positive integers nums, return the minimal length of a contiguous subarray whose sum is ≥ target, or 0 if none exists. A window grows on the right and shrinks on the left.'
+approach = 'Expand the window by adding nums[right]. Whenever the window sum reaches target, record its length and shrink from the left as far as it stays valid. Keep the smallest length ever seen.'
+
+[[inputs]]
+name = 'target'
+label = 'target'
+type = 'int'
+min = 1
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+target = 7
+nums = [2, 3, 1, 2, 4, 3]
+
+[[tests]]
+expected = '2'
+[tests.input]
+target = 7
+nums = [2, 3, 1, 2, 4, 3]
+
+[[tests]]
+expected = '1'
+[tests.input]
+target = 4
+nums = [1, 4, 4]
+
+[[tests]]
+expected = '0'
+[tests.input]
+target = 11
+nums = [1, 1, 1, 1, 1, 1, 1, 1]

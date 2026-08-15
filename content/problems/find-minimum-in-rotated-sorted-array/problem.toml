@@ -1,0 +1,33 @@
+slug = 'find-minimum-in-rotated-sorted-array'
+title = 'Find Minimum in Rotated Sorted Array'
+category = 'Binary Search'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(log n) time · O(1) space'
+
+description = 'An ascending sorted array of distinct integers has been rotated at an unknown pivot. Return the minimum element. Must run in O(log n).'
+approach = 'Binary search on the pivot. Compare nums[mid] with nums[hi]: if nums[mid] > nums[hi] the rotation point is to the right, so the minimum is after mid; otherwise mid could be the minimum, so keep it and search left. The range shrinks until lo == hi at the minimum.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums (rotated sorted)'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+nums = [4, 5, 6, 7, 0, 1, 2]
+
+[[tests]]
+expected = '0'
+[tests.input]
+nums = [4, 5, 6, 7, 0, 1, 2]
+
+[[tests]]
+expected = '1'
+[tests.input]
+nums = [3, 4, 5, 1, 2]
+
+[[tests]]
+expected = '11'
+[tests.input]
+nums = [11, 13, 15, 17]

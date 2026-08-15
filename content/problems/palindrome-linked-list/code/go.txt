@@ -1,0 +1,23 @@
+func isPalindrome(head *ListNode) bool {
+    slow, fast := head, head //@mid
+    for fast != nil && fast.Next != nil { //@midLoop
+        slow = slow.Next
+        fast = fast.Next.Next
+    }
+    var prev *ListNode //@revInit
+    for slow != nil { //@revLoop
+        next := slow.Next
+        slow.Next = prev //@flip
+        prev = slow
+        slow = next
+    }
+    left, right := head, prev //@cmpInit
+    for right != nil { //@cmpLoop
+        if left.Val != right.Val { //@cmp
+            return false //@no
+        }
+        left = left.Next //@advance
+        right = right.Next
+    }
+    return true //@yes
+}

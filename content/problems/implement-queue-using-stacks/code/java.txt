@@ -1,0 +1,29 @@
+static Deque<Integer> inbox = new ArrayDeque<>(), outbox = new ArrayDeque<>(); //@init
+
+static void transfer() {
+    if (outbox.isEmpty()) { //@needTransfer
+        while (!inbox.isEmpty()) { //@drain
+            int v = inbox.pop(); //@move
+            outbox.push(v); //@onto
+        }
+    }
+}
+
+static void push(int x) {
+    inbox.push(x); //@push
+}
+
+static int pop() {
+    transfer(); //@callPop
+    int v = outbox.pop(); //@pop
+    return v; //@retPop
+}
+
+static int peek() {
+    transfer(); //@callPeek
+    return outbox.peek(); //@peek
+}
+
+static boolean empty() {
+    return inbox.isEmpty() && outbox.isEmpty(); //@empty
+}

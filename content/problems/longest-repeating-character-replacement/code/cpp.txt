@@ -1,0 +1,18 @@
+int characterReplacement(string s, int k) {
+    unordered_map<char, int> count; //@init
+    int res = 0, left = 0, maxf = 0; //@init2
+    for (int right = 0; right < (int)s.size(); right++) { //@loop
+        count[s[right]]++; //@add
+        if (count[s[right]] > maxf) { //@max
+            maxf = count[s[right]]; //@setmax
+        }
+        while ((right - left + 1) - maxf > k) { //@while
+            count[s[left]]--; //@dec
+            left++; //@advance
+        }
+        if (right - left + 1 > res) { //@cmp
+            res = right - left + 1; //@newBest
+        }
+    }
+    return res; //@ret
+}

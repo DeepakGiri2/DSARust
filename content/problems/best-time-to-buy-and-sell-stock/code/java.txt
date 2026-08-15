@@ -1,0 +1,13 @@
+static int maxProfit(int[] prices) {
+    int minPrice = prices[0], best = 0; //@init
+    for (int day = 1; day < prices.length; day++) { //@loop
+        int profit = prices[day] - minPrice; //@profit
+        if (profit > best) { //@cmpBest
+            best = profit; //@newBest
+        }
+        if (prices[day] < minPrice) { //@cmpMin
+            minPrice = prices[day]; //@newMin
+        }
+    }
+    return best; //@ret
+}

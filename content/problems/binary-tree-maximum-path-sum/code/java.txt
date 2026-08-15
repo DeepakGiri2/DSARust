@@ -1,0 +1,17 @@
+static int best;
+
+static int gain(TreeNode node) {
+    if (node == null) { //@base
+        return 0; //@ret0
+    }
+    int left = Math.max(0, gain(node.left)); //@recL
+    int right = Math.max(0, gain(node.right)); //@recR
+    best = Math.max(best, node.val + left + right); //@best
+    return node.val + Math.max(left, right); //@ret
+}
+
+static int maxPathSum(TreeNode root) {
+    best = Integer.MIN_VALUE; //@init
+    gain(root); //@call
+    return best; //@result
+}

@@ -1,0 +1,10 @@
+string convertToTitle(int columnNumber) {
+    string out = ""; //@init
+    while (columnNumber > 0) { //@loop
+        columnNumber--; //@shift
+        int r = columnNumber % 26; //@digit
+        out = string(1, char('A' + r)) + out; //@prepend
+        columnNumber /= 26; //@divide
+    }
+    return out; //@ret
+}

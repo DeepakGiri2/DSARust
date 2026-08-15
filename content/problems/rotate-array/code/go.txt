@@ -1,0 +1,15 @@
+func rotate(nums []int, k int) {
+    n := len(nums)
+    k %= n //@norm
+    reverse(nums, 0, n-1) //@rev1
+    reverse(nums, 0, k-1) //@rev2
+    reverse(nums, k, n-1) //@rev3
+}
+
+func reverse(nums []int, lo, hi int) {
+    for lo < hi { //@loop
+        nums[lo], nums[hi] = nums[hi], nums[lo] //@swap
+        lo++
+        hi-- //@move
+    }
+}

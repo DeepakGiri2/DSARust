@@ -1,0 +1,15 @@
+func arrangeCoins(n int) int {
+    lo, hi := 0, n //@bounds
+    best := 0 //@best
+    for lo <= hi { //@loop
+        k := lo + (hi-lo)/2 //@mid
+        need := k * (k + 1) / 2 //@need
+        if need <= n { //@fits
+            best = k //@keep
+            lo = k + 1 //@more
+        } else { //@tooMany
+            hi = k - 1 //@fewer
+        }
+    }
+    return best //@ret
+}

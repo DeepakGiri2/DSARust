@@ -1,0 +1,35 @@
+slug = 'longest-increasing-path-in-a-matrix'
+title = 'Longest Increasing Path in a Matrix'
+category = '2-D Dynamic Programming'
+difficulty = 'Hard'
+tier = '150'
+leetcode = '329'
+complexity = 'O(rows · cols) time · O(rows · cols) space'
+
+description = 'Find the length of the longest strictly increasing path in a matrix, moving up, down, left or right.'
+approach = 'Because every step must go strictly up in value, no path can revisit a cell — the graph of legal moves is acyclic, so there is nothing to guard against and no visited set is needed. That also means the answer for a cell never changes, which is what makes memoisation safe: each cell is expanded once and read many times, turning an exponential search into one pass.'
+
+[[inputs]]
+name = 'matrix'
+label = 'matrix'
+type = 'string'
+max_len = 60
+help = 'rows separated by spaces, values by commas'
+
+[default_input]
+matrix = '9,9,4 6,6,8 2,1,1'
+
+[[tests]]
+expected = '4'
+[tests.input]
+matrix = '9,9,4 6,6,8 2,1,1'
+
+[[tests]]
+expected = '4'
+[tests.input]
+matrix = '3,4,5 3,2,6 2,2,1'
+
+[[tests]]
+expected = '1'
+[tests.input]
+matrix = '1'

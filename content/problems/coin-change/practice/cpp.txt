@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int coinChange(vector<int>& coins, int amount) {
+    vector<int> dp(amount+1, 0);
+    for (int a = 1; a <= amount; a++) {
+        dp[a] = amount + 1;
+    }
+    for (int a = 1; a <= amount; a++) {
+        for (int c : coins) {
+            if (c <= a && dp[a-c] + 1 < dp[a]) {
+                dp[a] = dp[a-c] + 1;
+            }
+        }
+    }
+    if (dp[amount] > amount) {
+        return -1;
+    }
+    return dp[amount];
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> coins = readInts();
+    int amount = readInts()[0];
+    cout << coinChange(coins, amount) << endl;
+}

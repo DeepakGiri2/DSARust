@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int findMin(vector<int>& nums) {
+    int lo = 0, hi = (int)nums.size() - 1;
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (nums[mid] > nums[hi]) {
+            lo = mid + 1;
+        } else {
+            hi = mid;
+        }
+    }
+    return nums[lo];
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> nums = readInts();
+    cout << findMin(nums) << endl;
+}

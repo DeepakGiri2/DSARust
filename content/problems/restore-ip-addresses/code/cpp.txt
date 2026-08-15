@@ -1,0 +1,30 @@
+vector<string> res; //@init
+vector<string> parts; //@parts
+
+void back(const string& s, int start) {
+    if (parts.size() == 4) { //@four
+        if (start == (int)s.size()) { //@consumed
+            string ip = parts[0] + "." + parts[1] + "." + parts[2] + "." + parts[3];
+            res.push_back(ip); //@record
+        }
+        return; //@retDone
+    }
+    for (int length = 1; length <= 3 && start + length <= (int)s.size(); length++) { //@loop
+        string seg = s.substr(start, length); //@slice
+        if (seg.size() > 1 && seg[0] == '0') { //@leadingZero
+            break;
+        }
+        if (stoi(seg) > 255) { //@tooBig
+            break;
+        }
+        parts.push_back(seg); //@choose
+        back(s, start + length); //@recurse
+        parts.pop_back(); //@undo
+    }
+}
+
+vector<string> restoreIpAddresses(string s) {
+    res.clear(); parts.clear();
+    back(s, 0); //@call
+    return res; //@ret
+}

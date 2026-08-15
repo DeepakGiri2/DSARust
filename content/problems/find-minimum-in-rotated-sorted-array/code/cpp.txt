@@ -1,0 +1,12 @@
+int findMin(vector<int>& nums) {
+    int lo = 0, hi = (int)nums.size() - 1; //@init
+    while (lo < hi) { //@loop
+        int mid = lo + (hi - lo) / 2; //@mid
+        if (nums[mid] > nums[hi]) { //@cmp
+            lo = mid + 1; //@right
+        } else {
+            hi = mid; //@left
+        }
+    }
+    return nums[lo]; //@done
+}

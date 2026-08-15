@@ -1,0 +1,21 @@
+string convert(string s, int numRows) {
+    if (numRows == 1) { //@single
+        return s;
+    }
+    vector<string> rows(numRows); //@init
+    int row = 0, dir = 1; //@cursor
+    for (int i = 0; i < (int)s.size(); i++) { //@loop
+        rows[row] += s[i]; //@place
+        if (row == 0) { //@atTop
+            dir = 1; //@down
+        } else if (row == numRows - 1) { //@atBottom
+            dir = -1; //@up
+        }
+        row += dir; //@move
+    }
+    string out = ""; //@join
+    for (auto& r : rows) { //@concat
+        out += r;
+    }
+    return out; //@ret
+}

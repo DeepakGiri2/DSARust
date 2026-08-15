@@ -1,0 +1,25 @@
+type MyStack struct {
+    q []int //@init
+}
+
+func (s *MyStack) Push(x int) {
+    s.q = append(s.q, x) //@enqueue
+    for i := 0; i < len(s.q)-1; i++ { //@rotate
+        s.q = append(s.q, s.q[0]) //@moveBack
+        s.q = s.q[1:]
+    }
+}
+
+func (s *MyStack) Pop() int {
+    v := s.q[0] //@pop
+    s.q = s.q[1:]
+    return v //@retPop
+}
+
+func (s *MyStack) Top() int {
+    return s.q[0] //@top
+}
+
+func (s *MyStack) Empty() bool {
+    return len(s.q) == 0 //@empty
+}

@@ -1,0 +1,22 @@
+func isSubtree(root *TreeNode, subRoot *TreeNode) bool {
+    if root == nil { //@rootNil
+        return false //@retFalse
+    }
+    if isSameTree(root, subRoot) { //@check
+        return true //@retTrue
+    }
+    return isSubtree(root.Left, subRoot) || isSubtree(root.Right, subRoot) //@recurse
+}
+
+func isSameTree(p *TreeNode, q *TreeNode) bool {
+    if p == nil && q == nil { //@bothNil
+        return true //@sameTrue
+    }
+    if p == nil || q == nil { //@oneNil
+        return false //@sameFalse
+    }
+    if p.Val != q.Val { //@valDiff
+        return false //@sameDiff
+    }
+    return isSameTree(p.Left, q.Left) && isSameTree(p.Right, q.Right) //@sameRec
+}

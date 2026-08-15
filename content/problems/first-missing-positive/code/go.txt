@@ -1,0 +1,15 @@
+func firstMissingPositive(nums []int) int {
+    n := len(nums) //@n
+    for i := 0; i < n; i++ { //@loop
+        for nums[i] > 0 && nums[i] <= n && nums[nums[i]-1] != nums[i] { //@can
+            j := nums[i] - 1 //@home
+            nums[i], nums[j] = nums[j], nums[i] //@swap
+        }
+    }
+    for i := 0; i < n; i++ { //@check
+        if nums[i] != i+1 { //@gap
+            return i + 1 //@ret
+        }
+    }
+    return n + 1 //@all
+}

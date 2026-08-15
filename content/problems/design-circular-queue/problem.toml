@@ -1,0 +1,46 @@
+slug = 'design-circular-queue'
+title = 'Design Circular Queue'
+category = 'Design'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '622'
+complexity = 'O(1) per operation · O(k) space'
+
+description = 'Implement a fixed-size FIFO queue on a single array: enQueue, deQueue, Front, Rear, isEmpty and isFull, each in constant time.'
+approach = 'Store head and a count rather than head and tail. The tail is derived — (head + count) mod k — which removes the classic ambiguity where head == tail could mean either empty or full. Both ends move by adding one modulo k, so the buffer wraps around instead of shifting elements, and no operation ever touches more than one cell.'
+
+[[inputs]]
+name = 'k'
+label = 'k'
+type = 'int'
+min = 1
+max = 8
+
+[[inputs]]
+name = 'ops'
+label = 'ops'
+type = 'string'
+max_len = 90
+help = 'enQueue n · deQueue · Front · Rear · isFull · isEmpty'
+
+[default_input]
+k = 3
+ops = 'enQueue 1, enQueue 2, enQueue 3, enQueue 4, Rear, isFull, deQueue, enQueue 4, Rear'
+
+[[tests]]
+expected = 'true true true false 3 true true true 4'
+[tests.input]
+k = 3
+ops = 'enQueue 1, enQueue 2, enQueue 3, enQueue 4, Rear, isFull, deQueue, enQueue 4, Rear'
+
+[[tests]]
+expected = 'true true 7 true true'
+[tests.input]
+k = 2
+ops = 'isEmpty, enQueue 7, Front, deQueue, isEmpty'
+
+[[tests]]
+expected = 'true false 5 true -1'
+[tests.input]
+k = 1
+ops = 'enQueue 5, enQueue 6, Rear, deQueue, Front'

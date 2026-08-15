@@ -1,0 +1,35 @@
+slug = 'redundant-connection'
+title = 'Redundant Connection'
+category = 'Graphs'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '684'
+complexity = 'O(n · α(n)) time · O(n) space'
+
+description = 'A tree has had one extra edge added. Return the edge that can be removed to make it a tree again, choosing the last one given if several qualify.'
+approach = 'Add the edges one at a time and keep track of which nodes are already connected, using union-find. An edge whose two endpoints already share a root would close a cycle — and since the edges are added in order, the first such edge encountered is by definition the last one needed to complete a cycle. Path compression keeps each lookup effectively constant.'
+
+[[inputs]]
+name = 'edges'
+label = 'edges'
+type = 'string'
+max_len = 60
+help = "pairs 'a b', comma separated"
+
+[default_input]
+edges = '1 2, 1 3, 2 3'
+
+[[tests]]
+expected = '2 3'
+[tests.input]
+edges = '1 2, 1 3, 2 3'
+
+[[tests]]
+expected = '1 4'
+[tests.input]
+edges = '1 2, 2 3, 3 4, 1 4, 1 5'
+
+[[tests]]
+expected = '2 1'
+[tests.input]
+edges = '1 2, 2 1'

@@ -1,0 +1,12 @@
+func fib(n int) int {
+    if n < 2 { //@base
+        return n
+    }
+    prev, cur := 0, 1 //@init
+    for i := 2; i <= n; i++ { //@loop
+        next := prev + cur //@add
+        prev = cur //@shift
+        cur = next //@advance
+    }
+    return cur //@ret
+}

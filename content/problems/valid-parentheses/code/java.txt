@@ -1,0 +1,20 @@
+static boolean isValid(String s) {
+    Map<Character, Character> pairs = Map.of(')', '(', ']', '[', '}', '{');
+    Deque<Character> stack = new ArrayDeque<>(); //@init
+    for (int i = 0; i < s.length(); i++) { //@loop
+        char c = s.charAt(i);
+        if (c == '(' || c == '[' || c == '{') { //@isopen
+            stack.push(c); //@push
+        } else {
+            if (stack.isEmpty()) { //@empty
+                return false; //@bad
+            }
+            char top = stack.peek(); //@peek
+            if (top != pairs.get(c)) { //@match
+                return false; //@bad2
+            }
+            stack.pop(); //@pop
+        }
+    }
+    return stack.isEmpty(); //@end
+}

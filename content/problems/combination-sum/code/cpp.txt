@@ -1,0 +1,20 @@
+vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+    vector<vector<int>> res; //@init
+    vector<int> cur; //@cur
+    backtrack(0, target, candidates, cur, res); //@call
+    return res; //@done
+}
+
+void backtrack(int i, int remaining, vector<int>& candidates, vector<int>& cur, vector<vector<int>>& res) {
+    if (remaining == 0) { //@base
+        res.push_back(cur); //@add
+        return; //@ret
+    }
+    if (remaining < 0 || i == (int)candidates.size()) { //@prune
+        return; //@pret
+    }
+    cur.push_back(candidates[i]); //@include
+    backtrack(i, remaining - candidates[i], candidates, cur, res); //@recIn
+    cur.pop_back(); //@exclude
+    backtrack(i + 1, remaining, candidates, cur, res); //@recEx
+}

@@ -1,0 +1,35 @@
+slug = 'find-median-from-data-stream'
+title = 'Find Median From Data Stream'
+category = 'Heap / Priority Queue'
+difficulty = 'Hard'
+tier = '150'
+leetcode = '295'
+complexity = 'O(log n) per insert · O(1) per query · O(n) space'
+
+description = 'Support adding numbers one at a time and asking for the median of everything added so far.'
+approach = 'Keep the values split into a lower half and an upper half, each in a heap oriented so that the two values nearest the middle sit on top — a max-heap below, a min-heap above. The median is then always one or two peeks away. Every insertion pushes into the low half, immediately moves its largest across, and rebalances, which keeps both the ordering and the sizes correct without ever sorting anything.'
+
+[[inputs]]
+name = 'ops'
+label = 'ops'
+type = 'string'
+max_len = 60
+help = 'add <x> / median, comma separated'
+
+[default_input]
+ops = 'add 1, add 2, median, add 3, median'
+
+[[tests]]
+expected = '1.5 2'
+[tests.input]
+ops = 'add 1, add 2, median, add 3, median'
+
+[[tests]]
+expected = '6 6'
+[tests.input]
+ops = 'add 6, add 10, add 2, median, add 6, median'
+
+[[tests]]
+expected = '1'
+[tests.input]
+ops = 'add 1, median'

@@ -1,0 +1,30 @@
+slug = 'design-hashmap'
+title = 'Design HashMap'
+category = 'Arrays & Hashing'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '706'
+complexity = 'O(1) average per operation · O(n) space'
+
+description = 'Build a key-value map supporting put, get and remove, without using any built-in hash container.'
+approach = 'The same bucket array as a hash set, except each entry stores a value alongside its key. That one change is what distinguishes put from add: an existing key is not ignored but overwritten, so the scan has to find the entry rather than merely decide whether it exists.'
+
+[[inputs]]
+name = 'ops'
+label = 'ops'
+type = 'string'
+max_len = 63
+help = 'put <k> <v> / get <k> / remove <k>, comma separated'
+
+[default_input]
+ops = 'put 1 1, put 2 2, get 1, get 3, put 2 1, get 2, remove 2, get 2'
+
+[[tests]]
+expected = '1 -1 1 -1'
+[tests.input]
+ops = 'put 1 1, put 2 2, get 1, get 3, put 2 1, get 2, remove 2, get 2'
+
+[[tests]]
+expected = '5 6'
+[tests.input]
+ops = 'put 9 5, put 17 6, get 9, get 17'

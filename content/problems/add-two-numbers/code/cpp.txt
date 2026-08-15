@@ -1,0 +1,19 @@
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+    ListNode dummy; //@dummy
+    ListNode* tail = &dummy; int carry = 0; //@init
+    while (l1 || l2 || carry) { //@loop
+        int sum = carry; //@sum
+        if (l1) { //@takeA
+            sum += l1->val;
+            l1 = l1->next;
+        }
+        if (l2) { //@takeB
+            sum += l2->val;
+            l2 = l2->next;
+        }
+        carry = sum / 10; //@carry
+        tail->next = new ListNode(sum % 10); //@digit
+        tail = tail->next; //@advance
+    }
+    return dummy.next; //@ret
+}

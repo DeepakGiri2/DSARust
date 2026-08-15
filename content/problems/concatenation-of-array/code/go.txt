@@ -1,0 +1,9 @@
+func getConcatenation(nums []int) []int {
+    n := len(nums) //@n
+    ans := make([]int, 2*n) //@alloc
+    for i := 0; i < n; i++ { //@loop
+        ans[i] = nums[i] //@first
+        ans[i+n] = nums[i] //@second
+    }
+    return ans //@ret
+}

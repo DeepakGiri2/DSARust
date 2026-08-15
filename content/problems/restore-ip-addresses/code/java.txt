@@ -1,0 +1,29 @@
+static List<String> res = new ArrayList<>(); //@init
+static List<String> parts = new ArrayList<>(); //@parts
+
+static void back(String s, int start) {
+    if (parts.size() == 4) { //@four
+        if (start == s.length()) { //@consumed
+            res.add(String.join(".", parts)); //@record
+        }
+        return; //@retDone
+    }
+    for (int length = 1; length <= 3 && start + length <= s.length(); length++) { //@loop
+        String seg = s.substring(start, start + length); //@slice
+        if (seg.length() > 1 && seg.charAt(0) == '0') { //@leadingZero
+            break;
+        }
+        if (Integer.parseInt(seg) > 255) { //@tooBig
+            break;
+        }
+        parts.add(seg); //@choose
+        back(s, start + length); //@recurse
+        parts.remove(parts.size() - 1); //@undo
+    }
+}
+
+static List<String> restoreIpAddresses(String s) {
+    res.clear(); parts.clear();
+    back(s, 0); //@call
+    return res; //@ret
+}

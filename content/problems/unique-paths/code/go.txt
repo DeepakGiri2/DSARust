@@ -1,0 +1,16 @@
+func uniquePaths(m int, n int) int {
+    dp := make([][]int, m) //@alloc
+    for i := range dp {
+        dp[i] = make([]int, n)
+    }
+    for r := 0; r < m; r++ { //@outer
+        for c := 0; c < n; c++ { //@inner
+            if r == 0 || c == 0 { //@edge
+                dp[r][c] = 1 //@one
+            } else {
+                dp[r][c] = dp[r-1][c] + dp[r][c-1] //@sum
+            }
+        }
+    }
+    return dp[m-1][n-1] //@ret
+}

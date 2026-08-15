@@ -1,0 +1,21 @@
+static String reverseWords(String s) {
+    StringBuilder b = new StringBuilder(); //@init
+    int i = s.length() - 1; //@start
+    while (i >= 0) { //@loop
+        while (i >= 0 && s.charAt(i) == ' ') { //@skip
+            i--;
+        }
+        if (i < 0) { //@stop
+            break;
+        }
+        int end = i; //@end
+        while (i >= 0 && s.charAt(i) != ' ') { //@word
+            i--;
+        }
+        if (b.length() > 0) { //@sep
+            b.append(' ');
+        }
+        b.append(s, i + 1, end + 1); //@take
+    }
+    return b.toString(); //@ret
+}

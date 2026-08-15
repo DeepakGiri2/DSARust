@@ -1,0 +1,14 @@
+bool isSameTree(TreeNode* p, TreeNode* q) {
+    if (p == nullptr && q == nullptr) { //@bothNil
+        return true; //@rettrue
+    }
+    if (p == nullptr || q == nullptr) { //@oneNil
+        return false; //@retNil
+    }
+    if (p->val != q->val) { //@valDiff
+        return false; //@retDiff
+    }
+    bool left = isSameTree(p->left, q->left); //@recL
+    bool right = isSameTree(p->right, q->right); //@recR
+    return left && right; //@ret
+}

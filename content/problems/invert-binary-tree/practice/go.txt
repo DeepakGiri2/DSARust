@@ -1,0 +1,81 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+type TreeNode struct {
+    Val   int
+    Left  *TreeNode
+    Right *TreeNode
+}
+
+func invertTree(root *TreeNode) *TreeNode {
+    if root == nil {
+        return nil
+    }
+    left := invertTree(root.Left)
+    right := invertTree(root.Right)
+    root.Left = right
+    root.Right = left
+    return root
+}
+
+func buildTree(tokens []string) *TreeNode {
+    if len(tokens) == 0 || tokens[0] == "n" {
+        return nil
+    }
+    v, _ := strconv.Atoi(tokens[0])
+    root := &TreeNode{Val: v}
+    queue := []*TreeNode{root}
+    i := 1
+    for len(queue) > 0 && i < len(tokens) {
+        cur := queue[0]
+        queue = queue[1:]
+        if i < len(tokens) {
+            if tokens[i] != "n" {
+                v, _ := strconv.Atoi(tokens[i])
+                cur.Left = &TreeNode{Val: v}
+                queue = append(queue, cur.Left)
+            }
+            i++
+        }
+        if i < len(tokens) {
+            if tokens[i] != "n" {
+                v, _ := strconv.Atoi(tokens[i])
+                cur.Right = &TreeNode{Val: v}
+                queue = append(queue, cur.Right)
+            }
+            i++
+        }
+    }
+    return root
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    root := buildTree(strings.Fields(line))
+    root = invertTree(root)
+    out := []string{}
+    queue := []*TreeNode{}
+    if root != nil {
+        queue = append(queue, root)
+    }
+    for len(queue) > 0 {
+        cur := queue[0]
+        queue = queue[1:]
+        out = append(out, strconv.Itoa(cur.Val))
+        if cur.Left != nil {
+            queue = append(queue, cur.Left)
+        }
+        if cur.Right != nil {
+            queue = append(queue, cur.Right)
+        }
+    }
+    fmt.Println(strings.Join(out, " "))
+}

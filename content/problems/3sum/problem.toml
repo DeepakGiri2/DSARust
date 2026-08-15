@@ -1,0 +1,33 @@
+slug = '3sum'
+title = '3Sum'
+category = 'Two Pointers'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n^2) time · O(1) extra space'
+
+description = 'Given an integer array nums, return all unique triplets [a, b, c] such that a + b + c = 0. The solution set must not contain duplicate triplets.'
+approach = 'Sort the array. Fix each number nums[i] and use two pointers over the rest to find pairs summing to -nums[i]. Sorting lets the pointers converge in linear time and makes duplicate-skipping easy.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+nums = [-1, 0, 1, 2, -1, -4]
+
+[[tests]]
+expected = "-1 -1 2\n-1 0 1"
+[tests.input]
+nums = [-1, 0, 1, 2, -1, -4]
+
+[[tests]]
+expected = ''
+[tests.input]
+nums = [0, 1, 1]
+
+[[tests]]
+expected = '0 0 0'
+[tests.input]
+nums = [0, 0, 0]

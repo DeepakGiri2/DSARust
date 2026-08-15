@@ -1,0 +1,11 @@
+static int change(int amount, int[] coins) {
+    int[] dp = new int[amount + 1]; //@init
+    dp[0] = 1; //@seed
+    for (int c : coins) { //@coinLoop
+        for (int a = c; a <= amount; a++) { //@amountLoop
+            int ways = dp[a - c]; //@lookup
+            dp[a] += ways; //@add
+        }
+    }
+    return dp[amount]; //@ret
+}

@@ -1,0 +1,19 @@
+static Node cloneGraph(Node node) {
+    if (node == null) { //@nilcheck
+        return null; //@retnil
+    }
+    Map<Node, Node> cloned = new HashMap<>(); //@mapinit
+    return dfs(node, cloned); //@call
+}
+
+static Node dfs(Node cur, Map<Node, Node> cloned) {
+    if (cloned.containsKey(cur)) { //@seen
+        return cloned.get(cur); //@retseen
+    }
+    Node clone = new Node(cur.val); //@create
+    cloned.put(cur, clone); //@record
+    for (Node nb : cur.neighbors) { //@nbloop
+        clone.neighbors.add(dfs(nb, cloned)); //@wire
+    }
+    return clone; //@retcopy
+}

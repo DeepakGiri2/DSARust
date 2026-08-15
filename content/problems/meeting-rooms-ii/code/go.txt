@@ -1,0 +1,24 @@
+func minMeetingRooms(intervals [][]int) int {
+    starts, ends := []int{}, []int{} //@split
+    for _, iv := range intervals {
+        starts = append(starts, iv[0])
+        ends = append(ends, iv[1])
+    }
+    sort.Ints(starts)
+    sort.Ints(ends)
+    rooms, best := 0, 0 //@init
+    i, j := 0, 0 //@cursors
+    for i < len(starts) { //@loop
+        if starts[i] < ends[j] { //@overlap
+            rooms++ //@open
+            i++
+            if rooms > best { //@peak
+                best = rooms //@record
+            }
+        } else { //@free
+            rooms-- //@close
+            j++
+        }
+    }
+    return best //@ret
+}

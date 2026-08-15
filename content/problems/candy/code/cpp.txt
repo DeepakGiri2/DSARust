@@ -1,0 +1,22 @@
+int candy(vector<int>& ratings) {
+    int n = ratings.size();
+    vector<int> candies(n, 0); //@init
+    for (int i = 0; i < n; i++) {
+        candies[i] = 1; //@seed
+    }
+    for (int i = 1; i < n; i++) { //@leftPass
+        if (ratings[i] > ratings[i - 1]) { //@higherLeft
+            candies[i] = candies[i - 1] + 1; //@bumpLeft
+        }
+    }
+    for (int i = n - 2; i >= 0; i--) { //@rightPass
+        if (ratings[i] > ratings[i + 1] && candies[i] <= candies[i + 1]) { //@higherRight
+            candies[i] = candies[i + 1] + 1; //@bumpRight
+        }
+    }
+    int total = 0; //@sum
+    for (int c : candies) { //@add
+        total += c;
+    }
+    return total; //@ret
+}

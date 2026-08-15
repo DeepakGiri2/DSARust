@@ -1,0 +1,27 @@
+vector<vector<int>> res; //@init
+vector<int> cur;
+
+void back(vector<int>& candidates, int start, int remain) {
+    if (remain == 0) { //@hit
+        res.push_back(cur); //@record
+        return; //@retHit
+    }
+    for (int i = start; i < (int)candidates.size(); i++) { //@loop
+        if (i > start && candidates[i] == candidates[i - 1]) { //@dup
+            continue;
+        }
+        if (candidates[i] > remain) { //@tooBig
+            break;
+        }
+        cur.push_back(candidates[i]); //@choose
+        back(candidates, i + 1, remain - candidates[i]); //@recurse
+        cur.pop_back(); //@undo
+    }
+}
+
+vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+    sort(candidates.begin(), candidates.end()); //@sort
+    res.clear(); cur.clear();
+    back(candidates, 0, target); //@call
+    return res; //@ret
+}

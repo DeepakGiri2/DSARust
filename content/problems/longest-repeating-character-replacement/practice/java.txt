@@ -1,0 +1,31 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static int characterReplacement(String s, int k) {
+        Map<Character, Integer> count = new HashMap<>();
+        int res = 0, left = 0, maxf = 0;
+        for (int right = 0; right < s.length(); right++) {
+            count.merge(s.charAt(right), 1, Integer::sum);
+            if (count.get(s.charAt(right)) > maxf) {
+                maxf = count.get(s.charAt(right));
+            }
+            while ((right - left + 1) - maxf > k) {
+                count.merge(s.charAt(left), -1, Integer::sum);
+                left++;
+            }
+            if (right - left + 1 > res) {
+                res = right - left + 1;
+            }
+        }
+        return res;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String s = br.readLine().trim();
+        int k = Integer.parseInt(br.readLine().trim());
+        System.out.println(characterReplacement(s, k));
+    }
+}

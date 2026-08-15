@@ -1,0 +1,17 @@
+func coinChange(coins []int, amount int) int {
+    dp := make([]int, amount+1) //@init
+    for a := 1; a <= amount; a++ { //@fill
+        dp[a] = amount + 1 //@inf
+    }
+    for a := 1; a <= amount; a++ { //@outer
+        for _, c := range coins { //@inner
+            if c <= a && dp[a-c]+1 < dp[a] { //@check
+                dp[a] = dp[a-c] + 1 //@update
+            }
+        }
+    }
+    if dp[amount] > amount { //@test
+        return -1 //@none
+    }
+    return dp[amount] //@ret
+}

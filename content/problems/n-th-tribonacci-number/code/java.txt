@@ -1,0 +1,14 @@
+static int tribonacci(int n) {
+    if (n == 0) { //@zero
+        return 0;
+    }
+    if (n < 3) { //@small
+        return 1;
+    }
+    int a = 0, b = 1, c = 1; //@init
+    for (int i = 3; i <= n; i++) { //@loop
+        int next = a + b + c; //@add
+        a = b; b = c; c = next; //@shift
+    }
+    return c; //@ret
+}

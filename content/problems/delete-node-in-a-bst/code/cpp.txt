@@ -1,0 +1,24 @@
+TreeNode* deleteNode(TreeNode* root, int key) {
+    if (root == nullptr) { //@base
+        return nullptr;
+    }
+    if (key < root->val) { //@less
+        root->left = deleteNode(root->left, key); //@goL
+    } else if (key > root->val) { //@greater
+        root->right = deleteNode(root->right, key); //@goR
+    } else { //@found
+        if (root->left == nullptr) { //@noLeft
+            return root->right; //@liftR
+        }
+        if (root->right == nullptr) { //@noRight
+            return root->left; //@liftL
+        }
+        TreeNode* succ = root->right; //@succ
+        while (succ->left != nullptr) { //@descend
+            succ = succ->left; //@stepL
+        }
+        root->val = succ->val; //@copy
+        root->right = deleteNode(root->right, succ->val); //@remove
+    }
+    return root; //@ret
+}

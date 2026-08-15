@@ -1,0 +1,9 @@
+int minimumTotal(vector<vector<int>>& triangle) {
+    vector<int> dp = triangle.back(); //@init
+    for (int r = (int)triangle.size() - 2; r >= 0; r--) { //@row
+        for (int c = 0; c <= r; c++) { //@col
+            dp[c] = triangle[r][c] + min(dp[c], dp[c + 1]); //@relax
+        }
+    }
+    return dp[0]; //@ret
+}

@@ -1,0 +1,33 @@
+slug = 'balanced-binary-tree'
+title = 'Balanced Binary Tree'
+category = 'Trees'
+difficulty = 'Easy'
+tier = '150'
+complexity = 'O(n) time · O(h) space (recursion stack, h = height)'
+
+description = 'Given the root of a binary tree, return true if it is height-balanced — for every node, the heights of its left and right subtrees differ by at most 1. Watch a single bottom-up pass measure each subtree and flag the first place the balance breaks.'
+approach = 'One bottom-up DFS that returns a subtree height, or the sentinel -1 the moment an imbalance is found. Each node measures both children, propagates -1 if either failed, otherwise checks |leftH - rightH| ≤ 1 and returns 1 + max of the two heights. The tree is balanced iff dfs(root) never hits -1.'
+
+[[inputs]]
+name = 'root'
+label = "tree (level-order, 'n' = null)"
+type = 'tree'
+max_len = 40
+
+[default_input]
+root = '3 9 20 n n 15 7'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+root = '3 9 20 n n 15 7'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+root = '1 2 2 3 3 n n 4 4'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+root = '1 2 3'

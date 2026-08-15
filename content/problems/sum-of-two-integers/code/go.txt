@@ -1,0 +1,9 @@
+func getSum(a int, b int) int {
+    sum, carry := a, b //@init
+    for carry != 0 { //@loop
+        next := (sum & carry) << 1 //@carry
+        sum = sum ^ carry //@add
+        carry = next //@shift
+    }
+    return sum //@ret
+}

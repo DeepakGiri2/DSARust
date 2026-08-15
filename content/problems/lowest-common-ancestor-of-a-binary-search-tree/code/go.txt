@@ -1,0 +1,13 @@
+func lowestCommonAncestor(root *TreeNode, p int, q int) int {
+    cur := root //@start
+    for cur != nil { //@loop
+        if p < cur.Val && q < cur.Val { //@bothLeft
+            cur = cur.Left //@goLeft
+        } else if p > cur.Val && q > cur.Val { //@bothRight
+            cur = cur.Right //@goRight
+        } else { //@split
+            return cur.Val //@ret
+        }
+    }
+    return -1 //@none
+}

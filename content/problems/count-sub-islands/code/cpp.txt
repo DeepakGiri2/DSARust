@@ -1,0 +1,29 @@
+int dirs[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+bool sink(vector<vector<int>>& g1, vector<vector<int>>& g2, int r, int c) {
+    if (r < 0 || r >= (int)g2.size() || c < 0 || c >= (int)g2[0].size() || g2[r][c] == 0) { //@bounds
+        return true;
+    }
+    g2[r][c] = 0; //@visit
+    bool ok = g1[r][c] == 1; //@overlap
+    for (auto& d : dirs) { //@neighbours
+        if (!sink(g1, g2, r + d[0], c + d[1])) { //@recurse
+            ok = false; //@fail
+        }
+    }
+    return ok; //@verdict
+}
+
+int countSubIslands(vector<vector<int>>& grid1, vector<vector<int>>& grid2) {
+    int count = 0; //@init
+    for (int r = 0; r < (int)grid2.size(); r++) { //@rowLoop
+        for (int c = 0; c < (int)grid2[0].size(); c++) { //@colLoop
+            if (grid2[r][c] == 1) { //@land
+                if (sink(grid1, grid2, r, c)) { //@check
+                    count++; //@bump
+                }
+            }
+        }
+    }
+    return count; //@ret
+}

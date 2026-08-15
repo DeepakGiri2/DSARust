@@ -1,0 +1,20 @@
+func isValidBST(root *TreeNode) bool {
+    return valid(root, math.MinInt64, math.MaxInt64) //@call
+}
+
+func valid(node *TreeNode, low int64, high int64) bool {
+    if node == nil { //@base
+        return true //@rettrue
+    }
+    v := int64(node.Val) //@read
+    if v <= low || v >= high { //@check
+        return false //@retfalse
+    }
+    if !valid(node.Left, low, v) { //@recL
+        return false //@badL
+    }
+    if !valid(node.Right, v, high) { //@recR
+        return false //@badR
+    }
+    return true //@ret
+}

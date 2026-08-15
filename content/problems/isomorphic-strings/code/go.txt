@@ -1,0 +1,16 @@
+func isIsomorphic(s string, t string) bool {
+    st := map[byte]byte{} //@init
+    ts := map[byte]byte{}
+    for i := 0; i < len(s); i++ { //@loop
+        a, b := s[i], t[i] //@pair
+        if v, ok := st[a]; ok && v != b { //@fwd
+            return false //@no
+        }
+        if v, ok := ts[b]; ok && v != a { //@back
+            return false //@no2
+        }
+        st[a] = b //@map1
+        ts[b] = a //@map2
+    }
+    return true //@yes
+}

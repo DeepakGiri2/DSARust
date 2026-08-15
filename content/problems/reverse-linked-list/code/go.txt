@@ -1,0 +1,11 @@
+func reverseList(head *ListNode) *ListNode {
+    var prev *ListNode = nil //@init
+    curr := head //@init2
+    for curr != nil { //@loop
+        next := curr.Next //@save
+        curr.Next = prev //@flip
+        prev = curr //@advP
+        curr = next //@advC
+    }
+    return prev //@ret
+}

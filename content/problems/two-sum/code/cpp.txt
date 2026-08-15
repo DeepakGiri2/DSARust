@@ -1,0 +1,11 @@
+vector<int> twoSum(vector<int>& nums, int target) {
+    unordered_map<int, int> seen; //@init
+    for (int i = 0; i < (int)nums.size(); i++) { //@loop
+        int need = target - nums[i]; //@need
+        if (seen.count(need)) { //@check
+            return {seen[need], i}; //@found
+        }
+        seen[nums[i]] = i; //@store
+    }
+    return {}; //@none
+}

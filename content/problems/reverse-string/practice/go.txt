@@ -1,0 +1,26 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strings"
+)
+
+func reverseString(s string) string {
+    chars := []byte(s)
+    l, r := 0, len(chars)-1
+    for l < r {
+        chars[l], chars[r] = chars[r], chars[l]
+        l++
+        r--
+    }
+    return string(chars)
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    s := strings.TrimRight(line, "\r\n")
+    fmt.Println(reverseString(s))
+}

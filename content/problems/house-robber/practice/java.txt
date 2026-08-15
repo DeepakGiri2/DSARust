@@ -1,0 +1,39 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static int rob(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        dp[0] = nums[0];
+        for (int i = 1; i < n; i++) {
+            int skip = dp[i-1];
+            int rob = nums[i];
+            if (i >= 2) {
+                rob += dp[i-2];
+            }
+            if (rob > skip) {
+                dp[i] = rob;
+            } else {
+                dp[i] = skip;
+            }
+        }
+        return dp[n-1];
+    }
+
+    static int[] readInts(BufferedReader br) throws Exception {
+        String line = br.readLine();
+        if (line == null || line.trim().isEmpty()) return new int[0];
+        String[] parts = line.trim().split("\\s+");
+        int[] nums = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);
+        return nums;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] nums = readInts(br);
+        System.out.println(rob(nums));
+    }
+}

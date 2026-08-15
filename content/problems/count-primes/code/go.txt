@@ -1,0 +1,21 @@
+func countPrimes(n int) int {
+    if n < 3 { //@small
+        return 0
+    }
+    composite := make([]bool, n) //@init
+    count := 0 //@count
+    for p := 2; p*p < n; p++ { //@outer
+        if composite[p] { //@skip
+            continue
+        }
+        for m := p * p; m < n; m += p { //@inner
+            composite[m] = true //@mark
+        }
+    }
+    for k := 2; k < n; k++ { //@tally
+        if !composite[k] { //@isPrime
+            count++ //@bump
+        }
+    }
+    return count //@ret
+}

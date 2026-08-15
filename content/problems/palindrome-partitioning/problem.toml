@@ -1,0 +1,34 @@
+slug = 'palindrome-partitioning'
+title = 'Palindrome Partitioning'
+category = 'Backtracking'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '131'
+complexity = 'O(n · 2^n) time · O(n) space'
+
+description = 'List every way of cutting a string so that each piece is a palindrome.'
+approach = 'A partition is a sequence of cuts, so the recursion is over cut positions: from the current position, try every possible next piece, keep the ones that are palindromes, and recurse from just past them. Reaching the end of the string means every piece was accepted, so no separate validation is needed — the filter happens at the moment a piece is chosen, which is what prunes the search rather than merely checking it afterwards.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 8
+
+[default_input]
+s = 'aab'
+
+[[tests]]
+expected = 'a|a|b aa|b'
+[tests.input]
+s = 'aab'
+
+[[tests]]
+expected = 'a|b|c'
+[tests.input]
+s = 'abc'
+
+[[tests]]
+expected = 'a|a aa'
+[tests.input]
+s = 'aa'

@@ -1,0 +1,11 @@
+func change(amount int, coins []int) int {
+    dp := make([]int, amount+1) //@init
+    dp[0] = 1 //@seed
+    for _, c := range coins { //@coinLoop
+        for a := c; a <= amount; a++ { //@amountLoop
+            ways := dp[a-c] //@lookup
+            dp[a] += ways //@add
+        }
+    }
+    return dp[amount] //@ret
+}

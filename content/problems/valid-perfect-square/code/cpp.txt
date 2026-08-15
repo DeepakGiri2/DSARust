@@ -1,0 +1,16 @@
+bool isPerfectSquare(int num) {
+    long lo = 1, hi = num; //@bounds
+    while (lo <= hi) { //@loop
+        long mid = lo + (hi - lo) / 2; //@mid
+        long sq = mid * mid; //@square
+        if (sq == num) { //@hit
+            return true; //@retTrue
+        }
+        if (sq < num) { //@small
+            lo = mid + 1; //@up
+        } else { //@big
+            hi = mid - 1; //@down
+        }
+    }
+    return false; //@retFalse
+}

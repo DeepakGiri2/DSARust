@@ -1,0 +1,14 @@
+static int[] corpFlightBookings(int[][] bookings, int n) {
+    int[] diff = new int[n + 1]; //@init
+    for (int[] b : bookings) { //@loop
+        diff[b[0] - 1] += b[2]; //@open
+        diff[b[1]] -= b[2]; //@close
+    }
+    int[] ans = new int[n]; //@alloc
+    int run = 0; //@zero
+    for (int i = 0; i < n; i++) { //@sweep
+        run += diff[i]; //@run
+        ans[i] = run; //@fill
+    }
+    return ans; //@ret
+}

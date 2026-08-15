@@ -1,0 +1,35 @@
+slug = 'restore-ip-addresses'
+title = 'Restore IP Addresses'
+category = 'Backtracking'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '93'
+complexity = 'O(1) time (at most 3⁴ splits) · O(1) space'
+
+description = 'Insert three dots into a digit string to form every valid IP address. Each of the four parts must be 0-255 and must not have a leading zero.'
+approach = 'Three choices of segment length, one to three digits, made four times — so the search is tiny and the interest is entirely in the pruning. Both rules break rather than continue: a leading zero means only the one-digit reading is legal, and once a segment exceeds 255 every longer one does too. The final check that the string was fully consumed is what stops four valid segments being accepted while digits remain.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 12
+help = 'digits only'
+
+[default_input]
+s = '25525511135'
+
+[[tests]]
+expected = '255.255.11.135 255.255.111.35'
+[tests.input]
+s = '25525511135'
+
+[[tests]]
+expected = '0.0.0.0'
+[tests.input]
+s = '0000'
+
+[[tests]]
+expected = '1.0.10.23 1.0.102.3 10.1.0.23 10.10.2.3 101.0.2.3'
+[tests.input]
+s = '101023'

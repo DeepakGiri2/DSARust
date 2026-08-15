@@ -1,0 +1,10 @@
+int maxProfit(vector<int>& prices) {
+    int hold = -prices[0], sold = 0, rest = 0; //@init
+    for (int i = 1; i < (int)prices.size(); i++) { //@loop
+        int prevHold = hold, prevSold = sold, prevRest = rest; //@snapshot
+        hold = max(prevHold, prevRest - prices[i]); //@hold
+        sold = prevHold + prices[i]; //@sold
+        rest = max(prevRest, prevSold); //@rest
+    }
+    return max(sold, rest); //@ret
+}

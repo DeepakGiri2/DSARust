@@ -1,0 +1,46 @@
+slug = 'binary-search-tree-iterator'
+title = 'Binary Search Tree Iterator'
+category = 'Trees'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '173'
+complexity = 'O(1) amortized per next() · O(h) space'
+
+description = "Implement an iterator over a BST that returns the values in ascending order, with next() and hasNext(), using memory proportional to the tree's height rather than its size."
+approach = "An inorder traversal paused mid-flight. The stack holds exactly the ancestors whose value has not been returned yet, so the top is always the next smallest. next() pops it and then pushes the left spine of its right subtree — restoring the invariant. Each node is pushed and popped once across the whole iteration, so although one next() may push several nodes, the amortized cost is constant, and the stack never exceeds the tree's height."
+
+[[inputs]]
+name = 'tree'
+label = 'tree'
+type = 'tree'
+max_len = 60
+help = 'a BST, level order'
+
+[[inputs]]
+name = 'ops'
+label = 'ops'
+type = 'string'
+max_len = 80
+help = 'next · hasNext'
+
+[default_input]
+tree = '7 3 15 n n 9 20'
+ops = 'next, next, hasNext, next, hasNext, next, hasNext, next, hasNext'
+
+[[tests]]
+expected = '3 7 true 9 true 15 true 20 false'
+[tests.input]
+tree = '7 3 15 n n 9 20'
+ops = 'next, next, hasNext, next, hasNext, next, hasNext, next, hasNext'
+
+[[tests]]
+expected = '1 2 false'
+[tests.input]
+tree = '1 n 2'
+ops = 'next, next, hasNext'
+
+[[tests]]
+expected = 'true 3 5 8 false'
+[tests.input]
+tree = '5 3 8'
+ops = 'hasNext, next, next, next, hasNext'

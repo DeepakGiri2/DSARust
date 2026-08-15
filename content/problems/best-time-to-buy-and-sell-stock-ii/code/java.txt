@@ -1,0 +1,9 @@
+static int maxProfit(int[] prices) {
+    int profit = 0; //@init
+    for (int i = 1; i < prices.length; i++) { //@loop
+        if (prices[i] > prices[i - 1]) { //@up
+            profit += prices[i] - prices[i - 1]; //@add
+        }
+    }
+    return profit; //@ret
+}

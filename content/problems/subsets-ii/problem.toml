@@ -1,0 +1,30 @@
+slug = 'subsets-ii'
+title = 'Subsets II'
+category = 'Backtracking'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n · 2^n) time · O(n) space'
+
+description = 'Return all possible subsets of an array that may contain duplicates, without repeating a subset.'
+approach = 'Sort so equal values sit together, then at each level skip a value that repeats the previous one *within the same loop*. Taking the first copy is allowed; taking a later copy without the earlier one would rebuild a subset already produced.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 6
+min = -10
+max = 10
+
+[default_input]
+nums = [1, 2, 2]
+
+[[tests]]
+expected = '6'
+[tests.input]
+nums = [1, 2, 2]
+
+[[tests]]
+expected = '2'
+[tests.input]
+nums = [0]

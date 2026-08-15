@@ -1,0 +1,19 @@
+func mincostTickets(days []int, costs []int) int {
+    last := days[len(days)-1] //@span
+    travel := make([]bool, last+1) //@mark
+    for _, d := range days { //@markLoop
+        travel[d] = true
+    }
+    dp := make([]int, last+1) //@init
+    for d := 1; d <= last; d++ { //@loop
+        if !travel[d] { //@rest
+            dp[d] = dp[d-1] //@carry
+            continue
+        }
+        one := dp[maxi(0, d-1)] + costs[0] //@one
+        seven := dp[maxi(0, d-7)] + costs[1] //@seven
+        thirty := dp[maxi(0, d-30)] + costs[2] //@thirty
+        dp[d] = mini(one, mini(seven, thirty)) //@best
+    }
+    return dp[last] //@ret
+}

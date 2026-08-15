@@ -1,0 +1,40 @@
+slug = 'minimum-number-of-arrows-to-burst-balloons'
+title = 'Minimum Number of Arrows to Burst Balloons'
+category = 'Intervals'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '452'
+complexity = 'O(n log n) time · O(1) extra space'
+
+description = 'Each balloon spans an interval on the x axis. An arrow shot at x bursts every balloon whose interval contains x. Return the minimum number of arrows needed to burst them all.'
+approach = 'Sort by end point and shoot at the earliest end. That arrow bursts every balloon that starts at or before it — and no other choice can burst more, because any balloon it misses starts after that end and so shares no point with the balloon that defined it. Sorting by start instead needs backtracking; sorting by end does not.'
+
+[[inputs]]
+name = 'points'
+label = 'points'
+type = 'string'
+max_len = 70
+help = 'start end pairs, comma separated'
+
+[default_input]
+points = '10 16, 2 8, 1 6, 7 12'
+
+[[tests]]
+expected = '2'
+[tests.input]
+points = '10 16, 2 8, 1 6, 7 12'
+
+[[tests]]
+expected = '4'
+[tests.input]
+points = '1 2, 3 4, 5 6, 7 8'
+
+[[tests]]
+expected = '2'
+[tests.input]
+points = '1 2, 2 3, 3 4, 4 5'
+
+[[tests]]
+expected = '2'
+[tests.input]
+points = '1 10, 2 3, 4 5'

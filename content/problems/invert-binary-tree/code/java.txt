@@ -1,0 +1,10 @@
+static TreeNode invertTree(TreeNode root) {
+    if (root == null) { //@base
+        return null; //@retnil
+    }
+    TreeNode left = invertTree(root.left); //@recL
+    TreeNode right = invertTree(root.right); //@recR
+    root.left = right; //@setL
+    root.right = left; //@setR
+    return root; //@ret
+}

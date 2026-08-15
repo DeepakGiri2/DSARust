@@ -1,0 +1,24 @@
+func deleteNode(root *TreeNode, key int) *TreeNode {
+    if root == nil { //@base
+        return nil
+    }
+    if key < root.Val { //@less
+        root.Left = deleteNode(root.Left, key) //@goL
+    } else if key > root.Val { //@greater
+        root.Right = deleteNode(root.Right, key) //@goR
+    } else { //@found
+        if root.Left == nil { //@noLeft
+            return root.Right //@liftR
+        }
+        if root.Right == nil { //@noRight
+            return root.Left //@liftL
+        }
+        succ := root.Right //@succ
+        for succ.Left != nil { //@descend
+            succ = succ.Left //@stepL
+        }
+        root.Val = succ.Val //@copy
+        root.Right = deleteNode(root.Right, succ.Val) //@remove
+    }
+    return root //@ret
+}

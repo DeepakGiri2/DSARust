@@ -1,0 +1,33 @@
+slug = 'daily-temperatures'
+title = 'Daily Temperatures'
+category = 'Stack'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n) time · O(n) space'
+
+description = 'Given an array temps of daily temperatures, return an array answer where answer[i] is the number of days you have to wait after day i to get a warmer temperature. If there is no future warmer day, answer[i] is 0.'
+approach = 'Keep a stack of day indices whose warmer day is still unknown, in decreasing temperature order. For each new day, pop every colder day it beats and record the gap (i − j); then push the new day.'
+
+[[inputs]]
+name = 'temps'
+label = 'temps'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+temps = [73, 74, 75, 71, 69, 72, 76, 73]
+
+[[tests]]
+expected = '1 1 4 2 1 1 0 0'
+[tests.input]
+temps = [73, 74, 75, 71, 69, 72, 76, 73]
+
+[[tests]]
+expected = '1 1 1 0'
+[tests.input]
+temps = [30, 40, 50, 60]
+
+[[tests]]
+expected = '1 1 0'
+[tests.input]
+temps = [30, 60, 90]

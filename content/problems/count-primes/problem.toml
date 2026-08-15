@@ -1,0 +1,40 @@
+slug = 'count-primes'
+title = 'Count Primes'
+category = 'Math & Geometry'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '204'
+complexity = 'O(n log log n) time · O(n) space'
+
+description = 'Count the prime numbers strictly less than a given n.'
+approach = 'Testing each number for divisibility asks the same questions over and over. The sieve inverts it: every prime crosses out its own multiples, so each composite is reached from its factors rather than searched for. Two details make it fast — start crossing out at p·p, because everything smaller was already crossed out by a smaller factor, and stop looking for new primes once p·p reaches n.'
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 0
+max = 60
+
+[default_input]
+n = 30
+
+[[tests]]
+expected = '10'
+[tests.input]
+n = 30
+
+[[tests]]
+expected = '4'
+[tests.input]
+n = 10
+
+[[tests]]
+expected = '0'
+[tests.input]
+n = 2
+
+[[tests]]
+expected = '0'
+[tests.input]
+n = 0

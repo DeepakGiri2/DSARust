@@ -1,0 +1,101 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "sort"
+    "strconv"
+    "strings"
+)
+
+type Node struct {
+    Val       int
+    Neighbors []*Node
+}
+
+func cloneGraph(node *Node) *Node {
+    if node == nil {
+        return nil
+    }
+    cloned := map[*Node]*Node{}
+    return dfs(node, cloned)
+}
+
+func dfs(cur *Node, cloned map[*Node]*Node) *Node {
+    if c, ok := cloned[cur]; ok {
+        return c
+    }
+    clone := &Node{Val: cur.Val}
+    cloned[cur] = clone
+    for _, nb := range cur.Neighbors {
+        clone.Neighbors = append(clone.Neighbors, dfs(nb, cloned))
+    }
+    return clone
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    line = strings.TrimSpace(line)
+    nodes := map[int]*Node{}
+    getNode := func(v int) *Node {
+        if n, ok := nodes[v]; ok {
+            return n
+        }
+        n := &Node{Val: v}
+        nodes[v] = n
+        return n
+    }
+    if line != "" {
+        for _, tok := range strings.Fields(line) {
+            parts := strings.Split(tok, ",")
+            a, _ := strconv.Atoi(parts[0])
+            b, _ := strconv.Atoi(parts[1])
+            na, nb := getNode(a), getNode(b)
+            na.Neighbors = append(na.Neighbors, nb)
+            nb.Neighbors = append(nb.Neighbors, na)
+        }
+    }
+    if len(nodes) == 0 {
+        return
+    }
+    start := -1
+    for v := range nodes {
+        if start == -1 || v < start {
+            start = v
+        }
+    }
+    clone := cloneGraph(nodes[start])
+    result := map[int][]int{}
+    seen := map[*Node]bool{}
+    var visit func(n *Node)
+    visit = func(n *Node) {
+        if n == nil || seen[n] {
+            return
+        }
+        seen[n] = true
+        nbs := []int{}
+        for _, x := range n.Neighbors {
+            nbs = append(nbs, x.Val)
+        }
+        sort.Ints(nbs)
+        result[n.Val] = nbs
+        for _, x := range n.Neighbors {
+            visit(x)
+        }
+    }
+    visit(clone)
+    labels := []int{}
+    for v := range result {
+        labels = append(labels, v)
+    }
+    sort.Ints(labels)
+    for _, v := range labels {
+        out := strconv.Itoa(v) + ":"
+        for _, x := range result[v] {
+            out += " " + strconv.Itoa(x)
+        }
+        fmt.Println(out)
+    }
+}

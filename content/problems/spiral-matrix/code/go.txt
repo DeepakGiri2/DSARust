@@ -1,0 +1,28 @@
+func spiralOrder(matrix [][]int) []int {
+    out := []int{} //@init
+    top, bottom := 0, len(matrix)-1 //@bounds
+    left, right := 0, len(matrix[0])-1
+    for top <= bottom && left <= right { //@loop
+        for c := left; c <= right; c++ { //@goRight
+            out = append(out, matrix[top][c])
+        }
+        top++ //@shrinkTop
+        for r := top; r <= bottom; r++ { //@goDown
+            out = append(out, matrix[r][right])
+        }
+        right-- //@shrinkRight
+        if top <= bottom { //@checkRow
+            for c := right; c >= left; c-- { //@goLeft
+                out = append(out, matrix[bottom][c])
+            }
+            bottom-- //@shrinkBottom
+        }
+        if left <= right { //@checkCol
+            for r := bottom; r >= top; r-- { //@goUp
+                out = append(out, matrix[r][left])
+            }
+            left++ //@shrinkLeft
+        }
+    }
+    return out //@ret
+}

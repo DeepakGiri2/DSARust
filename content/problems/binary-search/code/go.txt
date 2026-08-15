@@ -1,0 +1,14 @@
+func search(nums []int, target int) int {
+    lo, hi := 0, len(nums)-1 //@init
+    for lo <= hi { //@loop
+        mid := lo + (hi-lo)/2 //@mid
+        if nums[mid] == target { //@cmp
+            return mid //@found
+        } else if nums[mid] < target { //@less
+            lo = mid + 1 //@right
+        } else {
+            hi = mid - 1 //@left
+        }
+    }
+    return -1 //@none
+}

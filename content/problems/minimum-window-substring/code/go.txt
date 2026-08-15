@@ -1,0 +1,35 @@
+func minWindow(s string, t string) string {
+    if len(t) == 0 { //@guard
+        return "" //@guardRet
+    }
+    need := map[byte]int{} //@need
+    for i := 0; i < len(t); i++ { //@buildNeed
+        need[t[i]]++ //@needInc
+    }
+    window := map[byte]int{} //@window
+    have, needCount := 0, len(need) //@have
+    resL, resR, resLen := -1, -1, math.MaxInt32 //@res
+    left := 0 //@left
+    for right := 0; right < len(s); right++ { //@loop
+        c := s[right] //@cur
+        window[c]++ //@add
+        if need[c] > 0 && window[c] == need[c] { //@satisfy
+            have++ //@haveInc
+        }
+        for have == needCount { //@while
+            if right-left+1 < resLen { //@better
+                resL, resR = left, right //@save
+                resLen = right - left + 1 //@saveLen
+            }
+            window[s[left]]-- //@shrink
+            if need[s[left]] > 0 && window[s[left]] < need[s[left]] { //@lose
+                have-- //@haveDec
+            }
+            left++ //@advance
+        }
+    }
+    if resLen == math.MaxInt32 { //@check
+        return "" //@empty
+    }
+    return s[resL : resR+1] //@ret
+}

@@ -1,0 +1,18 @@
+int deleteAndEarn(vector<int>& nums) {
+    int maxV = 0; //@scan
+    for (int v : nums) {
+        maxV = max(maxV, v);
+    }
+    vector<int> points(maxV + 1, 0); //@bucket
+    for (int v : nums) { //@fill
+        points[v] += v; //@add
+    }
+    int prev2 = 0, prev1 = 0; //@init
+    for (int v = 1; v <= maxV; v++) { //@loop
+        int take = prev2 + points[v]; //@take
+        int skip = prev1; //@skip
+        int best = max(take, skip); //@best
+        prev2 = prev1; prev1 = best; //@shift
+    }
+    return prev1; //@ret
+}

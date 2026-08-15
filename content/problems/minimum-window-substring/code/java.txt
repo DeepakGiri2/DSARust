@@ -1,0 +1,35 @@
+static String minWindow(String s, String t) {
+    if (t.length() == 0) { //@guard
+        return ""; //@guardRet
+    }
+    Map<Character, Integer> need = new HashMap<>(); //@need
+    for (int i = 0; i < t.length(); i++) { //@buildNeed
+        need.merge(t.charAt(i), 1, Integer::sum); //@needInc
+    }
+    Map<Character, Integer> window = new HashMap<>(); //@window
+    int have = 0, needCount = need.size(); //@have
+    int resL = -1, resR = -1, resLen = Integer.MAX_VALUE; //@res
+    int left = 0; //@left
+    for (int right = 0; right < s.length(); right++) { //@loop
+        char c = s.charAt(right); //@cur
+        window.merge(c, 1, Integer::sum); //@add
+        if (need.containsKey(c) && window.get(c).equals(need.get(c))) { //@satisfy
+            have++; //@haveInc
+        }
+        while (have == needCount) { //@while
+            if (right - left + 1 < resLen) { //@better
+                resL = left; resR = right; //@save
+                resLen = right - left + 1; //@saveLen
+            }
+            window.merge(s.charAt(left), -1, Integer::sum); //@shrink
+            if (need.containsKey(s.charAt(left)) && window.get(s.charAt(left)) < need.get(s.charAt(left))) { //@lose
+                have--; //@haveDec
+            }
+            left++; //@advance
+        }
+    }
+    if (resLen == Integer.MAX_VALUE) { //@check
+        return ""; //@empty
+    }
+    return s.substring(resL, resR + 1); //@ret
+}

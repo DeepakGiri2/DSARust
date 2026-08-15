@@ -1,0 +1,36 @@
+slug = 'sort-an-array'
+title = 'Sort an Array'
+category = 'Arrays & Hashing'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '912'
+complexity = 'O(n log n) time · O(n) space'
+
+description = 'Sort an array without using a built-in sort.'
+approach = 'Merge sort. Splitting in half costs nothing and merging two sorted halves is linear, because the smaller of the two front elements is always the next value overall — no searching required. The halving gives log n levels and each level does linear work, which is where n log n comes from.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 10
+min = -20
+max = 20
+
+[default_input]
+nums = [5, 2, 3, 1]
+
+[[tests]]
+expected = '1 2 3 5'
+[tests.input]
+nums = [5, 2, 3, 1]
+
+[[tests]]
+expected = '0 0 1 1 2 5'
+[tests.input]
+nums = [5, 1, 1, 2, 0, 0]
+
+[[tests]]
+expected = '3'
+[tests.input]
+nums = [3]

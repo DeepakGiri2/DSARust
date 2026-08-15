@@ -1,0 +1,51 @@
+slug = 'lowest-common-ancestor-of-a-binary-search-tree'
+title = 'Lowest Common Ancestor of a Binary Search Tree'
+category = 'Trees'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(h) time · O(1) space'
+
+description = 'Given a binary search tree and two node values p and q, return the value of their lowest common ancestor — the deepest node that has both p and q in its subtrees. The BST ordering lets us find it with a single walk down from the root, no recursion or extra space.'
+approach = 'Walk from the root. If both p and q are less than the current node, the LCA lies in the left subtree; if both are greater, it lies in the right subtree. The first node where they split (one goes left and one right, or one equals the node) is the lowest common ancestor.'
+
+[[inputs]]
+name = 'root'
+label = "BST (level-order, 'n' = null)"
+type = 'string'
+max_len = 40
+
+[[inputs]]
+name = 'p'
+label = 'value p'
+type = 'int'
+
+[[inputs]]
+name = 'q'
+label = 'value q'
+type = 'int'
+
+[default_input]
+root = '6 2 8 0 4 7 9 n n 3 5'
+p = 2
+q = 8
+
+[[tests]]
+expected = '6'
+[tests.input]
+root = '6 2 8 0 4 7 9 n n 3 5'
+p = 2
+q = 8
+
+[[tests]]
+expected = '2'
+[tests.input]
+root = '6 2 8 0 4 7 9 n n 3 5'
+p = 2
+q = 4
+
+[[tests]]
+expected = '4'
+[tests.input]
+root = '6 2 8 0 4 7 9 n n 3 5'
+p = 3
+q = 5

@@ -1,0 +1,16 @@
+func myPow(x float64, n int) float64 {
+    if n < 0 { //@negative
+        x = 1 / x
+        n = -n
+    }
+    result := 1.0 //@init
+    base := x //@base
+    for n > 0 { //@loop
+        if n%2 == 1 { //@odd
+            result *= base //@absorb
+        }
+        base *= base //@square
+        n /= 2 //@halve
+    }
+    return result //@ret
+}

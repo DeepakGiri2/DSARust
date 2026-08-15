@@ -1,0 +1,17 @@
+static List<List<Integer>> subsets(int[] nums) {
+    List<List<Integer>> res = new ArrayList<>(); //@init
+    List<Integer> subset = new ArrayList<>(); //@sub
+    backtrack(0, nums, subset, res); //@call
+    return res; //@done
+}
+
+static void backtrack(int i, int[] nums, List<Integer> subset, List<List<Integer>> res) {
+    if (i == nums.length) { //@base
+        res.add(new ArrayList<>(subset)); //@add
+        return; //@ret
+    }
+    subset.add(nums[i]); //@include
+    backtrack(i + 1, nums, subset, res); //@recIn
+    subset.remove(subset.size() - 1); //@exclude
+    backtrack(i + 1, nums, subset, res); //@recEx
+}

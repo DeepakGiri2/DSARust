@@ -1,0 +1,17 @@
+int best;
+
+int gain(TreeNode* node) {
+    if (node == nullptr) { //@base
+        return 0; //@ret0
+    }
+    int left = max(0, gain(node->left)); //@recL
+    int right = max(0, gain(node->right)); //@recR
+    best = max(best, node->val + left + right); //@best
+    return node->val + max(left, right); //@ret
+}
+
+int maxPathSum(TreeNode* root) {
+    best = INT_MIN; //@init
+    gain(root); //@call
+    return best; //@result
+}

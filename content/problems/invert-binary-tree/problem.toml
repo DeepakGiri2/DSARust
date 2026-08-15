@@ -1,0 +1,28 @@
+slug = 'invert-binary-tree'
+title = 'Invert Binary Tree'
+category = 'Trees'
+difficulty = 'Easy'
+tier = '50'
+complexity = 'O(n) time · O(h) space (recursion stack)'
+
+description = 'Given the root of a binary tree, invert it (mirror it: every left child becomes the right child and vice versa) and return the root. Great problem for watching recursion — use Step In / Step Out!'
+approach = 'Recursion: to invert a tree, first invert both subtrees, then swap them. The base case is an empty (nil) node. Watch the call stack grow as we Step In, and collapse as calls return.'
+
+[[inputs]]
+name = 'tree'
+label = "tree (level-order, 'n' = null)"
+type = 'tree'
+max_len = 40
+
+[default_input]
+tree = '4 2 7 1 3 6 9'
+
+[[tests]]
+expected = '4 7 2 9 6 3 1'
+[tests.input]
+tree = '4 2 7 1 3 6 9'
+
+[[tests]]
+expected = '2 3 1'
+[tests.input]
+tree = '2 1 3'

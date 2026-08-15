@@ -1,0 +1,13 @@
+int removeDuplicates(vector<int>& nums) {
+    if (nums.empty()) { //@empty
+        return 0; //@ret0
+    }
+    int slow = 0; //@init
+    for (int fast = 1; fast < (int)nums.size(); fast++) { //@loop
+        if (nums[fast] != nums[slow]) { //@cmp
+            slow++; //@incS
+            nums[slow] = nums[fast]; //@write
+        }
+    }
+    return slow + 1; //@ret
+}

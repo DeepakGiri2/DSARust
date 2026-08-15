@@ -1,0 +1,10 @@
+func removeDuplicates(nums []int) int {
+    k := 0 //@init
+    for _, v := range nums { //@loop
+        if k < 2 || v != nums[k-2] { //@allowed
+            nums[k] = v //@write
+            k++ //@bump
+        }
+    }
+    return k //@ret
+}

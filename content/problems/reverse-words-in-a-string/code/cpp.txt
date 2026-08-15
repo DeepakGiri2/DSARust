@@ -1,0 +1,21 @@
+string reverseWords(string s) {
+    string out; //@init
+    int i = (int)s.size() - 1; //@start
+    while (i >= 0) { //@loop
+        while (i >= 0 && s[i] == ' ') { //@skip
+            i--;
+        }
+        if (i < 0) { //@stop
+            break;
+        }
+        int end = i; //@end
+        while (i >= 0 && s[i] != ' ') { //@word
+            i--;
+        }
+        if (!out.empty()) { //@sep
+            out += ' ';
+        }
+        out += s.substr(i + 1, end - i); //@take
+    }
+    return out; //@ret
+}

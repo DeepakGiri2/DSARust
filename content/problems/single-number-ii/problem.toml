@@ -1,0 +1,36 @@
+slug = 'single-number-ii'
+title = 'Single Number II'
+category = 'Bit Manipulation'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '137'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Every value in the array appears three times except one, which appears once. Find it, using constant extra space.'
+approach = "Count each bit modulo three, but keep the counters as bit-parallel words. Two variables encode the three states: `ones` holds the bits seen a multiple-of-three-plus-one times, `twos` the bits seen plus-two times, and the two masks are what make a bit reaching three fall back to neither. Since every repeated value contributes exactly three times, only the loner's bits survive in `ones`."
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 12
+min = 0
+max = 200
+
+[default_input]
+nums = [2, 2, 3, 2]
+
+[[tests]]
+expected = '3'
+[tests.input]
+nums = [2, 2, 3, 2]
+
+[[tests]]
+expected = '99'
+[tests.input]
+nums = [0, 1, 0, 1, 0, 1, 99]
+
+[[tests]]
+expected = '7'
+[tests.input]
+nums = [5, 5, 5, 7]

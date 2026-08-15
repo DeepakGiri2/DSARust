@@ -1,0 +1,30 @@
+slug = 'decode-string'
+title = 'Decode String'
+category = 'Stack'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '394'
+complexity = 'O(n · k) time (k = expansion factor) · O(n) space'
+
+description = 'Expand an encoded string where k[encoded] means the enclosed text repeated k times. The encodings may be nested.'
+approach = "Nesting means the text being built has to be *suspended* when a new bracket opens and resumed when it closes — so two stacks: one of repeat counts, one of the partially built strings that are waiting. On ']' the innermost text is complete, so multiply it out and glue it onto whatever was suspended underneath. Nothing is ever re-parsed."
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 60
+help = 'e.g. 3[a2[c]]'
+
+[default_input]
+s = '3[a2[c]]'
+
+[[tests]]
+expected = 'accaccacc'
+[tests.input]
+s = '3[a2[c]]'
+
+[[tests]]
+expected = 'abcabccdcdcdef'
+[tests.input]
+s = '2[abc]3[cd]ef'

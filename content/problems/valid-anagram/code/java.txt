@@ -1,0 +1,16 @@
+static boolean isAnagram(String s, String t) {
+    if (s.length() != t.length()) { //@len
+        return false; //@lenbad
+    }
+    Map<Character, Integer> count = new HashMap<>(); //@init
+    for (char c : s.toCharArray()) { //@builds
+        count.put(c, count.getOrDefault(c, 0) + 1); //@inc
+    }
+    for (char c : t.toCharArray()) { //@scant
+        count.put(c, count.getOrDefault(c, 0) - 1); //@dec
+        if (count.get(c) < 0) { //@check
+            return false; //@bad
+        }
+    }
+    return true; //@ok
+}

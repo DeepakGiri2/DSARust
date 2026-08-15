@@ -1,0 +1,15 @@
+static int pivotIndex(int[] nums) {
+    int total = 0; //@init
+    for (int x : nums) {
+        total += x; //@sum
+    }
+    int left = 0; //@left
+    for (int i = 0; i < nums.length; i++) { //@loop
+        int right = total - left - nums[i]; //@right
+        if (left == right) { //@check
+            return i; //@ret
+        }
+        left += nums[i]; //@advance
+    }
+    return -1; //@none
+}

@@ -1,0 +1,49 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func trap(height []int) int {
+    l, r := 0, len(height)-1
+    leftMax, rightMax := 0, 0
+    water := 0
+    for l < r {
+        if height[l] < height[r] {
+            if height[l] >= leftMax {
+                leftMax = height[l]
+            } else {
+                water += leftMax - height[l]
+            }
+            l++
+        } else {
+            if height[r] >= rightMax {
+                rightMax = height[r]
+            } else {
+                water += rightMax - height[r]
+            }
+            r--
+        }
+    }
+    return water
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    height := readInts(reader)
+    fmt.Println(trap(height))
+}

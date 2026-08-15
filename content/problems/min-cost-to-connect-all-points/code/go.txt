@@ -1,0 +1,31 @@
+const INF = 1 << 30
+
+func minCostConnectPoints(points [][]int) int {
+    n := len(points)
+    inTree := make([]bool, n) //@init
+    best := make([]int, n) //@dist
+    for i := range best {
+        best[i] = INF
+    }
+    best[0] = 0 //@seed
+    total := 0 //@total
+    for iter := 0; iter < n; iter++ { //@loop
+        u := -1 //@pick
+        for v := 0; v < n; v++ { //@scan
+            if !inTree[v] && (u == -1 || best[v] < best[u]) {
+                u = v //@closest
+            }
+        }
+        inTree[u] = true //@add
+        total += best[u] //@pay
+        for v := 0; v < n; v++ { //@relax
+            if !inTree[v] {
+                d := abs(points[u][0]-points[v][0]) + abs(points[u][1]-points[v][1]) //@dist2
+                if d < best[v] { //@cheaper
+                    best[v] = d //@update
+                }
+            }
+        }
+    }
+    return total //@ret
+}

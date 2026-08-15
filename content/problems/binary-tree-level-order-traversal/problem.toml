@@ -1,0 +1,33 @@
+slug = 'binary-tree-level-order-traversal'
+title = 'Binary Tree Level Order Traversal'
+category = 'Trees'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n) time · O(n) space (the queue)'
+
+description = 'Given the root of a binary tree, return the values of its nodes level by level, from left to right — one array per level (a breadth-first traversal). Watch the queue drive the exploration one level at a time.'
+approach = 'Breadth-first search with a queue. Seed the queue with the root. On each outer pass, record how many nodes are currently queued — that is exactly one level — then dequeue that many, collect their values, and enqueue their children for the next level.'
+
+[[inputs]]
+name = 'tree'
+label = "tree (level-order, 'n' = null)"
+type = 'tree'
+max_len = 40
+
+[default_input]
+tree = '3 9 20 n n 15 7'
+
+[[tests]]
+expected = "3\n9 20\n15 7"
+[tests.input]
+tree = '3 9 20 n n 15 7'
+
+[[tests]]
+expected = '1'
+[tests.input]
+tree = '1'
+
+[[tests]]
+expected = "1\n2 3\n4 5"
+[tests.input]
+tree = '1 2 3 4 5'

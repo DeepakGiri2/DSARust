@@ -1,0 +1,21 @@
+static int idx;
+static TreeNode buildTree(int[] preorder, int[] inorder) {
+    idx = 0;
+    return helper(preorder, inorder, 0, inorder.length - 1);
+}
+
+static TreeNode helper(int[] preorder, int[] inorder, int lo, int hi) {
+    if (lo > hi) { //@base
+        return null; //@retNil
+    }
+    int rootVal = preorder[idx]; //@pickRoot
+    idx++; //@advance
+    TreeNode root = new TreeNode(rootVal); //@makeNode
+    int mid = lo;
+    while (inorder[mid] != rootVal) { //@findMid
+        mid++;
+    }
+    root.left = helper(preorder, inorder, lo, mid - 1); //@recL
+    root.right = helper(preorder, inorder, mid + 1, hi); //@recR
+    return root; //@ret
+}

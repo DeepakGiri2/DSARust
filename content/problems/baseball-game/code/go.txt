@@ -1,0 +1,21 @@
+func calPoints(operations []string) int {
+    record := []int{} //@init
+    for _, op := range operations { //@loop
+        if op == "C" { //@isC
+            record = record[:len(record)-1] //@popC
+        } else if op == "D" { //@isD
+            record = append(record, 2*record[len(record)-1]) //@pushD
+        } else if op == "+" { //@isPlus
+            n := len(record)
+            record = append(record, record[n-1]+record[n-2]) //@pushPlus
+        } else { //@isNum
+            v, _ := strconv.Atoi(op)
+            record = append(record, v) //@pushNum
+        }
+    }
+    total := 0 //@sum
+    for _, v := range record { //@add
+        total += v
+    }
+    return total //@ret
+}

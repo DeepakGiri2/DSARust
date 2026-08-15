@@ -1,0 +1,19 @@
+func repeatedSubstringPattern(s string) bool {
+    n := len(s)
+    lps := make([]int, n) //@lps
+    for i, length := 1, 0; i < n; { //@build
+        if s[i] == s[length] { //@match
+            length++
+            lps[i] = length //@set
+            i++
+        } else if length > 0 { //@fall
+            length = lps[length-1] //@back
+        } else {
+            lps[i] = 0 //@zero
+            i++
+        }
+    }
+    longest := lps[n-1] //@longest
+    period := n - longest //@period
+    return longest > 0 && n%period == 0 //@ret
+}

@@ -1,0 +1,42 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func replaceElements(arr []int) []int {
+    mx := -1
+    for i := len(arr) - 1; i >= 0; i-- {
+        cur := arr[i]
+        arr[i] = mx
+        if cur > mx {
+            mx = cur
+        }
+    }
+    return arr
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    arr := readInts(reader)
+    res := replaceElements(arr)
+    strs := make([]string, len(res))
+    for i, v := range res {
+        strs[i] = strconv.Itoa(v)
+    }
+    fmt.Println(strings.Join(strs, " "))
+}

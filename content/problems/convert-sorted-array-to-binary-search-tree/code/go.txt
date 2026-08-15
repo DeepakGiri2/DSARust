@@ -1,0 +1,14 @@
+func sortedArrayToBST(nums []int) *TreeNode {
+    return build(nums, 0, len(nums)-1) //@call
+}
+
+func build(nums []int, lo, hi int) *TreeNode {
+    if lo > hi { //@base
+        return nil
+    }
+    mid := lo + (hi-lo)/2 //@mid
+    node := &TreeNode{Val: nums[mid]} //@make
+    node.Left = build(nums, lo, mid-1) //@recL
+    node.Right = build(nums, mid+1, hi) //@recR
+    return node //@ret
+}

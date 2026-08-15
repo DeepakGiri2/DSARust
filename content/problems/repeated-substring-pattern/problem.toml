@@ -1,0 +1,44 @@
+slug = 'repeated-substring-pattern'
+title = 'Repeated Substring Pattern'
+category = 'String Algorithms'
+difficulty = 'Easy'
+tier = 'extra'
+leetcode = '459'
+complexity = 'O(n) time · O(n) space'
+
+description = 'Decide whether the string can be built by taking some proper substring of it and concatenating two or more copies.'
+approach = "Reuse KMP's failure table. If the longest proper prefix that is also a suffix has length L, then the string has period n − L: shifting it by that much maps it onto itself. The string is a whole number of repetitions exactly when that period divides n evenly (and L > 0, which rules out a string with no repetition at all)."
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 24
+
+[default_input]
+s = 'abcabcabc'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = 'abcabcabc'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = 'abab'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = 'aba'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = 'a'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = 'abaababaab'

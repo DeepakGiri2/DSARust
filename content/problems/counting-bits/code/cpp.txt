@@ -1,0 +1,7 @@
+vector<int> countBits(int n) {
+    vector<int> dp(n + 1, 0); //@init
+    for (int i = 1; i <= n; i++) { //@loop
+        dp[i] = dp[i >> 1] + (i & 1); //@recur
+    }
+    return dp; //@ret
+}

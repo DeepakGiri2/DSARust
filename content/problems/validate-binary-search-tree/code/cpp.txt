@@ -1,0 +1,20 @@
+bool isValidBST(TreeNode* root) {
+    return valid(root, LLONG_MIN, LLONG_MAX); //@call
+}
+
+bool valid(TreeNode* node, long long low, long long high) {
+    if (node == nullptr) { //@base
+        return true; //@rettrue
+    }
+    long long v = node->val; //@read
+    if (v <= low || v >= high) { //@check
+        return false; //@retfalse
+    }
+    if (!valid(node->left, low, v)) { //@recL
+        return false; //@badL
+    }
+    if (!valid(node->right, v, high)) { //@recR
+        return false; //@badR
+    }
+    return true; //@ret
+}

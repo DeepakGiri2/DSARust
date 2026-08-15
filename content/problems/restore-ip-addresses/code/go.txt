@@ -1,0 +1,27 @@
+func restoreIpAddresses(s string) []string {
+    res := []string{} //@init
+    parts := []string{} //@parts
+    var back func(start int)
+    back = func(start int) {
+        if len(parts) == 4 { //@four
+            if start == len(s) { //@consumed
+                res = append(res, strings.Join(parts, ".")) //@record
+            }
+            return //@retDone
+        }
+        for length := 1; length <= 3 && start+length <= len(s); length++ { //@loop
+            seg := s[start : start+length] //@slice
+            if len(seg) > 1 && seg[0] == '0' { //@leadingZero
+                break
+            }
+            if toInt(seg) > 255 { //@tooBig
+                break
+            }
+            parts = append(parts, seg) //@choose
+            back(start + length) //@recurse
+            parts = parts[:len(parts)-1] //@undo
+        }
+    }
+    back(0) //@call
+    return res //@ret
+}

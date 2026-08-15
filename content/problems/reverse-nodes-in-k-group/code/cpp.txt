@@ -1,0 +1,30 @@
+ListNode* kthNode(ListNode* cur, int k) {
+    while (cur != nullptr && k > 0) { //@walk
+        cur = cur->next;
+        k--;
+    }
+    return cur; //@retKth
+}
+
+ListNode* reverseKGroup(ListNode* head, int k) {
+    ListNode dummy(0, head); //@dummy
+    ListNode* groupPrev = &dummy; //@groupPrev
+    while (true) { //@loop
+        ListNode* kth = kthNode(groupPrev, k); //@findKth
+        if (kth == nullptr) { //@short
+            break;
+        }
+        ListNode* groupNext = kth->next; //@groupNext
+        ListNode *prev = groupNext, *cur = groupPrev->next; //@revInit
+        while (cur != groupNext) { //@revLoop
+            ListNode* next = cur->next; //@save
+            cur->next = prev; //@flip
+            prev = cur; //@stepPrev
+            cur = next; //@stepCur
+        }
+        ListNode* tmp = groupPrev->next; //@tmp
+        groupPrev->next = kth; //@relink
+        groupPrev = tmp; //@advance
+    }
+    return dummy.next; //@ret
+}

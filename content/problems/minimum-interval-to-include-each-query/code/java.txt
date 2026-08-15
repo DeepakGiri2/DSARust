@@ -1,0 +1,25 @@
+static int[] minInterval(int[][] intervals, int[] queries) {
+    Arrays.sort(intervals, (a, b) -> a[0] - b[0]); //@sortIntervals
+    Integer[] order = new Integer[queries.length]; //@sortQueries
+    for (int i = 0; i < queries.length; i++) order[i] = i;
+    Arrays.sort(order, (a, b) -> queries[a] - queries[b]);
+    PriorityQueue<int[]> h = new PriorityQueue<>((a, b) -> a[0] - b[0]); //@init
+    int[] res = new int[queries.length]; //@out
+    int i = 0; //@cursor
+    for (int qi : order) { //@loop
+        int q = queries[qi]; //@query
+        while (i < intervals.length && intervals[i][0] <= q) { //@admit
+            h.add(new int[]{intervals[i][1] - intervals[i][0] + 1, intervals[i][1]}); //@push
+            i++;
+        }
+        while (!h.isEmpty() && h.peek()[1] < q) { //@expire
+            h.poll(); //@drop
+        }
+        if (h.isEmpty()) { //@none
+            res[qi] = -1; //@miss
+        } else {
+            res[qi] = h.peek()[0]; //@hit
+        }
+    }
+    return res; //@ret
+}

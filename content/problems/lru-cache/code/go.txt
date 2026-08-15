@@ -1,0 +1,31 @@
+type LRUCache struct {
+    cap   int
+    m     map[int]*Node //@init
+    head  *Node
+    tail  *Node
+}
+
+func (c *LRUCache) Get(key int) int {
+    n, ok := c.m[key] //@lookup
+    if !ok { //@miss
+        return -1 //@retMiss
+    }
+    c.moveToFront(n) //@touch
+    return n.val //@retHit
+}
+
+func (c *LRUCache) Put(key, value int) {
+    if n, ok := c.m[key]; ok { //@exists
+        n.val = value //@update
+        c.moveToFront(n) //@touchPut
+        return
+    }
+    if len(c.m) == c.cap { //@full
+        lru := c.tail.prev //@victim
+        c.unlink(lru) //@unlink
+        delete(c.m, lru.key) //@evict
+    }
+    n := &Node{key: key, val: value} //@newNode
+    c.m[key] = n //@insert
+    c.pushFront(n) //@front
+}

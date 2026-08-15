@@ -1,0 +1,58 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+type ListNode struct {
+    Val  int
+    Next *ListNode
+}
+
+func removeNthFromEnd(head *ListNode, n int) *ListNode {
+    dummy := &ListNode{}
+    dummy.Next = head
+    slow := dummy
+    fast := dummy
+    for i := 0; i < n; i++ {
+        fast = fast.Next
+    }
+    for fast.Next != nil {
+        slow = slow.Next
+        fast = fast.Next
+    }
+    slow.Next = slow.Next.Next
+    return dummy.Next
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    vals := readInts(reader)
+    n := readInts(reader)[0]
+    dummy := &ListNode{}
+    tail := dummy
+    for _, v := range vals {
+        tail.Next = &ListNode{Val: v}
+        tail = tail.Next
+    }
+    head := removeNthFromEnd(dummy.Next, n)
+    out := []string{}
+    for p := head; p != nil; p = p.Next {
+        out = append(out, strconv.Itoa(p.Val))
+    }
+    fmt.Println(strings.Join(out, " "))
+}

@@ -1,0 +1,40 @@
+slug = 'design-browser-history'
+title = 'Design Browser History'
+category = 'Linked List'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '1472'
+complexity = 'O(1) amortised per visit · O(1) per back/forward · O(n) space'
+
+description = "Model a browser's history: visiting a page clears everything ahead of the current one, and back/forward move by a number of steps, clamped at the ends."
+approach = 'History is a line with a cursor, so an array plus an index says everything. The one rule that is easy to miss is what a visit does to the *future*: pages ahead of the cursor become unreachable, so they are discarded before the new page is appended. Back and forward are then just cursor arithmetic, clamped rather than rejected.'
+
+[[inputs]]
+name = 'homepage'
+label = 'homepage'
+type = 'string'
+max_len = 60
+help = 'the page the browser starts on'
+
+[[inputs]]
+name = 'ops'
+label = 'ops'
+type = 'string'
+max_len = 113
+help = 'visit <page> / back <n> / forward <n>, comma separated'
+
+[default_input]
+homepage = 'leetcode'
+ops = 'visit google, visit facebook, visit youtube, back 1, back 1, forward 1, visit linkedin, forward 2, back 2, back 7'
+
+[[tests]]
+expected = 'facebook google facebook linkedin google leetcode'
+[tests.input]
+homepage = 'leetcode'
+ops = 'visit google, visit facebook, visit youtube, back 1, back 1, forward 1, visit linkedin, forward 2, back 2, back 7'
+
+[[tests]]
+expected = 'a b'
+[tests.input]
+homepage = 'a'
+ops = 'visit b, back 1, forward 1'

@@ -1,0 +1,36 @@
+static List<String> parts;
+static int idx;
+
+static String serialize(TreeNode root) {
+    parts = new ArrayList<>(); //@sinit
+    sdfs(root);
+    return String.join(",", parts); //@sjoin
+}
+
+static void sdfs(TreeNode node) {
+    if (node == null) { //@snull
+        parts.add("N"); //@sapnull
+        return;
+    }
+    parts.add(String.valueOf(node.val)); //@sapval
+    sdfs(node.left); //@sleft
+    sdfs(node.right); //@sright
+}
+
+static TreeNode deserialize(String data) {
+    String[] tokens = data.split(","); //@dsplit
+    idx = 0;
+    return ddfs(tokens);
+}
+
+static TreeNode ddfs(String[] tokens) {
+    String tok = tokens[idx]; //@dread
+    idx++;
+    if (tok.equals("N")) { //@dnull
+        return null;
+    }
+    TreeNode node = new TreeNode(Integer.parseInt(tok)); //@dnode
+    node.left = ddfs(tokens); //@dleft
+    node.right = ddfs(tokens); //@dright
+    return node; //@dret
+}

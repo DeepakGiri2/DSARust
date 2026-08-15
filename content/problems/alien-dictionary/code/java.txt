@@ -1,0 +1,47 @@
+static String alienOrder(String[] words) {
+    Map<Character, Set<Character>> adj = new LinkedHashMap<>(); //@init
+    Map<Character, Integer> indeg = new LinkedHashMap<>(); //@degrees
+    for (String w : words) { //@letters
+        for (char ch : w.toCharArray()) {
+            if (!indeg.containsKey(ch)) {
+                indeg.put(ch, 0);
+                adj.put(ch, new LinkedHashSet<>());
+            }
+        }
+    }
+    for (int i = 0; i + 1 < words.length; i++) { //@pairs
+        String a = words[i], b = words[i + 1];
+        int n = Math.min(a.length(), b.length());
+        if (a.length() > b.length() && a.substring(0, n).equals(b.substring(0, n))) { //@prefix
+            return ""; //@invalid
+        }
+        for (int j = 0; j < n; j++) { //@compare
+            if (a.charAt(j) != b.charAt(j)) { //@differ
+                if (!adj.get(a.charAt(j)).contains(b.charAt(j))) {
+                    adj.get(a.charAt(j)).add(b.charAt(j)); //@edge
+                    indeg.merge(b.charAt(j), 1, Integer::sum); //@bump
+                }
+                break; //@stop
+            }
+        }
+    }
+    List<Character> q = new ArrayList<>(); //@queue
+    for (var e : indeg.entrySet()) { //@seed
+        if (e.getValue() == 0) q.add(e.getKey());
+    }
+    StringBuilder out = new StringBuilder(); //@build
+    for (int i = 0; i < q.size(); i++) { //@loop
+        char c = q.get(i); //@pop
+        out.append(c); //@emit
+        for (char nxt : adj.get(c)) { //@neighbours
+            indeg.merge(nxt, -1, Integer::sum); //@dec
+            if (indeg.get(nxt) == 0) { //@ready
+                q.add(nxt); //@enqueue
+            }
+        }
+    }
+    if (out.length() != indeg.size()) { //@cycle
+        return ""; //@none
+    }
+    return out.toString(); //@ret
+}

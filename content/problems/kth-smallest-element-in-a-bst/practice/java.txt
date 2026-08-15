@@ -1,0 +1,57 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static int kthSmallest(TreeNode root, int k) {
+        Deque<TreeNode> stk = new ArrayDeque<>();
+        TreeNode cur = root;
+        while (cur != null || !stk.isEmpty()) {
+            while (cur != null) {
+                stk.push(cur);
+                cur = cur.left;
+            }
+            cur = stk.pop();
+            k--;
+            if (k == 0) {
+                return cur.val;
+            }
+            cur = cur.right;
+        }
+        return -1;
+    }
+
+    static class TreeNode {
+        int val;
+        TreeNode left, right;
+        TreeNode(int v) { val = v; }
+    }
+
+    static TreeNode buildTree(String[] tokens) {
+        if (tokens.length == 0 || tokens[0].equals("n")) return null;
+        TreeNode root = new TreeNode(Integer.parseInt(tokens[0]));
+        Queue<TreeNode> q = new ArrayDeque<>();
+        q.add(root);
+        int i = 1;
+        while (!q.isEmpty() && i < tokens.length) {
+            TreeNode cur = q.poll();
+            if (i < tokens.length) {
+                if (!tokens[i].equals("n")) { cur.left = new TreeNode(Integer.parseInt(tokens[i])); q.add(cur.left); }
+                i++;
+            }
+            if (i < tokens.length) {
+                if (!tokens[i].equals("n")) { cur.right = new TreeNode(Integer.parseInt(tokens[i])); q.add(cur.right); }
+                i++;
+            }
+        }
+        return root;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] tokens = br.readLine().trim().split("\\s+");
+        int k = Integer.parseInt(br.readLine().trim());
+        TreeNode root = buildTree(tokens);
+        System.out.println(kthSmallest(root, k));
+    }
+}

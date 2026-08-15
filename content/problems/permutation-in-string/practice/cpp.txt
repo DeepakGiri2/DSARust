@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool checkInclusion(string s1, string s2) {
+    int n = (int)s1.size();
+    if (n > (int)s2.size()) {
+        return false;
+    }
+    vector<int> need(26, 0);
+    vector<int> win(26, 0);
+    for (int i = 0; i < n; i++) {
+        need[s1[i] - 'a']++;
+        win[s2[i] - 'a']++;
+    }
+    for (int right = n - 1; right < (int)s2.size(); right++) {
+        if (right >= n) {
+            win[s2[right] - 'a']++;
+            win[s2[right - n] - 'a']--;
+        }
+        bool ok = true;
+        for (int c = 0; c < 26; c++) {
+            if (win[c] != need[c]) {
+                ok = false;
+                break;
+            }
+        }
+        if (ok) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int main() {
+    string s1, s2;
+    getline(cin, s1);
+    getline(cin, s2);
+    bool ans = checkInclusion(s1, s2);
+    cout << (ans ? "true" : "false") << endl;
+}

@@ -1,0 +1,20 @@
+class MyStack {
+    queue<int> q; //@init
+public:
+    void push(int x) {
+        q.push(x); //@enqueue
+        for (int i = 0; i + 1 < (int)q.size(); i++) { //@rotate
+            q.push(q.front()); q.pop(); //@moveBack
+        }
+    }
+    int pop() {
+        int v = q.front(); q.pop(); //@pop
+        return v; //@retPop
+    }
+    int top() {
+        return q.front(); //@top
+    }
+    bool empty() {
+        return q.empty(); //@empty
+    }
+};

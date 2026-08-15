@@ -1,0 +1,13 @@
+func wordBreak(s string, wordDict []string) bool {
+    dp := make([]bool, len(s)+1) //@init
+    dp[0] = true //@base
+    for i := 1; i <= len(s); i++ { //@outer
+        for _, w := range wordDict { //@inner
+            if i >= len(w) && dp[i-len(w)] && s[i-len(w):i] == w { //@check
+                dp[i] = true //@set
+                break //@brk
+            }
+        }
+    }
+    return dp[len(s)] //@ret
+}

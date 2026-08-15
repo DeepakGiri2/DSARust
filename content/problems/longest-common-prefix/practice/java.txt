@@ -1,0 +1,27 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static String longestCommonPrefix(String[] strs) {
+        String prefix = "";
+        for (int j = 0; j < strs[0].length(); j++) {
+            char c = strs[0].charAt(j);
+            for (int k = 1; k < strs.length; k++) {
+                if (j >= strs[k].length() || strs[k].charAt(j) != c) {
+                    return prefix;
+                }
+            }
+            prefix += c;
+        }
+        return prefix;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String line = br.readLine();
+        if (line == null) line = "";
+        String[] strs = line.trim().split("\\s+");
+        System.out.println(longestCommonPrefix(strs));
+    }
+}

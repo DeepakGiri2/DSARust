@@ -1,0 +1,10 @@
+int singleNumber(vector<int>& nums) {
+    int ones = 0, twos = 0; //@init
+    for (int v : nums) { //@loop
+        int seenOnce = ones ^ v; //@xorOnes
+        ones = seenOnce & ~twos; //@maskOnes
+        int seenTwice = twos ^ v; //@xorTwos
+        twos = seenTwice & ~ones; //@maskTwos
+    }
+    return ones; //@ret
+}

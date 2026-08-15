@@ -1,0 +1,33 @@
+slug = 'remove-duplicates-from-sorted-array'
+title = 'Remove Duplicates From Sorted Array'
+category = 'Two Pointers'
+difficulty = 'Easy'
+tier = '250'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Given a sorted array, remove the duplicates in place so each unique value appears once, and return the count k of unique values. A slow pointer marks the end of the unique region while a fast pointer scans ahead.'
+approach = 'Because the array is sorted, equal values are adjacent. Keep a slow pointer at the last unique value written. Scan with fast; whenever it finds a value different from nums[slow], advance slow and copy the new value there.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums (sorted)'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+nums = [1, 1, 2, 2, 3]
+
+[[tests]]
+expected = "2\n1 2"
+[tests.input]
+nums = [1, 1, 2]
+
+[[tests]]
+expected = "5\n0 1 2 3 4"
+[tests.input]
+nums = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4]
+
+[[tests]]
+expected = "1\n7"
+[tests.input]
+nums = [7]

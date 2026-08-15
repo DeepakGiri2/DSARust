@@ -1,0 +1,14 @@
+static boolean isSameTree(TreeNode p, TreeNode q) {
+    if (p == null && q == null) { //@bothNil
+        return true; //@rettrue
+    }
+    if (p == null || q == null) { //@oneNil
+        return false; //@retNil
+    }
+    if (p.val != q.val) { //@valDiff
+        return false; //@retDiff
+    }
+    boolean left = isSameTree(p.left, q.left); //@recL
+    boolean right = isSameTree(p.right, q.right); //@recR
+    return left && right; //@ret
+}

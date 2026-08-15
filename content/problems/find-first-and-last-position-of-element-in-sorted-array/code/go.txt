@@ -1,0 +1,22 @@
+func searchRange(nums []int, target int) []int {
+    lo := lowerBound(nums, target) //@first
+    if lo == len(nums) || nums[lo] != target { //@absent
+        return []int{-1, -1} //@none
+    }
+    hi := lowerBound(nums, target+1) - 1 //@last
+    return []int{lo, hi} //@ret
+}
+
+// First index whose value is >= target (len(nums) if there is none).
+func lowerBound(nums []int, target int) int {
+    l, r := 0, len(nums) //@init
+    for l < r { //@loop
+        m := (l + r) / 2 //@mid
+        if nums[m] < target { //@cmp
+            l = m + 1 //@right
+        } else {
+            r = m //@left
+        }
+    }
+    return l //@bound
+}

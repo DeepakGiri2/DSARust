@@ -1,0 +1,53 @@
+slug = 'sum-of-two-integers'
+title = 'Sum of Two Integers'
+category = 'Bit Manipulation'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '371'
+complexity = 'O(bits) time · O(1) space'
+
+description = 'Add two integers without using + or -.'
+approach = 'Addition is XOR plus carry. XOR gives the sum of each column ignoring carries; AND finds the columns that produced a carry, and shifting it left puts each carry where it must be added. Repeating that turns the carries into a smaller and smaller number, because every round pushes them at least one place further left — so the loop terminates once no carries remain.'
+
+[[inputs]]
+name = 'a'
+label = 'a'
+type = 'int'
+min = 0
+max = 255
+help = 'kept non-negative so the bit rows stay readable'
+
+[[inputs]]
+name = 'b'
+label = 'b'
+type = 'int'
+min = 0
+max = 255
+
+[default_input]
+a = 2
+b = 3
+
+[[tests]]
+expected = '5'
+[tests.input]
+a = 2
+b = 3
+
+[[tests]]
+expected = '2'
+[tests.input]
+a = 1
+b = 1
+
+[[tests]]
+expected = '50'
+[tests.input]
+a = 20
+b = 30
+
+[[tests]]
+expected = '0'
+[tests.input]
+a = 0
+b = 0

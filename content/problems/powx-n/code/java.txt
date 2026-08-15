@@ -1,0 +1,17 @@
+static double myPow(double x, int n) {
+    long e = n;
+    if (e < 0) { //@negative
+        x = 1 / x;
+        e = -e;
+    }
+    double result = 1.0; //@init
+    double base = x; //@base
+    while (e > 0) { //@loop
+        if (e % 2 == 1) { //@odd
+            result *= base; //@absorb
+        }
+        base *= base; //@square
+        e /= 2; //@halve
+    }
+    return result; //@ret
+}

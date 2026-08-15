@@ -1,0 +1,22 @@
+string reorganizeString(string s) {
+    map<char, int> count; //@count
+    for (char ch : s) count[ch]++;
+    priority_queue<pair<int, char>> h; //@init
+    for (auto& kv : count) h.push({kv.second, -kv.first});
+    string out; //@out
+    pair<int, char> prev = {0, 0}; //@prev
+    bool hasPrev = false;
+    while (!h.empty()) { //@loop
+        auto top = h.top(); h.pop(); //@pop
+        out += char(-top.second); //@emit
+        top.first--; //@spend
+        if (hasPrev && prev.first > 0) { //@restore
+            h.push(prev); //@back
+        }
+        prev = top; hasPrev = true; //@hold
+    }
+    if (out.size() < s.size()) { //@check
+        return ""; //@fail
+    }
+    return out; //@ret
+}

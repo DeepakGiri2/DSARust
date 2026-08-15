@@ -1,0 +1,42 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static boolean exist(char[][] board, String word) {
+        int rows = board.length, cols = board[0].length;
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (dfs(board, word, r, c, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    static boolean dfs(char[][] board, String word, int r, int c, int k) {
+        if (k == word.length()) {
+            return true;
+        }
+        if (r < 0 || r >= board.length || c < 0 || c >= board[0].length || board[r][c] != word.charAt(k)) {
+            return false;
+        }
+        board[r][c] = '#';
+        boolean found = dfs(board, word, r + 1, c, k + 1) ||
+            dfs(board, word, r - 1, c, k + 1) ||
+            dfs(board, word, r, c + 1, k + 1) ||
+            dfs(board, word, r, c - 1, k + 1);
+        board[r][c] = word.charAt(k);
+        return found;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] rows = br.readLine().trim().split("\\s+");
+        char[][] board = new char[rows.length][];
+        for (int i = 0; i < rows.length; i++) board[i] = rows[i].toCharArray();
+        String word = br.readLine().trim();
+        System.out.println(exist(board, word));
+    }
+}

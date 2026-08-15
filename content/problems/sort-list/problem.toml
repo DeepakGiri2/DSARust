@@ -1,0 +1,41 @@
+slug = 'sort-list'
+title = 'Sort List'
+category = 'Linked List'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '148'
+complexity = 'O(n log n) time · O(log n) stack space'
+
+description = 'Sort a singly linked list in O(n log n) time.'
+approach = 'Merge sort is the sort for linked lists: it never needs random access, and merging two sorted lists is pure pointer rewiring with no extra array. Split with the slow/fast pointer trick — starting fast one node ahead so a two-element list actually splits — sort each half recursively, then merge. Quicksort would need random access to partition well; heapsort would need an array.'
+
+[[inputs]]
+name = 'list'
+label = 'list'
+type = 'int-array'
+max_len = 8
+min = -50
+max = 50
+
+[default_input]
+list = [4, 2, 1, 3]
+
+[[tests]]
+expected = '1 2 3 4'
+[tests.input]
+list = [4, 2, 1, 3]
+
+[[tests]]
+expected = '-1 0 3 4 5'
+[tests.input]
+list = [-1, 5, 3, 4, 0]
+
+[[tests]]
+expected = '1'
+[tests.input]
+list = [1]
+
+[[tests]]
+expected = '1 2'
+[tests.input]
+list = [2, 1]

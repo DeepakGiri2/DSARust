@@ -1,0 +1,30 @@
+bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+    vector<vector<int>> adj(numCourses); //@init
+    for (auto& p : prerequisites) { //@build
+        adj[p[0]].push_back(p[1]);
+    }
+    vector<int> state(numCourses, 0); //@state
+    for (int i = 0; i < numCourses; i++) { //@mainloop
+        if (!dfs(i, adj, state)) { //@call
+            return false; //@retfalse
+        }
+    }
+    return true; //@rettrue
+}
+
+bool dfs(int course, vector<vector<int>>& adj, vector<int>& state) {
+    if (state[course] == 1) { //@cycle
+        return false; //@backedge
+    }
+    if (state[course] == 2) { //@donecheck
+        return true; //@skip
+    }
+    state[course] = 1; //@visiting
+    for (int dep : adj[course]) { //@deploop
+        if (!dfs(dep, adj, state)) { //@rec
+            return false; //@propagate
+        }
+    }
+    state[course] = 2; //@done
+    return true; //@ok
+}

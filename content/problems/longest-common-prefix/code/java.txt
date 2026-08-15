@@ -1,0 +1,13 @@
+static String longestCommonPrefix(String[] strs) {
+    String prefix = ""; //@init
+    for (int j = 0; j < strs[0].length(); j++) { //@col
+        char c = strs[0].charAt(j); //@pick
+        for (int k = 1; k < strs.length; k++) { //@row
+            if (j >= strs[k].length() || strs[k].charAt(j) != c) { //@mismatch
+                return prefix; //@ret
+            }
+        }
+        prefix += c; //@grow
+    }
+    return prefix; //@done
+}

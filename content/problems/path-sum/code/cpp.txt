@@ -1,0 +1,13 @@
+bool hasPathSum(TreeNode* root, int targetSum) {
+    if (root == nullptr) { //@base
+        return false;
+    }
+    int rem = targetSum - root->val; //@sub
+    if (root->left == nullptr && root->right == nullptr) { //@leaf
+        return rem == 0; //@check
+    }
+    if (hasPathSum(root->left, rem)) { //@recL
+        return true; //@foundL
+    }
+    return hasPathSum(root->right, rem); //@recR
+}

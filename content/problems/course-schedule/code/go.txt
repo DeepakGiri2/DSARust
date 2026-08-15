@@ -1,0 +1,30 @@
+func canFinish(numCourses int, prerequisites [][]int) bool {
+    adj := make([][]int, numCourses) //@init
+    for _, p := range prerequisites { //@build
+        adj[p[0]] = append(adj[p[0]], p[1])
+    }
+    state := make([]int, numCourses) //@state
+    for i := 0; i < numCourses; i++ { //@mainloop
+        if !dfs(i, adj, state) { //@call
+            return false //@retfalse
+        }
+    }
+    return true //@rettrue
+}
+
+func dfs(course int, adj [][]int, state []int) bool {
+    if state[course] == 1 { //@cycle
+        return false //@backedge
+    }
+    if state[course] == 2 { //@donecheck
+        return true //@skip
+    }
+    state[course] = 1 //@visiting
+    for _, dep := range adj[course] { //@deploop
+        if !dfs(dep, adj, state) { //@rec
+            return false //@propagate
+        }
+    }
+    state[course] = 2 //@done
+    return true //@ok
+}

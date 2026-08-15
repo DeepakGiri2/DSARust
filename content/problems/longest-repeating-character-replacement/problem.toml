@@ -1,0 +1,43 @@
+slug = 'longest-repeating-character-replacement'
+title = 'Longest Repeating Character Replacement'
+category = 'Sliding Window'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n) time · O(1) space (26 letters)'
+
+description = 'Given a string s of uppercase letters and an integer k, you may replace at most k characters with any other letter. Return the length of the longest substring that can be turned into all the same character.'
+approach = 'Slide a window and track the frequency of the most common character in it (maxFreq). The window is valid while windowLen − maxFreq ≤ k — the extra characters can all be replaced. When it becomes invalid, shrink from the left.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 20
+
+[[inputs]]
+name = 'k'
+label = 'k'
+type = 'int'
+min = 0
+
+[default_input]
+s = 'AABABBA'
+k = 1
+
+[[tests]]
+expected = '4'
+[tests.input]
+s = 'AABABBA'
+k = 1
+
+[[tests]]
+expected = '4'
+[tests.input]
+s = 'ABAB'
+k = 2
+
+[[tests]]
+expected = '2'
+[tests.input]
+s = 'AABA'
+k = 0

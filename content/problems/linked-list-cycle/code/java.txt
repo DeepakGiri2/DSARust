@@ -1,0 +1,12 @@
+static boolean hasCycle(ListNode head) {
+    ListNode slow = head; //@init
+    ListNode fast = head; //@init2
+    while (fast != null && fast.next != null) { //@loop
+        slow = slow.next; //@slow
+        fast = fast.next.next; //@fast
+        if (slow == fast) { //@check
+            return true; //@true
+        }
+    }
+    return false; //@false
+}

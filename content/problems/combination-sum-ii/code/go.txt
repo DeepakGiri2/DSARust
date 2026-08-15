@@ -1,0 +1,25 @@
+func combinationSum2(candidates []int, target int) [][]int {
+    sort.Ints(candidates) //@sort
+    res := [][]int{} //@init
+    cur := []int{}
+    var back func(start, remain int)
+    back = func(start, remain int) {
+        if remain == 0 { //@hit
+            res = append(res, append([]int{}, cur...)) //@record
+            return //@retHit
+        }
+        for i := start; i < len(candidates); i++ { //@loop
+            if i > start && candidates[i] == candidates[i-1] { //@dup
+                continue
+            }
+            if candidates[i] > remain { //@tooBig
+                break
+            }
+            cur = append(cur, candidates[i]) //@choose
+            back(i+1, remain-candidates[i]) //@recurse
+            cur = cur[:len(cur)-1] //@undo
+        }
+    }
+    back(0, target) //@call
+    return res //@ret
+}

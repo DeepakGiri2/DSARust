@@ -1,0 +1,36 @@
+slug = 'middle-of-the-linked-list'
+title = 'Middle of the Linked List'
+category = 'Linked List'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '876'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Return the middle node of a singly linked list. With an even number of nodes, return the second of the two middle ones.'
+approach = 'A list has no length until you walk it, so the obvious answer needs two passes. One pointer moving twice as fast removes the second pass: by the time the fast one reaches the end it has covered twice the ground, which puts the slow one exactly halfway. The loop condition is where the even case is decided.'
+
+[[inputs]]
+name = 'list'
+label = 'list'
+type = 'int-array'
+max_len = 12
+min = 0
+max = 99
+
+[default_input]
+list = [1, 2, 3, 4, 5]
+
+[[tests]]
+expected = '3 4 5'
+[tests.input]
+list = [1, 2, 3, 4, 5]
+
+[[tests]]
+expected = '4 5 6'
+[tests.input]
+list = [1, 2, 3, 4, 5, 6]
+
+[[tests]]
+expected = '1'
+[tests.input]
+list = [1]

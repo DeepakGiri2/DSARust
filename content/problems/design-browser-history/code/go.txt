@@ -1,0 +1,26 @@
+type BrowserHistory struct {
+    pages []string //@init
+    cur   int //@cur
+}
+
+func (b *BrowserHistory) Visit(url string) {
+    b.pages = b.pages[:b.cur+1] //@truncate
+    b.pages = append(b.pages, url) //@append
+    b.cur++ //@moveCur
+}
+
+func (b *BrowserHistory) Back(steps int) string {
+    if steps > b.cur { //@clampBack
+        steps = b.cur
+    }
+    b.cur -= steps //@stepBack
+    return b.pages[b.cur] //@retBack
+}
+
+func (b *BrowserHistory) Forward(steps int) string {
+    if b.cur+steps >= len(b.pages) { //@clampFwd
+        steps = len(b.pages) - 1 - b.cur
+    }
+    b.cur += steps //@stepFwd
+    return b.pages[b.cur] //@retFwd
+}

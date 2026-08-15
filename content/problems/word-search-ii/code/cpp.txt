@@ -1,0 +1,33 @@
+void dfs(vector<vector<char>>& board, int r, int c, Node* node, string prefix,
+         vector<string>& res) {
+    if (r < 0 || r >= (int)board.size() || c < 0 || c >= (int)board[0].size()) { //@bounds
+        return;
+    }
+    char ch = board[r][c]; //@cell
+    if (ch == '#' || !node->children.count(ch)) { //@prune
+        return;
+    }
+    node = node->children[ch]; //@advance
+    prefix += ch;
+    if (node->word) { //@found
+        res.push_back(prefix); //@record
+        node->word = false; //@dedup
+    }
+    board[r][c] = '#'; //@mark
+    dfs(board, r + 1, c, node, prefix, res); //@down
+    dfs(board, r - 1, c, node, prefix, res); //@up
+    dfs(board, r, c + 1, node, prefix, res); //@right
+    dfs(board, r, c - 1, node, prefix, res); //@left
+    board[r][c] = ch; //@restore
+}
+
+vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+    Node* root = buildTrie(words); //@build
+    vector<string> res; //@init
+    for (int r = 0; r < (int)board.size(); r++) { //@rowLoop
+        for (int c = 0; c < (int)board[0].size(); c++) { //@colLoop
+            dfs(board, r, c, root, "", res); //@call
+        }
+    }
+    return res; //@ret
+}

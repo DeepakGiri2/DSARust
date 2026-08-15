@@ -1,0 +1,19 @@
+static List<Integer> postorderTraversal(TreeNode root) {
+    List<Integer> out = new ArrayList<>(); //@init
+    Deque<TreeNode> stack = new ArrayDeque<>(); //@stack
+    if (root != null) { //@seed
+        stack.push(root);
+    }
+    while (!stack.isEmpty()) { //@loop
+        TreeNode node = stack.pop(); //@pop
+        out.add(node.val); //@visit
+        if (node.left != null) { //@hasL
+            stack.push(node.left); //@pushL
+        }
+        if (node.right != null) { //@hasR
+            stack.push(node.right); //@pushR
+        }
+    }
+    Collections.reverse(out); //@reverse
+    return out; //@ret
+}

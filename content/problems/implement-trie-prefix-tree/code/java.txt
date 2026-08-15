@@ -1,0 +1,40 @@
+static class Trie {
+    Map<Character, Trie> children = new HashMap<>();
+    boolean end = false;
+
+    void insert(String word) {
+        Trie cur = this;
+        for (int i = 0; i < word.length(); i++) { //@insLoop
+            char c = word.charAt(i);
+            if (!cur.children.containsKey(c)) { //@insMiss
+                cur.children.put(c, new Trie());
+            }
+            cur = cur.children.get(c); //@insDown
+        }
+        cur.end = true; //@insEnd
+    }
+
+    boolean search(String word) {
+        Trie cur = this;
+        for (int i = 0; i < word.length(); i++) { //@srchLoop
+            char c = word.charAt(i);
+            if (!cur.children.containsKey(c)) { //@srchMiss
+                return false; //@srchFail
+            }
+            cur = cur.children.get(c); //@srchDown
+        }
+        return cur.end; //@srchEnd
+    }
+
+    boolean startsWith(String prefix) {
+        Trie cur = this;
+        for (int i = 0; i < prefix.length(); i++) { //@swLoop
+            char c = prefix.charAt(i);
+            if (!cur.children.containsKey(c)) { //@swMiss
+                return false; //@swFail
+            }
+            cur = cur.children.get(c); //@swDown
+        }
+        return true; //@swEnd
+    }
+}

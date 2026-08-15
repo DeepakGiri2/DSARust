@@ -1,0 +1,9 @@
+func hammingDistance(x int, y int) int {
+    diff := x ^ y //@xor
+    count := 0 //@init
+    for diff > 0 { //@loop
+        diff &= diff - 1 //@clear
+        count++ //@bump
+    }
+    return count //@ret
+}

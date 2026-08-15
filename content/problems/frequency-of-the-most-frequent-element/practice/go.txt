@@ -1,0 +1,43 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "sort"
+    "strconv"
+    "strings"
+)
+
+func maxFrequency(nums []int, k int) int {
+    sort.Ints(nums)
+    best, left, windowSum := 1, 0, 0
+    for right := 0; right < len(nums); right++ {
+        windowSum += nums[right]
+        for nums[right]*(right-left+1)-windowSum > k {
+            windowSum -= nums[left]
+            left++
+        }
+        if right-left+1 > best {
+            best = right - left + 1
+        }
+    }
+    return best
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    nums := readInts(reader)
+    k := readInts(reader)[0]
+    fmt.Println(maxFrequency(nums, k))
+}

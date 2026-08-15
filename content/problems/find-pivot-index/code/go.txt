@@ -1,0 +1,15 @@
+func pivotIndex(nums []int) int {
+    total := 0 //@init
+    for _, x := range nums {
+        total += x //@sum
+    }
+    left := 0 //@left
+    for i, x := range nums { //@loop
+        right := total - left - x //@right
+        if left == right { //@check
+            return i //@ret
+        }
+        left += x //@advance
+    }
+    return -1 //@none
+}

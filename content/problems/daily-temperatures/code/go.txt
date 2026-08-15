@@ -1,0 +1,14 @@
+func dailyTemperatures(temps []int) []int {
+    n := len(temps)
+    answer := make([]int, n) //@init
+    stack := []int{} //@initStack
+    for i := 0; i < n; i++ { //@loop
+        for len(stack) > 0 && temps[i] > temps[stack[len(stack)-1]] { //@while
+            j := stack[len(stack)-1] //@peek
+            stack = stack[:len(stack)-1] //@pop
+            answer[j] = i - j //@set
+        }
+        stack = append(stack, i) //@push
+    }
+    return answer //@ret
+}

@@ -1,0 +1,15 @@
+static ListNode removeNthFromEnd(ListNode head, int n) {
+    ListNode dummy = new ListNode(0); //@dummy
+    dummy.next = head; //@link
+    ListNode slow = dummy; //@slow0
+    ListNode fast = dummy; //@fast0
+    for (int i = 0; i < n; i++) { //@gap
+        fast = fast.next; //@gapAdv
+    }
+    while (fast.next != null) { //@loop
+        slow = slow.next; //@advS
+        fast = fast.next; //@advF
+    }
+    slow.next = slow.next.next; //@unlink
+    return dummy.next; //@ret
+}

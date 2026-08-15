@@ -1,0 +1,36 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static boolean isValidSudoku(char[][] board) {
+        Set<String> seen = new HashSet<>();
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                char v = board[r][c];
+                if (v == '.') {
+                    continue;
+                }
+                int b = (r / 3) * 3 + c / 3;
+                String[] keys = {"r" + r + "#" + v, "c" + c + "#" + v, "b" + b + "#" + v};
+                for (String k : keys) {
+                    if (seen.contains(k)) {
+                        return false;
+                    }
+                    seen.add(k);
+                }
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String line = br.readLine().trim();
+        char[][] board = new char[9][9];
+        for (int r = 0; r < 9; r++)
+            for (int c = 0; c < 9; c++)
+                board[r][c] = line.charAt(r * 9 + c);
+        System.out.println(isValidSudoku(board) ? "true" : "false");
+    }
+}

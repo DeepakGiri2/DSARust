@@ -1,0 +1,16 @@
+int removeCoveredIntervals(vector<vector<int>>& intervals) {
+    sort(intervals.begin(), intervals.end(), [](auto& a, auto& b) { //@sort
+        if (a[0] != b[0]) return a[0] < b[0];
+        return a[1] > b[1];
+    });
+    int count = 0, reach = 0; //@init
+    for (auto& iv : intervals) { //@loop
+        if (iv[1] > reach) { //@extends
+            count++; //@keep
+            reach = iv[1]; //@extend
+        } else { //@covered
+            continue;
+        }
+    }
+    return count; //@ret
+}

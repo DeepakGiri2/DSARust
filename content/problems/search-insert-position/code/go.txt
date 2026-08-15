@@ -1,0 +1,12 @@
+func searchInsert(nums []int, target int) int {
+    lo, hi := 0, len(nums) //@bounds
+    for lo < hi { //@loop
+        mid := lo + (hi-lo)/2 //@mid
+        if nums[mid] < target { //@cmp
+            lo = mid + 1 //@right
+        } else { //@notLess
+            hi = mid //@left
+        }
+    }
+    return lo //@ret
+}

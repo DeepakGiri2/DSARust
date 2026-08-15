@@ -1,0 +1,17 @@
+static int kthSmallest(TreeNode root, int k) {
+    Deque<TreeNode> stk = new ArrayDeque<>(); //@init
+    TreeNode cur = root; //@setcur
+    while (cur != null || !stk.isEmpty()) { //@loop
+        while (cur != null) { //@dive
+            stk.push(cur); //@push
+            cur = cur.left; //@left
+        }
+        cur = stk.pop(); //@pop
+        k--; //@dec
+        if (k == 0) { //@check
+            return cur.val; //@found
+        }
+        cur = cur.right; //@right
+    }
+    return -1; //@notfound
+}

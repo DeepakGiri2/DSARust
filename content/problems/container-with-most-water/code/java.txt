@@ -1,0 +1,20 @@
+static int maxArea(int[] heights) {
+    int l = 0, r = heights.length - 1; //@init
+    int best = 0; //@best
+    while (l < r) { //@loop
+        int h = heights[l]; //@hmin
+        if (heights[r] < h) { //@pick
+            h = heights[r];
+        }
+        int area = h * (r - l); //@area
+        if (area > best) { //@cmp
+            best = area; //@update
+        }
+        if (heights[l] < heights[r]) { //@which
+            l++; //@moveL
+        } else {
+            r--; //@moveR
+        }
+    }
+    return best; //@ret
+}

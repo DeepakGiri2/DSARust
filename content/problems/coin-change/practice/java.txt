@@ -1,0 +1,39 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount+1];
+        for (int a = 1; a <= amount; a++) {
+            dp[a] = amount + 1;
+        }
+        for (int a = 1; a <= amount; a++) {
+            for (int c : coins) {
+                if (c <= a && dp[a-c] + 1 < dp[a]) {
+                    dp[a] = dp[a-c] + 1;
+                }
+            }
+        }
+        if (dp[amount] > amount) {
+            return -1;
+        }
+        return dp[amount];
+    }
+
+    static int[] readInts(BufferedReader br) throws Exception {
+        String line = br.readLine();
+        if (line == null || line.trim().isEmpty()) return new int[0];
+        String[] parts = line.trim().split("\\s+");
+        int[] nums = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);
+        return nums;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] coins = readInts(br);
+        int amount = readInts(br)[0];
+        System.out.println(coinChange(coins, amount));
+    }
+}

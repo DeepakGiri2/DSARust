@@ -1,0 +1,15 @@
+int mySqrt(int x) {
+    long lo = 0, hi = x; //@bounds
+    long best = 0; //@best
+    while (lo <= hi) { //@loop
+        long mid = lo + (hi - lo) / 2; //@mid
+        long sq = mid * mid; //@square
+        if (sq <= x) { //@fits
+            best = mid; //@keep
+            lo = mid + 1; //@up
+        } else { //@over
+            hi = mid - 1; //@down
+        }
+    }
+    return (int)best; //@ret
+}

@@ -1,0 +1,35 @@
+slug = 'reconstruct-itinerary'
+title = 'Reconstruct Itinerary'
+category = 'Advanced Graphs'
+difficulty = 'Hard'
+tier = '150'
+leetcode = '332'
+complexity = 'O(edges log edges) time · O(edges) space'
+
+description = 'Given a list of one-way tickets, reconstruct the itinerary that uses every ticket exactly once, starting from JFK and preferring the lexicographically smallest option at each step.'
+approach = "Plain greedy fails: always taking the smallest next airport can strand you at a dead end with tickets still unused. Hierholzer's algorithm fixes that by recording an airport only *after* its tickets are exhausted. A dead end is therefore the first thing written down, and the route emerges in reverse — so any stranding is automatically pushed to the end of the itinerary, where it belongs."
+
+[[inputs]]
+name = 'tickets'
+label = 'tickets'
+type = 'string'
+max_len = 80
+help = "'from to' pairs, comma separated"
+
+[default_input]
+tickets = 'MUC LHR, JFK MUC, SFO SJC, LHR SFO'
+
+[[tests]]
+expected = 'JFK MUC LHR SFO SJC'
+[tests.input]
+tickets = 'MUC LHR, JFK MUC, SFO SJC, LHR SFO'
+
+[[tests]]
+expected = 'JFK ATL JFK SFO ATL SFO'
+[tests.input]
+tickets = 'JFK SFO, JFK ATL, SFO ATL, ATL JFK, ATL SFO'
+
+[[tests]]
+expected = 'JFK A JFK'
+[tests.input]
+tickets = 'JFK A, A JFK'

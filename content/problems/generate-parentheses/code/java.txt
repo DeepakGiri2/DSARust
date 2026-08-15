@@ -1,0 +1,20 @@
+static List<String> res = new ArrayList<>(); //@init
+
+static List<String> generateParenthesis(int n) {
+    res.clear();
+    back("", 0, 0, n); //@call
+    return res; //@done
+}
+
+static void back(String cur, int open, int close, int n) {
+    if (cur.length() == 2 * n) { //@base
+        res.add(cur); //@add
+        return; //@ret
+    }
+    if (open < n) { //@canOpen
+        back(cur + "(", open + 1, close, n); //@recOpen
+    }
+    if (close < open) { //@canClose
+        back(cur + ")", open, close + 1, n); //@recClose
+    }
+}

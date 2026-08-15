@@ -1,0 +1,20 @@
+func isValidSudoku(board [][]byte) bool {
+    seen := map[string]bool{} //@init
+    for r := 0; r < 9; r++ { //@rowloop
+        for c := 0; c < 9; c++ { //@colloop
+            v := board[r][c] //@read
+            if v == '.' { //@empty
+                continue
+            }
+            b := (r/3)*3 + c/3
+            keys := []string{fmt.Sprintf("r%d#%c", r, v), fmt.Sprintf("c%d#%c", c, v), fmt.Sprintf("b%d#%c", b, v)} //@keys
+            for _, k := range keys { //@each
+                if seen[k] { //@check
+                    return false //@bad
+                }
+                seen[k] = true //@mark
+            }
+        }
+    }
+    return true //@ok
+}

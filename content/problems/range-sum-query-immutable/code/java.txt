@@ -1,0 +1,14 @@
+class NumArray {
+    private final int[] prefix;
+
+    NumArray(int[] nums) {
+        prefix = new int[nums.length + 1]; //@init
+        for (int i = 0; i < nums.length; i++) { //@build
+            prefix[i + 1] = prefix[i] + nums[i]; //@add
+        }
+    } //@ready
+
+    int sumRange(int left, int right) { //@query
+        return prefix[right + 1] - prefix[left]; //@answer
+    }
+}

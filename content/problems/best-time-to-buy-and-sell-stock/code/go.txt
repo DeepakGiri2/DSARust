@@ -1,0 +1,13 @@
+func maxProfit(prices []int) int {
+    minPrice, best := prices[0], 0 //@init
+    for day := 1; day < len(prices); day++ { //@loop
+        profit := prices[day] - minPrice //@profit
+        if profit > best { //@cmpBest
+            best = profit //@newBest
+        }
+        if prices[day] < minPrice { //@cmpMin
+            minPrice = prices[day] //@newMin
+        }
+    }
+    return best //@ret
+}

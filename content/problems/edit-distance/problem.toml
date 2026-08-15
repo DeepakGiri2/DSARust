@@ -1,0 +1,44 @@
+slug = 'edit-distance'
+title = 'Edit Distance'
+category = '2-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '72'
+complexity = 'O(m · n) time · O(m · n) space'
+
+description = 'Find the fewest single-character insertions, deletions or replacements that turn one word into another.'
+approach = 'Compare the two words one character at a time from the front. If the current pair matches, neither needs editing and the cost is whatever the shorter prefixes cost. If not, exactly three edits could fix this position — replace, delete, insert — and each corresponds to one neighbouring cell in the table, so the cost is one plus the cheapest of the three. The first row and column are the cost of building a word from nothing.'
+
+[[inputs]]
+name = 'word1'
+label = 'word1'
+type = 'string'
+max_len = 12
+
+[[inputs]]
+name = 'word2'
+label = 'word2'
+type = 'string'
+max_len = 12
+
+[default_input]
+word1 = 'horse'
+word2 = 'ros'
+
+[[tests]]
+expected = '3'
+[tests.input]
+word1 = 'horse'
+word2 = 'ros'
+
+[[tests]]
+expected = '5'
+[tests.input]
+word1 = 'intention'
+word2 = 'execution'
+
+[[tests]]
+expected = '0'
+[tests.input]
+word1 = 'a'
+word2 = 'a'

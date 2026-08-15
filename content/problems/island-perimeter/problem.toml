@@ -1,0 +1,35 @@
+slug = 'island-perimeter'
+title = 'Island Perimeter'
+category = 'Graphs'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '463'
+complexity = 'O(rows · cols) time · O(1) space'
+
+description = 'Return the perimeter of the single island in a binary grid.'
+approach = 'No traversal at all. Every land cell contributes four edges, and every pair of adjacent land cells hides two of them. Counting only the neighbour above and the neighbour to the left visits each adjacent pair exactly once, so a single scan gives the answer — connectivity never has to be established.'
+
+[[inputs]]
+name = 'grid'
+label = 'grid'
+type = 'grid'
+max_len = 200
+help = '1 = land, 0 = water'
+
+[default_input]
+grid = '0100 1110 0100 1100'
+
+[[tests]]
+expected = '16'
+[tests.input]
+grid = '0100 1110 0100 1100'
+
+[[tests]]
+expected = '8'
+[tests.input]
+grid = '01 10'
+
+[[tests]]
+expected = '4'
+[tests.input]
+grid = '1'

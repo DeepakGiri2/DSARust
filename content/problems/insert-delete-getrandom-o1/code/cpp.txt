@@ -1,0 +1,29 @@
+class RandomizedSet {
+    unordered_map<int, int> idx; //@init
+    vector<int> vals; //@vals
+public:
+    bool insert(int v) {
+        if (idx.count(v)) { //@hasInsert
+            return false;
+        }
+        idx[v] = vals.size(); //@record
+        vals.push_back(v); //@append
+        return true; //@inserted
+    }
+    bool remove(int v) {
+        auto it = idx.find(v); //@lookup
+        if (it == idx.end()) { //@absent
+            return false;
+        }
+        int i = it->second;
+        int last = vals.back(); //@last
+        vals[i] = last; //@move
+        idx[last] = i; //@reindex
+        vals.pop_back(); //@shrink
+        idx.erase(v); //@forget
+        return true; //@removed
+    }
+    int getRandom() {
+        return vals[rand() % vals.size()]; //@random
+    }
+};

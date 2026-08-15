@@ -1,0 +1,17 @@
+func nextPermutation(nums []int) {
+    n := len(nums)
+    i := n - 2 //@start
+    for i >= 0 && nums[i] >= nums[i+1] { //@descend
+        i-- //@back
+    }
+    if i >= 0 { //@pivot
+        j := n - 1 //@scan
+        for nums[j] <= nums[i] { //@bigger
+            j-- //@downj
+        }
+        nums[i], nums[j] = nums[j], nums[i] //@swap
+    }
+    for lo, hi := i+1, n-1; lo < hi; lo, hi = lo+1, hi-1 { //@flip
+        nums[lo], nums[hi] = nums[hi], nums[lo] //@mirror
+    }
+}

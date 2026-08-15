@@ -1,0 +1,9 @@
+static int[] getConcatenation(int[] nums) {
+    int n = nums.length; //@n
+    int[] ans = new int[2 * n]; //@alloc
+    for (int i = 0; i < n; i++) { //@loop
+        ans[i] = nums[i]; //@first
+        ans[i + n] = nums[i]; //@second
+    }
+    return ans; //@ret
+}

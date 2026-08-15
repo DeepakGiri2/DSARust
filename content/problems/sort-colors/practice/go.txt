@@ -1,0 +1,46 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func sortColors(nums []int) {
+    low, mid, high := 0, 0, len(nums)-1
+    for mid <= high {
+        if nums[mid] == 0 {
+            nums[low], nums[mid] = nums[mid], nums[low]
+            low++
+            mid++
+        } else if nums[mid] == 1 {
+            mid++
+        } else {
+            nums[mid], nums[high] = nums[high], nums[mid]
+            high--
+        }
+    }
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    nums := readInts(reader)
+    sortColors(nums)
+    parts := make([]string, len(nums))
+    for i, v := range nums {
+        parts[i] = strconv.Itoa(v)
+    }
+    fmt.Println(strings.Join(parts, " "))
+}

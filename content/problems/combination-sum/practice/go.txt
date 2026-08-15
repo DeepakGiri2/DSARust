@@ -1,0 +1,57 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func combinationSum(candidates []int, target int) [][]int {
+    res := [][]int{}
+    cur := []int{}
+    backtrack(0, target, candidates, cur, &res)
+    return res
+}
+
+func backtrack(i int, remaining int, candidates []int, cur []int, res *[][]int) {
+    if remaining == 0 {
+        cp := make([]int, len(cur))
+        copy(cp, cur)
+        *res = append(*res, cp)
+        return
+    }
+    if remaining < 0 || i == len(candidates) {
+        return
+    }
+    cur = append(cur, candidates[i])
+    backtrack(i, remaining-candidates[i], candidates, cur, res)
+    cur = cur[:len(cur)-1]
+    backtrack(i+1, remaining, candidates, cur, res)
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    candidates := readInts(reader)
+    line, _ := reader.ReadString('\n')
+    target, _ := strconv.Atoi(strings.TrimSpace(line))
+    res := combinationSum(candidates, target)
+    for _, s := range res {
+        parts := make([]string, len(s))
+        for i, v := range s {
+            parts[i] = strconv.Itoa(v)
+        }
+        fmt.Println(strings.Join(parts, " "))
+    }
+}

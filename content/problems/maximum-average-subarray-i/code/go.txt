@@ -1,0 +1,14 @@
+func findMaxAverage(nums []int, k int) float64 {
+    windowSum := 0 //@initSum
+    for i := 0; i < k; i++ { //@fill
+        windowSum += nums[i] //@add
+    }
+    maxSum := windowSum //@best
+    for r := k; r < len(nums); r++ { //@loop
+        windowSum += nums[r] - nums[r-k] //@slide
+        if windowSum > maxSum { //@cmp
+            maxSum = windowSum //@newBest
+        }
+    }
+    return float64(maxSum) / float64(k) //@ret
+}

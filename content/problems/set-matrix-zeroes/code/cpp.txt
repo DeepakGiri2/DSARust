@@ -1,0 +1,34 @@
+void setZeroes(vector<vector<int>>& matrix) {
+    int rows = matrix.size(), cols = matrix[0].size();
+    bool firstRow = false; //@flag
+    for (int c = 0; c < cols; c++) { //@scanFirst
+        if (matrix[0][c] == 0) {
+            firstRow = true;
+        }
+    }
+    for (int r = 1; r < rows; r++) { //@markRows
+        for (int c = 0; c < cols; c++) { //@markCols
+            if (matrix[r][c] == 0) { //@found
+                matrix[0][c] = 0; //@markCol
+                matrix[r][0] = 0; //@markRow
+            }
+        }
+    }
+    for (int r = 1; r < rows; r++) { //@applyRows
+        for (int c = 1; c < cols; c++) { //@applyCols
+            if (matrix[0][c] == 0 || matrix[r][0] == 0) { //@check
+                matrix[r][c] = 0; //@zero
+            }
+        }
+    }
+    if (matrix[0][0] == 0) { //@colZero
+        for (int r = 0; r < rows; r++) { //@wipeCol
+            matrix[r][0] = 0;
+        }
+    }
+    if (firstRow) { //@rowZero
+        for (int c = 0; c < cols; c++) { //@wipeRow
+            matrix[0][c] = 0;
+        }
+    }
+}

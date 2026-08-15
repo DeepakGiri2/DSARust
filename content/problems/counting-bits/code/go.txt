@@ -1,0 +1,7 @@
+func countBits(n int) []int {
+    dp := make([]int, n+1) //@init
+    for i := 1; i <= n; i++ { //@loop
+        dp[i] = dp[i>>1] + (i & 1) //@recur
+    }
+    return dp //@ret
+}

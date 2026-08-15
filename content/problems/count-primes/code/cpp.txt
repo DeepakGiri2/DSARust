@@ -1,0 +1,21 @@
+int countPrimes(int n) {
+    if (n < 3) { //@small
+        return 0;
+    }
+    vector<bool> composite(n, false); //@init
+    int count = 0; //@count
+    for (int p = 2; p * p < n; p++) { //@outer
+        if (composite[p]) { //@skip
+            continue;
+        }
+        for (int m = p * p; m < n; m += p) { //@inner
+            composite[m] = true; //@mark
+        }
+    }
+    for (int k = 2; k < n; k++) { //@tally
+        if (!composite[k]) { //@isPrime
+            count++; //@bump
+        }
+    }
+    return count; //@ret
+}

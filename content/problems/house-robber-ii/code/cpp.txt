@@ -1,0 +1,18 @@
+int rob(vector<int>& nums) {
+    if (nums.size() == 1) { //@single
+        return nums[0]; //@retSingle
+    }
+    vector<int> a(nums.begin(), nums.end() - 1); //@dropLast
+    vector<int> b(nums.begin() + 1, nums.end()); //@dropFirst
+    return max(robLine(a), robLine(b)); //@ret
+}
+
+int robLine(vector<int>& nums) {
+    int prev = 0, cur = 0; //@lineInit
+    for (int v : nums) { //@lineLoop
+        int next = max(cur, prev + v); //@lineStep
+        prev = cur;
+        cur = next;
+    }
+    return cur; //@lineRet
+}

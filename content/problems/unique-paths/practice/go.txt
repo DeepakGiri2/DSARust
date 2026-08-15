@@ -1,0 +1,43 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func uniquePaths(m int, n int) int {
+    dp := make([][]int, m)
+    for i := range dp {
+        dp[i] = make([]int, n)
+    }
+    for r := 0; r < m; r++ {
+        for c := 0; c < n; c++ {
+            if r == 0 || c == 0 {
+                dp[r][c] = 1
+            } else {
+                dp[r][c] = dp[r-1][c] + dp[r][c-1]
+            }
+        }
+    }
+    return dp[m-1][n-1]
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    m := readInts(reader)[0]
+    n := readInts(reader)[0]
+    fmt.Println(uniquePaths(m, n))
+}

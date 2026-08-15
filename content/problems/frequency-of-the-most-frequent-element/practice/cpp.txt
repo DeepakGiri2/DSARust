@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int maxFrequency(vector<int>& nums, int k) {
+    sort(nums.begin(), nums.end());
+    int best = 1, left = 0, windowSum = 0;
+    for (int right = 0; right < (int)nums.size(); right++) {
+        windowSum += nums[right];
+        while ((long long)nums[right]*(right-left+1) - windowSum > k) {
+            windowSum -= nums[left];
+            left++;
+        }
+        if (right - left + 1 > best) {
+            best = right - left + 1;
+        }
+    }
+    return best;
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> nums = readInts();
+    int k = readInts()[0];
+    cout << maxFrequency(nums, k) << endl;
+}

@@ -1,0 +1,37 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func characterReplacement(s string, k int) int {
+    count := map[byte]int{}
+    res, left, maxf := 0, 0, 0
+    for right := 0; right < len(s); right++ {
+        count[s[right]]++
+        if count[s[right]] > maxf {
+            maxf = count[s[right]]
+        }
+        for (right-left+1)-maxf > k {
+            count[s[left]]--
+            left++
+        }
+        if right-left+1 > res {
+            res = right - left + 1
+        }
+    }
+    return res
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line1, _ := reader.ReadString('\n')
+    s := strings.TrimSpace(line1)
+    line2, _ := reader.ReadString('\n')
+    k, _ := strconv.Atoi(strings.TrimSpace(line2))
+    fmt.Println(characterReplacement(s, k))
+}

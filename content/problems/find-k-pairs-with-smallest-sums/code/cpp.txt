@@ -1,0 +1,17 @@
+vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
+    // {sum, i, j}, smallest sum on top.
+    priority_queue<array<int, 3>, vector<array<int, 3>>, greater<>> pq; //@init
+    for (int i = 0; i < (int)nums1.size() && i < k; i++) { //@seed
+        pq.push({nums1[i] + nums2[0], i, 0}); //@push
+    }
+    vector<vector<int>> out; //@out
+    while (!pq.empty() && (int)out.size() < k) { //@loop
+        auto [sum, i, j] = pq.top();
+        pq.pop(); //@pop
+        out.push_back({nums1[i], nums2[j]}); //@take
+        if (j + 1 < (int)nums2.size()) { //@more
+            pq.push({nums1[i] + nums2[j + 1], i, j + 1}); //@next
+        }
+    }
+    return out; //@ret
+}

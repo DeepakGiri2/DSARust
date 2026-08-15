@@ -1,0 +1,22 @@
+func isSymmetric(root *TreeNode) bool {
+    if root == nil { //@empty
+        return true
+    }
+    return mirror(root.Left, root.Right) //@call
+}
+
+func mirror(a, b *TreeNode) bool {
+    if a == nil && b == nil { //@bothNil
+        return true
+    }
+    if a == nil || b == nil { //@oneNil
+        return false
+    }
+    if a.Val != b.Val { //@valCmp
+        return false
+    }
+    if !mirror(a.Left, b.Right) { //@outer
+        return false //@failOuter
+    }
+    return mirror(a.Right, b.Left) //@inner
+}

@@ -1,0 +1,19 @@
+func cloneGraph(node *Node) *Node {
+    if node == nil { //@nilcheck
+        return nil //@retnil
+    }
+    cloned := map[*Node]*Node{} //@mapinit
+    return dfs(node, cloned) //@call
+}
+
+func dfs(cur *Node, cloned map[*Node]*Node) *Node {
+    if c, ok := cloned[cur]; ok { //@seen
+        return c //@retseen
+    }
+    clone := &Node{Val: cur.Val} //@create
+    cloned[cur] = clone //@record
+    for _, nb := range cur.Neighbors { //@nbloop
+        clone.Neighbors = append(clone.Neighbors, dfs(nb, cloned)) //@wire
+    }
+    return clone //@retcopy
+}

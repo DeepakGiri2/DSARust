@@ -1,0 +1,25 @@
+func validTree(n int, edges [][]int) bool {
+    if len(edges) != n-1 { //@count
+        return false
+    }
+    parent := make([]int, n) //@init
+    for i := range parent {
+        parent[i] = i //@seed
+    }
+    for _, e := range edges { //@loop
+        a, b := find(parent, e[0]), find(parent, e[1]) //@find
+        if a == b { //@cycle
+            return false //@no
+        }
+        parent[a] = b //@union
+    }
+    return true //@yes
+}
+
+func find(parent []int, x int) int {
+    for parent[x] != x { //@walk
+        parent[x] = parent[parent[x]]
+        x = parent[x]
+    }
+    return x //@root
+}

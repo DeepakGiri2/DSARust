@@ -1,0 +1,36 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static int lastStoneWeight(int[] stones) {
+        PriorityQueue<Integer> h = new PriorityQueue<>(Collections.reverseOrder());
+        for (int s : stones) h.offer(s);
+        while (h.size() > 1) {
+            int y = h.poll();
+            int x = h.poll();
+            if (x != y) {
+                h.offer(y - x);
+            }
+        }
+        if (h.isEmpty()) {
+            return 0;
+        }
+        return h.peek();
+    }
+
+    static int[] readInts(BufferedReader br) throws Exception {
+        String line = br.readLine();
+        if (line == null || line.trim().isEmpty()) return new int[0];
+        String[] parts = line.trim().split("\\s+");
+        int[] nums = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);
+        return nums;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] stones = readInts(br);
+        System.out.println(lastStoneWeight(stones));
+    }
+}

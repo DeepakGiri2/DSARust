@@ -1,0 +1,17 @@
+static int[][] intervalIntersection(int[][] a, int[][] b) {
+    List<int[]> res = new ArrayList<>(); //@init
+    int i = 0, j = 0; //@cursors
+    while (i < a.length && j < b.length) { //@loop
+        int lo = Math.max(a[i][0], b[j][0]); //@lo
+        int hi = Math.min(a[i][1], b[j][1]); //@hi
+        if (lo <= hi) { //@overlap
+            res.add(new int[]{lo, hi}); //@record
+        }
+        if (a[i][1] < b[j][1]) { //@advanceA
+            i++;
+        } else { //@advanceB
+            j++;
+        }
+    }
+    return res.toArray(new int[0][]); //@ret
+}

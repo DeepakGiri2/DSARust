@@ -1,0 +1,32 @@
+static void dfs(char[][] board, int r, int c, Node node, String prefix, List<String> res) {
+    if (r < 0 || r >= board.length || c < 0 || c >= board[0].length) { //@bounds
+        return;
+    }
+    char ch = board[r][c]; //@cell
+    if (ch == '#' || !node.children.containsKey(ch)) { //@prune
+        return;
+    }
+    node = node.children.get(ch); //@advance
+    prefix += ch;
+    if (node.word) { //@found
+        res.add(prefix); //@record
+        node.word = false; //@dedup
+    }
+    board[r][c] = '#'; //@mark
+    dfs(board, r + 1, c, node, prefix, res); //@down
+    dfs(board, r - 1, c, node, prefix, res); //@up
+    dfs(board, r, c + 1, node, prefix, res); //@right
+    dfs(board, r, c - 1, node, prefix, res); //@left
+    board[r][c] = ch; //@restore
+}
+
+static List<String> findWords(char[][] board, String[] words) {
+    Node root = buildTrie(words); //@build
+    List<String> res = new ArrayList<>(); //@init
+    for (int r = 0; r < board.length; r++) { //@rowLoop
+        for (int c = 0; c < board[0].length; c++) { //@colLoop
+            dfs(board, r, c, root, "", res); //@call
+        }
+    }
+    return res; //@ret
+}

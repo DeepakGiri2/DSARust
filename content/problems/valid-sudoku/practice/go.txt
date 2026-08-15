@@ -1,0 +1,43 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strings"
+)
+
+func isValidSudoku(board [][]byte) bool {
+    seen := map[string]bool{}
+    for r := 0; r < 9; r++ {
+        for c := 0; c < 9; c++ {
+            v := board[r][c]
+            if v == '.' {
+                continue
+            }
+            b := (r/3)*3 + c/3
+            keys := []string{fmt.Sprintf("r%d#%c", r, v), fmt.Sprintf("c%d#%c", c, v), fmt.Sprintf("b%d#%c", b, v)}
+            for _, k := range keys {
+                if seen[k] {
+                    return false
+                }
+                seen[k] = true
+            }
+        }
+    }
+    return true
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    line = strings.TrimSpace(line)
+    board := make([][]byte, 9)
+    for r := 0; r < 9; r++ {
+        board[r] = make([]byte, 9)
+        for c := 0; c < 9; c++ {
+            board[r][c] = line[r*9+c]
+        }
+    }
+    fmt.Println(isValidSudoku(board))
+}

@@ -1,0 +1,41 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+        List<int[]> merged = new ArrayList<>();
+        for (int i = 0; i < intervals.length; i++) {
+            int[] cur = intervals[i];
+            if (merged.isEmpty() || merged.get(merged.size() - 1)[1] < cur[0]) {
+                merged.add(cur);
+            } else if (cur[1] > merged.get(merged.size() - 1)[1]) {
+                merged.get(merged.size() - 1)[1] = cur[1];
+            }
+        }
+        return merged.toArray(new int[merged.size()][]);
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String line = br.readLine();
+        if (line == null) line = "";
+        line = line.trim();
+        List<int[]> list = new ArrayList<>();
+        if (!line.isEmpty()) {
+            for (String tok : line.split("\\s+")) {
+                String[] parts = tok.split(",");
+                list.add(new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1])});
+            }
+        }
+        int[][] intervals = list.toArray(new int[list.size()][]);
+        int[][] res = merge(intervals);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < res.length; i++) {
+            if (i > 0) sb.append(' ');
+            sb.append(res[i][0]).append(',').append(res[i][1]);
+        }
+        System.out.println(sb);
+    }
+}

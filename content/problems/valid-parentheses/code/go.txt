@@ -1,0 +1,20 @@
+func isValid(s string) bool {
+    pairs := map[byte]byte{')': '(', ']': '[', '}': '{'}
+    stack := []byte{} //@init
+    for i := 0; i < len(s); i++ { //@loop
+        c := s[i]
+        if c == '(' || c == '[' || c == '{' { //@isopen
+            stack = append(stack, c) //@push
+        } else {
+            if len(stack) == 0 { //@empty
+                return false //@bad
+            }
+            top := stack[len(stack)-1] //@peek
+            if top != pairs[c] { //@match
+                return false //@bad2
+            }
+            stack = stack[:len(stack)-1] //@pop
+        }
+    }
+    return len(stack) == 0 //@end
+}

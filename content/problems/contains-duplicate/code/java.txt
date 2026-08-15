@@ -1,0 +1,10 @@
+static boolean containsDuplicate(int[] nums) {
+    Set<Integer> seen = new HashSet<>(); //@init
+    for (int i = 0; i < nums.length; i++) { //@loop
+        if (seen.contains(nums[i])) { //@check
+            return true; //@dup
+        }
+        seen.add(nums[i]); //@store
+    }
+    return false; //@none
+}

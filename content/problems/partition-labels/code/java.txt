@@ -1,0 +1,18 @@
+static List<Integer> partitionLabels(String s) {
+    Map<Character, Integer> last = new HashMap<>(); //@last
+    for (int i = 0; i < s.length(); i++) { //@scan
+        last.put(s.charAt(i), i); //@record
+    }
+    List<Integer> res = new ArrayList<>(); //@init
+    int start = 0, end = 0; //@bounds
+    for (int i = 0; i < s.length(); i++) { //@loop
+        if (last.get(s.charAt(i)) > end) { //@extend
+            end = last.get(s.charAt(i)); //@setEnd
+        }
+        if (i == end) { //@cut
+            res.add(end - start + 1); //@emit
+            start = i + 1; //@next
+        }
+    }
+    return res; //@ret
+}

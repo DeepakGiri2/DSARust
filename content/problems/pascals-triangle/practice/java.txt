@@ -1,0 +1,34 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static List<int[]> generate(int numRows) {
+        List<int[]> res = new ArrayList<>();
+        for (int i = 0; i < numRows; i++) {
+            int[] row = new int[i + 1];
+            row[0] = row[i] = 1;
+            for (int j = 1; j < i; j++) {
+                row[j] = res.get(i-1)[j-1] + res.get(i-1)[j];
+            }
+            res.add(row);
+        }
+        return res;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int numRows = Integer.parseInt(br.readLine().trim());
+        List<int[]> res = generate(numRows);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < res.size(); i++) {
+            int[] row = res.get(i);
+            for (int j = 0; j < row.length; j++) {
+                if (j > 0) sb.append(' ');
+                sb.append(row[j]);
+            }
+            if (i + 1 < res.size()) sb.append('\n');
+        }
+        System.out.println(sb.toString());
+    }
+}

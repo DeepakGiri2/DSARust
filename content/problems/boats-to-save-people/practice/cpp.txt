@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int numRescueBoats(vector<int>& people, int limit) {
+    sort(people.begin(), people.end());
+    int l = 0, r = (int)people.size() - 1;
+    int boats = 0;
+    while (l <= r) {
+        if (people[l] + people[r] <= limit) {
+            l++;
+        }
+        r--;
+        boats++;
+    }
+    return boats;
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> people = readInts();
+    int limit;
+    cin >> limit;
+    cout << numRescueBoats(people, limit) << endl;
+}

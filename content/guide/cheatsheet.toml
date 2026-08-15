@@ -1,0 +1,1092 @@
+# Cross-language syntax cheat sheet: "I know X, show me Y".
+
+[[section]]
+name = 'Basics'
+
+[[section.row]]
+topic = 'declare variable'
+go = '''
+x := 5
+var y int // zero = 0
+'''
+cpp = '''
+int x = 5;
+auto y = 5;
+'''
+java = '''
+int x = 5;
+var y = 5; // Java 10+
+'''
+
+[[section.row]]
+topic = 'function'
+go = '''
+func add(a, b int) int {
+    return a + b
+}
+'''
+cpp = '''
+int add(int a, int b) {
+    return a + b;
+}
+'''
+java = '''
+static int add(int a, int b) {
+    return a + b;
+}
+'''
+
+[[section.row]]
+topic = 'multiple return values'
+go = '''
+func divmod(a, b int) (int, int) {
+    return a / b, a % b
+}
+'''
+cpp = '''
+pair<int,int> divmod(int a, int b) {
+    return {a / b, a % b};
+}
+// auto [q, r] = divmod(7, 2);
+'''
+java = '''
+int[] divmod(int a, int b) {
+    return new int[]{a / b, a % b};
+}
+'''
+
+[[section.row]]
+topic = 'if / else'
+go = '''
+if x > 0 {
+} else if x < 0 {
+} else {
+}
+// with init: if v, ok := m[k]; ok { }
+'''
+cpp = '''
+if (x > 0) {
+} else if (x < 0) {
+} else {
+}
+'''
+java = '''
+if (x > 0) {
+} else if (x < 0) {
+} else {
+}
+'''
+
+[[section.row]]
+topic = 'while loop'
+go = '''
+for x > 0 { x-- }   // for IS while
+for { }             // infinite
+'''
+cpp = '''
+while (x > 0) x--;
+while (true) { }
+'''
+java = '''
+while (x > 0) x--;
+while (true) { }
+'''
+
+[[section.row]]
+topic = 'ternary / conditional'
+go = '''
+// none — use if
+max := a
+if b > a { max = b }
+'''
+cpp = 'int max = a > b ? a : b;'
+java = 'int max = a > b ? a : b;'
+
+[[section.row]]
+topic = 'null value'
+go = 'nil'
+cpp = 'nullptr'
+java = 'null'
+
+[[section.row]]
+topic = 'max / min / abs'
+go = '''
+max(a, b) // builtin since 1.21
+min(a, b)
+// abs: if x < 0 { x = -x }
+'''
+cpp = '''
+max(a, b); min(a, b);
+abs(x);
+// <algorithm>, <cstdlib>
+'''
+java = '''
+Math.max(a, b);
+Math.min(a, b);
+Math.abs(x);
+'''
+
+[[section.row]]
+topic = 'int limits (watch overflow!)'
+go = '''
+math.MaxInt   // 64-bit on x64
+math.MaxInt32 // 2147483647
+// int is 64-bit on modern platforms
+'''
+cpp = '''
+INT_MAX  // 2147483647 (32-bit)
+LLONG_MAX
+// use long long for big sums
+'''
+java = '''
+Integer.MAX_VALUE // 2147483647
+Long.MAX_VALUE
+// use long for big sums
+'''
+
+[[section.row]]
+topic = 'print / debug'
+go = '''
+fmt.Println("x =", x)
+fmt.Printf("%d %v\n", x, arr)
+'''
+cpp = 'cout << "x = " << x << endl;'
+java = 'System.out.println("x = " + x);'
+
+[[section]]
+name = 'Arrays & slices'
+
+[[section.row]]
+topic = 'create dynamic array'
+go = '''
+nums := []int{1, 2, 3}
+zeros := make([]int, n) // n zeros
+'''
+cpp = '''
+vector<int> nums = {1, 2, 3};
+vector<int> zeros(n, 0);
+'''
+java = '''
+List<Integer> nums = new ArrayList<>(List.of(1, 2, 3));
+int[] zeros = new int[n];
+'''
+
+[[section.row]]
+topic = 'append / length'
+go = '''
+nums = append(nums, 9)
+n := len(nums)
+'''
+cpp = '''
+nums.push_back(9);
+int n = nums.size();
+'''
+java = '''
+nums.add(9);
+int n = nums.size(); // arr.length
+'''
+
+[[section.row]]
+topic = 'iterate (index + value)'
+go = '''
+for i, v := range nums { }
+for _, v := range nums { }
+'''
+cpp = '''
+for (int i = 0; i < n; i++) { }
+for (int v : nums) { }
+'''
+java = '''
+for (int i = 0; i < n; i++) { }
+for (int v : nums) { }
+'''
+
+[[section.row]]
+topic = 'slice / subarray'
+go = 'sub := nums[1:4] // idx 1,2,3 (view!)'
+cpp = '''
+vector<int> sub(nums.begin()+1,
+                nums.begin()+4);
+'''
+java = '''
+List<Integer> sub =
+    nums.subList(1, 4); // view
+'''
+
+[[section.row]]
+topic = '2-D grid n×m'
+go = '''
+g := make([][]int, n)
+for i := range g {
+    g[i] = make([]int, m)
+}
+'''
+cpp = '''
+vector<vector<int>> g(n,
+    vector<int>(m, 0));
+'''
+java = 'int[][] g = new int[n][m];'
+
+[[section.row]]
+topic = 'sort ascending'
+go = '''
+sort.Ints(nums)
+sort.Strings(strs)
+'''
+cpp = 'sort(nums.begin(), nums.end());'
+java = '''
+Arrays.sort(arr);
+Collections.sort(list);
+'''
+
+[[section.row]]
+topic = 'sort with comparator'
+go = '''
+sort.Slice(items, func(i, j int) bool {
+    return items[i].age < items[j].age
+})
+'''
+cpp = '''
+sort(v.begin(), v.end(),
+    [](auto& a, auto& b) {
+        return a.age < b.age;
+    });
+'''
+java = '''
+list.sort((a, b) ->
+    Integer.compare(a.age, b.age));
+Arrays.sort(arr, cmp); // boxed only
+'''
+
+[[section.row]]
+topic = 'reverse'
+go = '''
+slices.Reverse(nums) // Go 1.21+
+// or manual two-pointer swap
+'''
+cpp = 'reverse(nums.begin(), nums.end());'
+java = '''
+Collections.reverse(list);
+// int[]: manual two-pointer swap
+'''
+
+[[section]]
+name = 'Strings'
+
+[[section.row]]
+topic = 'length / char at i'
+go = '''
+len(s)
+c := s[i] // byte
+'''
+cpp = '''
+s.size()
+char c = s[i];
+'''
+java = '''
+s.length()
+char c = s.charAt(i);
+'''
+
+[[section.row]]
+topic = 'substring'
+go = 's[1:4] // half-open, O(1) view'
+cpp = 's.substr(1, 3) // start, LENGTH'
+java = 's.substring(1, 4) // half-open'
+
+[[section.row]]
+topic = 'build efficiently'
+go = '''
+var b strings.Builder
+b.WriteByte(c)
+b.WriteString("ab")
+s := b.String()
+'''
+cpp = '''
+string s;
+s += c;    // already efficient
+s += "ab";
+'''
+java = '''
+StringBuilder sb =
+    new StringBuilder();
+sb.append(c).append("ab");
+String s = sb.toString();
+'''
+
+[[section.row]]
+topic = 'string ↔ char array'
+go = '''
+b := []byte(s)
+s2 := string(b)
+'''
+cpp = '''
+// std::string is already mutable
+s[0] = 'x';
+'''
+java = '''
+char[] a = s.toCharArray();
+String s2 = new String(a);
+'''
+
+[[section.row]]
+topic = 'letter → 0..25 index'
+go = "idx := int(s[i] - 'a')"
+cpp = "int idx = s[i] - 'a';"
+java = "int idx = s.charAt(i) - 'a';"
+
+[[section.row]]
+topic = 'number ↔ string'
+go = '''
+strconv.Itoa(42)
+n, _ := strconv.Atoi("42")
+'''
+cpp = '''
+to_string(42)
+stoi("42")
+'''
+java = '''
+String.valueOf(42)
+Integer.parseInt("42")
+'''
+
+[[section.row]]
+topic = 'compare / equality'
+go = '''
+s == t          // content
+s < t           // lexicographic
+'''
+cpp = '''
+s == t          // content
+s < t           // lexicographic
+'''
+java = '''
+s.equals(t)     // NOT ==
+s.compareTo(t) < 0
+'''
+
+[[section.row]]
+topic = 'split / join'
+go = '''
+parts := strings.Split(s, ",")
+strings.Join(parts, "-")
+'''
+cpp = '''
+// no builtin split — stringstream:
+stringstream ss(s); string p;
+while (getline(ss, p, ',')) { }
+'''
+java = '''
+String[] parts = s.split(",");
+String.join("-", parts);
+'''
+
+[[section]]
+name = 'Hash map & set'
+
+[[section.row]]
+topic = 'create map'
+go = 'm := map[string]int{}'
+cpp = 'unordered_map<string, int> m;'
+java = '''
+Map<String, Integer> m =
+    new HashMap<>();
+'''
+
+[[section.row]]
+topic = 'insert / lookup / missing key'
+go = '''
+m["a"] = 1
+v, ok := m["a"] // ok=false if absent
+// m["absent"] → 0 silently
+'''
+cpp = '''
+m["a"] = 1;
+if (m.count("a")) v = m["a"];
+// m["absent"] INSERTS 0!
+'''
+java = '''
+m.put("a", 1);
+int v = m.getOrDefault("a", 0);
+// m.get("absent") → null
+'''
+
+[[section.row]]
+topic = 'count frequencies'
+go = '''
+for _, c := range s {
+    m[c]++
+}
+'''
+cpp = '''
+for (char c : s)
+    m[c]++;
+'''
+java = '''
+for (char c : s.toCharArray())
+    m.merge(c, 1, Integer::sum);
+'''
+
+[[section.row]]
+topic = 'delete / iterate'
+go = '''
+delete(m, "a")
+for k, v := range m { }
+'''
+cpp = '''
+m.erase("a");
+for (auto& [k, v] : m) { }
+'''
+java = '''
+m.remove("a");
+for (var e : m.entrySet()) {
+    e.getKey(); e.getValue();
+}
+'''
+
+[[section.row]]
+topic = 'set: create / add / contains'
+go = '''
+seen := map[int]bool{}
+seen[x] = true
+if seen[x] { }
+'''
+cpp = '''
+unordered_set<int> seen;
+seen.insert(x);
+if (seen.count(x)) { }
+'''
+java = '''
+Set<Integer> seen = new HashSet<>();
+seen.add(x);
+if (seen.contains(x)) { }
+'''
+
+[[section.row]]
+topic = 'sorted map (ordered keys)'
+go = '''
+// none — sort keys manually:
+keys := []int{}
+for k := range m { keys = append(keys, k) }
+sort.Ints(keys)
+'''
+cpp = '''
+map<int, int> m; // red-black tree
+// O(log n) ops, sorted iteration
+'''
+java = '''
+TreeMap<Integer, Integer> m =
+    new TreeMap<>();
+m.firstKey(); m.floorKey(x);
+'''
+
+[[section]]
+name = 'Stack, queue, deque, heap'
+
+[[section.row]]
+topic = 'stack push / peek / pop'
+go = '''
+st := []int{}
+st = append(st, x)
+top := st[len(st)-1]
+st = st[:len(st)-1]
+'''
+cpp = '''
+stack<int> st;
+st.push(x);
+int top = st.top();
+st.pop(); // void!
+'''
+java = '''
+Deque<Integer> st =
+    new ArrayDeque<>();
+st.push(x);
+int top = st.peek();
+st.pop();
+'''
+
+[[section.row]]
+topic = 'queue enqueue / dequeue'
+go = '''
+q := []int{}
+q = append(q, x)
+front := q[0]
+q = q[1:]
+'''
+cpp = '''
+queue<int> q;
+q.push(x);
+int front = q.front();
+q.pop();
+'''
+java = '''
+Queue<Integer> q =
+    new ArrayDeque<>();
+q.offer(x);
+int front = q.poll();
+'''
+
+[[section.row]]
+topic = 'min-heap'
+go = '''
+// container/heap: implement
+// Len/Less/Swap/Push/Pop
+heap.Init(h)
+heap.Push(h, x)
+min := heap.Pop(h).(int)
+'''
+cpp = '''
+priority_queue<int,
+    vector<int>, greater<int>> pq;
+pq.push(x);
+int min = pq.top(); pq.pop();
+'''
+java = '''
+Queue<Integer> pq =
+    new PriorityQueue<>();
+pq.offer(x);
+int min = pq.poll();
+'''
+
+[[section.row]]
+topic = 'max-heap'
+go = '''
+// same, but Less returns >
+// or push negated values
+'''
+cpp = '''
+priority_queue<int> pq;
+// max by DEFAULT in C++
+'''
+java = '''
+new PriorityQueue<>(
+    Comparator.reverseOrder());
+'''
+
+[[section]]
+name = 'Structs & nodes'
+
+[[section.row]]
+topic = 'list node'
+go = '''
+type ListNode struct {
+    Val  int
+    Next *ListNode
+}
+n := &ListNode{Val: 5}
+n.Next // . even on pointers
+'''
+cpp = '''
+struct ListNode {
+    int val;
+    ListNode* next;
+};
+auto* n = new ListNode{5};
+n->next // -> on pointers
+'''
+java = '''
+class ListNode {
+    int val;
+    ListNode next;
+}
+ListNode n = new ListNode();
+n.next
+'''
+
+[[section.row]]
+topic = 'pair / tuple'
+go = '''
+// use a small struct or [2]int
+p := [2]int{r, c}
+'''
+cpp = '''
+pair<int,int> p = {r, c};
+p.first; p.second;
+auto [a, b] = p;
+'''
+java = '''
+// use int[2] (arrays)
+int[] p = {r, c};
+p[0]; p[1];
+'''
+
+[[section.row]]
+topic = 'lambda / closure'
+go = '''
+f := func(x int) int {
+    return x * 2
+}
+// recursive: declare var first
+var dfs func(n int)
+'''
+cpp = '''
+auto f = [](int x) {
+    return x * 2;
+};
+// capture by ref: [&]
+function<void(int)> dfs;
+'''
+java = '''
+Function<Integer,Integer> f =
+    x -> x * 2;
+// or a helper method
+'''
+
+[[section]]
+name = 'Binary search helpers'
+
+[[section.row]]
+topic = 'first index >= x (lower bound)'
+go = '''
+i := sort.SearchInts(nums, x)
+// i == len(nums) if every value is < x
+'''
+cpp = '''
+auto it = lower_bound(v.begin(), v.end(), x);
+int i = it - v.begin();
+'''
+java = '''
+// Arrays.binarySearch gives ANY match, not
+// the first — write the loop yourself:
+int lo = 0, hi = n;
+while (lo < hi) {
+    int m = (lo + hi) / 2;
+    if (nums[m] < x) lo = m + 1; else hi = m;
+}
+'''
+
+[[section.row]]
+topic = 'first index > x (upper bound)'
+go = 'i := sort.SearchInts(nums, x+1)'
+cpp = '''
+auto it = upper_bound(v.begin(), v.end(), x);
+'''
+java = '''
+// same loop with <= instead of <
+if (nums[m] <= x) lo = m + 1; else hi = m;
+'''
+
+[[section.row]]
+topic = 'count of x in a sorted array'
+go = '''
+hi := sort.SearchInts(nums, x+1)
+lo := sort.SearchInts(nums, x)
+count := hi - lo
+'''
+cpp = '''
+auto [a, b] = equal_range(v.begin(),
+                          v.end(), x);
+int count = b - a;
+'''
+java = 'int count = upper(x) - lower(x);'
+
+[[section.row]]
+topic = 'binary search on the answer'
+go = '''
+lo, hi := 1, maxAnswer
+for lo < hi {
+    mid := lo + (hi-lo)/2
+    if feasible(mid) { hi = mid } else { lo = mid + 1 }
+}
+// lo is the smallest feasible answer
+'''
+cpp = '''
+int lo = 1, hi = maxAnswer;
+while (lo < hi) {
+    int mid = lo + (hi - lo) / 2;
+    if (feasible(mid)) hi = mid;
+    else lo = mid + 1;
+}
+'''
+java = '''
+int lo = 1, hi = maxAnswer;
+while (lo < hi) {
+    int mid = lo + (hi - lo) / 2;
+    if (feasible(mid)) hi = mid;
+    else lo = mid + 1;
+}
+'''
+
+[[section.row]]
+topic = 'safe midpoint'
+go = 'mid := lo + (hi-lo)/2 // (lo+hi)/2 can overflow'
+cpp = 'int mid = lo + (hi - lo) / 2;'
+java = '''
+int mid = lo + (hi - lo) / 2;
+// or: (lo + hi) >>> 1
+'''
+
+[[section]]
+name = 'Math & overflow'
+
+[[section.row]]
+topic = 'integer division & remainder'
+go = '''
+7 / 2   // 3
+-7 / 2  // -3  (truncates toward zero)
+-7 % 2  // -1  (sign of the dividend)
+'''
+cpp = '''
+7 / 2;   // 3
+-7 / 2;  // -3
+-7 % 2;  // -1
+'''
+java = '''
+7 / 2;   // 3
+-7 / 2;  // -3
+-7 % 2;  // -1
+Math.floorMod(-7, 2); // 1
+'''
+
+[[section.row]]
+topic = 'positive remainder'
+go = 'r := ((x % m) + m) % m'
+cpp = 'int r = ((x % m) + m) % m;'
+java = 'int r = Math.floorMod(x, m);'
+
+[[section.row]]
+topic = 'ceiling division'
+go = 'up := (a + b - 1) / b // a, b > 0'
+cpp = 'int up = (a + b - 1) / b;'
+java = '''
+int up = (a + b - 1) / b;
+// or Math.ceilDiv(a, b) in Java 18+
+'''
+
+[[section.row]]
+topic = 'gcd / lcm'
+go = '''
+func gcd(a, b int) int {
+    for b != 0 { a, b = b, a%b }
+    return a
+}
+lcm := a / gcd(a, b) * b // divide first
+'''
+cpp = '''
+int g = __gcd(a, b);   // or std::gcd
+long long l = 1LL * a / g * b;
+'''
+java = '''
+// no builtin for int — write Euclid
+long l = (long) a / gcd(a, b) * b;
+'''
+
+[[section.row]]
+topic = 'avoid multiply overflow'
+go = '''
+// int is 64-bit: 2 * 10^9 * 2 is fine.
+// Still guard against 10^18 products.
+'''
+cpp = '''
+long long p = 1LL * a * b; // cast FIRST
+// (long long)(a * b) is already wrong
+'''
+java = '''
+long p = (long) a * b;     // cast FIRST
+// (long)(a * b) is already wrong
+'''
+
+[[section.row]]
+topic = 'power / sqrt'
+go = '''
+math.Pow(2, 10)          // float64!
+int(math.Sqrt(float64(n)))
+1 << 10                  // integer power of two
+'''
+cpp = '''
+pow(2, 10);              // double
+(int) sqrt((double) n);
+1 << 10;
+'''
+java = '''
+Math.pow(2, 10);         // double
+(int) Math.sqrt(n);
+1 << 10;
+'''
+
+[[section.row]]
+topic = 'random number'
+go = '''
+rand.Intn(n)      // 0 .. n-1
+rand.Shuffle(len(a), func(i, j int) {
+    a[i], a[j] = a[j], a[i]
+})
+'''
+cpp = '''
+rand() % n;       // 0 .. n-1
+shuffle(v.begin(), v.end(),
+        mt19937(random_device{}()));
+'''
+java = '''
+new Random().nextInt(n); // 0 .. n-1
+Collections.shuffle(list);
+'''
+
+[[section]]
+name = 'Bit tricks'
+
+[[section.row]]
+topic = 'test / set / clear bit i'
+go = '''
+x&(1<<i) != 0   // test
+x |= 1 << i     // set
+x &^= 1 << i    // clear (Go: AND NOT)
+x ^= 1 << i     // flip
+'''
+cpp = '''
+x & (1 << i);   // test
+x |= 1 << i;    // set
+x &= ~(1 << i); // clear
+x ^= 1 << i;    // flip
+'''
+java = '''
+(x & (1 << i)) != 0; // test
+x |= 1 << i;         // set
+x &= ~(1 << i);      // clear
+x ^= 1 << i;         // flip
+'''
+
+[[section.row]]
+topic = 'count set bits'
+go = 'bits.OnesCount(uint(x))'
+cpp = '__builtin_popcount(x) // popcountll for 64-bit'
+java = 'Integer.bitCount(x)'
+
+[[section.row]]
+topic = 'lowest set bit / drop it'
+go = '''
+low := x & -x    // isolate lowest 1
+x &= x - 1       // drop lowest 1
+'''
+cpp = '''
+int low = x & -x;
+x &= x - 1;
+'''
+java = '''
+int low = x & -x;   // Integer.lowestOneBit(x)
+x &= x - 1;
+'''
+
+[[section.row]]
+topic = 'power of two / parity'
+go = '''
+x > 0 && x&(x-1) == 0  // power of two
+x&1 == 1               // odd (x >= 0)
+'''
+cpp = '''
+x > 0 && (x & (x - 1)) == 0;
+x & 1;                 // careful with negatives
+'''
+java = '''
+x > 0 && (x & (x - 1)) == 0;
+(x & 1) != 0;          // not == 1: negatives
+'''
+
+[[section.row]]
+topic = 'iterate every subset of a set'
+go = '''
+for mask := 0; mask < 1<<n; mask++ {
+    for i := 0; i < n; i++ {
+        if mask&(1<<i) != 0 { /* i is in */ }
+    }
+}
+'''
+cpp = '''
+for (int mask = 0; mask < (1 << n); mask++)
+    for (int i = 0; i < n; i++)
+        if (mask & (1 << i)) { /* i is in */ }
+'''
+java = '''
+for (int mask = 0; mask < (1 << n); mask++)
+    for (int i = 0; i < n; i++)
+        if ((mask & (1 << i)) != 0) { }
+'''
+
+[[section.row]]
+topic = 'shift right: signed vs unsigned'
+go = '''
+x >> 1   // arithmetic for int,
+         // logical for uint
+'''
+cpp = '''
+x >> 1;             // arithmetic if signed
+(unsigned)x >> 1;   // logical
+'''
+java = '''
+x >> 1;   // arithmetic (keeps the sign)
+x >>> 1;  // logical (fills with 0)
+'''
+
+[[section]]
+name = 'Chars & ASCII'
+
+[[section.row]]
+topic = 'is digit / letter'
+go = '''
+c >= '0' && c <= '9'
+unicode.IsLetter(rune(c))
+unicode.IsLetterOrDigit // not builtin —
+// use IsLetter || IsDigit
+'''
+cpp = '''
+isdigit(c); isalpha(c);
+isalnum(c); isspace(c);
+// <cctype>
+'''
+java = '''
+Character.isDigit(c);
+Character.isLetter(c);
+Character.isLetterOrDigit(c);
+'''
+
+[[section.row]]
+topic = 'to lower / upper'
+go = '''
+strings.ToLower(s)
+c | 32  // ASCII letter -> lowercase
+'''
+cpp = '''
+tolower(c); toupper(c);
+transform(s.begin(), s.end(),
+          s.begin(), ::tolower);
+'''
+java = '''
+s.toLowerCase();
+Character.toLowerCase(c);
+'''
+
+[[section.row]]
+topic = 'digit value / char of digit'
+go = '''
+v := int(c - '0')
+c := byte('0' + v)
+'''
+cpp = '''
+int v = c - '0';
+char c = '0' + v;
+'''
+java = '''
+int v = c - '0';        // or Character.getNumericValue(c)
+char c = (char) ('0' + v);
+'''
+
+[[section.row]]
+topic = '26-slot frequency table'
+go = '''
+var count [26]int
+for i := 0; i < len(s); i++ {
+    count[s[i]-'a']++
+}
+'''
+cpp = '''
+int count[26] = {0};
+for (char c : s) count[c - 'a']++;
+'''
+java = '''
+int[] count = new int[26];
+for (char c : s.toCharArray())
+    count[c - 'a']++;
+'''
+
+[[section]]
+name = 'Language gotchas'
+
+[[section.row]]
+topic = 'compare boxed integers'
+go = '// no boxing — == is always value equality'
+cpp = '// no boxing — == is always value equality'
+java = '''
+Integer a = 200, b = 200;
+a == b        // FALSE (outside -128..127)
+a.equals(b)   // true
+// use int, not Integer, in hot loops
+'''
+
+[[section.row]]
+topic = 'size of an empty container'
+go = 'len(nums) - 1 // -1, an int: safe'
+cpp = '''
+nums.size() - 1  // HUGE: size_t is unsigned
+// use (int)nums.size() - 1
+'''
+java = 'nums.length - 1 // -1, an int: safe'
+
+[[section.row]]
+topic = 'copy vs reference'
+go = '''
+b := a          // slice: SHARES the array
+c := append([]int{}, a...) // real copy
+'''
+cpp = '''
+auto b = a;     // vector: real copy
+auto& r = a;    // reference
+'''
+java = '''
+int[] b = a;              // same array!
+int[] c = a.clone();      // copy
+List<Integer> d = new ArrayList<>(list);
+'''
+
+[[section.row]]
+topic = 'map iteration order'
+go = '''
+// RANDOMISED on purpose — never rely on it
+keys := make([]int, 0, len(m))
+for k := range m { keys = append(keys, k) }
+sort.Ints(keys)
+'''
+cpp = '''
+// unordered_map: unspecified
+// map: sorted by key
+'''
+java = '''
+// HashMap: unspecified
+// LinkedHashMap: insertion order
+// TreeMap: sorted by key
+'''
+
+[[section.row]]
+topic = 'modify a collection while iterating'
+go = '''
+// deleting during range is safe in Go
+for k := range m { delete(m, k) }
+'''
+cpp = '''
+for (auto it = m.begin(); it != m.end(); )
+    it = cond ? m.erase(it) : next(it);
+'''
+java = '''
+// ConcurrentModificationException!
+Iterator<T> it = list.iterator();
+while (it.hasNext())
+    if (cond) it.remove();
+'''
+
+[[section.row]]
+topic = 'recursion depth limit'
+go = '// stacks grow dynamically — 10^6 is fine'
+cpp = '// ~10^5 frames; deeper needs an explicit stack'
+java = '''
+// ~10^4 frames by default (StackOverflowError)
+// make it iterative, or raise -Xss
+'''
+
+[[section.row]]
+topic = 'read all of stdin'
+go = '''
+sc := bufio.NewScanner(os.Stdin)
+sc.Buffer(make([]byte, 1024*1024), 1024*1024)
+for sc.Scan() { line := sc.Text() }
+'''
+cpp = '''
+ios::sync_with_stdio(false);
+cin.tie(nullptr);   // both matter for speed
+string line;
+while (getline(cin, line)) { }
+'''
+java = '''
+BufferedReader br = new BufferedReader(
+    new InputStreamReader(System.in));
+String line;
+while ((line = br.readLine()) != null) { }
+'''

@@ -1,0 +1,15 @@
+func lengthOfLongestSubstring(s string) int {
+    last := map[byte]int{} //@init
+    best, left := 0, 0 //@init2
+    for right := 0; right < len(s); right++ { //@loop
+        c := s[right]
+        if j, ok := last[c]; ok && j >= left { //@check
+            left = j + 1 //@shrink
+        }
+        last[c] = right //@store
+        if right-left+1 > best { //@cmp
+            best = right - left + 1 //@newBest
+        }
+    }
+    return best //@ret
+}

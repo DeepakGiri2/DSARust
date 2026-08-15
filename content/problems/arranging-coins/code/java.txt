@@ -1,0 +1,15 @@
+static int arrangeCoins(int n) {
+    long lo = 0, hi = n; //@bounds
+    long best = 0; //@best
+    while (lo <= hi) { //@loop
+        long k = lo + (hi - lo) / 2; //@mid
+        long need = k * (k + 1) / 2; //@need
+        if (need <= n) { //@fits
+            best = k; //@keep
+            lo = k + 1; //@more
+        } else { //@tooMany
+            hi = k - 1; //@fewer
+        }
+    }
+    return (int) best; //@ret
+}

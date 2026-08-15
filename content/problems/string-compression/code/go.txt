@@ -1,0 +1,20 @@
+func compress(chars []byte) int {
+    write, read := 0, 0 //@init
+    for read < len(chars) { //@loop
+        ch := chars[read] //@char
+        count := 0 //@count
+        for read < len(chars) && chars[read] == ch { //@run
+            read++
+            count++ //@grow
+        }
+        chars[write] = ch //@put
+        write++
+        if count > 1 { //@many
+            for _, d := range strconv.Itoa(count) { //@digits
+                chars[write] = byte(d) //@digit
+                write++
+            }
+        }
+    }
+    return write //@ret
+}

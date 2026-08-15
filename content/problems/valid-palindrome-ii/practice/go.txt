@@ -1,0 +1,38 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strings"
+)
+
+func validPalindrome(s string) bool {
+    l, r := 0, len(s)-1
+    for l < r {
+        if s[l] != s[r] {
+            return isRange(s, l+1, r) || isRange(s, l, r-1)
+        }
+        l++
+        r--
+    }
+    return true
+}
+
+func isRange(s string, i, j int) bool {
+    for i < j {
+        if s[i] != s[j] {
+            return false
+        }
+        i++
+        j--
+    }
+    return true
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    s := strings.TrimRight(line, "\r\n")
+    fmt.Println(validPalindrome(s))
+}

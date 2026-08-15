@@ -1,0 +1,20 @@
+static class KthLargest {
+    int k;
+    PriorityQueue<Integer> h;
+
+    KthLargest(int k, int[] nums) { //@ctor
+        this.k = k; //@init
+        this.h = new PriorityQueue<>();
+        for (int n : nums) { //@ctorLoop
+            add(n);
+        }
+    }
+
+    int add(int val) { //@add
+        h.offer(val); //@push
+        if (h.size() > k) { //@check
+            h.poll(); //@pop
+        }
+        return h.peek(); //@return
+    }
+}

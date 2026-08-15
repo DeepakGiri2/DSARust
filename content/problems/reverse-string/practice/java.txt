@@ -1,0 +1,23 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static String reverseString(String s) {
+        char[] chars = s.toCharArray();
+        int l = 0, r = chars.length - 1;
+        while (l < r) {
+            char tmp = chars[l]; chars[l] = chars[r]; chars[r] = tmp;
+            l++;
+            r--;
+        }
+        return new String(chars);
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String s = br.readLine();
+        if (s == null) s = "";
+        System.out.println(reverseString(s));
+    }
+}

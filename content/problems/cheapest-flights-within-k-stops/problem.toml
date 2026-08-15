@@ -1,0 +1,79 @@
+slug = 'cheapest-flights-within-k-stops'
+title = 'Cheapest Flights Within K Stops'
+category = 'Advanced Graphs'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '787'
+complexity = 'O(k · edges) time · O(n) space'
+
+description = 'Find the cheapest route between two cities using at most k intermediate stops.'
+approach = 'Dijkstra is the wrong tool here: the cheapest route may use too many stops, and a costlier one with fewer stops may be the only legal answer. Bellman-Ford is right, because each of its rounds relaxes every edge exactly once — so after r rounds every price reachable in r flights has been found. Running k+1 rounds bounds the route length directly. The copy of the price table each round is essential: without it, two flights could be taken inside one round.'
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 2
+max = 8
+
+[[inputs]]
+name = 'flights'
+label = 'flights'
+type = 'string'
+max_len = 60
+help = "'from to price' triples, comma separated"
+
+[[inputs]]
+name = 'src'
+label = 'src'
+type = 'int'
+min = 0
+max = 7
+
+[[inputs]]
+name = 'dst'
+label = 'dst'
+type = 'int'
+min = 0
+max = 7
+
+[[inputs]]
+name = 'k'
+label = 'max stops'
+type = 'int'
+min = 0
+max = 6
+
+[default_input]
+n = 4
+flights = '0 1 100, 1 2 100, 2 0 100, 1 3 600, 2 3 200'
+src = 0
+dst = 3
+k = 1
+
+[[tests]]
+expected = '700'
+[tests.input]
+n = 4
+flights = '0 1 100, 1 2 100, 2 0 100, 1 3 600, 2 3 200'
+src = 0
+dst = 3
+k = 1
+
+[[tests]]
+expected = '200'
+[tests.input]
+n = 3
+flights = '0 1 100, 1 2 100, 0 2 500'
+src = 0
+dst = 2
+k = 1
+
+[[tests]]
+expected = '500'
+[tests.input]
+n = 3
+flights = '0 1 100, 1 2 100, 0 2 500'
+src = 0
+dst = 2
+k = 0

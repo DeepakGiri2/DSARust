@@ -1,0 +1,17 @@
+bool stoneGame(vector<int>& piles) {
+    int n = piles.size();
+    vector<int> dp(piles); //@init
+    // dp[i] currently holds the margin for the single pile i //@seed
+    for (int length = 2; length <= n; length++) { //@len
+        for (int i = 0; i + length <= n; i++) { //@start
+            int takeLeft = piles[i] - dp[i + 1]; //@takeLeft
+            int takeRight = piles[i + length - 1] - dp[i]; //@takeRight
+            if (takeLeft > takeRight) { //@choose
+                dp[i] = takeLeft; //@storeLeft
+            } else {
+                dp[i] = takeRight; //@storeRight
+            }
+        }
+    }
+    return dp[0] > 0; //@ret
+}

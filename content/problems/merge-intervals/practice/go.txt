@@ -1,0 +1,47 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "sort"
+    "strconv"
+    "strings"
+)
+
+func merge(intervals [][]int) [][]int {
+    sort.Slice(intervals, func(a, b int) bool {
+        return intervals[a][0] < intervals[b][0]
+    })
+    merged := [][]int{}
+    for i := 0; i < len(intervals); i++ {
+        cur := intervals[i]
+        if len(merged) == 0 || merged[len(merged)-1][1] < cur[0] {
+            merged = append(merged, cur)
+        } else if cur[1] > merged[len(merged)-1][1] {
+            merged[len(merged)-1][1] = cur[1]
+        }
+    }
+    return merged
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    line = strings.TrimSpace(line)
+    intervals := [][]int{}
+    if line != "" {
+        for _, tok := range strings.Fields(line) {
+            parts := strings.Split(tok, ",")
+            a, _ := strconv.Atoi(parts[0])
+            b, _ := strconv.Atoi(parts[1])
+            intervals = append(intervals, []int{a, b})
+        }
+    }
+    res := merge(intervals)
+    out := make([]string, len(res))
+    for i, iv := range res {
+        out[i] = strconv.Itoa(iv[0]) + "," + strconv.Itoa(iv[1])
+    }
+    fmt.Println(strings.Join(out, " "))
+}

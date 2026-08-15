@@ -1,0 +1,24 @@
+int numIslands(vector<string>& grid) {
+    int rows = grid.size(), cols = grid[0].size();
+    int count = 0; //@count0
+    for (int r = 0; r < rows; r++) { //@rowloop
+        for (int c = 0; c < cols; c++) { //@colloop
+            if (grid[r][c] == '1') { //@isfound
+                count++; //@inc
+                dfs(grid, r, c); //@calldfs
+            }
+        }
+    }
+    return count; //@ret
+}
+
+void dfs(vector<string>& grid, int r, int c) {
+    if (r < 0 || r >= (int)grid.size() || c < 0 || c >= (int)grid[0].size() || grid[r][c] != '1') { //@bounds
+        return; //@retn
+    }
+    grid[r][c] = '0'; //@sink
+    dfs(grid, r + 1, c); //@down
+    dfs(grid, r - 1, c); //@up
+    dfs(grid, r, c + 1); //@right
+    dfs(grid, r, c - 1); //@left
+}

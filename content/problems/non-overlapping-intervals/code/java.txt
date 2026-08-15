@@ -1,0 +1,13 @@
+static int eraseOverlapIntervals(int[][] intervals) {
+    Arrays.sort(intervals, (a, b) -> a[1] - b[1]); //@sort
+    int removed = 0; //@init
+    int end = intervals[0][1]; //@first
+    for (int i = 1; i < intervals.length; i++) { //@loop
+        if (intervals[i][0] < end) { //@clash
+            removed++; //@drop
+        } else {
+            end = intervals[i][1]; //@keep
+        }
+    }
+    return removed; //@ret
+}

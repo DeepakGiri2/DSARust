@@ -1,0 +1,12 @@
+int subarraysDivByK(vector<int>& nums, int k) {
+    vector<int> count(k, 0); //@init
+    count[0] = 1; //@seed
+    int sum = 0, ans = 0; //@zero
+    for (int x : nums) { //@loop
+        sum += x; //@add
+        int r = ((sum % k) + k) % k; //@mod
+        ans += count[r]; //@take
+        count[r]++; //@store
+    }
+    return ans; //@ret
+}

@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+    int i = m - 1, j = n - 1, k = m + n - 1;
+    while (j >= 0) {
+        if (i >= 0 && nums1[i] > nums2[j]) {
+            nums1[k] = nums1[i];
+            i--;
+        } else {
+            nums1[k] = nums2[j];
+            j--;
+        }
+        k--;
+    }
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> nums1vals = readInts();
+    vector<int> nums2 = readInts();
+    int m = (int)nums1vals.size(), n = (int)nums2.size();
+    vector<int> nums1(m + n, 0);
+    for (int idx = 0; idx < m; idx++) nums1[idx] = nums1vals[idx];
+    merge(nums1, m, nums2, n);
+    for (int idx = 0; idx < (int)nums1.size(); idx++) {
+        if (idx) cout << " ";
+        cout << nums1[idx];
+    }
+    cout << "\n";
+}

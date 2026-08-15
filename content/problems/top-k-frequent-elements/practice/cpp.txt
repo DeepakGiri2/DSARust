@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> topKFrequent(vector<int>& nums, int k) {
+    unordered_map<int, int> count;
+    for (int n : nums) {
+        count[n]++;
+    }
+    vector<vector<int>> buckets(nums.size() + 1);
+    unordered_set<int> added;
+    for (int n : nums) {
+        if (!added.count(n)) {
+            buckets[count[n]].push_back(n);
+            added.insert(n);
+        }
+    }
+    vector<int> res;
+    for (int f = (int)nums.size(); f >= 1; f--) {
+        for (int n : buckets[f]) {
+            if ((int)res.size() < k) {
+                res.push_back(n);
+            }
+        }
+    }
+    return res;
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> nums = readInts();
+    int k = readInts()[0];
+    vector<int> res = topKFrequent(nums, k);
+    for (size_t i = 0; i < res.size(); i++) {
+        if (i) cout << " ";
+        cout << res[i];
+    }
+    cout << endl;
+}

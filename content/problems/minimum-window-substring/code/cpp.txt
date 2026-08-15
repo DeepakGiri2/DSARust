@@ -1,0 +1,35 @@
+string minWindow(string s, string t) {
+    if (t.empty()) { //@guard
+        return ""; //@guardRet
+    }
+    unordered_map<char, int> need; //@need
+    for (int i = 0; i < (int)t.size(); i++) { //@buildNeed
+        need[t[i]]++; //@needInc
+    }
+    unordered_map<char, int> window; //@window
+    int have = 0, needCount = (int)need.size(); //@have
+    int resL = -1, resR = -1, resLen = INT_MAX; //@res
+    int left = 0; //@left
+    for (int right = 0; right < (int)s.size(); right++) { //@loop
+        char c = s[right]; //@cur
+        window[c]++; //@add
+        if (need.count(c) && window[c] == need[c]) { //@satisfy
+            have++; //@haveInc
+        }
+        while (have == needCount) { //@while
+            if (right - left + 1 < resLen) { //@better
+                resL = left; resR = right; //@save
+                resLen = right - left + 1; //@saveLen
+            }
+            window[s[left]]--; //@shrink
+            if (need.count(s[left]) && window[s[left]] < need[s[left]]) { //@lose
+                have--; //@haveDec
+            }
+            left++; //@advance
+        }
+    }
+    if (resLen == INT_MAX) { //@check
+        return ""; //@empty
+    }
+    return s.substr(resL, resR - resL + 1); //@ret
+}

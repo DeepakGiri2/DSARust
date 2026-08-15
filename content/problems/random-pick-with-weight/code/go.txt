@@ -1,0 +1,25 @@
+type Solution struct{ prefix []int }
+
+func Constructor(w []int) Solution {
+    prefix := make([]int, len(w)) //@init
+    sum := 0 //@zero
+    for i, x := range w { //@build
+        sum += x
+        prefix[i] = sum //@add
+    }
+    return Solution{prefix} //@ready
+}
+
+func (s *Solution) PickIndex() int { //@pick
+    target := rand.Intn(s.prefix[len(s.prefix)-1]) + 1 //@draw
+    lo, hi := 0, len(s.prefix)-1 //@bounds
+    for lo < hi { //@search
+        mid := (lo + hi) / 2 //@mid
+        if s.prefix[mid] < target { //@cmp
+            lo = mid + 1 //@right
+        } else {
+            hi = mid //@left
+        }
+    }
+    return lo //@ret
+}

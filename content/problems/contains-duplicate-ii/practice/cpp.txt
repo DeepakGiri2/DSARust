@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool containsNearbyDuplicate(vector<int>& nums, int k) {
+    unordered_set<int> seen;
+    for (int i = 0; i < (int)nums.size(); i++) {
+        if (i > k) {
+            seen.erase(nums[i-k-1]);
+        }
+        if (seen.count(nums[i])) {
+            return true;
+        }
+        seen.insert(nums[i]);
+    }
+    return false;
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> nums = readInts();
+    int k = readInts()[0];
+    cout << (containsNearbyDuplicate(nums, k) ? "true" : "false") << endl;
+}

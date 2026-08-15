@@ -1,0 +1,36 @@
+slug = 'stone-game'
+title = 'Stone Game'
+category = '1-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '877'
+complexity = 'O(n²) time · O(n) space'
+
+description = 'Two players alternately take a pile from either end of a row. Both play optimally; return true if the player who moves first ends up with more stones.'
+approach = "Track the *margin* — how far ahead the player to move can finish — instead of two separate scores. That makes both players' behaviour identical: whoever moves takes a pile and then faces the negated margin of the smaller row. One rolling array is enough, because the answer for a window of length L only ever reads two windows of length L-1. (With an even number of piles and an odd total, LeetCode's guarantee, the first player can always win — but the DP proves it rather than assuming it.)"
+
+[[inputs]]
+name = 'piles'
+label = 'piles'
+type = 'int-array'
+max_len = 8
+min = 1
+max = 40
+
+[default_input]
+piles = [5, 3, 4, 5]
+
+[[tests]]
+expected = 'true'
+[tests.input]
+piles = [5, 3, 4, 5]
+
+[[tests]]
+expected = 'true'
+[tests.input]
+piles = [3, 7, 2, 3]
+
+[[tests]]
+expected = 'false'
+[tests.input]
+piles = [1, 3, 1]

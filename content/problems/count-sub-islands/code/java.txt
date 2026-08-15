@@ -1,0 +1,29 @@
+static int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+static boolean sink(int[][] g1, int[][] g2, int r, int c) {
+    if (r < 0 || r >= g2.length || c < 0 || c >= g2[0].length || g2[r][c] == 0) { //@bounds
+        return true;
+    }
+    g2[r][c] = 0; //@visit
+    boolean ok = g1[r][c] == 1; //@overlap
+    for (int[] d : dirs) { //@neighbours
+        if (!sink(g1, g2, r + d[0], c + d[1])) { //@recurse
+            ok = false; //@fail
+        }
+    }
+    return ok; //@verdict
+}
+
+static int countSubIslands(int[][] grid1, int[][] grid2) {
+    int count = 0; //@init
+    for (int r = 0; r < grid2.length; r++) { //@rowLoop
+        for (int c = 0; c < grid2[0].length; c++) { //@colLoop
+            if (grid2[r][c] == 1) { //@land
+                if (sink(grid1, grid2, r, c)) { //@check
+                    count++; //@bump
+                }
+            }
+        }
+    }
+    return count; //@ret
+}

@@ -1,0 +1,43 @@
+slug = 'copy-list-with-random-pointer'
+title = 'Copy List With Random Pointer'
+category = 'Linked List'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '138'
+complexity = 'O(n) time · O(n) space'
+
+description = "Deep-copy a linked list in which every node also has a 'random' pointer to any node in the list, or to nothing."
+approach = 'The difficulty is ordering: a random pointer can aim at a node that has not been created yet, so links cannot be set while walking. Split the work into two passes — the first creates every clone and records old → new, the second sets both links by translating each original pointer through that map. By the second pass every target exists, so no case is special.'
+
+[[inputs]]
+name = 'list'
+label = 'list'
+type = 'int-array'
+max_len = 8
+min = 0
+max = 99
+
+[[inputs]]
+name = 'random'
+label = 'random targets'
+type = 'int-array'
+max_len = 40
+min = -1
+max = 7
+help = 'one index per node; -1 means the random pointer is nil'
+
+[default_input]
+list = [7, 13, 11, 10, 1]
+random = [-1, 0, 4, 2, 0]
+
+[[tests]]
+expected = '7:n 13:0 11:4 10:2 1:0'
+[tests.input]
+list = [7, 13, 11, 10, 1]
+random = [-1, 0, 4, 2, 0]
+
+[[tests]]
+expected = '1:1 2:1'
+[tests.input]
+list = [1, 2]
+random = [1, 1]

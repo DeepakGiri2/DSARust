@@ -1,0 +1,35 @@
+class MyHashMap {
+    vector<vector<pair<int, int>>> buckets; //@init
+    int hash(int key) { return key % (int)buckets.size(); } //@hash
+public:
+    MyHashMap() : buckets(8) {}
+
+    void put(int key, int value) {
+        int b = hash(key); //@putHash
+        for (auto& e : buckets[b]) { //@scanPut
+            if (e.first == key) { //@existing
+                e.second = value; //@update
+                return;
+            }
+        }
+        buckets[b].push_back({key, value}); //@append
+    }
+    int get(int key) {
+        int b = hash(key); //@getHash
+        for (auto& e : buckets[b]) { //@scanGet
+            if (e.first == key) { //@hit
+                return e.second;
+            }
+        }
+        return -1; //@miss
+    }
+    void remove(int key) {
+        int b = hash(key); //@removeHash
+        for (size_t i = 0; i < buckets[b].size(); i++) { //@scanRemove
+            if (buckets[b][i].first == key) { //@found
+                buckets[b].erase(buckets[b].begin() + i); //@unlink
+                return;
+            }
+        }
+    }
+};

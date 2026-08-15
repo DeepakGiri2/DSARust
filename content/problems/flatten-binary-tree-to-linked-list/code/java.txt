@@ -1,0 +1,15 @@
+static void flatten(TreeNode root) {
+    TreeNode curr = root; //@init
+    while (curr != null) { //@loop
+        if (curr.left != null) { //@hasleft
+            TreeNode pred = curr.left; //@pred
+            while (pred.right != null) { //@rightmost
+                pred = pred.right; //@down
+            }
+            pred.right = curr.right; //@graft
+            curr.right = curr.left; //@promote
+            curr.left = null; //@clear
+        }
+        curr = curr.right; //@next
+    }
+}

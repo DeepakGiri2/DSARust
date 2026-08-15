@@ -1,0 +1,19 @@
+static int longestConsecutive(int[] nums) {
+    Set<Integer> set = new HashSet<>(); //@build
+    for (int n : nums) { //@add
+        set.add(n); //@insert
+    }
+    int best = 0; //@best
+    for (int n : set) { //@scan
+        if (!set.contains(n - 1)) { //@isstart
+            int length = 1; //@len
+            while (set.contains(n + length)) { //@walk
+                length++; //@grow
+            }
+            if (length > best) { //@cmp
+                best = length; //@update
+            }
+        }
+    }
+    return best; //@return
+}

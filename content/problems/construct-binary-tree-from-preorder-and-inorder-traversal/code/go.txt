@@ -1,0 +1,20 @@
+func buildTree(preorder []int, inorder []int) *TreeNode {
+    idx := 0
+    var helper func(lo, hi int) *TreeNode
+    helper = func(lo, hi int) *TreeNode {
+        if lo > hi { //@base
+            return nil //@retNil
+        }
+        rootVal := preorder[idx] //@pickRoot
+        idx++ //@advance
+        root := &TreeNode{Val: rootVal} //@makeNode
+        mid := lo
+        for inorder[mid] != rootVal { //@findMid
+            mid++
+        }
+        root.Left = helper(lo, mid-1) //@recL
+        root.Right = helper(mid+1, hi) //@recR
+        return root //@ret
+    }
+    return helper(0, len(inorder)-1)
+}

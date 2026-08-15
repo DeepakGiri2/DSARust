@@ -1,0 +1,26 @@
+func findMedianSortedArrays(a []int, b []int) float64 {
+    if len(a) > len(b) { //@swap
+        a, b = b, a
+    }
+    m, n := len(a), len(b) //@sizes
+    half := (m + n + 1) / 2 //@half
+    lo, hi := 0, m //@bounds
+    for lo <= hi { //@loop
+        i := lo + (hi-lo)/2 //@mid
+        j := half - i //@partner
+        aLeft, aRight := edgeLo(a, i-1), edgeHi(a, i) //@edges
+        bLeft, bRight := edgeLo(b, j-1), edgeHi(b, j)
+        if aLeft <= bRight && bLeft <= aRight { //@check
+            if (m+n)%2 == 1 { //@odd
+                return float64(max(aLeft, bLeft)) //@retOdd
+            }
+            return float64(max(aLeft, bLeft)+min(aRight, bRight)) / 2 //@retEven
+        }
+        if aLeft > bRight { //@tooBig
+            hi = i - 1 //@shrink
+        } else { //@tooSmall
+            lo = i + 1 //@grow
+        }
+    }
+    return 0
+}

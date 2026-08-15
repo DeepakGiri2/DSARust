@@ -1,0 +1,30 @@
+slug = 'plus-one'
+title = 'Plus One'
+category = 'Math & Geometry'
+difficulty = 'Easy'
+tier = '150'
+complexity = 'O(n) time · O(1) extra space'
+
+description = 'A number is stored as an array of digits, most significant first. Add one to it.'
+approach = 'Walk from the last digit backwards. A digit below 9 absorbs the carry and the work stops immediately; a 9 becomes 0 and passes the carry on. Only an all-nines number needs a new leading digit.'
+
+[[inputs]]
+name = 'digits'
+label = 'digits'
+type = 'int-array'
+max_len = 40
+min = 0
+max = 9
+
+[default_input]
+digits = [1, 2, 9]
+
+[[tests]]
+expected = '1 3 0'
+[tests.input]
+digits = [1, 2, 9]
+
+[[tests]]
+expected = '1 0 0'
+[tests.input]
+digits = [9, 9]

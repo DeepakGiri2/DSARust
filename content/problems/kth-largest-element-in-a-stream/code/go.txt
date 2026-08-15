@@ -1,0 +1,20 @@
+type KthLargest struct {
+    k int
+    h *IntHeap
+}
+
+func Constructor(k int, nums []int) *KthLargest { //@ctor
+    kl := &KthLargest{k: k, h: &IntHeap{}} //@init
+    for _, n := range nums { //@ctorLoop
+        kl.Add(n)
+    }
+    return kl
+}
+
+func (kl *KthLargest) Add(val int) int { //@add
+    heap.Push(kl.h, val) //@push
+    if kl.h.Len() > kl.k { //@check
+        heap.Pop(kl.h) //@pop
+    }
+    return (*kl.h)[0] //@return
+}

@@ -1,0 +1,54 @@
+slug = 'interleaving-string'
+title = 'Interleaving String'
+category = '2-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '97'
+complexity = 'O(m · n) time · O(m · n) space'
+
+description = "Return true if a third string can be formed by interleaving two others, keeping each one's characters in order."
+approach = "Greedily taking whichever string matches fails, because a matching character may be the wrong one to take. So track every reachable split point instead: cell (i, j) means 'the first i characters of s1 and the first j of s2 can produce the first i+j of s3'. Crucially i and j together determine the position in s3, which is why two indices suffice."
+
+[[inputs]]
+name = 's1'
+label = 's1'
+type = 'string'
+max_len = 10
+
+[[inputs]]
+name = 's2'
+label = 's2'
+type = 'string'
+max_len = 10
+
+[[inputs]]
+name = 's3'
+label = 's3'
+type = 'string'
+max_len = 20
+
+[default_input]
+s1 = 'ab'
+s2 = 'cd'
+s3 = 'acbd'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s1 = 'ab'
+s2 = 'cd'
+s3 = 'acbd'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s1 = 'ab'
+s2 = 'cd'
+s3 = 'abdc'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s1 = 'aab'
+s2 = 'axy'
+s3 = 'aaxaby'

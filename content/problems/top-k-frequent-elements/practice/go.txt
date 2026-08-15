@@ -1,0 +1,55 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func topKFrequent(nums []int, k int) []int {
+    count := map[int]int{}
+    for _, n := range nums {
+        count[n]++
+    }
+    buckets := make([][]int, len(nums)+1)
+    added := map[int]bool{}
+    for _, n := range nums {
+        if !added[n] {
+            buckets[count[n]] = append(buckets[count[n]], n)
+            added[n] = true
+        }
+    }
+    res := []int{}
+    for f := len(nums); f >= 1; f-- {
+        for _, n := range buckets[f] {
+            if len(res) < k {
+                res = append(res, n)
+            }
+        }
+    }
+    return res
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    nums := readInts(reader)
+    k := readInts(reader)[0]
+    res := topKFrequent(nums, k)
+    out := make([]string, len(res))
+    for i, v := range res {
+        out[i] = strconv.Itoa(v)
+    }
+    fmt.Println(strings.Join(out, " "))
+}

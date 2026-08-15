@@ -1,0 +1,53 @@
+func alienOrder(words []string) string {
+    adj := map[byte]map[byte]bool{} //@init
+    indeg := map[byte]int{} //@degrees
+    for _, w := range words { //@letters
+        for i := 0; i < len(w); i++ {
+            if _, ok := indeg[w[i]]; !ok {
+                indeg[w[i]] = 0
+                adj[w[i]] = map[byte]bool{}
+            }
+        }
+    }
+    for i := 0; i+1 < len(words); i++ { //@pairs
+        a, b := words[i], words[i+1]
+        n := len(a)
+        if len(b) < n {
+            n = len(b)
+        }
+        if len(a) > len(b) && a[:n] == b[:n] { //@prefix
+            return "" //@invalid
+        }
+        for j := 0; j < n; j++ { //@compare
+            if a[j] != b[j] { //@differ
+                if !adj[a[j]][b[j]] {
+                    adj[a[j]][b[j]] = true //@edge
+                    indeg[b[j]]++ //@bump
+                }
+                break //@stop
+            }
+        }
+    }
+    q := []byte{} //@queue
+    for c, d := range indeg { //@seed
+        if d == 0 {
+            q = append(q, c)
+        }
+    }
+    out := []byte{} //@build
+    for len(q) > 0 { //@loop
+        c := q[0] //@pop
+        q = q[1:]
+        out = append(out, c) //@emit
+        for nxt := range adj[c] { //@neighbours
+            indeg[nxt]-- //@dec
+            if indeg[nxt] == 0 { //@ready
+                q = append(q, nxt) //@enqueue
+            }
+        }
+    }
+    if len(out) != len(indeg) { //@cycle
+        return "" //@none
+    }
+    return string(out) //@ret
+}

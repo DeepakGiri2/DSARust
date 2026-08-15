@@ -1,0 +1,21 @@
+func convert(s string, numRows int) string {
+    if numRows == 1 { //@single
+        return s
+    }
+    rows := make([]string, numRows) //@init
+    row, dir := 0, 1 //@cursor
+    for i := 0; i < len(s); i++ { //@loop
+        rows[row] += string(s[i]) //@place
+        if row == 0 { //@atTop
+            dir = 1 //@down
+        } else if row == numRows-1 { //@atBottom
+            dir = -1 //@up
+        }
+        row += dir //@move
+    }
+    out := "" //@join
+    for _, r := range rows { //@concat
+        out += r
+    }
+    return out //@ret
+}

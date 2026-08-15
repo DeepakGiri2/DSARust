@@ -1,0 +1,15 @@
+vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> out; //@init
+    vector<TreeNode*> stack; //@stack
+    TreeNode* cur = root; //@cur
+    while (cur != nullptr || !stack.empty()) { //@loop
+        while (cur != nullptr) { //@dive
+            stack.push_back(cur); //@push
+            cur = cur->left; //@left
+        }
+        cur = stack.back(); stack.pop_back(); //@pop
+        out.push_back(cur->val); //@visit
+        cur = cur->right; //@right
+    }
+    return out; //@ret
+}

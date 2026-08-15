@@ -1,0 +1,29 @@
+slug = 'convert-sorted-array-to-binary-search-tree'
+title = 'Convert Sorted Array to Binary Search Tree'
+category = 'Trees'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '108'
+complexity = 'O(n) time · O(log n) space (recursion stack)'
+
+description = 'Build a height-balanced binary search tree from a sorted array.'
+approach = 'A sorted array is already an inorder traversal, so any choice of root splits it into the values that must go left and the values that must go right. Choosing the *middle* element each time makes those two halves the same size, which is what forces the result to be balanced — the height follows from the halving, not from any rebalancing work.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 15
+
+[default_input]
+nums = [-10, -3, 0, 5, 9]
+
+[[tests]]
+expected = '0 -10 5 n -3 n 9'
+[tests.input]
+nums = [-10, -3, 0, 5, 9]
+
+[[tests]]
+expected = '1 n 3'
+[tests.input]
+nums = [1, 3]

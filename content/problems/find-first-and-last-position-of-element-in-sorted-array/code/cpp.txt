@@ -1,0 +1,22 @@
+vector<int> searchRange(vector<int>& nums, int target) {
+    int lo = lowerBound(nums, target); //@first
+    if (lo == (int)nums.size() || nums[lo] != target) { //@absent
+        return {-1, -1}; //@none
+    }
+    int hi = lowerBound(nums, target + 1) - 1; //@last
+    return {lo, hi}; //@ret
+}
+
+// First index whose value is >= target (nums.size() if there is none).
+int lowerBound(vector<int>& nums, int target) {
+    int l = 0, r = nums.size(); //@init
+    while (l < r) { //@loop
+        int m = (l + r) / 2; //@mid
+        if (nums[m] < target) { //@cmp
+            l = m + 1; //@right
+        } else {
+            r = m; //@left
+        }
+    }
+    return l; //@bound
+}

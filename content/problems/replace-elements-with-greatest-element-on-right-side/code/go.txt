@@ -1,0 +1,11 @@
+func replaceElements(arr []int) []int {
+    mx := -1 //@init
+    for i := len(arr) - 1; i >= 0; i-- { //@loop
+        cur := arr[i] //@read
+        arr[i] = mx //@replace
+        if cur > mx { //@check
+            mx = cur //@update
+        }
+    }
+    return arr //@ret
+}

@@ -1,0 +1,37 @@
+type MyHashSet struct {
+    buckets [][]int //@init
+}
+
+func (s *MyHashSet) hash(key int) int {
+    return key % len(s.buckets) //@hash
+}
+
+func (s *MyHashSet) Add(key int) {
+    b := s.hash(key) //@addHash
+    for _, v := range s.buckets[b] { //@scanAdd
+        if v == key { //@present
+            return
+        }
+    }
+    s.buckets[b] = append(s.buckets[b], key) //@append
+}
+
+func (s *MyHashSet) Remove(key int) {
+    b := s.hash(key) //@removeHash
+    for i, v := range s.buckets[b] { //@scanRemove
+        if v == key { //@found
+            s.buckets[b] = append(s.buckets[b][:i], s.buckets[b][i+1:]...) //@unlink
+            return
+        }
+    }
+}
+
+func (s *MyHashSet) Contains(key int) bool {
+    b := s.hash(key) //@containsHash
+    for _, v := range s.buckets[b] { //@scanContains
+        if v == key { //@hit
+            return true
+        }
+    }
+    return false //@miss
+}

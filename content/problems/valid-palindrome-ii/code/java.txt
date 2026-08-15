@@ -1,0 +1,22 @@
+static boolean isRange(String s, int i, int j) {
+    while (i < j) { //@rloop
+        if (s.charAt(i) != s.charAt(j)) { //@rcmp
+            return false; //@rbad
+        }
+        i++; //@rmoveL
+        j--; //@rmoveR
+    }
+    return true; //@rgood
+}
+
+static boolean validPalindrome(String s) {
+    int l = 0, r = s.length() - 1; //@init
+    while (l < r) { //@loop
+        if (s.charAt(l) != s.charAt(r)) { //@cmp
+            return isRange(s, l + 1, r) || isRange(s, l, r - 1); //@branch
+        }
+        l++; //@moveL
+        r--; //@moveR
+    }
+    return true; //@good
+}

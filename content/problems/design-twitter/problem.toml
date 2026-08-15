@@ -1,0 +1,30 @@
+slug = 'design-twitter'
+title = 'Design Twitter'
+category = 'Heap / Priority Queue'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '355'
+complexity = 'O(followed · log followed) per feed · O(tweets) space'
+
+description = 'Support posting tweets, following and unfollowing users, and fetching the ten most recent tweets from a user and everyone they follow.'
+approach = "Merging several already-sorted tweet lists is exactly what a heap is for. Store each user's tweets in posting order with a global timestamp, and at feed time push the newest tweet of each relevant user into a max-heap keyed by timestamp. Popping ten times gives the ten newest overall, without merging or sorting the full history."
+
+[[inputs]]
+name = 'ops'
+label = 'ops'
+type = 'string'
+max_len = 120
+help = 'post <user> <tweet> / follow <a> <b> / unfollow <a> <b> / feed <user>, comma separated'
+
+[default_input]
+ops = 'post 1 5, feed 1, follow 1 2, post 2 6, feed 1, unfollow 1 2, feed 1'
+
+[[tests]]
+expected = '5 | 6 5 | 5'
+[tests.input]
+ops = 'post 1 5, feed 1, follow 1 2, post 2 6, feed 1, unfollow 1 2, feed 1'
+
+[[tests]]
+expected = '2 1'
+[tests.input]
+ops = 'post 1 1, post 1 2, feed 1'

@@ -1,0 +1,15 @@
+func evalRPN(tokens []string) int {
+    stack := []int{} //@init
+    for _, t := range tokens { //@loop
+        if isOp(t) { //@isop
+            b := stack[len(stack)-1] //@popB
+            a := stack[len(stack)-2] //@popA
+            stack = stack[:len(stack)-2]
+            stack = append(stack, apply(a, b, t)) //@push
+        } else {
+            n, _ := strconv.Atoi(t) //@parse
+            stack = append(stack, n) //@pushNum
+        }
+    }
+    return stack[0] //@ret
+}

@@ -1,0 +1,14 @@
+func maxSubArray(nums []int) int {
+    cur, best := nums[0], nums[0] //@init
+    for i := 1; i < len(nums); i++ { //@loop
+        if nums[i] > cur+nums[i] { //@cmp
+            cur = nums[i] //@reset
+        } else {
+            cur = cur + nums[i] //@extend
+        }
+        if cur > best { //@cmpBest
+            best = cur //@newBest
+        }
+    }
+    return best //@ret
+}

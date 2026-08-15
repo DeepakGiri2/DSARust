@@ -1,0 +1,19 @@
+func longestConsecutive(nums []int) int {
+    set := map[int]bool{} //@build
+    for _, n := range nums { //@add
+        set[n] = true //@insert
+    }
+    best := 0 //@best
+    for n := range set { //@scan
+        if !set[n-1] { //@isstart
+            length := 1 //@len
+            for set[n+length] { //@walk
+                length++ //@grow
+            }
+            if length > best { //@cmp
+                best = length //@update
+            }
+        }
+    }
+    return best //@return
+}

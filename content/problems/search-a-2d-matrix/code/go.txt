@@ -1,0 +1,18 @@
+func searchMatrix(matrix [][]int, target int) bool {
+    rows, cols := len(matrix), len(matrix[0])
+    lo, hi := 0, rows*cols-1 //@init
+    for lo <= hi { //@loop
+        mid := lo + (hi-lo)/2 //@mid
+        r, c := mid/cols, mid%cols //@map
+        v := matrix[r][c] //@read
+        if v == target { //@cmp
+            return true //@found
+        }
+        if v < target { //@less
+            lo = mid + 1 //@right
+        } else {
+            hi = mid - 1 //@left
+        }
+    }
+    return false //@none
+}

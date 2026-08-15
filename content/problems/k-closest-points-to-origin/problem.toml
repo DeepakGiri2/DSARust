@@ -1,0 +1,39 @@
+slug = 'k-closest-points-to-origin'
+title = 'K Closest Points to Origin'
+category = 'Heap / Priority Queue'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n log k) time · O(k) space'
+
+description = 'Return the k points closest to the origin.'
+approach = 'A max-heap capped at k. Whatever sits at its root is the worst of the current best k, so a new point either beats it and evicts it, or is discarded immediately. Comparing squared distances avoids square roots entirely — the ordering is the same.'
+
+[[inputs]]
+name = 'points'
+label = 'points'
+type = 'string'
+max_len = 60
+help = "pairs like '1,3 -2,2 5,8 0,1'"
+
+[[inputs]]
+name = 'k'
+label = 'k'
+type = 'int'
+min = 1
+max = 8
+
+[default_input]
+points = '1,3 -2,2 5,8 0,1'
+k = 2
+
+[[tests]]
+expected = '-2,2 0,1'
+[tests.input]
+points = '1,3 -2,2 5,8 0,1'
+k = 2
+
+[[tests]]
+expected = '3,3'
+[tests.input]
+points = '3,3 5,-1'
+k = 1

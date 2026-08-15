@@ -1,0 +1,44 @@
+slug = 'course-schedule'
+title = 'Course Schedule'
+category = 'Graphs'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(V + E) time · O(V + E) space'
+
+description = 'There are numCourses courses labeled 0..n-1. Each prerequisite pair [a, b] means you must take b before a. Return true if you can finish every course — i.e. the dependency graph has no cycle.'
+approach = "Model courses as a directed graph (course → its prerequisites) and run DFS looking for a cycle. Each node is 'unvisited', 'visiting' (on the current DFS path) or 'done'. Reaching a 'visiting' node again is a back-edge — a cycle — so not all courses can be finished."
+
+[[inputs]]
+name = 'numCourses'
+label = 'numCourses'
+type = 'int'
+min = 1
+max = 6
+
+[[inputs]]
+name = 'prereqs'
+label = 'prereqs (pairs "a,b" = a needs b; blank = none)'
+type = 'string'
+max_len = 40
+
+[default_input]
+numCourses = 4
+prereqs = '1,0 2,1 3,2'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+numCourses = 4
+prereqs = '1,0 2,1 3,2'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+numCourses = 2
+prereqs = '1,0 0,1'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+numCourses = 3
+prereqs = ''

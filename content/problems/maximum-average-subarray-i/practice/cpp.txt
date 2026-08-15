@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+double findMaxAverage(vector<int>& nums, int k) {
+    int windowSum = 0;
+    for (int i = 0; i < k; i++) {
+        windowSum += nums[i];
+    }
+    int maxSum = windowSum;
+    for (int r = k; r < (int)nums.size(); r++) {
+        windowSum += nums[r] - nums[r-k];
+        if (windowSum > maxSum) {
+            maxSum = windowSum;
+        }
+    }
+    return (double)maxSum / k;
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> nums = readInts();
+    int k = readInts()[0];
+    cout << findMaxAverage(nums, k) << endl;
+}

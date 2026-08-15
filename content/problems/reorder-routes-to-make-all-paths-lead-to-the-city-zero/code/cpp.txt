@@ -1,0 +1,26 @@
+vector<vector<pair<int, int>>> adj;
+vector<bool> visited;
+
+int dfs(int node) {
+    visited[node] = true; //@visit
+    int total = 0; //@total
+    for (auto& e : adj[node]) { //@neighbours
+        if (visited[e.first]) { //@seen
+            continue;
+        }
+        total += e.second; //@cost
+        total += dfs(e.first); //@recurse
+    }
+    return total; //@ret2
+}
+
+int minReorder(int n, vector<vector<int>>& connections) {
+    adj.assign(n, {}); //@build
+    for (auto& c : connections) { //@edges
+        adj[c[0]].push_back({c[1], 1}); //@forward
+        adj[c[1]].push_back({c[0], 0}); //@backward
+    }
+    visited.assign(n, false); //@init
+    int count = dfs(0); //@call
+    return count; //@ret
+}

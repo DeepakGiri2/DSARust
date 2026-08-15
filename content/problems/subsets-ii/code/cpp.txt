@@ -1,0 +1,18 @@
+vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+    sort(nums.begin(), nums.end()); //@sort
+    vector<vector<int>> res; //@init
+    vector<int> cur;
+    function<void(int)> back = [&](int start) {
+        res.push_back(cur); //@record
+        for (int i = start; i < (int)nums.size(); i++) { //@loop
+            if (i > start && nums[i] == nums[i - 1]) { //@dup
+                continue; //@skip
+            }
+            cur.push_back(nums[i]);
+            back(i + 1); //@rec
+            cur.pop_back();
+        }
+    };
+    back(0); //@call
+    return res; //@ret
+}

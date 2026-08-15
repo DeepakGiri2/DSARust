@@ -1,0 +1,66 @@
+package main
+
+import (
+    "bufio"
+    "container/heap"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+type IntHeap []int
+
+func (h IntHeap) Len() int            { return len(h) }
+func (h IntHeap) Less(i, j int) bool  { return h[i] < h[j] }
+func (h IntHeap) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
+func (h *IntHeap) Push(x interface{}) { *h = append(*h, x.(int)) }
+func (h *IntHeap) Pop() interface{} {
+    old := *h
+    n := len(old)
+    x := old[n-1]
+    *h = old[:n-1]
+    return x
+}
+
+type KthLargest struct {
+    k int
+    h *IntHeap
+}
+
+func Constructor(k int, nums []int) *KthLargest {
+    kl := &KthLargest{k: k, h: &IntHeap{}}
+    for _, n := range nums {
+        kl.Add(n)
+    }
+    return kl
+}
+
+func (kl *KthLargest) Add(val int) int {
+    heap.Push(kl.h, val)
+    if kl.h.Len() > kl.k {
+        heap.Pop(kl.h)
+    }
+    return (*kl.h)[0]
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    k := readInts(reader)[0]
+    nums := readInts(reader)
+    adds := readInts(reader)
+    kl := Constructor(k, nums)
+    for _, v := range adds {
+        fmt.Println(kl.Add(v))
+    }
+}

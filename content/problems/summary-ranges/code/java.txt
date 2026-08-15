@@ -1,0 +1,16 @@
+static List<String> summaryRanges(int[] nums) {
+    List<String> out = new ArrayList<>(); //@init
+    for (int i = 0; i < nums.length; ) { //@loop
+        int start = i; //@start
+        while (i + 1 < nums.length && nums[i + 1] == nums[i] + 1) { //@extend
+            i++; //@grow
+        }
+        if (start == i) { //@single
+            out.add(String.valueOf(nums[start])); //@one
+        } else {
+            out.add(nums[start] + "->" + nums[i]); //@range
+        }
+        i++; //@next
+    }
+    return out; //@ret
+}

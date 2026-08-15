@@ -1,0 +1,28 @@
+static String minStackOps(String ops) {
+    String[] tokens = ops.trim().split("\\s+");
+    Deque<Integer> stack = new ArrayDeque<>(); //@initS
+    Deque<Integer> mins = new ArrayDeque<>(); //@initM
+    List<String> out = new ArrayList<>(); //@initOut
+    for (int i = 0; i < tokens.length; i++) { //@loop
+        String op = tokens[i];
+        if (op.equals("push")) { //@isPush
+            i++;
+            int x = Integer.parseInt(tokens[i]);
+            stack.push(x); //@push
+            int m = x;
+            if (!mins.isEmpty() && mins.peek() < m) { //@cmpMin
+                m = mins.peek();
+            }
+            mins.push(m); //@pushMin
+        } else if (op.equals("pop")) { //@isPop
+            int v = stack.pop(); //@pop
+            mins.pop(); //@popMin
+            out.add(String.valueOf(v)); //@emit
+        } else if (op.equals("top")) { //@isTop
+            out.add(String.valueOf(stack.peek())); //@emit2
+        } else { //@isMin
+            out.add(String.valueOf(mins.peek())); //@emit3
+        }
+    }
+    return String.join(" ", out); //@ret
+}

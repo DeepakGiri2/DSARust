@@ -1,0 +1,18 @@
+static int largestRectangleArea(int[] heights) {
+    int best = 0; //@init
+    Deque<int[]> stack = new ArrayDeque<>(); //@stack
+    for (int i = 0; i < heights.length; i++) { //@loop
+        int start = i; //@start
+        while (!stack.isEmpty() && stack.peek()[1] > heights[i]) { //@while
+            int[] top = stack.peek(); //@peek
+            stack.pop(); //@pop
+            best = Math.max(best, top[1] * (i - top[0])); //@area
+            start = top[0]; //@inherit
+        }
+        stack.push(new int[]{start, heights[i]}); //@push
+    }
+    for (int[] b : stack) { //@drain
+        best = Math.max(best, b[1] * (heights.length - b[0])); //@tail
+    }
+    return best; //@ret
+}

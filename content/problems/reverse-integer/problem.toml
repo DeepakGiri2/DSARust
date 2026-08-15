@@ -1,0 +1,40 @@
+slug = 'reverse-integer'
+title = 'Reverse Integer'
+category = 'Bit Manipulation'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '7'
+complexity = 'O(log x) time · O(1) space'
+
+description = 'Reverse the digits of a signed 32-bit integer, returning 0 if the result would not fit in 32 bits.'
+approach = "Peel digits off the back and push them onto a growing result. The interesting part is the overflow test, which has to happen *before* the multiplication rather than after — checking afterwards would already have overflowed. Comparing the result against (limit − digit) / 10 asks 'would this next step exceed the limit?' using only arithmetic that cannot itself overflow."
+
+[[inputs]]
+name = 'x'
+label = 'x'
+type = 'int'
+min = -2147483648
+max = 2147483647
+
+[default_input]
+x = 123
+
+[[tests]]
+expected = '321'
+[tests.input]
+x = 123
+
+[[tests]]
+expected = '-321'
+[tests.input]
+x = -123
+
+[[tests]]
+expected = '21'
+[tests.input]
+x = 120
+
+[[tests]]
+expected = '0'
+[tests.input]
+x = 1534236469

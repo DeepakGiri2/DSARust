@@ -1,0 +1,28 @@
+slug = 'partition-labels'
+title = 'Partition Labels'
+category = 'Greedy'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Partition a string into as many parts as possible so that each letter appears in at most one part. Return the size of each part.'
+approach = 'Record the last index of every letter first. Then sweep once, extending the current part to the furthest last-index seen so far; when the scan reaches that boundary, no letter inside the part appears later, so it can be cut.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 30
+
+[default_input]
+s = 'ababcbacadefegde'
+
+[[tests]]
+expected = '9 7'
+[tests.input]
+s = 'ababcbacadefegde'
+
+[[tests]]
+expected = '10'
+[tests.input]
+s = 'eccbbbbdec'

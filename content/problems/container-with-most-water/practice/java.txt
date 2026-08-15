@@ -1,0 +1,41 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static int maxArea(int[] heights) {
+        int l = 0, r = heights.length - 1;
+        int best = 0;
+        while (l < r) {
+            int h = heights[l];
+            if (heights[r] < h) {
+                h = heights[r];
+            }
+            int area = h * (r - l);
+            if (area > best) {
+                best = area;
+            }
+            if (heights[l] < heights[r]) {
+                l++;
+            } else {
+                r--;
+            }
+        }
+        return best;
+    }
+
+    static int[] readInts(BufferedReader br) throws Exception {
+        String line = br.readLine();
+        if (line == null || line.trim().isEmpty()) return new int[0];
+        String[] parts = line.trim().split("\\s+");
+        int[] nums = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);
+        return nums;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] heights = readInts(br);
+        System.out.println(maxArea(heights));
+    }
+}

@@ -1,0 +1,26 @@
+class BrowserHistory {
+    vector<string> pages; //@init
+    int cur = 0; //@cur
+public:
+    BrowserHistory(string homepage) { pages.push_back(homepage); }
+
+    void visit(string url) {
+        pages.resize(cur + 1); //@truncate
+        pages.push_back(url); //@append
+        cur++; //@moveCur
+    }
+    string back(int steps) {
+        if (steps > cur) { //@clampBack
+            steps = cur;
+        }
+        cur -= steps; //@stepBack
+        return pages[cur]; //@retBack
+    }
+    string forward(int steps) {
+        if (cur + steps >= (int)pages.size()) { //@clampFwd
+            steps = (int)pages.size() - 1 - cur;
+        }
+        cur += steps; //@stepFwd
+        return pages[cur]; //@retFwd
+    }
+};

@@ -1,0 +1,11 @@
+func copyRandomList(head *Node) *Node {
+    clones := map[*Node]*Node{} //@init
+    for cur := head; cur != nil; cur = cur.Next { //@pass1
+        clones[cur] = &Node{Val: cur.Val} //@make
+    }
+    for cur := head; cur != nil; cur = cur.Next { //@pass2
+        clones[cur].Next = clones[cur.Next] //@linkNext
+        clones[cur].Random = clones[cur.Random] //@linkRandom
+    }
+    return clones[head] //@ret
+}

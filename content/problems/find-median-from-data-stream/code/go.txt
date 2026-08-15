@@ -1,0 +1,19 @@
+type MedianFinder struct {
+    low  *MaxHeap //@init
+    high *MinHeap
+}
+
+func (m *MedianFinder) AddNum(num int) {
+    m.low.Push(num) //@pushLow
+    m.high.Push(m.low.Pop()) //@shift
+    if m.high.Len() > m.low.Len() { //@rebalance
+        m.low.Push(m.high.Pop()) //@moveBack
+    }
+}
+
+func (m *MedianFinder) FindMedian() float64 {
+    if m.low.Len() > m.high.Len() { //@odd
+        return float64(m.low.Peek()) //@retOdd
+    }
+    return float64(m.low.Peek()+m.high.Peek()) / 2 //@retEven
+}

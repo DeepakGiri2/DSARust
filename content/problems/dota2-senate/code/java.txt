@@ -1,0 +1,21 @@
+static String predictPartyVictory(String senate) {
+    Deque<Integer> radiant = new ArrayDeque<>(), dire = new ArrayDeque<>(); //@init
+    int n = senate.length(); //@n
+    for (int i = 0; i < n; i++) { //@fill
+        if (senate.charAt(i) == 'R') radiant.addLast(i);
+        else dire.addLast(i);
+    }
+    while (!radiant.isEmpty() && !dire.isEmpty()) { //@loop
+        int r = radiant.pollFirst(); //@popR
+        int d = dire.pollFirst(); //@popD
+        if (r < d) { //@earlier
+            radiant.addLast(r + n); //@requeueR
+        } else { //@later
+            dire.addLast(d + n); //@requeueD
+        }
+    }
+    if (!radiant.isEmpty()) { //@check
+        return "Radiant"; //@retR
+    }
+    return "Dire"; //@retD
+}

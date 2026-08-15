@@ -1,0 +1,35 @@
+slug = 'reorganize-string'
+title = 'Reorganize String'
+category = 'Heap / Priority Queue'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '767'
+complexity = 'O(n log 26) time · O(1) space'
+
+description = 'Rearrange a string so no two adjacent characters are the same, or report that it cannot be done.'
+approach = "Always place the character with the most left, because the one in greatest supply is the one most at risk of being forced into a repeat later. Hold the character just used aside for exactly one round so it cannot be chosen again immediately, then return it. A max-heap keeps 'most remaining' available in one look, and if the heap runs dry before the string is filled, no arrangement exists."
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 16
+help = 'lower-case letters'
+
+[default_input]
+s = 'aab'
+
+[[tests]]
+expected = 'aba'
+[tests.input]
+s = 'aab'
+
+[[tests]]
+expected = '(impossible)'
+[tests.input]
+s = 'aaab'
+
+[[tests]]
+expected = 'vlvov'
+[tests.input]
+s = 'vvvlo'

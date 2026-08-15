@@ -1,0 +1,25 @@
+static Map<String, List<String>> adj = new HashMap<>();
+static List<String> route = new ArrayList<>();
+
+static void visit(String airport) {
+    List<String> outs = adj.getOrDefault(airport, new ArrayList<>());
+    while (!outs.isEmpty()) { //@while
+        String next = outs.remove(0); //@take
+        visit(next); //@recurse
+    }
+    route.add(airport); //@append
+}
+
+static List<String> findItinerary(List<List<String>> tickets) {
+    adj.clear(); //@build
+    for (List<String> t : tickets) {
+        adj.computeIfAbsent(t.get(0), k -> new ArrayList<>()).add(t.get(1));
+    }
+    for (List<String> outs : adj.values()) { //@sort
+        Collections.sort(outs);
+    }
+    route.clear(); //@route
+    visit("JFK"); //@start
+    Collections.reverse(route); //@reverse
+    return route; //@ret
+}

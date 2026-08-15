@@ -1,0 +1,35 @@
+slug = 'min-cost-to-connect-all-points'
+title = 'Min Cost to Connect All Points'
+category = 'Advanced Graphs'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '1584'
+complexity = 'O(n²) time · O(n) space'
+
+description = 'Connect every point to every other, directly or indirectly, using Manhattan-distance edges of minimum total cost.'
+approach = "A minimum spanning tree, built by Prim's algorithm. Grow one connected blob: repeatedly attach the point that is cheapest to reach from anything already inside it. That is safe because of the cut property — the cheapest edge crossing the boundary between the blob and the outside must belong to some minimum spanning tree. Because the graph is complete, keeping one 'cheapest known link' per outside point is enough, and no edge list is ever built."
+
+[[inputs]]
+name = 'points'
+label = 'points'
+type = 'string'
+max_len = 60
+help = "'x,y' pairs separated by spaces"
+
+[default_input]
+points = '0,0 2,2 3,10 5,2 7,0'
+
+[[tests]]
+expected = '20'
+[tests.input]
+points = '0,0 2,2 3,10 5,2 7,0'
+
+[[tests]]
+expected = '18'
+[tests.input]
+points = '3,12 -2,5 -4,1'
+
+[[tests]]
+expected = '2'
+[tests.input]
+points = '0,0 1,1'

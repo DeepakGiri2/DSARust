@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode(int v) : val(v), next(nullptr) {}
+};
+
+bool hasCycle(ListNode* head) {
+    ListNode* slow = head;
+    ListNode* fast = head;
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) {
+            return true;
+        }
+    }
+    return false;
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> vals = readInts();
+    int pos = readInts()[0];
+    int n = vals.size();
+    vector<ListNode*> nodes(n);
+    for (int i = 0; i < n; i++) nodes[i] = new ListNode(vals[i]);
+    for (int i = 0; i + 1 < n; i++) nodes[i]->next = nodes[i + 1];
+    ListNode* head = nullptr;
+    if (n > 0) {
+        head = nodes[0];
+        if (pos >= 0) nodes[n - 1]->next = nodes[pos];
+    }
+    cout << (hasCycle(head) ? "true" : "false") << endl;
+}

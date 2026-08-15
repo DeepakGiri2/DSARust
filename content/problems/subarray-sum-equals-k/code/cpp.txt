@@ -1,0 +1,13 @@
+int subarraySum(vector<int>& nums, int k) {
+    unordered_map<int, int> seen; //@init
+    seen[0] = 1;
+    int sum = 0, count = 0; //@running
+    for (int v : nums) { //@loop
+        sum += v; //@add
+        if (seen.count(sum - k)) { //@lookup
+            count += seen[sum - k]; //@bump
+        }
+        seen[sum]++; //@record
+    }
+    return count; //@ret
+}

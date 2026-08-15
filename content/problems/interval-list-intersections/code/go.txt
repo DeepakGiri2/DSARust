@@ -1,0 +1,17 @@
+func intervalIntersection(a [][]int, b [][]int) [][]int {
+    res := [][]int{} //@init
+    i, j := 0, 0 //@cursors
+    for i < len(a) && j < len(b) { //@loop
+        lo := max(a[i][0], b[j][0]) //@lo
+        hi := min(a[i][1], b[j][1]) //@hi
+        if lo <= hi { //@overlap
+            res = append(res, []int{lo, hi}) //@record
+        }
+        if a[i][1] < b[j][1] { //@advanceA
+            i++
+        } else { //@advanceB
+            j++
+        }
+    }
+    return res //@ret
+}

@@ -1,0 +1,29 @@
+func minStackOps(ops string) string {
+    tokens := strings.Fields(ops)
+    stack := []int{} //@initS
+    mins := []int{} //@initM
+    out := []string{} //@initOut
+    for i := 0; i < len(tokens); i++ { //@loop
+        op := tokens[i]
+        if op == "push" { //@isPush
+            i++
+            x, _ := strconv.Atoi(tokens[i])
+            stack = append(stack, x) //@push
+            m := x
+            if len(mins) > 0 && mins[len(mins)-1] < m { //@cmpMin
+                m = mins[len(mins)-1]
+            }
+            mins = append(mins, m) //@pushMin
+        } else if op == "pop" { //@isPop
+            v := stack[len(stack)-1]
+            stack = stack[:len(stack)-1] //@pop
+            mins = mins[:len(mins)-1] //@popMin
+            out = append(out, strconv.Itoa(v)) //@emit
+        } else if op == "top" { //@isTop
+            out = append(out, strconv.Itoa(stack[len(stack)-1])) //@emit2
+        } else { //@isMin
+            out = append(out, strconv.Itoa(mins[len(mins)-1])) //@emit3
+        }
+    }
+    return strings.Join(out, " ") //@ret
+}

@@ -1,0 +1,26 @@
+func equationsPossible(equations []string) bool {
+    parent := make([]int, 26) //@init
+    for i := range parent {
+        parent[i] = i //@seed
+    }
+    for _, e := range equations { //@join
+        if e[1] == '=' { //@iseq
+            a, b := find(parent, int(e[0]-'a')), find(parent, int(e[3]-'a')) //@roots
+            parent[a] = b //@union
+        }
+    }
+    for _, e := range equations { //@check
+        if e[1] == '!' && find(parent, int(e[0]-'a')) == find(parent, int(e[3]-'a')) { //@clash
+            return false //@no
+        }
+    }
+    return true //@yes
+}
+
+func find(parent []int, x int) int {
+    for parent[x] != x { //@walk
+        parent[x] = parent[parent[x]] //@compress
+        x = parent[x] //@up
+    }
+    return x //@root
+}

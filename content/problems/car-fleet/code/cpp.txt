@@ -1,0 +1,16 @@
+int carFleet(int target, vector<int>& position, vector<int>& speed) {
+    int n = position.size();
+    vector<int> idx(n); //@order
+    iota(idx.begin(), idx.end(), 0);
+    sort(idx.begin(), idx.end(), [&](int a, int b) { //@sort
+        return position[a] > position[b];
+    });
+    vector<double> stack; //@init
+    for (int i : idx) { //@loop
+        double t = double(target - position[i]) / speed[i]; //@time
+        if (stack.empty() || t > stack.back()) { //@check
+            stack.push_back(t); //@push
+        }
+    }
+    return stack.size(); //@ret
+}

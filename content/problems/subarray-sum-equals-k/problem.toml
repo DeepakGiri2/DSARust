@@ -1,0 +1,47 @@
+slug = 'subarray-sum-equals-k'
+title = 'Subarray Sum Equals K'
+category = 'Arrays & Hashing'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '560'
+complexity = 'O(n) time · O(n) space'
+
+description = 'Count the contiguous subarrays whose values sum to k.'
+approach = "A subarray's sum is the difference of two running totals, so 'does some subarray ending here sum to k?' becomes 'has the running total ever been current − k?'. Counting how many times each running total has occurred turns that into a lookup, and the entry for 0 is seeded once because a prefix that itself sums to k needs an empty prefix to subtract."
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 12
+min = -10
+max = 10
+
+[[inputs]]
+name = 'k'
+label = 'k'
+type = 'int'
+min = -20
+max = 20
+
+[default_input]
+nums = [1, 1, 1]
+k = 2
+
+[[tests]]
+expected = '2'
+[tests.input]
+nums = [1, 1, 1]
+k = 2
+
+[[tests]]
+expected = '2'
+[tests.input]
+nums = [1, 2, 3]
+k = 3
+
+[[tests]]
+expected = '3'
+[tests.input]
+nums = [1, -1, 0]
+k = 0

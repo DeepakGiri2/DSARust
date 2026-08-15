@@ -1,0 +1,15 @@
+func maxFrequency(nums []int, k int) int {
+    sort.Ints(nums) //@sort
+    best, left, windowSum := 1, 0, 0 //@init
+    for right := 0; right < len(nums); right++ { //@loop
+        windowSum += nums[right] //@add
+        for nums[right]*(right-left+1)-windowSum > k { //@shrink
+            windowSum -= nums[left] //@sub
+            left++ //@advance
+        }
+        if right-left+1 > best { //@cmp
+            best = right - left + 1 //@newBest
+        }
+    }
+    return best //@ret
+}

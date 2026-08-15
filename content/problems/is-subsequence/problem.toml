@@ -1,0 +1,43 @@
+slug = 'is-subsequence'
+title = 'Is Subsequence'
+category = 'Arrays & Hashing'
+difficulty = 'Easy'
+tier = '250'
+complexity = 'O(|t|) time · O(1) space'
+
+description = 'Given two strings s and t, return true if s is a subsequence of t. A subsequence keeps the characters of s in order but may skip characters of t in between.'
+approach = 'Two pointers: i over s and j over t. Advance j through t; whenever t[j] matches the current s[i], advance i too. If i reaches the end of s, every character was matched in order.'
+
+[[inputs]]
+name = 's'
+label = 's (candidate subsequence)'
+type = 'string'
+max_len = 20
+
+[[inputs]]
+name = 't'
+label = 't (full string)'
+type = 'string'
+max_len = 40
+
+[default_input]
+s = 'abc'
+t = 'ahbgdc'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = 'abc'
+t = 'ahbgdc'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = 'axc'
+t = 'ahbgdc'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = ''
+t = 'ahbgdc'

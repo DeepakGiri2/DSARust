@@ -1,0 +1,30 @@
+func reverseKGroup(head *ListNode, k int) *ListNode {
+    dummy := &ListNode{Next: head} //@dummy
+    groupPrev := dummy //@groupPrev
+    for { //@loop
+        kth := kthNode(groupPrev, k) //@findKth
+        if kth == nil { //@short
+            break
+        }
+        groupNext := kth.Next //@groupNext
+        prev, cur := groupNext, groupPrev.Next //@revInit
+        for cur != groupNext { //@revLoop
+            next := cur.Next //@save
+            cur.Next = prev //@flip
+            prev = cur //@stepPrev
+            cur = next //@stepCur
+        }
+        tmp := groupPrev.Next //@tmp
+        groupPrev.Next = kth //@relink
+        groupPrev = tmp //@advance
+    }
+    return dummy.Next //@ret
+}
+
+func kthNode(cur *ListNode, k int) *ListNode {
+    for cur != nil && k > 0 { //@walk
+        cur = cur.Next
+        k--
+    }
+    return cur //@retKth
+}

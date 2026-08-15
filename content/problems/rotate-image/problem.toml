@@ -1,0 +1,29 @@
+slug = 'rotate-image'
+title = 'Rotate Image'
+category = 'Math & Geometry'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n²) time · O(1) space'
+
+description = 'Rotate an n × n matrix 90 degrees clockwise, in place.'
+approach = 'Transpose the matrix (mirror it across the main diagonal), then reverse each row. Transposing turns rows into columns; reversing then puts them in the right order. Both steps are in place, so no second matrix is needed.'
+
+[[inputs]]
+name = 'matrix'
+label = 'matrix'
+type = 'grid'
+max_len = 200
+help = "rows of digits, e.g. '123 456 789'"
+
+[default_input]
+matrix = '123 456 789'
+
+[[tests]]
+expected = '741 852 963'
+[tests.input]
+matrix = '123 456 789'
+
+[[tests]]
+expected = '31 42'
+[tests.input]
+matrix = '12 34'

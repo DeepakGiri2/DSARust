@@ -1,0 +1,8 @@
+static int hammingWeight(int n) {
+    int count = 0; //@init
+    while (n != 0) { //@loop
+        n &= n - 1; //@clear
+        count++; //@count
+    }
+    return count; //@ret
+}

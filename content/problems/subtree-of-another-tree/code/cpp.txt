@@ -1,0 +1,22 @@
+bool isSubtree(TreeNode* root, TreeNode* subRoot) {
+    if (root == nullptr) { //@rootNil
+        return false; //@retFalse
+    }
+    if (isSameTree(root, subRoot)) { //@check
+        return true; //@retTrue
+    }
+    return isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot); //@recurse
+}
+
+bool isSameTree(TreeNode* p, TreeNode* q) {
+    if (p == nullptr && q == nullptr) { //@bothNil
+        return true; //@sameTrue
+    }
+    if (p == nullptr || q == nullptr) { //@oneNil
+        return false; //@sameFalse
+    }
+    if (p->val != q->val) { //@valDiff
+        return false; //@sameDiff
+    }
+    return isSameTree(p->left, q->left) && isSameTree(p->right, q->right); //@sameRec
+}

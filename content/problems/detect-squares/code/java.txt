@@ -1,0 +1,22 @@
+static Map<Long, Integer> cnt = new HashMap<>(); //@init
+static List<int[]> pts = new ArrayList<>(); //@list
+
+static long key(int x, int y) { return ((long) x << 32) ^ (y & 0xffffffffL); }
+
+static void add(int[] p) {
+    cnt.merge(key(p[0], p[1]), 1, Integer::sum); //@add
+    pts.add(new int[]{p[0], p[1]}); //@remember
+}
+
+static int count(int[] p) {
+    int x = p[0], y = p[1]; //@query
+    int total = 0; //@total
+    for (int[] q : pts) { //@scan
+        int px = q[0], py = q[1];
+        if (Math.abs(px - x) != Math.abs(py - y) || px == x || py == y) { //@diagonal
+            continue;
+        }
+        total += cnt.getOrDefault(key(px, y), 0) * cnt.getOrDefault(key(x, py), 0); //@corners
+    }
+    return total; //@ret
+}

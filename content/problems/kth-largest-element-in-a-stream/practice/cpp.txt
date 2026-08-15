@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class KthLargest {
+    int k;
+    priority_queue<int, vector<int>, greater<int>> h;
+public:
+    KthLargest(int k, vector<int>& nums) {
+        this->k = k;
+        for (int n : nums) {
+            add(n);
+        }
+    }
+
+    int add(int val) {
+        h.push(val);
+        if ((int)h.size() > k) {
+            h.pop();
+        }
+        return h.top();
+    }
+};
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    int k = readInts()[0];
+    vector<int> nums = readInts();
+    vector<int> adds = readInts();
+    KthLargest kl(k, nums);
+    for (int v : adds) cout << kl.add(v) << "\n";
+}

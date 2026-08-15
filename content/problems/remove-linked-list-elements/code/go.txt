@@ -1,0 +1,12 @@
+func removeElements(head *ListNode, val int) *ListNode {
+    dummy := &ListNode{Next: head} //@dummy
+    prev := dummy //@prev
+    for cur := head; cur != nil; cur = cur.Next { //@loop
+        if cur.Val == val { //@match
+            prev.Next = cur.Next //@unlink
+        } else { //@keep
+            prev = cur //@advance
+        }
+    }
+    return dummy.Next //@ret
+}

@@ -1,0 +1,47 @@
+slug = 'coin-change-ii'
+title = 'Coin Change II'
+category = '2-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '518'
+complexity = 'O(amount · coins) time · O(amount) space'
+
+description = 'Count the number of distinct combinations of coins that add up to a given amount. Coins may be used any number of times.'
+approach = 'The loop order carries the whole meaning. Putting coins on the outside means every combination is counted in exactly one order — the order the coins were introduced — so 1+2 and 2+1 are the same thing and are counted once. Swapping the loops would count permutations instead. Scanning amounts upwards is what allows a coin to be reused within its own pass.'
+
+[[inputs]]
+name = 'amount'
+label = 'amount'
+type = 'int'
+min = 0
+max = 25
+
+[[inputs]]
+name = 'coins'
+label = 'coins'
+type = 'int-array'
+max_len = 5
+min = 1
+max = 25
+
+[default_input]
+amount = 5
+coins = [1, 2, 5]
+
+[[tests]]
+expected = '4'
+[tests.input]
+amount = 5
+coins = [1, 2, 5]
+
+[[tests]]
+expected = '0'
+[tests.input]
+amount = 3
+coins = [2]
+
+[[tests]]
+expected = '1'
+[tests.input]
+amount = 10
+coins = [10]

@@ -1,0 +1,15 @@
+int lastStoneWeight(vector<int>& stones) {
+    priority_queue<int> h; //@init
+    for (int s : stones) h.push(s); //@build
+    while (h.size() > 1) { //@loop
+        int y = h.top(); h.pop(); //@pop1
+        int x = h.top(); h.pop(); //@pop2
+        if (x != y) { //@check
+            h.push(y - x); //@push
+        }
+    }
+    if (h.empty()) { //@empty
+        return 0;
+    }
+    return h.top(); //@return
+}

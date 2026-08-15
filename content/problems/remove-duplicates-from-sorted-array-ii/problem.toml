@@ -1,0 +1,37 @@
+slug = 'remove-duplicates-from-sorted-array-ii'
+title = 'Remove Duplicates From Sorted Array II'
+category = 'Two Pointers'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '80'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Remove excess duplicates from a sorted array in place so that each value appears at most twice, and return the new length.'
+approach = 'A read pointer scans and a write pointer builds the answer behind it. The whole condition is one comparison: a value may be written unless it already equals the one two places back in the *output* — which, since the array is sorted, means two copies have already been kept. Comparing against the output rather than the input is what makes writing in place safe.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 14
+min = -10
+max = 10
+help = 'sorted, non-decreasing'
+
+[default_input]
+nums = [1, 1, 1, 2, 2, 3]
+
+[[tests]]
+expected = '5 | 1 1 2 2 3'
+[tests.input]
+nums = [1, 1, 1, 2, 2, 3]
+
+[[tests]]
+expected = '7 | 0 0 1 1 2 3 3'
+[tests.input]
+nums = [0, 0, 1, 1, 1, 1, 2, 3, 3]
+
+[[tests]]
+expected = '3 | 1 2 3'
+[tests.input]
+nums = [1, 2, 3]

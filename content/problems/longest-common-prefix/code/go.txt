@@ -1,0 +1,13 @@
+func longestCommonPrefix(strs []string) string {
+    prefix := "" //@init
+    for j := 0; j < len(strs[0]); j++ { //@col
+        c := strs[0][j] //@pick
+        for k := 1; k < len(strs); k++ { //@row
+            if j >= len(strs[k]) || strs[k][j] != c { //@mismatch
+                return prefix //@ret
+            }
+        }
+        prefix += string(c) //@grow
+    }
+    return prefix //@done
+}

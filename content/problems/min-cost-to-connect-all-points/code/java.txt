@@ -1,0 +1,29 @@
+static final int INF = 1 << 30;
+
+static int minCostConnectPoints(int[][] points) {
+    int n = points.length;
+    boolean[] inTree = new boolean[n]; //@init
+    int[] best = new int[n]; //@dist
+    Arrays.fill(best, INF);
+    best[0] = 0; //@seed
+    int total = 0; //@total
+    for (int iter = 0; iter < n; iter++) { //@loop
+        int u = -1; //@pick
+        for (int v = 0; v < n; v++) { //@scan
+            if (!inTree[v] && (u == -1 || best[v] < best[u])) {
+                u = v; //@closest
+            }
+        }
+        inTree[u] = true; //@add
+        total += best[u]; //@pay
+        for (int v = 0; v < n; v++) { //@relax
+            if (!inTree[v]) {
+                int d = Math.abs(points[u][0] - points[v][0]) + Math.abs(points[u][1] - points[v][1]); //@dist2
+                if (d < best[v]) { //@cheaper
+                    best[v] = d; //@update
+                }
+            }
+        }
+    }
+    return total; //@ret
+}

@@ -1,0 +1,23 @@
+static void wallsAndGates(int[][] rooms) {
+    final int INF = 2147483647;
+    Deque<int[]> q = new ArrayDeque<>(); //@init
+    for (int r = 0; r < rooms.length; r++) { //@scanRows
+        for (int c = 0; c < rooms[0].length; c++) { //@scanCols
+            if (rooms[r][c] == 0) { //@gate
+                q.addLast(new int[]{r, c}); //@seed
+            }
+        }
+    }
+    int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    while (!q.isEmpty()) { //@loop
+        int[] cur = q.pollFirst(); //@pop
+        for (int[] d : dirs) { //@neighbours
+            int nr = cur[0] + d[0], nc = cur[1] + d[1];
+            if (nr >= 0 && nr < rooms.length && nc >= 0 && nc < rooms[0].length &&
+                rooms[nr][nc] == INF) { //@empty
+                rooms[nr][nc] = rooms[cur[0]][cur[1]] + 1; //@setDist
+                q.addLast(new int[]{nr, nc}); //@push
+            }
+        }
+    }
+}

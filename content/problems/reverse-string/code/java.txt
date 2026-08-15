@@ -1,0 +1,10 @@
+static String reverseString(String s) {
+    char[] chars = s.toCharArray(); //@init
+    int l = 0, r = chars.length - 1; //@bounds
+    while (l < r) { //@loop
+        char tmp = chars[l]; chars[l] = chars[r]; chars[r] = tmp; //@swap
+        l++; //@moveL
+        r--; //@moveR
+    }
+    return new String(chars); //@ret
+}

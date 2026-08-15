@@ -1,0 +1,15 @@
+func mySqrt(x int) int {
+    lo, hi := 0, x //@bounds
+    best := 0 //@best
+    for lo <= hi { //@loop
+        mid := lo + (hi-lo)/2 //@mid
+        sq := mid * mid //@square
+        if sq <= x { //@fits
+            best = mid //@keep
+            lo = mid + 1 //@up
+        } else { //@over
+            hi = mid - 1 //@down
+        }
+    }
+    return best //@ret
+}

@@ -1,0 +1,46 @@
+slug = 'car-pooling'
+title = 'Car Pooling'
+category = 'Heap / Priority Queue'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '1094'
+complexity = 'O(n log n) time · O(n) space'
+
+description = 'A car drives one way along a road picking up and dropping off groups of passengers at given locations. Return true if it never exceeds its capacity.'
+approach = 'Process the trips in pickup order and keep the ongoing trips in a min-heap keyed by drop-off point. Before boarding anyone, drop everyone whose destination is at or behind the current pickup — since the car only moves forwards, those seats are certainly free. The heap gives the earliest drop-off in one look, so no trip is ever rescanned.'
+
+[[inputs]]
+name = 'trips'
+label = 'trips'
+type = 'string'
+max_len = 60
+help = "'passengers from to' triples, comma separated"
+
+[[inputs]]
+name = 'capacity'
+label = 'capacity'
+type = 'int'
+min = 1
+max = 30
+
+[default_input]
+trips = '2 1 5, 3 3 7'
+capacity = 4
+
+[[tests]]
+expected = 'false'
+[tests.input]
+trips = '2 1 5, 3 3 7'
+capacity = 4
+
+[[tests]]
+expected = 'true'
+[tests.input]
+trips = '2 1 5, 3 3 7'
+capacity = 5
+
+[[tests]]
+expected = 'true'
+[tests.input]
+trips = '2 1 5, 3 5 7'
+capacity = 3

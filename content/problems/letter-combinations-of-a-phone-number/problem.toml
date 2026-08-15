@@ -1,0 +1,28 @@
+slug = 'letter-combinations-of-a-phone-number'
+title = 'Letter Combinations of a Phone Number'
+category = 'Backtracking'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(4^n · n) time · O(n) space'
+
+description = 'Given digits 2-9, return every letter combination the number could spell, using the phone keypad mapping.'
+approach = "A depth-first walk over the digits: at depth i choose one of the letters for digit i, recurse, and undo. The recursion depth is the number of digits, and each level branches over that digit's three or four letters."
+
+[[inputs]]
+name = 'digits'
+label = 'digits'
+type = 'string'
+max_len = 4
+
+[default_input]
+digits = '23'
+
+[[tests]]
+expected = '9'
+[tests.input]
+digits = '23'
+
+[[tests]]
+expected = '3'
+[tests.input]
+digits = '2'

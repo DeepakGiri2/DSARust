@@ -1,0 +1,15 @@
+static ListNode mergeKLists(ListNode[] lists) {
+    if (lists.length == 0) { //@empty
+        return null; //@retNil
+    }
+    List<ListNode> cur = new ArrayList<>(Arrays.asList(lists));
+    while (cur.size() > 1) { //@round
+        List<ListNode> merged = new ArrayList<>(); //@newRound
+        for (int i = 0; i < cur.size(); i += 2) { //@pairs
+            ListNode b = i + 1 < cur.size() ? cur.get(i + 1) : null; //@hasPair
+            merged.add(mergeTwo(cur.get(i), b)); //@merge
+        }
+        cur = merged; //@replace
+    }
+    return cur.get(0); //@ret
+}

@@ -1,0 +1,18 @@
+func countSubstrings(s string) int {
+    count := 0 //@init
+    for i := 0; i < len(s); i++ { //@loop
+        count += expand(s, i, i) //@odd
+        count += expand(s, i, i+1) //@even
+    }
+    return count //@ret
+}
+
+func expand(s string, l, r int) int {
+    found := 0 //@expInit
+    for l >= 0 && r < len(s) && s[l] == s[r] { //@grow
+        found++ //@hit
+        l--
+        r++
+    }
+    return found //@expRet
+}

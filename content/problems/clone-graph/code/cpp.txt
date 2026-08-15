@@ -1,0 +1,19 @@
+Node* cloneGraph(Node* node) {
+    if (node == nullptr) { //@nilcheck
+        return nullptr; //@retnil
+    }
+    unordered_map<Node*, Node*> cloned; //@mapinit
+    return dfs(node, cloned); //@call
+}
+
+Node* dfs(Node* cur, unordered_map<Node*, Node*>& cloned) {
+    if (cloned.count(cur)) { //@seen
+        return cloned[cur]; //@retseen
+    }
+    Node* clone = new Node(cur->val); //@create
+    cloned[cur] = clone; //@record
+    for (Node* nb : cur->neighbors) { //@nbloop
+        clone->neighbors.push_back(dfs(nb, cloned)); //@wire
+    }
+    return clone; //@retcopy
+}

@@ -1,0 +1,33 @@
+slug = 'diameter-of-binary-tree'
+title = 'Diameter of Binary Tree'
+category = 'Trees'
+difficulty = 'Easy'
+tier = '150'
+complexity = 'O(n) time · O(h) space (recursion stack, h = height)'
+
+description = 'Given the root of a binary tree, return the length of its diameter — the number of edges on the longest path between any two nodes. That path may or may not pass through the root. Watch how a single post-order DFS both measures heights and tracks the best diameter seen.'
+approach = 'Post-order DFS: for each node compute the height of its left and right subtrees. The longest path THROUGH that node uses leftH + rightH edges, so keep a running best = max(best, leftH + rightH). The function itself returns the height (1 + the taller subtree) up to the parent.'
+
+[[inputs]]
+name = 'root'
+label = "tree (level-order, 'n' = null)"
+type = 'tree'
+max_len = 40
+
+[default_input]
+root = '1 2 3 4 5'
+
+[[tests]]
+expected = '3'
+[tests.input]
+root = '1 2 3 4 5'
+
+[[tests]]
+expected = '0'
+[tests.input]
+root = '1'
+
+[[tests]]
+expected = '2'
+[tests.input]
+root = '1 2 3'

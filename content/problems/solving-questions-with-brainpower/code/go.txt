@@ -1,0 +1,19 @@
+func mostPoints(questions [][]int) int64 {
+    n := len(questions)
+    dp := make([]int64, n+1) //@init
+    for i := n - 1; i >= 0; i-- { //@loop
+        points, brain := questions[i][0], questions[i][1] //@read
+        next := i + brain + 1 //@jump
+        take := int64(points) //@take
+        if next <= n { //@inRange
+            take += dp[next] //@addFuture
+        }
+        skip := dp[i+1] //@skip
+        if take > skip { //@compare
+            dp[i] = take //@storeTake
+        } else {
+            dp[i] = skip //@storeSkip
+        }
+    }
+    return dp[0] //@ret
+}

@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+string minWindow(string s, string t) {
+    if (t.empty()) {
+        return "";
+    }
+    unordered_map<char, int> need;
+    for (int i = 0; i < (int)t.size(); i++) {
+        need[t[i]]++;
+    }
+    unordered_map<char, int> window;
+    int have = 0, needCount = (int)need.size();
+    int resL = -1, resR = -1, resLen = INT_MAX;
+    int left = 0;
+    for (int right = 0; right < (int)s.size(); right++) {
+        char c = s[right];
+        window[c]++;
+        if (need.count(c) && window[c] == need[c]) {
+            have++;
+        }
+        while (have == needCount) {
+            if (right - left + 1 < resLen) {
+                resL = left; resR = right;
+                resLen = right - left + 1;
+            }
+            window[s[left]]--;
+            if (need.count(s[left]) && window[s[left]] < need[s[left]]) {
+                have--;
+            }
+            left++;
+        }
+    }
+    if (resLen == INT_MAX) {
+        return "";
+    }
+    return s.substr(resL, resR - resL + 1);
+}
+
+int main() {
+    string s, t;
+    getline(cin, s);
+    getline(cin, t);
+    cout << minWindow(s, t) << endl;
+}

@@ -1,0 +1,9 @@
+func maxProfit(prices []int) int {
+    profit := 0 //@init
+    for i := 1; i < len(prices); i++ { //@loop
+        if prices[i] > prices[i-1] { //@up
+            profit += prices[i] - prices[i-1] //@add
+        }
+    }
+    return profit //@ret
+}

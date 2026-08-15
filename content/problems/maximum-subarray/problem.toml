@@ -1,0 +1,33 @@
+slug = 'maximum-subarray'
+title = 'Maximum Subarray'
+category = 'Greedy'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Given an integer array nums, find the contiguous subarray (containing at least one number) with the largest sum, and return that sum.'
+approach = "Kadane's algorithm. Walk left to right keeping cur = the best sum of a subarray ending here. At each element, either extend the previous subarray or start fresh at nums[i] — whichever is larger. Track the best cur ever seen."
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+
+[[tests]]
+expected = '6'
+[tests.input]
+nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+
+[[tests]]
+expected = '23'
+[tests.input]
+nums = [5, 4, -1, 7, 8]
+
+[[tests]]
+expected = '-1'
+[tests.input]
+nums = [-3, -1, -2]

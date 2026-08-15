@@ -1,0 +1,42 @@
+slug = 'remove-element'
+title = 'Remove Element'
+category = 'Arrays & Hashing'
+difficulty = 'Easy'
+tier = '250'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Given an array nums and a value val, remove all occurrences of val in place and return the new length k, so that the first k elements hold the values that are kept. Watch a slow pointer k mark the write position while a fast pointer i scans every element.'
+approach = 'Two pointers over one array. The fast pointer i reads every element; whenever nums[i] is not val, copy it to nums[k] and advance the slow pointer k. At the end k is the count of kept elements.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+
+[[inputs]]
+name = 'val'
+label = 'val'
+type = 'int'
+
+[default_input]
+nums = [3, 2, 2, 3]
+val = 3
+
+[[tests]]
+expected = "2\n2 2"
+[tests.input]
+nums = [3, 2, 2, 3]
+val = 3
+
+[[tests]]
+expected = "5\n0 1 3 0 4"
+[tests.input]
+nums = [0, 1, 2, 2, 3, 0, 4, 2]
+val = 2
+
+[[tests]]
+expected = "2\n4 5"
+[tests.input]
+nums = [4, 5]
+val = 9

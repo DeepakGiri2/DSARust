@@ -1,0 +1,27 @@
+static int[] getOrder(int[][] tasks) {
+    int n = tasks.length;
+    Integer[] idx = new Integer[n]; //@sort
+    for (int i = 0; i < n; i++) idx[i] = i;
+    Arrays.sort(idx, (a, b) -> tasks[a][0] - tasks[b][0]);
+    PriorityQueue<int[]> h = new PriorityQueue<>((a, b) ->
+        a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]); //@init
+    long time = 0; //@clock
+    List<Integer> order = new ArrayList<>(); //@order
+    int i = 0; //@cursor
+    while (order.size() < n) { //@loop
+        while (i < n && tasks[idx[i]][0] <= time) { //@arrive
+            h.add(new int[]{tasks[idx[i]][1], idx[i]}); //@enqueue
+            i++;
+        }
+        if (h.isEmpty()) { //@idle
+            time = tasks[idx[i]][0]; //@jump
+            continue;
+        }
+        int[] t = h.poll(); //@pick
+        time += t[0]; //@run
+        order.add(t[1]); //@append
+    }
+    int[] out = new int[n];
+    for (int k = 0; k < n; k++) out[k] = order.get(k);
+    return out; //@ret
+}

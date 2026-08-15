@@ -1,0 +1,30 @@
+static List<List<String>> res = new ArrayList<>(); //@init
+static Set<Integer> cols = new HashSet<>(); //@cols
+static Set<Integer> diag = new HashSet<>(); //@diag
+static Set<Integer> anti = new HashSet<>(); //@anti
+static int[] board; //@board
+
+static void back(int row, int n) {
+    if (row == n) { //@complete
+        res.add(render(board)); //@record
+        return; //@retDone
+    }
+    for (int c = 0; c < n; c++) { //@loop
+        if (cols.contains(c) || diag.contains(row - c) || anti.contains(row + c)) { //@attacked
+            continue;
+        }
+        cols.add(c); diag.add(row - c); anti.add(row + c); //@place
+        board[row] = c;
+        back(row + 1, n); //@recurse
+        cols.remove(c); //@undo
+        diag.remove(row - c);
+        anti.remove(row + c);
+    }
+}
+
+static List<List<String>> solveNQueens(int n) {
+    res.clear(); cols.clear(); diag.clear(); anti.clear();
+    board = new int[n];
+    back(0, n); //@call
+    return res; //@ret
+}

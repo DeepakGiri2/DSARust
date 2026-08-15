@@ -1,0 +1,43 @@
+slug = 'valid-anagram'
+title = 'Valid Anagram'
+category = 'Arrays & Hashing'
+difficulty = 'Easy'
+tier = '50'
+complexity = 'O(n) time · O(1) space (alphabet-bounded)'
+
+description = 'Given two strings s and t, return true if t is an anagram of s — that is, t uses exactly the same characters as s, each the same number of times.'
+approach = 'Count every character in s in a hash map. Then walk t, decrementing each count. If a count ever drops below zero, t has a character s does not (or too many of one), so they are not anagrams. Equal lengths plus no negative counts means they match.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 12
+
+[[inputs]]
+name = 't'
+label = 't'
+type = 'string'
+max_len = 12
+
+[default_input]
+s = 'racecar'
+t = 'carrace'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = 'racecar'
+t = 'carrace'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = 'jar'
+t = 'jam'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = 'ab'
+t = 'a'

@@ -1,0 +1,16 @@
+bool isAnagram(string s, string t) {
+    if (s.size() != t.size()) { //@len
+        return false; //@lenbad
+    }
+    unordered_map<char, int> count; //@init
+    for (char c : s) { //@builds
+        count[c]++; //@inc
+    }
+    for (char c : t) { //@scant
+        count[c]--; //@dec
+        if (count[c] < 0) { //@check
+            return false; //@bad
+        }
+    }
+    return true; //@ok
+}

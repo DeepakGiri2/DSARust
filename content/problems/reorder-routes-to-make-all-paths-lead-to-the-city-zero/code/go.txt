@@ -1,0 +1,23 @@
+func minReorder(n int, connections [][]int) int {
+    adj := make([][][2]int, n) //@build
+    for _, c := range connections { //@edges
+        adj[c[0]] = append(adj[c[0]], [2]int{c[1], 1}) //@forward
+        adj[c[1]] = append(adj[c[1]], [2]int{c[0], 0}) //@backward
+    }
+    visited := make([]bool, n) //@init
+    count := dfs(adj, visited, 0) //@call
+    return count //@ret
+}
+
+func dfs(adj [][][2]int, visited []bool, node int) int {
+    visited[node] = true //@visit
+    total := 0 //@total
+    for _, e := range adj[node] { //@neighbours
+        if visited[e[0]] { //@seen
+            continue
+        }
+        total += e[1] //@cost
+        total += dfs(adj, visited, e[0]) //@recurse
+    }
+    return total //@ret2
+}

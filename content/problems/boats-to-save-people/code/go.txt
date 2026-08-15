@@ -1,0 +1,13 @@
+func numRescueBoats(people []int, limit int) int {
+    sort.Ints(people) //@sort
+    l, r := 0, len(people)-1 //@init
+    boats := 0 //@boats
+    for l <= r { //@loop
+        if people[l]+people[r] <= limit { //@fit
+            l++ //@moveL
+        }
+        r-- //@moveR
+        boats++ //@count
+    }
+    return boats //@ret
+}

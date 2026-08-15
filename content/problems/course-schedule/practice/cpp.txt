@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool dfs(int course, vector<vector<int>>& adj, vector<int>& state);
+
+bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+    vector<vector<int>> adj(numCourses);
+    for (auto& p : prerequisites) {
+        adj[p[0]].push_back(p[1]);
+    }
+    vector<int> state(numCourses, 0);
+    for (int i = 0; i < numCourses; i++) {
+        if (!dfs(i, adj, state)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool dfs(int course, vector<vector<int>>& adj, vector<int>& state) {
+    if (state[course] == 1) {
+        return false;
+    }
+    if (state[course] == 2) {
+        return true;
+    }
+    state[course] = 1;
+    for (int dep : adj[course]) {
+        if (!dfs(dep, adj, state)) {
+            return false;
+        }
+    }
+    state[course] = 2;
+    return true;
+}
+
+int main() {
+    string line1;
+    getline(cin, line1);
+    int numCourses = stoi(line1);
+    string line2;
+    getline(cin, line2);
+    vector<vector<int>> prerequisites;
+    istringstream ss(line2);
+    string tok;
+    while (ss >> tok) {
+        size_t comma = tok.find(',');
+        int a = stoi(tok.substr(0, comma));
+        int b = stoi(tok.substr(comma + 1));
+        prerequisites.push_back({a, b});
+    }
+    cout << (canFinish(numCourses, prerequisites) ? "true" : "false") << endl;
+}

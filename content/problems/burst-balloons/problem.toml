@@ -1,0 +1,36 @@
+slug = 'burst-balloons'
+title = 'Burst Balloons'
+category = '2-D Dynamic Programming'
+difficulty = 'Hard'
+tier = '150'
+leetcode = '312'
+complexity = 'O(n³) time · O(n²) space'
+
+description = 'Bursting a balloon earns the product of it and its two current neighbours, and its neighbours then become adjacent. Maximise the total earned.'
+approach = 'Asking which balloon to burst *first* fails, because that split leaves two halves whose neighbours depend on each other. Asking which to burst *last* works: at that moment its neighbours are exactly the walls of the range, so the two sides become genuinely independent subproblems. Padding both ends with a virtual 1 removes the edge cases.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 6
+min = 0
+max = 15
+
+[default_input]
+nums = [3, 1, 5, 8]
+
+[[tests]]
+expected = '167'
+[tests.input]
+nums = [3, 1, 5, 8]
+
+[[tests]]
+expected = '10'
+[tests.input]
+nums = [1, 5]
+
+[[tests]]
+expected = '7'
+[tests.input]
+nums = [7]

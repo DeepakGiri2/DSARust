@@ -1,0 +1,40 @@
+slug = 'flatten-binary-tree-to-linked-list'
+title = 'Flatten Binary Tree to Linked List'
+category = 'Trees'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '114'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Flatten the tree into a linked list in place, using the right pointers and following preorder. Every left pointer must end up null.'
+approach = "Morris-style threading, no stack and no recursion. At each node with a left subtree, find that subtree's rightmost node — the last node preorder visits before returning to the current node's right subtree — and graft the right subtree onto it. Then move the left subtree over to the right and null the left pointer. Walking right from there repeats the process, and each edge is traversed a constant number of times."
+
+[[inputs]]
+name = 'tree'
+label = 'tree'
+type = 'tree'
+max_len = 60
+help = 'level order, n for a missing child'
+
+[default_input]
+tree = '1 2 5 3 4 n 6'
+
+[[tests]]
+expected = '1 2 3 4 5 6'
+[tests.input]
+tree = '1 2 5 3 4 n 6'
+
+[[tests]]
+expected = '1 2 3'
+[tests.input]
+tree = '1 2 3'
+
+[[tests]]
+expected = '1 2 3'
+[tests.input]
+tree = '1 n 2 n 3'
+
+[[tests]]
+expected = '4 2 1 3 6'
+[tests.input]
+tree = '4 2 6 1 3'

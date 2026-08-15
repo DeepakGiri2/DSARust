@@ -1,0 +1,39 @@
+slug = 'replace-words'
+title = 'Replace Words'
+category = 'Tries'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '648'
+complexity = 'O(total characters) time · O(dictionary) space'
+
+description = 'Replace every word in a sentence with the shortest dictionary root that is a prefix of it.'
+approach = 'Walking a word down a trie visits its prefixes in increasing length, so the *first* node marked as a dictionary word is automatically the shortest root — no comparison of candidate lengths is needed anywhere. The walk also stops the moment the trie runs out of matching links, so a word with no root costs only as many steps as it shares with the dictionary.'
+
+[[inputs]]
+name = 'dictionary'
+label = 'dictionary'
+type = 'string'
+max_len = 60
+help = 'roots separated by spaces'
+
+[[inputs]]
+name = 'sentence'
+label = 'sentence'
+type = 'string'
+max_len = 60
+
+[default_input]
+dictionary = 'cat bat rat'
+sentence = 'the cattle was rattled by the battery'
+
+[[tests]]
+expected = 'the cat was rat by the bat'
+[tests.input]
+dictionary = 'cat bat rat'
+sentence = 'the cattle was rattled by the battery'
+
+[[tests]]
+expected = 'a a b c'
+[tests.input]
+dictionary = 'a b c'
+sentence = 'aadsfasf absbs bbab cadsfafs'

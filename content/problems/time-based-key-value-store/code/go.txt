@@ -1,0 +1,28 @@
+type TimeMap struct {
+    store map[string][]entry //@init
+}
+
+type entry struct {
+    stamp int
+    value string
+}
+
+func (t *TimeMap) Set(key, value string, stamp int) {
+    t.store[key] = append(t.store[key], entry{stamp, value}) //@set
+}
+
+func (t *TimeMap) Get(key string, stamp int) string {
+    hist := t.store[key] //@hist
+    lo, hi := 0, len(hist)-1 //@bounds
+    best := "" //@best
+    for lo <= hi { //@loop
+        mid := lo + (hi-lo)/2 //@mid
+        if hist[mid].stamp <= stamp { //@cmp
+            best = hist[mid].value //@keep
+            lo = mid + 1 //@later
+        } else {
+            hi = mid - 1 //@earlier
+        }
+    }
+    return best //@ret
+}

@@ -1,0 +1,16 @@
+func isPerfectSquare(num int) bool {
+    lo, hi := 1, num //@bounds
+    for lo <= hi { //@loop
+        mid := lo + (hi-lo)/2 //@mid
+        sq := mid * mid //@square
+        if sq == num { //@hit
+            return true //@retTrue
+        }
+        if sq < num { //@small
+            lo = mid + 1 //@up
+        } else { //@big
+            hi = mid - 1 //@down
+        }
+    }
+    return false //@retFalse
+}

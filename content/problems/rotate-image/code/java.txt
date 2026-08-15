@@ -1,0 +1,17 @@
+static void rotate(int[][] matrix) {
+    int n = matrix.length;
+    for (int i = 0; i < n; i++) { //@tOuter
+        for (int j = i + 1; j < n; j++) { //@tInner
+            int t = matrix[i][j]; //@swap
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = t;
+        }
+    }
+    for (int i = 0; i < n; i++) { //@rOuter
+        for (int l = 0, r = n - 1; l < r; l++, r--) { //@rInner
+            int t = matrix[i][l]; //@rSwap
+            matrix[i][l] = matrix[i][r];
+            matrix[i][r] = t;
+        }
+    }
+}

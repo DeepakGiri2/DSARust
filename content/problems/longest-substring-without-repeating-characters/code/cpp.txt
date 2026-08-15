@@ -1,0 +1,15 @@
+int lengthOfLongestSubstring(string s) {
+    unordered_map<char, int> last; //@init
+    int best = 0, left = 0; //@init2
+    for (int right = 0; right < (int)s.size(); right++) { //@loop
+        char c = s[right];
+        if (last.count(c) && last[c] >= left) { //@check
+            left = last[c] + 1; //@shrink
+        }
+        last[c] = right; //@store
+        if (right - left + 1 > best) { //@cmp
+            best = right - left + 1; //@newBest
+        }
+    }
+    return best; //@ret
+}

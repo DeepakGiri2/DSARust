@@ -1,0 +1,43 @@
+slug = 'subtree-of-another-tree'
+title = 'Subtree of Another Tree'
+category = 'Trees'
+difficulty = 'Easy'
+tier = '50'
+complexity = 'O(m · n) time · O(h) space (recursion stack)'
+
+description = 'Given the roots of two binary trees root and subRoot, return true if there is a node in root such that the subtree rooted there is identical to subRoot. Watch the scan walk every node of root and, at each one, run a full same-tree comparison against subRoot.'
+approach = 'Scan every node of root. At each node, reuse isSameTree to test whether the subtree hanging off that node is structurally and value-identical to subRoot. A single match anywhere means true; if the scan reaches nil without a match on any branch, the answer is false.'
+
+[[inputs]]
+name = 'root'
+label = "root (level-order, 'n' = null)"
+type = 'string'
+max_len = 40
+
+[[inputs]]
+name = 'subRoot'
+label = "subRoot (level-order, 'n' = null)"
+type = 'string'
+max_len = 40
+
+[default_input]
+root = '3 4 5 1 2'
+subRoot = '4 1 2'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+root = '3 4 5 1 2'
+subRoot = '4 1 2'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+root = '3 4 5 1 2'
+subRoot = '4 1 3'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+root = '1 2 3'
+subRoot = '2'

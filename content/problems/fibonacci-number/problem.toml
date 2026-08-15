@@ -1,0 +1,40 @@
+slug = 'fibonacci-number'
+title = 'Fibonacci Number'
+category = '1-D Dynamic Programming'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '509'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Return the nth Fibonacci number, where F(0) = 0, F(1) = 1 and every later term is the sum of the two before it.'
+approach = 'The naive recursion recomputes the same subproblems exponentially often. Going bottom-up computes each term once — and since a term only ever looks two places back, the whole table collapses to two variables. That is the smallest possible instance of the idea behind every rolling-array DP.'
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 0
+max = 40
+
+[default_input]
+n = 10
+
+[[tests]]
+expected = '55'
+[tests.input]
+n = 10
+
+[[tests]]
+expected = '1'
+[tests.input]
+n = 2
+
+[[tests]]
+expected = '0'
+[tests.input]
+n = 0
+
+[[tests]]
+expected = '1'
+[tests.input]
+n = 1

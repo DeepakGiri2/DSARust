@@ -1,0 +1,32 @@
+static void mark(char[][] board, int r, int c) {
+    if (r < 0 || r >= board.length || c < 0 || c >= board[0].length ||
+        board[r][c] != 'O') { //@bounds
+        return;
+    }
+    board[r][c] = 'S'; //@save
+    mark(board, r + 1, c); //@down
+    mark(board, r - 1, c); //@up
+    mark(board, r, c + 1); //@right
+    mark(board, r, c - 1); //@left
+}
+
+static void solve(char[][] board) {
+    int rows = board.length, cols = board[0].length;
+    for (int r = 0; r < rows; r++) { //@leftRight
+        mark(board, r, 0);
+        mark(board, r, cols - 1);
+    }
+    for (int c = 0; c < cols; c++) { //@topBottom
+        mark(board, 0, c);
+        mark(board, rows - 1, c);
+    }
+    for (int r = 0; r < rows; r++) { //@rowLoop
+        for (int c = 0; c < cols; c++) { //@colLoop
+            if (board[r][c] == 'O') { //@captured
+                board[r][c] = 'X'; //@flip
+            } else if (board[r][c] == 'S') { //@safe
+                board[r][c] = 'O'; //@restore
+            }
+        }
+    }
+}

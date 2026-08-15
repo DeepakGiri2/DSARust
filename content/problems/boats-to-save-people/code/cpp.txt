@@ -1,0 +1,13 @@
+int numRescueBoats(vector<int>& people, int limit) {
+    sort(people.begin(), people.end()); //@sort
+    int l = 0, r = (int)people.size() - 1; //@init
+    int boats = 0; //@boats
+    while (l <= r) { //@loop
+        if (people[l] + people[r] <= limit) { //@fit
+            l++; //@moveL
+        }
+        r--; //@moveR
+        boats++; //@count
+    }
+    return boats; //@ret
+}

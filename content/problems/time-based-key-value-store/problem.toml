@@ -1,0 +1,29 @@
+slug = 'time-based-key-value-store'
+title = 'Time Based Key-Value Store'
+category = 'Binary Search'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(log n) per get · O(n) space'
+
+description = 'Store multiple values per key, each stamped with a timestamp, and retrieve the value that was current at a given time — the one with the largest timestamp not exceeding it.'
+approach = "Timestamps arrive in increasing order, so each key's history is already sorted. get is then a binary search for the rightmost entry at or before the query time, which is the classic 'largest value <= target' variant."
+
+[[inputs]]
+name = 'ops'
+label = 'ops'
+type = 'string'
+max_len = 72
+help = 'set/get commands, comma separated'
+
+[default_input]
+ops = 'set foo bar 1, get foo 1, get foo 3, set foo baz 4, get foo 4, get foo 5'
+
+[[tests]]
+expected = 'bar bar'
+[tests.input]
+ops = 'set foo bar 1, get foo 1, get foo 3'
+
+[[tests]]
+expected = ''
+[tests.input]
+ops = 'set a x 5, get a 1'

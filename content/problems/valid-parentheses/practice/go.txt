@@ -1,0 +1,36 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strings"
+)
+
+func isValid(s string) bool {
+    pairs := map[byte]byte{')': '(', ']': '[', '}': '{'}
+    stack := []byte{}
+    for i := 0; i < len(s); i++ {
+        c := s[i]
+        if c == '(' || c == '[' || c == '{' {
+            stack = append(stack, c)
+        } else {
+            if len(stack) == 0 {
+                return false
+            }
+            top := stack[len(stack)-1]
+            if top != pairs[c] {
+                return false
+            }
+            stack = stack[:len(stack)-1]
+        }
+    }
+    return len(stack) == 0
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    s := strings.TrimSpace(line)
+    fmt.Println(isValid(s))
+}

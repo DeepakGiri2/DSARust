@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isAnagram(string s, string t) {
+    if (s.size() != t.size()) {
+        return false;
+    }
+    unordered_map<char, int> count;
+    for (char c : s) {
+        count[c]++;
+    }
+    for (char c : t) {
+        count[c]--;
+        if (count[c] < 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main() {
+    string s, t;
+    getline(cin, s);
+    getline(cin, t);
+    while (!s.empty() && (s.back() == '\r' || s.back() == '\n')) s.pop_back();
+    while (!t.empty() && (t.back() == '\r' || t.back() == '\n')) t.pop_back();
+    cout << (isAnagram(s, t) ? "true" : "false") << endl;
+}

@@ -1,0 +1,46 @@
+slug = 'count-sub-islands'
+title = 'Count Sub Islands'
+category = 'Graphs'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '1905'
+complexity = 'O(rows · cols) time · O(rows · cols) space'
+
+description = 'An island in the second grid is a sub-island if every one of its cells is also land in the first grid. Count them.'
+approach = 'An ordinary flood fill, with one verdict carried out of it. The trap is short-circuiting: the moment a cell fails, it is tempting to stop — but the rest of the island must still be sunk, or its remaining cells will be counted as further islands. So every branch is explored regardless, and the failure is combined into the result rather than thrown.'
+
+[[inputs]]
+name = 'grid1'
+label = 'grid1'
+type = 'grid'
+max_len = 200
+help = '1 = land'
+
+[[inputs]]
+name = 'grid2'
+label = 'grid2'
+type = 'grid'
+max_len = 200
+help = '1 = land'
+
+[default_input]
+grid1 = '110 010 011'
+grid2 = '110 100 001'
+
+[[tests]]
+expected = '1'
+[tests.input]
+grid1 = '110 010 011'
+grid2 = '110 100 001'
+
+[[tests]]
+expected = '2'
+[tests.input]
+grid1 = '110 010 011'
+grid2 = '110 000 001'
+
+[[tests]]
+expected = '4'
+[tests.input]
+grid1 = '111 111 111'
+grid2 = '101 000 101'

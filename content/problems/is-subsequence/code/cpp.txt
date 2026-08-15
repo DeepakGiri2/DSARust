@@ -1,0 +1,10 @@
+bool isSubsequence(string s, string t) {
+    int i = 0, j = 0; //@init
+    while (i < (int)s.size() && j < (int)t.size()) { //@loop
+        if (s[i] == t[j]) { //@match
+            i++; //@advI
+        }
+        j++; //@advJ
+    }
+    return i == (int)s.size(); //@ret
+}

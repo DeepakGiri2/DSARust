@@ -1,0 +1,23 @@
+static int trap(int[] height) {
+    int l = 0, r = height.length - 1; //@init
+    int leftMax = 0, rightMax = 0; //@max
+    int water = 0; //@water
+    while (l < r) { //@loop
+        if (height[l] < height[r]) { //@which
+            if (height[l] >= leftMax) { //@chkL
+                leftMax = height[l]; //@setL
+            } else {
+                water += leftMax - height[l]; //@addL
+            }
+            l++; //@moveL
+        } else {
+            if (height[r] >= rightMax) { //@chkR
+                rightMax = height[r]; //@setR
+            } else {
+                water += rightMax - height[r]; //@addR
+            }
+            r--; //@moveR
+        }
+    }
+    return water; //@ret
+}

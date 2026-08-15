@@ -1,0 +1,20 @@
+static boolean isValidSudoku(char[][] board) {
+    Set<String> seen = new HashSet<>(); //@init
+    for (int r = 0; r < 9; r++) { //@rowloop
+        for (int c = 0; c < 9; c++) { //@colloop
+            char v = board[r][c]; //@read
+            if (v == '.') { //@empty
+                continue;
+            }
+            int b = (r / 3) * 3 + c / 3;
+            String[] keys = {"r" + r + "#" + v, "c" + c + "#" + v, "b" + b + "#" + v}; //@keys
+            for (String k : keys) { //@each
+                if (seen.contains(k)) { //@check
+                    return false; //@bad
+                }
+                seen.add(k); //@mark
+            }
+        }
+    }
+    return true; //@ok
+}

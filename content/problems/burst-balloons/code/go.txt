@@ -1,0 +1,23 @@
+func maxCoins(nums []int) int {
+    n := len(nums)
+    vals := make([]int, n+2) //@pad
+    vals[0], vals[n+1] = 1, 1
+    copy(vals[1:], nums)
+    dp := make([][]int, n+2) //@init
+    for i := range dp {
+        dp[i] = make([]int, n+2)
+    }
+    for length := 1; length <= n; length++ { //@len
+        for left := 1; left+length-1 <= n; left++ { //@left
+            right := left + length - 1 //@right
+            for k := left; k <= right; k++ { //@last
+                gain := vals[left-1] * vals[k] * vals[right+1] //@gain
+                total := dp[left][k-1] + gain + dp[k+1][right] //@total
+                if total > dp[left][right] { //@better
+                    dp[left][right] = total //@store
+                }
+            }
+        }
+    }
+    return dp[1][n] //@ret
+}

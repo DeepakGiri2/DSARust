@@ -1,0 +1,16 @@
+func inorderTraversal(root *TreeNode) []int {
+    out := []int{} //@init
+    stack := []*TreeNode{} //@stack
+    cur := root //@cur
+    for cur != nil || len(stack) > 0 { //@loop
+        for cur != nil { //@dive
+            stack = append(stack, cur) //@push
+            cur = cur.Left //@left
+        }
+        cur = stack[len(stack)-1] //@pop
+        stack = stack[:len(stack)-1]
+        out = append(out, cur.Val) //@visit
+        cur = cur.Right //@right
+    }
+    return out //@ret
+}

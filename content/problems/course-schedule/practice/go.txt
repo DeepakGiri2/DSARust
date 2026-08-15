@@ -1,0 +1,55 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func canFinish(numCourses int, prerequisites [][]int) bool {
+    adj := make([][]int, numCourses)
+    for _, p := range prerequisites {
+        adj[p[0]] = append(adj[p[0]], p[1])
+    }
+    state := make([]int, numCourses)
+    for i := 0; i < numCourses; i++ {
+        if !dfs(i, adj, state) {
+            return false
+        }
+    }
+    return true
+}
+
+func dfs(course int, adj [][]int, state []int) bool {
+    if state[course] == 1 {
+        return false
+    }
+    if state[course] == 2 {
+        return true
+    }
+    state[course] = 1
+    for _, dep := range adj[course] {
+        if !dfs(dep, adj, state) {
+            return false
+        }
+    }
+    state[course] = 2
+    return true
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line1, _ := reader.ReadString('\n')
+    numCourses, _ := strconv.Atoi(strings.TrimSpace(line1))
+    line2, _ := reader.ReadString('\n')
+    prerequisites := [][]int{}
+    for _, tok := range strings.Fields(line2) {
+        parts := strings.Split(tok, ",")
+        a, _ := strconv.Atoi(parts[0])
+        b, _ := strconv.Atoi(parts[1])
+        prerequisites = append(prerequisites, []int{a, b})
+    }
+    fmt.Println(canFinish(numCourses, prerequisites))
+}

@@ -1,0 +1,11 @@
+static Deque<int[]> stack = new ArrayDeque<>(); //@init
+
+static int next(int price) {
+    int span = 1; //@span
+    while (!stack.isEmpty() && stack.peek()[0] <= price) { //@while
+        span += stack.peek()[1]; //@absorb
+        stack.pop(); //@pop
+    }
+    stack.push(new int[]{price, span}); //@push
+    return span; //@ret
+}

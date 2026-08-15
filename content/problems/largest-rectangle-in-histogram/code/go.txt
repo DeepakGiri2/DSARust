@@ -1,0 +1,19 @@
+func largestRectangleArea(heights []int) int {
+    best := 0 //@init
+    type bar struct{ start, height int }
+    stack := []bar{} //@stack
+    for i, h := range heights { //@loop
+        start := i //@start
+        for len(stack) > 0 && stack[len(stack)-1].height > h { //@while
+            top := stack[len(stack)-1] //@peek
+            stack = stack[:len(stack)-1] //@pop
+            best = max(best, top.height*(i-top.start)) //@area
+            start = top.start //@inherit
+        }
+        stack = append(stack, bar{start, h}) //@push
+    }
+    for _, b := range stack { //@drain
+        best = max(best, b.height*(len(heights)-b.start)) //@tail
+    }
+    return best //@ret
+}

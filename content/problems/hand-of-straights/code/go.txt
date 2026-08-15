@@ -1,0 +1,23 @@
+func isNStraightHand(hand []int, groupSize int) bool {
+    if len(hand)%groupSize != 0 { //@divisible
+        return false
+    }
+    count := map[int]int{} //@count
+    for _, c := range hand {
+        count[c]++
+    }
+    keys := sortedKeys(count) //@sort
+    for _, c := range keys { //@loop
+        n := count[c] //@need
+        if n == 0 { //@spent
+            continue
+        }
+        for k := 0; k < groupSize; k++ { //@build
+            if count[c+k] < n { //@missing
+                return false //@no
+            }
+            count[c+k] -= n //@consume
+        }
+    }
+    return true //@yes
+}

@@ -1,0 +1,12 @@
+func mergeTrees(a *TreeNode, b *TreeNode) *TreeNode {
+    if a == nil { //@aNil
+        return b
+    }
+    if b == nil { //@bNil
+        return a
+    }
+    merged := &TreeNode{Val: a.Val + b.Val} //@sum
+    merged.Left = mergeTrees(a.Left, b.Left) //@recL
+    merged.Right = mergeTrees(a.Right, b.Right) //@recR
+    return merged //@ret
+}

@@ -1,0 +1,14 @@
+vector<int> twoSumII(vector<int>& numbers, int target) {
+    int l = 0, r = (int)numbers.size() - 1; //@init
+    while (l < r) { //@loop
+        int sum = numbers[l] + numbers[r]; //@sum
+        if (sum == target) { //@cmp
+            return {l + 1, r + 1}; //@found
+        } else if (sum < target) { //@less
+            l++; //@moveL
+        } else {
+            r--; //@moveR
+        }
+    }
+    return {}; //@none
+}

@@ -1,0 +1,39 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func twoSum(nums []int, target int) []int {
+    seen := map[int]int{}
+    for i, x := range nums {
+        need := target - x
+        if j, ok := seen[need]; ok {
+            return []int{j, i}
+        }
+        seen[x] = i
+    }
+    return nil
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    nums := readInts(reader)
+    target := readInts(reader)[0]
+    res := twoSum(nums, target)
+    fmt.Println(res[0], res[1])
+}

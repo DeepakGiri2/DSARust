@@ -1,0 +1,53 @@
+slug = 'subarray-sums-divisible-by-k'
+title = 'Subarray Sums Divisible by K'
+category = 'Prefix Sums'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '974'
+complexity = 'O(n) time · O(k) space'
+
+description = 'Count the non-empty subarrays whose sum is divisible by k.'
+approach = 'A subarray sums to a multiple of k exactly when its two prefix sums leave the same remainder mod k — the difference of two numbers congruent mod k is divisible by k. So count how many earlier prefixes share the current remainder, and add that many. Seeding the count of remainder 0 with 1 accounts for the empty prefix, which is what makes a subarray starting at index 0 count.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 16
+min = -30
+max = 30
+
+[[inputs]]
+name = 'k'
+label = 'k'
+type = 'int'
+min = 2
+max = 12
+
+[default_input]
+nums = [4, 5, 0, -2, -3, 1]
+k = 5
+
+[[tests]]
+expected = '7'
+[tests.input]
+nums = [4, 5, 0, -2, -3, 1]
+k = 5
+
+[[tests]]
+expected = '0'
+[tests.input]
+nums = [5]
+k = 9
+
+[[tests]]
+expected = '2'
+[tests.input]
+nums = [2, -2, 2, -4]
+k = 6
+
+[[tests]]
+expected = '3'
+[tests.input]
+nums = [1, 2, 3]
+k = 3

@@ -1,0 +1,13 @@
+bool containsNearbyDuplicate(vector<int>& nums, int k) {
+    unordered_set<int> seen; //@init
+    for (int i = 0; i < (int)nums.size(); i++) { //@loop
+        if (i > k) { //@evict
+            seen.erase(nums[i-k-1]); //@remove
+        }
+        if (seen.count(nums[i])) { //@check
+            return true; //@dup
+        }
+        seen.insert(nums[i]); //@store
+    }
+    return false; //@none
+}

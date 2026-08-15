@@ -1,0 +1,46 @@
+slug = 'combinations'
+title = 'Combinations'
+category = 'Backtracking'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '77'
+complexity = 'O(C(n, k) · k) time · O(k) space'
+
+description = 'List every combination of k numbers chosen from 1 to n.'
+approach = "Choosing in increasing order is what makes these combinations rather than permutations: each recursive call may only start above the value just taken, so {1,3} is generated and {3,1} never is. The loop's upper bound is the pruning — if too few numbers remain above the current one to finish the combination, the branch cannot possibly succeed and is never entered."
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 1
+max = 8
+
+[[inputs]]
+name = 'k'
+label = 'k'
+type = 'int'
+min = 1
+max = 5
+
+[default_input]
+n = 4
+k = 2
+
+[[tests]]
+expected = '1,2 1,3 1,4 2,3 2,4 3,4'
+[tests.input]
+n = 4
+k = 2
+
+[[tests]]
+expected = '1'
+[tests.input]
+n = 1
+k = 1
+
+[[tests]]
+expected = '1,2,3 1,2,4 1,2,5 1,3,4 1,3,5 1,4,5 2,3,4 2,3,5 2,4,5 3,4,5'
+[tests.input]
+n = 5
+k = 3

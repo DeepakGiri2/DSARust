@@ -1,0 +1,22 @@
+static String reorganizeString(String s) {
+    Map<Character, Integer> count = new LinkedHashMap<>(); //@count
+    for (char ch : s.toCharArray()) count.merge(ch, 1, Integer::sum);
+    PriorityQueue<int[]> h = new PriorityQueue<>((a, b) ->
+        a[0] != b[0] ? b[0] - a[0] : a[1] - b[1]); //@init
+    for (var e : count.entrySet()) h.add(new int[]{e.getValue(), e.getKey()});
+    StringBuilder out = new StringBuilder(); //@out
+    int[] prev = null; //@prev
+    while (!h.isEmpty()) { //@loop
+        int[] top = h.poll(); //@pop
+        out.append((char) top[1]); //@emit
+        top[0]--; //@spend
+        if (prev != null && prev[0] > 0) { //@restore
+            h.add(prev); //@back
+        }
+        prev = top; //@hold
+    }
+    if (out.length() < s.length()) { //@check
+        return ""; //@fail
+    }
+    return out.toString(); //@ret
+}

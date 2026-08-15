@@ -1,0 +1,46 @@
+slug = 'multiply-strings'
+title = 'Multiply Strings'
+category = 'Math & Geometry'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '43'
+complexity = 'O(m · n) time · O(m + n) space'
+
+description = 'Multiply two non-negative integers given as strings, without converting them to a numeric type.'
+approach = 'Long multiplication, but with every partial product written straight into one shared result array. The key observation is positional: digit i of the first number times digit j of the second always lands at position i + j + 1, with its carry at i + j. Because each cell is normalised the moment it is written, no separate carry pass is needed at the end.'
+
+[[inputs]]
+name = 'num1'
+label = 'num1'
+type = 'string'
+max_len = 6
+help = 'digits only'
+
+[[inputs]]
+name = 'num2'
+label = 'num2'
+type = 'string'
+max_len = 6
+help = 'digits only'
+
+[default_input]
+num1 = '123'
+num2 = '456'
+
+[[tests]]
+expected = '56088'
+[tests.input]
+num1 = '123'
+num2 = '456'
+
+[[tests]]
+expected = '6'
+[tests.input]
+num1 = '2'
+num2 = '3'
+
+[[tests]]
+expected = '0'
+[tests.input]
+num1 = '0'
+num2 = '52'

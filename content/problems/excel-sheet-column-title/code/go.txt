@@ -1,0 +1,10 @@
+func convertToTitle(columnNumber int) string {
+    out := "" //@init
+    for columnNumber > 0 { //@loop
+        columnNumber-- //@shift
+        r := columnNumber % 26 //@digit
+        out = string(rune('A'+r)) + out //@prepend
+        columnNumber /= 26 //@divide
+    }
+    return out //@ret
+}

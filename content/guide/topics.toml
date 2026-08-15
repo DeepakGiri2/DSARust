@@ -1,0 +1,2571 @@
+# Data structure and technique deep-dives shown in the 📘 helper.
+#
+# Plain data: edit a paragraph, save, reopen the helper. No rebuild.
+
+[[topic]]
+id = 'array'
+title = 'Array / Slice / Vector'
+kind = 'structure'
+emoji = '🔢'
+what = [
+  'An array is one contiguous block of memory: element i lives exactly at base_address + i × element_size. That single multiplication is why reading or writing arr[i] is O(1) — the CPU jumps straight to the byte, no searching. Contiguity also makes iteration extremely fast in practice (cache lines pull in neighbors for free).',
+  'Dynamic arrays (Go slice, C++ vector, Java ArrayList) wrap a fixed array and track length vs capacity. Appending is O(1) *amortized*: while length < capacity it just writes to the next cell; when full, it allocates a bigger block (usually ~2×), copies everything over (O(n) for that one append), and continues. Averaged over many appends the cost per append stays constant.',
+  'The expensive operations are the ones that break contiguity: inserting or deleting in the middle must shift every element after the position, so both are O(n). If you find yourself deleting from the front repeatedly, you want a queue/deque, not an array.',
+]
+notes = [
+  'Indexing is 0-based in Go, C++ and Java: a length-n array has valid indices 0 … n-1. arr[n] is out of bounds.',
+  'Go slicing a[lo:hi] and Java subList(lo, hi) are half-open: they include lo, exclude hi. Length of the piece = hi - lo.',
+  'Out-of-bounds: Go and Java throw/panic immediately (safe crash). C++ operator[] is undefined behavior — it may silently corrupt memory; use .at(i) while learning.',
+  'Go slices share the underlying array: sub := nums[1:3] is a view, writing sub[0] changes nums[1]. Copy explicitly with copy(dst, src) if you need independence.',
+  'C++ .size() returns an unsigned size_t — `nums.size() - 1` underflows to a huge number when empty. Compare with int i < (int)nums.size().',
+]
+
+[topic.syntax]
+go = '''
+nums := []int{3, 1, 4}        // slice literal
+nums = append(nums, 9)         // grow
+n := len(nums)                 // length
+first, last := nums[0], nums[n-1]
+sub := nums[1:3]               // [1,4] — half-open: index 1..2
+grid := make([][]int, rows)    // 2-D: make each row
+for i := range grid { grid[i] = make([]int, cols) }
+for i, v := range nums { _ = i; _ = v } // index + value
+'''
+cpp = '''
+vector<int> nums = {3, 1, 4};
+nums.push_back(9);             // grow
+int n = nums.size();           // size_t! cast or compare carefully
+int first = nums[0], last = nums.back();
+vector<vector<int>> grid(rows, vector<int>(cols, 0)); // 2-D filled with 0
+for (int v : nums) { }         // value
+for (int i = 0; i < n; i++) { } // index
+'''
+java = '''
+int[] fixed = {3, 1, 4};        // fixed-size array
+List<Integer> nums = new ArrayList<>(); // dynamic
+nums.add(9);
+int n = nums.size();            // fixed.length for arrays
+int[][] grid = new int[rows][cols];     // 2-D, zero-filled
+for (int v : fixed) { }         // value
+for (int i = 0; i < n; i++) { } // index
+'''
+
+[[topic.complexity]]
+op = 'read / write by index arr[i]'
+big = 'O(1)'
+
+[[topic.complexity]]
+op = 'append at end'
+big = 'O(1) amortized'
+note = 'occasional O(n) regrow + copy'
+
+[[topic.complexity]]
+op = 'insert / delete in middle'
+big = 'O(n)'
+note = 'shifts everything after i'
+
+[[topic.complexity]]
+op = 'search unsorted'
+big = 'O(n)'
+
+[[topic.complexity]]
+op = 'search sorted (binary search)'
+big = 'O(log n)'
+
+[[topic.complexity]]
+op = 'sort'
+big = 'O(n log n)'
+
+[[topic]]
+id = 'string'
+title = 'String'
+kind = 'structure'
+emoji = '🔤'
+what = [
+  'A string is an array of characters, and in all three languages it is (effectively) immutable in-place editing terms: Go strings and Java Strings are truly immutable — every "modification" builds a new string. C++ std::string is mutable, which is why C++ solutions often edit in place.',
+  'Because concatenation copies the whole string, building a string with s += ch in a loop is O(n²) in Go and Java. The fix is a builder: strings.Builder (Go) or StringBuilder (Java), which behave like a dynamic char array and give O(1) amortized appends, with one final O(n) conversion.',
+  "Indexing s[i] returns a byte (Go) / char (C++, Java) in O(1). For classic DSA problems input is usually ASCII, so byte == character; the frequency-count trick `count[c - 'a']` maps letters a–z onto indices 0–25 of a 26-slot array.",
+]
+notes = [
+  '0-based indexing everywhere; s.charAt(n) / s[n] on a length-n string is out of bounds.',
+  'Substring argument conventions differ! Java substring(start, end) is half-open; C++ substr(start, LENGTH) takes a length; Go s[lo:hi] is half-open.',
+  "Char arithmetic: 'a'–'z' are consecutive codes (97–122), '0'–'9' are 48–57. c - 'a' gives 0-based letter index; c - '0' gives the digit value.",
+  'Go strings are UTF-8 bytes: len("é") is 2. For interview problems assume ASCII; if you need real characters, iterate `for _, r := range s` (runes).',
+  'Comparing with == compares content in Go and C++, but object identity in Java — always use s.equals(t) in Java.',
+]
+
+[topic.syntax]
+go = '''
+s := "hello"
+n := len(s)                    // bytes
+c := s[1]                      // byte 'e' (uint8)
+sub := s[1:3]                  // "el" — O(1) view, half-open
+idx := int(c - 'a')            // letter → 0..25
+var b strings.Builder          // fast building
+b.WriteByte('x'); b.WriteString("yz")
+out := b.String()
+chars := []byte(s)             // mutable copy; string(chars) back
+'''
+cpp = '''
+string s = "hello";
+int n = s.size();
+char c = s[1];                 // 'e'
+string sub = s.substr(1, 2);   // "el" — (start, LENGTH not end!)
+int idx = c - 'a';             // letter → 0..25
+s += 'x';                      // std::string IS mutable, O(1) amortized
+s[0] = 'H';                    // in-place edit ok
+reverse(s.begin(), s.end());
+'''
+java = '''
+String s = "hello";
+int n = s.length();
+char c = s.charAt(1);          // 'e'
+String sub = s.substring(1, 3); // "el" — half-open (start, end)
+int idx = c - 'a';             // letter → 0..25
+StringBuilder sb = new StringBuilder(); // fast building
+sb.append('x').append("yz");
+String out = sb.toString();
+char[] chars = s.toCharArray(); // mutable copy; new String(chars) back
+'''
+
+[[topic.complexity]]
+op = 'read char s[i]'
+big = 'O(1)'
+
+[[topic.complexity]]
+op = 'length'
+big = 'O(1)'
+
+[[topic.complexity]]
+op = 'substring / slice'
+big = 'O(k)'
+note = 'copies k chars (Go slice of string is O(1) view)'
+
+[[topic.complexity]]
+op = 'concat a + b'
+big = 'O(a+b)'
+note = 'in a loop → O(n²): use a builder'
+
+[[topic.complexity]]
+op = 'build with Builder'
+big = 'O(n) total'
+
+[[topic.complexity]]
+op = 'compare equality'
+big = 'O(n)'
+
+[[topic]]
+id = 'hashmap'
+title = 'Hash Map (dictionary)'
+kind = 'structure'
+emoji = '🗺️'
+what = [
+  'A hash map stores key → value pairs with O(1) average lookup. It runs the key through a hash function to get a bucket index in an internal array, and stores the pair there. Lookup re-hashes the key and jumps straight to the bucket — no scanning. Collisions (two keys, same bucket) are handled with per-bucket chains or probing; with a good hash function chains stay tiny, which is where the "average O(1)" comes from.',
+  'Like a dynamic array, the map resizes when it gets too full (load factor), rehashing every key into a bigger table — an occasional O(n) hit amortized away over many inserts.',
+  'The classic use in DSA: trade memory for time. Two Sum drops from O(n²) to O(n) by asking "have I already seen target - x?" in O(1). Frequency counting, grouping anagrams by a signature key, caching/memoization — all hash-map patterns. Iteration order is NOT the insertion order (Go even randomizes it deliberately); never rely on it.',
+]
+notes = [
+  'Missing-key behavior differs sharply: Go returns the zero value silently, C++ operator[] INSERTS a default entry, Java get() returns null. Use comma-ok / find() / getOrDefault() respectively.',
+  'Keys must be hashable: Go — comparable types only (no slices/maps as keys; use arrays like [26]int); C++ unordered_map needs std::hash (no std::hash for vector/pair without custom hash — encode as string or use map); Java keys need consistent hashCode()/equals().',
+  'Go maps are unordered by design (iteration order randomized). Need sorted keys? Collect keys into a slice and sort. C++ std::map / Java TreeMap keep keys sorted but cost O(log n) per op.',
+  'A hash map of counts over a small alphabet (a–z) is usually better as a plain int[26] array — faster and comparable by value.',
+]
+
+[topic.syntax]
+go = '''
+m := map[string]int{}          // or make(map[string]int)
+m["a"] = 1                     // insert / overwrite
+v := m["b"]                    // MISSING KEY → zero value (0), no error!
+v, ok := m["b"]                // comma-ok: ok=false if absent
+if _, ok := m["a"]; ok { }     // contains?
+delete(m, "a")
+m["x"]++                       // counting works even if absent (0+1)
+for k, v := range m { _ = k; _ = v }
+'''
+cpp = '''
+unordered_map<string, int> m;
+m["a"] = 1;                    // insert / overwrite
+int v = m["b"];                // MISSING KEY → inserts default 0!
+if (m.count("a")) { }          // contains? (0 or 1)
+auto it = m.find("a");         // iterator, m.end() if absent
+m.erase("a");
+m["x"]++;                      // counting idiom
+for (auto& [k, v] : m) { }     // structured binding (C++17)
+'''
+java = '''
+Map<String, Integer> m = new HashMap<>();
+m.put("a", 1);                 // insert / overwrite
+Integer v = m.get("b");        // MISSING KEY → null (NPE if unboxed!)
+int w = m.getOrDefault("b", 0);
+if (m.containsKey("a")) { }
+m.remove("a");
+m.merge("x", 1, Integer::sum); // counting idiom
+for (Map.Entry<String, Integer> e : m.entrySet()) { }
+'''
+
+[[topic.complexity]]
+op = 'insert m[k] = v'
+big = 'O(1) avg'
+
+[[topic.complexity]]
+op = 'lookup m[k]'
+big = 'O(1) avg'
+
+[[topic.complexity]]
+op = 'delete'
+big = 'O(1) avg'
+
+[[topic.complexity]]
+op = 'contains key?'
+big = 'O(1) avg'
+
+[[topic.complexity]]
+op = 'iterate all entries'
+big = 'O(n)'
+note = 'order is arbitrary'
+
+[[topic.complexity]]
+op = 'worst case (all collide)'
+big = 'O(n)'
+note = 'rare with builtin hashes'
+
+[[topic]]
+id = 'hashset'
+title = 'Hash Set'
+kind = 'structure'
+emoji = '🎯'
+what = [
+  'A set stores unique values with O(1) average add / remove / contains — it is a hash map where you only care about the keys. Adding a duplicate is a no-op, which is itself useful: "have I seen this before?" becomes one line.',
+  'Typical DSA jobs: detecting duplicates (Contains Duplicate), tracking visited nodes in graph/grid traversal so you never loop forever, and O(1) membership tests that turn nested scans into linear passes (Longest Consecutive Sequence checks `n-1 in set` to find sequence starts).',
+  'Go has no built-in set type — the idiom is map[T]bool or the zero-byte map[T]struct{}. That is not a workaround, it is the intended design.',
+]
+notes = [
+  'Same key restrictions as hash maps (see Hash Map notes).',
+  'For visited-tracking on grids, encoding (row, col) as row*cols+col into an int set — or just a 2-D boolean array — avoids needing a pair/tuple key.',
+  'Java add() returning boolean ("was it new?") lets you detect duplicates while inserting: if (!seen.add(x)) return true;',
+]
+
+[topic.syntax]
+go = '''
+seen := map[int]bool{}         // the Go set idiom
+seen[5] = true                 // add
+if seen[5] { }                 // contains (false if absent)
+delete(seen, 5)                // remove
+// memory-tight variant:
+set := map[int]struct{}{}
+set[5] = struct{}{}
+_, ok := set[5]
+'''
+cpp = '''
+unordered_set<int> seen;
+seen.insert(5);
+if (seen.count(5)) { }         // contains (0 or 1)
+seen.erase(5);
+int n = seen.size();
+for (int v : seen) { }
+'''
+java = '''
+Set<Integer> seen = new HashSet<>();
+seen.add(5);                   // returns false if already present
+if (seen.contains(5)) { }
+seen.remove(5);
+int n = seen.size();
+for (int v : seen) { }
+'''
+
+[[topic.complexity]]
+op = 'add'
+big = 'O(1) avg'
+
+[[topic.complexity]]
+op = 'contains?'
+big = 'O(1) avg'
+
+[[topic.complexity]]
+op = 'remove'
+big = 'O(1) avg'
+
+[[topic.complexity]]
+op = 'iterate'
+big = 'O(n)'
+note = 'arbitrary order'
+
+[[topic]]
+id = 'stack'
+title = 'Stack (LIFO)'
+kind = 'structure'
+emoji = '🥞'
+what = [
+  'A stack is Last-In-First-Out: you can only push onto the top, peek the top, and pop the top — all O(1). It is just a dynamic array where you only touch the end, which is why all three languages implement it with their array type rather than a dedicated class.',
+  'Stacks shine whenever the most recent unfinished thing must be resolved first: matching brackets (push opens, pop on close), undo history, evaluating expressions, and — crucially — recursion itself. Every recursive algorithm secretly uses the call stack; any recursion can be rewritten with an explicit stack (that is exactly how iterative DFS works).',
+  'The monotonic stack is a power-pattern: keep the stack sorted (say, decreasing) by popping everything smaller before pushing. Each element is pushed and popped at most once, so problems like Daily Temperatures or Largest Rectangle in Histogram run in O(n) instead of O(n²).',
+]
+notes = [
+  'Popping an empty stack: Go slice pop panics on the index, C++ st.pop() is undefined behavior, Java pop() throws. Always guard with an emptiness check.',
+  'C++ pop() returns void — read top() before popping. This surprises everyone once.',
+  'Java: use ArrayDeque, not the legacy java.util.Stack (synchronized, slow, extends Vector).',
+  'The Go pop is two steps on purpose: read the top, then reslice. stack[:len(stack)-1] is O(1) — it just shortens the view.',
+]
+
+[topic.syntax]
+go = '''
+stack := []int{}
+stack = append(stack, 5)       // push
+top := stack[len(stack)-1]     // peek
+stack = stack[:len(stack)-1]   // pop (shrink by one)
+empty := len(stack) == 0
+'''
+cpp = '''
+stack<int> st;                 // #include <stack>
+st.push(5);
+int top = st.top();            // peek
+st.pop();                      // void! read top() first
+bool empty = st.empty();
+// many prefer: vector<int> st; st.push_back / st.back() / st.pop_back()
+'''
+java = '''
+Deque<Integer> st = new ArrayDeque<>(); // preferred over legacy Stack
+st.push(5);                    // addFirst
+int top = st.peek();
+int popped = st.pop();
+boolean empty = st.isEmpty();
+'''
+
+[[topic.complexity]]
+op = 'push'
+big = 'O(1) amortized'
+
+[[topic.complexity]]
+op = 'pop'
+big = 'O(1)'
+
+[[topic.complexity]]
+op = 'peek top'
+big = 'O(1)'
+
+[[topic.complexity]]
+op = 'search inside'
+big = 'O(n)'
+note = 'not what stacks are for'
+
+[[topic]]
+id = 'queue'
+title = 'Queue & Deque (FIFO)'
+kind = 'structure'
+emoji = '🚶'
+what = [
+  'A queue is First-In-First-Out: enqueue at the back, dequeue from the front, both O(1). It is THE data structure of breadth-first search — the queue holds the frontier, and processing it level by level guarantees you reach every node via a shortest path (in unweighted graphs).',
+  'A deque (double-ended queue) allows O(1) push/pop at both ends. Implementations use a ring buffer or doubly linked blocks so neither end requires shifting. The deque enables the monotonic-deque trick for Sliding Window Maximum: O(n) instead of O(n log n).',
+  'BFS template: push the start, mark visited, loop while the queue is non-empty — pop front, process, push unvisited neighbors. Level-order variants snapshot len(queue) at the top of each round and process exactly that many nodes; that count is "one level".',
+]
+notes = [
+  'Java naming trap: on Deque, push/pop work on the FRONT (stack semantics) while offer/poll default to back-in front-out (queue semantics). Mixing them is the classic BFS bug.',
+  'The Go queue = queue[1:] idiom never reuses the freed front memory during one traversal — acceptable for interviews; a ring buffer or index pointer fixes it for production.',
+  'BFS distance = number of levels processed; increment it once per level (using the levelSize snapshot), not once per node.',
+]
+
+[topic.syntax]
+go = '''
+queue := []int{}
+queue = append(queue, 5)       // enqueue
+front := queue[0]              // peek
+queue = queue[1:]              // dequeue (view moves forward)
+for len(queue) > 0 {
+    levelSize := len(queue)    // BFS level-order snapshot
+    for i := 0; i < levelSize; i++ { /* pop + push children */ }
+}
+'''
+cpp = '''
+queue<int> q;                  // #include <queue>
+q.push(5);                     // enqueue at back
+int front = q.front();         // peek
+q.pop();                       // void — read front() first
+// deque: both ends
+deque<int> dq;
+dq.push_front(1); dq.push_back(2);
+dq.pop_front();   dq.pop_back();
+'''
+java = '''
+Queue<Integer> q = new LinkedList<>(); // or ArrayDeque
+q.offer(5);                    // enqueue
+int front = q.peek();
+int popped = q.poll();         // null if empty (remove() throws)
+// deque: both ends
+Deque<Integer> dq = new ArrayDeque<>();
+dq.offerFirst(1); dq.offerLast(2);
+dq.pollFirst();   dq.pollLast();
+'''
+
+[[topic.complexity]]
+op = 'enqueue (push back)'
+big = 'O(1)'
+
+[[topic.complexity]]
+op = 'dequeue (pop front)'
+big = 'O(1)'
+note = 'Go slice idiom: amortized, leaks a bit — fine for interviews'
+
+[[topic.complexity]]
+op = 'peek front / back'
+big = 'O(1)'
+
+[[topic.complexity]]
+op = 'random access'
+big = 'O(n)'
+note = 'O(1) for C++ deque, but rarely needed'
+
+[[topic]]
+id = 'linkedlist'
+title = 'Linked List'
+kind = 'structure'
+emoji = '🔗'
+what = [
+  'A linked list is a chain of nodes, each holding a value and a pointer to the next node. Unlike an array, nodes live anywhere in memory — the structure IS the pointers. That inverts the array trade-off: O(1) insertion/deletion once you are standing at the spot (just rewire two pointers), but O(n) to reach position i because you must walk from the head.',
+  "Nearly every list problem is pointer surgery. Reversal: walk with prev/cur, flipping cur.next to point backwards. The two-pointer family: slow/fast (fast moves 2×) finds the middle, and if the list has a cycle, fast laps slow — they meet (Floyd's cycle detection). Deleting the n-th node from the end: advance one pointer n steps, then move both until the lead hits the end.",
+  'The dummy (sentinel) node is the great edge-case killer: dummy.next = head, do all surgery from dummy, return dummy.next. It removes every "what if I delete the head?" special case. Draw boxes and arrows on paper — order of rewiring matters, and saving next before overwriting it is the #1 bug.',
+]
+notes = [
+  'Null names differ: nil (Go), nullptr (C++), null (Java). Dereferencing it panics/segfaults/throws — check before every .next hop.',
+  'Save the next pointer BEFORE rewiring: next := cur.Next must happen before cur.Next = prev, or the rest of the list is lost.',
+  'Fast-pointer loop guard must check both: for fast != nil && fast.Next != nil — checking only one is the classic nil-pointer crash.',
+  'C++ uses -> on pointers (cur->next); Go and Java use . for everything.',
+]
+
+[topic.syntax]
+go = '''
+type ListNode struct {
+    Val  int
+    Next *ListNode
+}
+dummy := &ListNode{Next: head} // sentinel
+prev, cur := dummy, head
+for cur != nil {
+    // delete cur:  prev.Next = cur.Next
+    prev, cur = cur, cur.Next
+}
+// reversal core:
+// next := cur.Next; cur.Next = prev; prev = cur; cur = next
+'''
+cpp = '''
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(nullptr) {}
+};
+ListNode dummy(0); dummy.next = head; // sentinel on the stack
+ListNode *prev = &dummy, *cur = head;
+while (cur != nullptr) {
+    // delete cur:  prev->next = cur->next;
+    prev = cur; cur = cur->next;
+}
+'''
+java = '''
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int x) { val = x; }
+}
+ListNode dummy = new ListNode(0); dummy.next = head;
+ListNode prev = dummy, cur = head;
+while (cur != null) {
+    // delete cur:  prev.next = cur.next;
+    prev = cur; cur = cur.next;
+}
+'''
+
+[[topic.complexity]]
+op = 'access i-th element'
+big = 'O(n)'
+note = 'must walk'
+
+[[topic.complexity]]
+op = 'insert / delete at known node'
+big = 'O(1)'
+note = 'pointer rewiring'
+
+[[topic.complexity]]
+op = 'insert at head'
+big = 'O(1)'
+
+[[topic.complexity]]
+op = 'search'
+big = 'O(n)'
+
+[[topic.complexity]]
+op = 'find middle / detect cycle'
+big = 'O(n)'
+note = 'slow + fast pointers, O(1) space'
+
+[[topic]]
+id = 'tree'
+title = 'Binary Tree & BST'
+kind = 'structure'
+emoji = '🌳'
+what = [
+  'A binary tree is a linked structure where each node points to up to two children (left, right). Height h is the longest root-to-leaf path; a balanced tree keeps h ≈ log₂(n), a degenerate one (every node has one child) is effectively a linked list with h = n. Nearly every tree bound is written in terms of h for exactly this reason.',
+  "Traversals: DFS goes deep first, in three flavors defined by when you visit the node relative to recursing — preorder (node, left, right), inorder (left, node, right), postorder (left, right, node). BFS (level order) uses a queue and processes level by level. Most tree solutions are one traversal plus a few lines: \"max depth\" is postorder (need children's answers first), \"serialize\" is preorder, \"level averages\" is BFS.",
+  'A Binary Search Tree adds the ordering rule: everything in the left subtree < node < everything in the right subtree — recursively, for ALL descendants, not just direct children. That makes search/insert O(h), and gives the killer property: inorder traversal of a BST visits values in sorted order (this solves "k-th smallest" instantly). Validating a BST requires passing down (min, max) bounds — checking only parent vs child is the famous wrong answer.',
+]
+notes = [
+  'The nil/null base case comes first in every recursive tree function — it is both the recursion floor and the null-safety check.',
+  'Think in subproblems: "what do I need from my children to answer for myself?" — that decides pre/in/postorder for you.',
+  'BST validation: pass (low, high) bounds down; node.Val must be strictly inside. Duplicates policy depends on the problem statement.',
+  'LeetCode serializes trees level by level with null gaps: [3,9,20,null,null,15,7] — indices are NOT the parent/child formula unless the tree is complete (that formula belongs to heaps).',
+]
+
+[topic.syntax]
+go = '''
+type TreeNode struct {
+    Val         int
+    Left, Right *TreeNode
+}
+func dfs(node *TreeNode) int {
+    if node == nil { return 0 }      // base case FIRST
+    l, r := dfs(node.Left), dfs(node.Right)
+    return 1 + max(l, r)             // postorder combine
+}
+// BFS: queue := []*TreeNode{root}, snapshot len(queue) per level
+'''
+cpp = '''
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+int dfs(TreeNode* node) {
+    if (!node) return 0;
+    return 1 + max(dfs(node->left), dfs(node->right));
+}
+// BFS: queue<TreeNode*> q; q.push(root);
+'''
+java = '''
+class TreeNode {
+    int val;
+    TreeNode left, right;
+    TreeNode(int x) { val = x; }
+}
+int dfs(TreeNode node) {
+    if (node == null) return 0;
+    return 1 + Math.max(dfs(node.left), dfs(node.right));
+}
+// BFS: Queue<TreeNode> q = new ArrayDeque<>(); q.offer(root);
+'''
+
+[[topic.complexity]]
+op = 'search / insert / delete in BST'
+big = 'O(h)'
+note = 'O(log n) balanced, O(n) degenerate'
+
+[[topic.complexity]]
+op = 'any full traversal (DFS / BFS)'
+big = 'O(n)'
+note = 'every node once'
+
+[[topic.complexity]]
+op = 'space (recursion / queue)'
+big = 'O(h) DFS · O(w) BFS'
+note = 'w = widest level, up to n/2'
+
+[[topic.complexity]]
+op = 'inorder of BST'
+big = 'O(n)'
+note = 'yields sorted order'
+
+[[topic]]
+id = 'heap'
+title = 'Heap / Priority Queue'
+kind = 'structure'
+emoji = '⛰️'
+what = [
+  "A heap answers one question fast: \"what is the smallest (or largest) element right now?\" It is a complete binary tree stored flat in an array — no pointers. With 0-based indexing, node i has children at 2i+1 and 2i+2 and parent at (i-1)/2. The heap property: every parent ≤ its children (min-heap). Note that's much weaker than sorted — only the root is guaranteed to be the minimum.",
+  'Push appends at the end and "bubbles up" while smaller than its parent; pop swaps the root with the last element, removes it, and "sifts down". Both walk one root-to-leaf path, so O(log n). Peeking the top is O(1).',
+  'The Top-K pattern: keep a min-heap of size k while streaming n elements; if a new element beats the top, pop-and-push. n operations on a k-sized heap = O(n log k), far better than sorting when k ≪ n. Heaps also drive "merge k sorted lists", scheduling problems, and Dijkstra.',
+]
+notes = [
+  'Default direction differs! C++ priority_queue is a MAX-heap; Java PriorityQueue and Go container/heap conventions are MIN-heaps. Flipping this is the most common heap bug when switching languages.',
+  'Max-heap from a min-heap: negate values on push and pop, or invert the comparator.',
+  'Array math (0-based): children of i are 2i+1, 2i+2; parent is (i-1)/2. With 1-based indexing it is 2i, 2i+1 and i/2 — know which convention your source uses.',
+  'Java comparator (a, b) -> a - b can overflow for extreme values; Integer.compare(a, b) is safe.',
+]
+
+[topic.syntax]
+go = '''
+// container/heap needs boilerplate: implement heap.Interface
+type MinHeap []int
+func (h MinHeap) Len() int            { return len(h) }
+func (h MinHeap) Less(i, j int) bool  { return h[i] < h[j] }
+func (h MinHeap) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
+func (h *MinHeap) Push(x any)         { *h = append(*h, x.(int)) }
+func (h *MinHeap) Pop() any {
+    old := *h; n := len(old); x := old[n-1]; *h = old[:n-1]; return x
+}
+h := &MinHeap{5, 2, 8}
+heap.Init(h)                   // O(n) heapify
+heap.Push(h, 1)
+top := (*h)[0]                 // peek
+smallest := heap.Pop(h).(int)
+'''
+cpp = '''
+priority_queue<int> maxpq;             // MAX-heap by default!
+priority_queue<int, vector<int>, greater<int>> minpq; // min-heap
+minpq.push(5);
+int top = minpq.top();          // peek
+minpq.pop();                    // void
+// custom order (e.g. by pair.first):
+auto cmp = [](auto& a, auto& b){ return a.first > b.first; };
+priority_queue<pair<int,int>, vector<pair<int,int>>, decltype(cmp)> pq(cmp);
+'''
+java = '''
+Queue<Integer> minpq = new PriorityQueue<>();          // MIN-heap by default
+Queue<Integer> maxpq = new PriorityQueue<>(Comparator.reverseOrder());
+minpq.offer(5);
+int top = minpq.peek();
+int popped = minpq.poll();
+// custom order:
+Queue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+'''
+
+[[topic.complexity]]
+op = 'peek min/max'
+big = 'O(1)'
+
+[[topic.complexity]]
+op = 'push'
+big = 'O(log n)'
+
+[[topic.complexity]]
+op = 'pop'
+big = 'O(log n)'
+
+[[topic.complexity]]
+op = 'build heap from n items'
+big = 'O(n)'
+note = 'heapify, not n pushes'
+
+[[topic.complexity]]
+op = 'top-k of n items'
+big = 'O(n log k)'
+
+[[topic.complexity]]
+op = 'search arbitrary element'
+big = 'O(n)'
+note = 'heaps are not for searching'
+
+[[topic]]
+id = 'trie'
+title = 'Trie (prefix tree)'
+kind = 'structure'
+emoji = '🌲'
+what = [
+  "A trie stores strings character by character down a tree: the root is the empty string and each edge adds one character, so all words sharing a prefix share a path. A word's membership is marked with an end-of-word flag on its final node — \"car\" can exist inside \"card\" without confusion.",
+  "Every operation walks one node per character: insert, exact search, and — the trie's superpower — startsWith(prefix), all O(L) where L is the word length, regardless of how many words are stored. A hash set can check exact membership, but only a trie answers prefix questions cheaply, which is why it powers autocomplete and word-search puzzles.",
+  "Children are usually a 26-slot array for lowercase a–z (index = c - 'a') or a hash map for general alphabets. Word Search II shows the pattern at full power: walk the grid and the trie simultaneously, pruning any path the trie says leads nowhere.",
+]
+notes = [
+  "The children index is 0-based over the alphabet: c - 'a' maps 'a'→0 … 'z'→25. Uppercase or digits need a bigger array or a map.",
+  'search vs startsWith differ by ONE line: search requires isEnd on the final node, startsWith just requires the path to exist.',
+  'The root node represents the empty string and holds no character itself.',
+]
+
+[topic.syntax]
+go = '''
+type Trie struct {
+    children [26]*Trie
+    isEnd    bool
+}
+func (t *Trie) Insert(word string) {
+    cur := t
+    for i := 0; i < len(word); i++ {
+        c := word[i] - 'a'
+        if cur.children[c] == nil { cur.children[c] = &Trie{} }
+        cur = cur.children[c]
+    }
+    cur.isEnd = true
+}
+'''
+cpp = '''
+struct Trie {
+    Trie* children[26] = {};
+    bool isEnd = false;
+    void insert(const string& word) {
+        Trie* cur = this;
+        for (char ch : word) {
+            int c = ch - 'a';
+            if (!cur->children[c]) cur->children[c] = new Trie();
+            cur = cur->children[c];
+        }
+        cur->isEnd = true;
+    }
+};
+'''
+java = '''
+class Trie {
+    Trie[] children = new Trie[26];
+    boolean isEnd = false;
+    void insert(String word) {
+        Trie cur = this;
+        for (char ch : word.toCharArray()) {
+            int c = ch - 'a';
+            if (cur.children[c] == null) cur.children[c] = new Trie();
+            cur = cur.children[c];
+        }
+        cur.isEnd = true;
+    }
+}
+'''
+
+[[topic.complexity]]
+op = 'insert word (length L)'
+big = 'O(L)'
+
+[[topic.complexity]]
+op = 'search exact word'
+big = 'O(L)'
+
+[[topic.complexity]]
+op = 'startsWith(prefix)'
+big = 'O(L)'
+
+[[topic.complexity]]
+op = 'space'
+big = 'O(total chars × alphabet)'
+note = 'the price of prefix power'
+
+[[topic]]
+id = 'graph'
+title = 'Graph (adjacency list)'
+kind = 'structure'
+emoji = '🕸️'
+what = [
+  'A graph is nodes plus edges — the general "things and connections" structure (trees are just graphs with no cycles and one root). The standard representation is the adjacency list: for each node, the list of its neighbors. Space O(V+E), iterate-neighbors fast; an adjacency matrix (V×V grid) costs O(V²) space but answers "is there an edge u–v?" in O(1). Interviews almost always want the list.',
+  'The two traversals: DFS dives deep (recursion or explicit stack) — good for connectivity, counting components, cycle detection; BFS expands in rings via a queue — the only one that finds shortest paths in unweighted graphs. Both must track visited nodes, or cycles loop forever. Both visit each node and edge once: O(V+E).',
+  "Directed graphs add topological sort: an ordering where every edge points forward, which exists iff there is no cycle (Course Schedule). Kahn's algorithm: compute in-degrees, repeatedly take a node with in-degree 0, decrement its neighbors. If you process fewer than V nodes, there is a cycle. Alternatively DFS with three colors (unvisited / in-progress / done) — meeting an in-progress node means a cycle.",
+]
+notes = [
+  'Nodes are usually labeled 0 … n-1, so a plain array/slice of lists works; use a map only when labels are sparse or non-integer.',
+  'Undirected edge = add it in BOTH directions. Forgetting the second direction is the top graph-building bug.',
+  'Mark visited when you ENQUEUE in BFS (not when you dequeue) — otherwise the same node enters the queue multiple times.',
+  'Recursion depth can hit V — for huge graphs prefer iterative DFS with an explicit stack (especially in languages with small default stacks).',
+]
+
+[topic.syntax]
+go = '''
+// build adjacency list from edge pairs
+adj := make(map[int][]int)     // or make([][]int, n) when nodes are 0..n-1
+for _, e := range edges {
+    adj[e[0]] = append(adj[e[0]], e[1])
+    adj[e[1]] = append(adj[e[1]], e[0]) // undirected: both ways
+}
+visited := make([]bool, n)
+var dfs func(u int)
+dfs = func(u int) {
+    visited[u] = true
+    for _, v := range adj[u] {
+        if !visited[v] { dfs(v) }
+    }
+}
+'''
+cpp = '''
+vector<vector<int>> adj(n);
+for (auto& e : edges) {
+    adj[e[0]].push_back(e[1]);
+    adj[e[1]].push_back(e[0]);  // undirected
+}
+vector<bool> visited(n, false);
+function<void(int)> dfs = [&](int u) {
+    visited[u] = true;
+    for (int v : adj[u])
+        if (!visited[v]) dfs(v);
+};
+'''
+java = '''
+List<List<Integer>> adj = new ArrayList<>();
+for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
+for (int[] e : edges) {
+    adj.get(e[0]).add(e[1]);
+    adj.get(e[1]).add(e[0]);    // undirected
+}
+boolean[] visited = new boolean[n];
+void dfs(int u) {
+    visited[u] = true;
+    for (int v : adj.get(u))
+        if (!visited[v]) dfs(v);
+}
+'''
+
+[[topic.complexity]]
+op = 'BFS / DFS traversal'
+big = 'O(V + E)'
+
+[[topic.complexity]]
+op = 'check edge u–v (adj list)'
+big = 'O(degree(u))'
+note = 'O(1) with matrix or set'
+
+[[topic.complexity]]
+op = 'topological sort'
+big = 'O(V + E)'
+
+[[topic.complexity]]
+op = 'space (adj list)'
+big = 'O(V + E)'
+
+[[topic.complexity]]
+op = 'shortest path weighted (Dijkstra)'
+big = 'O(E log V)'
+note = 'with a min-heap'
+
+[[topic]]
+id = 'grid'
+title = 'Grid / Matrix as a graph'
+kind = 'structure'
+emoji = '🗺'
+what = [
+  'A 2-D grid is secretly a graph: each cell (r, c) is a node, connected to its 4 orthogonal neighbors (up, down, left, right). Number of Islands, Rotting Oranges, Word Search — all are BFS/DFS wearing a grid costume. Rows are indexed 0 … rows-1 top-to-bottom and columns 0 … cols-1 left-to-right, and grid[r][c] means row first, column second (r is the "y", c is the "x" — the reverse of screen coordinates; this trips everyone once).',
+  'The directions array is the idiom that keeps neighbor code sane: dirs = [(-1,0),(1,0),(0,-1),(0,1)], loop over it, and bounds-check every candidate BEFORE indexing: 0 ≤ nr < rows AND 0 ≤ nc < cols. Diagonals just extend the array to 8 entries.',
+  "Visited-tracking can be a separate boolean grid, or in-place mutation (sink the island: flip '1' to '0' as you visit) which uses no extra memory. Multi-source BFS (Rotting Oranges) starts with ALL sources in the queue at level 0 — the level count where the queue empties is the answer.",
+]
+notes = [
+  'grid[r][c]: ROW index first (vertical), column second. r ∈ [0, rows-1], c ∈ [0, cols-1], both 0-based.',
+  'Bounds-check BEFORE indexing — the check-inside-the-recursive-call pattern (shown above) keeps it in exactly one place.',
+  'Encoding a cell as one int: id = r*cols + c (decode: r = id/cols, c = id%cols) — handy for visited sets.',
+  'Assumes a rectangular grid; grab cols from grid[0] once, not per row.',
+]
+
+[topic.syntax]
+go = '''
+rows, cols := len(grid), len(grid[0])
+dirs := [4][2]int{{-1,0},{1,0},{0,-1},{0,1}}
+var dfs func(r, c int)
+dfs = func(r, c int) {
+    if r < 0 || r >= rows || c < 0 || c >= cols || grid[r][c] != '1' {
+        return                 // bounds + wall check first
+    }
+    grid[r][c] = '0'           // mark visited in place
+    for _, d := range dirs { dfs(r+d[0], c+d[1]) }
+}
+'''
+cpp = '''
+int rows = grid.size(), cols = grid[0].size();
+int dirs[4][2] = {{-1,0},{1,0},{0,-1},{0,1}};
+function<void(int,int)> dfs = [&](int r, int c) {
+    if (r < 0 || r >= rows || c < 0 || c >= cols || grid[r][c] != '1')
+        return;
+    grid[r][c] = '0';
+    for (auto& d : dirs) dfs(r + d[0], c + d[1]);
+};
+'''
+java = '''
+int rows = grid.length, cols = grid[0].length;
+int[][] dirs = {{-1,0},{1,0},{0,-1},{0,1}};
+void dfs(char[][] grid, int r, int c) {
+    if (r < 0 || r >= rows || c < 0 || c >= cols || grid[r][c] != '1')
+        return;
+    grid[r][c] = '0';
+    for (int[] d : dirs) dfs(grid, r + d[0], c + d[1]);
+}
+'''
+
+[[topic.complexity]]
+op = 'full traversal (BFS/DFS)'
+big = 'O(rows × cols)'
+note = 'every cell once'
+
+[[topic.complexity]]
+op = 'neighbor check per cell'
+big = 'O(4)'
+note = 'constant'
+
+[[topic.complexity]]
+op = 'space (visited / queue)'
+big = 'O(rows × cols)'
+note = 'worst case'
+
+[[topic]]
+id = 'intervals'
+title = 'Intervals'
+kind = 'structure'
+emoji = '📅'
+what = [
+  'Interval problems ([start, end] pairs — meetings, bookings, ranges) nearly all yield to one preprocessing step: sort by start. After sorting, only NEIGHBORING intervals can overlap-merge, so a single linear pass suffices — total O(n log n) for the sort plus O(n) for the sweep.',
+  'The overlap test between a and b (with a.start ≤ b.start): they overlap iff b.start ≤ a.end (touching counts, depending on the problem: for closed intervals [1,3] and [3,5] usually merge; if endpoints are exclusive, use <). The merged interval is [a.start, max(a.end, b.end)] — the max matters because a may fully contain b.',
+  "Merge template: sort, keep a current interval, and for each next one either extend cur.end = max(cur.end, next.end) (overlap) or emit cur and move on (gap). The Meeting Rooms II counting trick: split into start events (+1) and end events (−1), sort both, sweep — the running sum's peak is the number of rooms needed.",
+]
+notes = [
+  'Always clarify closed vs open endpoints: do [1,3] and [3,5] overlap? For merging usually yes (<=); for non-overlapping-count problems usually no (<).',
+  'Take max(cur.end, next.end) when merging — [1,10] then [2,3] must stay ending at 10.',
+  'Sorting by END time instead is the greedy key for "maximum number of non-overlapping intervals".',
+]
+
+[topic.syntax]
+go = '''
+sort.Slice(intervals, func(i, j int) bool {
+    return intervals[i][0] < intervals[j][0] // by start
+})
+merged := [][]int{intervals[0]}
+for _, iv := range intervals[1:] {
+    last := merged[len(merged)-1]
+    if iv[0] <= last[1] {          // overlap
+        if iv[1] > last[1] { last[1] = iv[1] }
+    } else {
+        merged = append(merged, iv)
+    }
+}
+'''
+cpp = '''
+sort(intervals.begin(), intervals.end()); // sorts by [0] then [1]
+vector<vector<int>> merged{intervals[0]};
+for (int i = 1; i < intervals.size(); i++) {
+    auto& last = merged.back();
+    if (intervals[i][0] <= last[1])
+        last[1] = max(last[1], intervals[i][1]);
+    else
+        merged.push_back(intervals[i]);
+}
+'''
+java = '''
+Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+List<int[]> merged = new ArrayList<>();
+merged.add(intervals[0]);
+for (int i = 1; i < intervals.length; i++) {
+    int[] last = merged.get(merged.size() - 1);
+    if (intervals[i][0] <= last[1])
+        last[1] = Math.max(last[1], intervals[i][1]);
+    else
+        merged.add(intervals[i]);
+}
+'''
+
+[[topic.complexity]]
+op = 'sort intervals'
+big = 'O(n log n)'
+
+[[topic.complexity]]
+op = 'merge / sweep after sorting'
+big = 'O(n)'
+
+[[topic.complexity]]
+op = 'overlap test (pair)'
+big = 'O(1)'
+
+[[topic]]
+id = 'bits'
+title = 'Bit Manipulation'
+kind = 'structure'
+emoji = '💡'
+what = [
+  'An int IS an array of bits — 32 or 64 boolean flags packed into one machine word, indexed 0 (least significant, rightmost) upward. Bit i has value 2^i. The operators: & (AND, both 1), | (OR, either 1), ^ (XOR, exactly one is 1), << and >> (shift = multiply/divide by 2), and ~ (NOT — ^ in Go).',
+  "The toolbox: read bit i with (n >> i) & 1; set it with n | (1 << i); clear it with n & ~(1 << i); toggle with n ^ (1 << i). Two magic tricks carry most problems: n & (n-1) clears the LOWEST set bit (loop it to count bits — Hamming weight, or test power-of-two: n & (n-1) == 0), and XOR's cancellation a ^ a = 0, a ^ 0 = a means XOR-ing a whole array leaves exactly the element that appears once (Single Number).",
+  'XOR is also a full adder without carry: a ^ b is the sum bits, (a & b) << 1 is the carries — loop until the carry is 0 and you have added two numbers with no + operator (Sum of Two Integers).',
+]
+notes = [
+  'Bit positions are 0-based from the RIGHT (least significant). Bit 31 of a 32-bit int is the sign bit.',
+  "Negative numbers are two's complement: -n == ~n + 1. Right-shifting a negative with >> keeps the sign (arithmetic shift); Java has >>> for logical shift, Go/C++ get it by casting to unsigned.",
+  'Go has no ~ operator: unary ^n is NOT, and n &^ m is AND-NOT (clear the bits of m in n).',
+  'Shifting by ≥ the type width (1 << 32 on int32) is undefined/wraps — mask shift amounts when they are computed.',
+]
+
+[topic.syntax]
+go = '''
+bit := (n >> i) & 1            // read bit i
+n |= 1 << i                    // set bit i
+n &^= 1 << i                   // clear (Go's AND-NOT operator)
+n ^= 1 << i                    // toggle
+count := 0
+for x := n; x != 0; x &= x - 1 { count++ } // popcount
+// also: bits.OnesCount(uint(n)) from math/bits
+'''
+cpp = '''
+int bit = (n >> i) & 1;
+n |= 1 << i;                   // set
+n &= ~(1 << i);                // clear
+n ^= 1 << i;                   // toggle
+int count = __builtin_popcount(n); // GCC/Clang builtin
+// portable: for (; n; n &= n - 1) count++;
+'''
+java = '''
+int bit = (n >> i) & 1;
+n |= 1 << i;                   // set
+n &= ~(1 << i);                // clear
+n ^= 1 << i;                   // toggle
+int count = Integer.bitCount(n);
+// >>> is unsigned shift (fills 0s); >> keeps the sign bit
+'''
+
+[[topic.complexity]]
+op = 'any single bit op (&, |, ^, <<)'
+big = 'O(1)'
+
+[[topic.complexity]]
+op = 'count set bits (n & (n-1) loop)'
+big = 'O(#set bits)'
+
+[[topic.complexity]]
+op = 'scan all 32 bits'
+big = 'O(32) = O(1)'
+
+[[topic.complexity]]
+op = 'XOR over an array'
+big = 'O(n)'
+
+[[topic]]
+id = 'dp'
+title = 'Dynamic Programming'
+kind = 'technique'
+emoji = '🧩'
+what = [
+  'DP applies when a problem has (1) optimal substructure — the answer builds from answers to smaller subproblems — and (2) overlapping subproblems — naive recursion would solve the same subproblem many times. Fibonacci is the toy example: fib(n) recomputes fib(n-2) exponentially many times; caching collapses the work to O(n).',
+  'Two equivalent implementations. Top-down (memoization): write the recursion, add a cache keyed by the arguments, return the cached value on re-entry. Bottom-up (tabulation): figure out the dependency order and fill a table from the base cases upward with a loop. Same asymptotics; bottom-up avoids recursion depth and often lets you shrink space (if dp[i] only reads dp[i-1] and dp[i-2], keep two variables — Climbing Stairs, House Robber).',
+  'The craft is defining the state: "dp[i] = best answer for the first i items" (1-D), "dp[i][j] = answer for prefix i of A vs prefix j of B" (classic 2-D, e.g. Longest Common Subsequence), "dp[amount] = fewest coins to make amount" (value-indexed, Coin Change). Then the recurrence: how does state depend on smaller states? Write the recurrence in words before code. A common convention: size the table n+1 and let index i mean "first i elements", so dp[0] is the empty prefix and there are no i-1 underflows.',
+]
+notes = [
+  'The n+1-sized table with dp[0] = base case ("zero items / empty prefix") eliminates most off-by-one bugs: dp[i] then refers to the FIRST i elements, i.e. element i-1 is the newest.',
+  'Use a sentinel like amount+1 for "impossible", not Integer.MAX_VALUE — MAX_VALUE + 1 overflows to negative.',
+  'Recite the recurrence in words first: "ways to reach step i = ways to reach i-1 + ways to reach i-2". If you can say it, you can code it.',
+  'Memo keys must capture the FULL state — if the recursion takes (i, j, canBuy), all three belong in the key.',
+]
+
+[topic.syntax]
+go = '''
+// bottom-up: Coin Change (fewest coins for amount)
+dp := make([]int, amount+1)
+for i := 1; i <= amount; i++ { dp[i] = amount + 1 } // "infinity"
+for i := 1; i <= amount; i++ {
+    for _, c := range coins {
+        if c <= i && dp[i-c]+1 < dp[i] { dp[i] = dp[i-c] + 1 }
+    }
+}
+// top-down: memo := map[int]int{}, check before recursing
+'''
+cpp = '''
+vector<int> dp(amount + 1, amount + 1); // "infinity"
+dp[0] = 0;
+for (int i = 1; i <= amount; i++)
+    for (int c : coins)
+        if (c <= i) dp[i] = min(dp[i], dp[i - c] + 1);
+// top-down: unordered_map<int,int> memo; or vector<int> memo(n, -1)
+'''
+java = '''
+int[] dp = new int[amount + 1];
+Arrays.fill(dp, amount + 1);            // "infinity"
+dp[0] = 0;
+for (int i = 1; i <= amount; i++)
+    for (int c : coins)
+        if (c <= i) dp[i] = Math.min(dp[i], dp[i - c] + 1);
+// top-down: Integer[] memo = new Integer[n]; null = not computed
+'''
+
+[[topic.complexity]]
+op = 'overall'
+big = 'O(#states × work per state)'
+
+[[topic.complexity]]
+op = '1-D linear dp'
+big = 'O(n)'
+note = 'Climbing Stairs, House Robber'
+
+[[topic.complexity]]
+op = '2-D prefix dp'
+big = 'O(n·m)'
+note = 'LCS, Edit Distance, Unique Paths'
+
+[[topic.complexity]]
+op = 'value-indexed dp'
+big = 'O(amount × coins)'
+note = 'Coin Change'
+
+[[topic.complexity]]
+op = 'space'
+big = 'often reducible'
+note = 'keep only the last row / two vars'
+
+[[topic]]
+id = 'twopointers'
+title = 'Two Pointers'
+kind = 'technique'
+emoji = '👉'
+what = [
+  'Two pointers replaces a nested O(n²) scan with one O(n) pass by maintaining two indices with an invariant that lets you move one of them decisively at every step. Each pointer only ever moves forward (or the two only ever move toward each other), so total movement is bounded by n.',
+  'Converging pattern (sorted data): l = 0, r = n-1. Compare arr[l] + arr[r] to the target: too small → l++ (the only way to grow the sum), too big → r-- (the only way to shrink it). That decisiveness is WHY sorting is a precondition — it is what makes one move provably safe. Two Sum II, 3Sum (fix one element, converge on the rest), Container With Most Water (move the shorter wall — the taller one can never do better with a narrower gap).',
+  'Fast/slow pattern (same direction): the slow pointer marks the boundary of "kept" elements while fast scans everything — in-place dedup and Remove Element work this way. On linked lists, fast moving 2× finds the middle and detects cycles (Floyd).',
+]
+notes = [
+  'Loop condition l < r (not <=) when the two pointers must be distinct elements.',
+  "For each move, be able to say why the skipped pairs cannot be the answer — that argument IS the algorithm's correctness.",
+  'In 3Sum-style problems, skip duplicate values after each move to avoid duplicate triples.',
+]
+
+[topic.syntax]
+go = '''
+l, r := 0, len(nums)-1
+for l < r {
+    sum := nums[l] + nums[r]
+    if sum == target { break }     // found
+    if sum < target { l++ } else { r-- }
+}
+// fast/slow (dedup): slow := 0; for fast := range nums {...}
+'''
+cpp = '''
+int l = 0, r = nums.size() - 1;
+while (l < r) {
+    int sum = nums[l] + nums[r];
+    if (sum == target) break;
+    if (sum < target) l++; else r--;
+}
+'''
+java = '''
+int l = 0, r = nums.length - 1;
+while (l < r) {
+    int sum = nums[l] + nums[r];
+    if (sum == target) break;
+    if (sum < target) l++; else r--;
+}
+'''
+
+[[topic.complexity]]
+op = 'converging scan'
+big = 'O(n)'
+note = 'after O(n log n) sort if unsorted'
+
+[[topic.complexity]]
+op = 'fast/slow scan'
+big = 'O(n)'
+
+[[topic.complexity]]
+op = 'space'
+big = 'O(1)'
+note = 'the whole point'
+
+[[topic]]
+id = 'slidingwindow'
+title = 'Sliding Window'
+kind = 'technique'
+emoji = '🪟'
+what = [
+  'Sliding window is two pointers where [left, right] brackets a contiguous subarray/substring, plus running state describing the window (a sum, a char-count map, a distinct counter). Instead of recomputing each window from scratch (O(n·k)), you UPDATE the state as elements enter on the right and leave on the left — O(1) per move, O(n) total, because each index enters once and leaves once.',
+  'Variable-size template (the common one): for each right, add s[right] to the state; while the window is INVALID (repeat char, sum too big, too many distinct), remove s[left] and left++; then the window is valid and you record best = max(best, right-left+1). Longest Substring Without Repeating Characters is the canonical example.',
+  'Fixed-size windows (size k) are simpler: slide both ends together, add the entering element, remove the leaving one. Best Time to Buy/Sell Stock is a disguised window: keep the min price seen (left side) and try each day as the sell (right side).',
+]
+notes = [
+  'Window size = right - left + 1 (both ends inclusive). Off-by-one here is the classic bug.',
+  'The shrink loop is `while`, not `if` — one entering element can invalidate the window by more than one step.',
+  'Only works when the answer is a CONTIGUOUS run; subsequences (gaps allowed) need DP instead.',
+]
+
+[topic.syntax]
+go = '''
+window := map[byte]bool{}      // window state
+best, l := 0, 0
+for r := 0; r < len(s); r++ {
+    for window[s[r]] {          // shrink until valid
+        delete(window, s[l]); l++
+    }
+    window[s[r]] = true
+    if r-l+1 > best { best = r - l + 1 }
+}
+'''
+cpp = '''
+unordered_set<char> window;
+int best = 0, l = 0;
+for (int r = 0; r < s.size(); r++) {
+    while (window.count(s[r])) { window.erase(s[l]); l++; }
+    window.insert(s[r]);
+    best = max(best, r - l + 1);
+}
+'''
+java = '''
+Set<Character> window = new HashSet<>();
+int best = 0, l = 0;
+for (int r = 0; r < s.length(); r++) {
+    while (window.contains(s.charAt(r))) { window.remove(s.charAt(l)); l++; }
+    window.add(s.charAt(r));
+    best = Math.max(best, r - l + 1);
+}
+'''
+
+[[topic.complexity]]
+op = 'full scan'
+big = 'O(n)'
+note = 'each element enters + leaves once'
+
+[[topic.complexity]]
+op = 'state update per move'
+big = 'O(1)'
+note = 'must be — or the trick is lost'
+
+[[topic.complexity]]
+op = 'space'
+big = 'O(k) or O(Σ)'
+note = 'window contents / alphabet size'
+
+[[topic]]
+id = 'binarysearch'
+title = 'Binary Search'
+kind = 'technique'
+emoji = '🎯'
+what = [
+  'Binary search finds a target in sorted data by halving the search space each probe: check the middle, discard the half that cannot contain the answer, repeat. n → n/2 → n/4 → … reaches 1 in log₂(n) steps — a billion elements in ~30 probes.',
+  "The bulletproof template: lo, hi = 0, n-1; while lo <= hi: mid = lo + (hi-lo)/2; three-way compare, moving lo = mid+1 or hi = mid-1 (always PAST mid — mid itself was checked; leaving it in causes infinite loops). The generalization that unlocks harder problems: you don't need a sorted array, only a MONOTONIC predicate — anything false…false,true…true can be searched for its boundary. \"Search on the answer\": Koko Eating Bananas binary-searches candidate speeds, checking feasibility in O(n) per probe.",
+  'Rotated arrays (Search in Rotated Sorted Array): at every mid, at least one half is still properly sorted — check which via arr[lo] ≤ arr[mid], then test whether the target lies inside that sorted half to decide direction.',
+]
+notes = [
+  'mid = lo + (hi - lo) / 2, not (lo + hi) / 2 — the sum can overflow 32-bit ints in C++/Java.',
+  'Pick ONE convention (inclusive hi + lo <= hi shown here) and never mix it with the half-open variant mid-loop.',
+  'lo/hi must always move PAST mid. If a variant keeps hi = mid (half-open style), the loop condition must be lo < hi.',
+  "For first/last occurrence, don't return on equality — record the hit and keep narrowing toward the wanted side.",
+]
+
+[topic.syntax]
+go = '''
+lo, hi := 0, len(nums)-1
+for lo <= hi {
+    mid := lo + (hi-lo)/2          // no overflow
+    if nums[mid] == target { return mid }
+    if nums[mid] < target { lo = mid + 1 } else { hi = mid - 1 }
+}
+return -1
+// stdlib: sort.SearchInts(nums, target) — first index where >= target
+'''
+cpp = '''
+int lo = 0, hi = nums.size() - 1;
+while (lo <= hi) {
+    int mid = lo + (hi - lo) / 2;
+    if (nums[mid] == target) return mid;
+    if (nums[mid] < target) lo = mid + 1; else hi = mid - 1;
+}
+return -1;
+// stdlib: lower_bound(v.begin(), v.end(), x) — first iterator where >= x
+'''
+java = '''
+int lo = 0, hi = nums.length - 1;
+while (lo <= hi) {
+    int mid = lo + (hi - lo) / 2;
+    if (nums[mid] == target) return mid;
+    if (nums[mid] < target) lo = mid + 1; else hi = mid - 1;
+}
+return -1;
+// stdlib: Arrays.binarySearch(nums, target)
+'''
+
+[[topic.complexity]]
+op = 'search sorted array'
+big = 'O(log n)'
+
+[[topic.complexity]]
+op = 'search-on-answer'
+big = 'O(log range × check)'
+note = 'e.g. log(maxSpeed) × O(n)'
+
+[[topic.complexity]]
+op = 'space'
+big = 'O(1)'
+
+[[topic]]
+id = 'backtracking'
+title = 'Backtracking & Recursion'
+kind = 'technique'
+emoji = '🔙'
+what = [
+  'Backtracking explores a decision tree with DFS: at each level make a choice, recurse deeper, then UNDO the choice and try the next option. The undo is the defining move — it returns the shared state to exactly what it was, so sibling branches start clean. Subsets (include element i or not), Permutations (which unused element next), Combination Sum, N-Queens — all the same skeleton.',
+  'The template: backtrack(state, choices) → if the state is complete, record a COPY of it and return; otherwise for each valid choice: apply it (append to path, mark used), recurse, revert it (pop from path, unmark). Pruning — skipping choices that provably cannot lead to a solution (sum already exceeds target; duplicate value at the same depth) — is what keeps exponential search practical.',
+  'Recursion mechanics worth internalizing: every call pushes a frame (its own copy of parameters and locals) onto the call stack; base cases stop the descent. Frames are independent — but anything passed by reference/pointer (the path slice, the used array) is SHARED across all frames, which is exactly why the undo step and the record-a-copy step are both mandatory.',
+]
+notes = [
+  'Record a COPY of the path — the path object keeps mutating after you store it; storing the reference gives you a result list full of identical (usually empty) lists. (C++ push_back copies automatically.)',
+  'The `start` index prevents revisiting earlier elements → combinations. Permutations instead loop over ALL elements with a used[] array.',
+  'Choose / explore / un-choose must be perfectly symmetric — every mutation before the recursive call needs its inverse after.',
+  'To skip duplicates: sort first, then at each depth skip nums[i] == nums[i-1] when i > start.',
+]
+
+[topic.syntax]
+go = '''
+var res [][]int
+var path []int
+var backtrack func(start int)
+backtrack = func(start int) {
+    cp := make([]int, len(path))
+    copy(cp, path)
+    res = append(res, cp)          // record a COPY!
+    for i := start; i < len(nums); i++ {
+        path = append(path, nums[i])   // choose
+        backtrack(i + 1)               // explore
+        path = path[:len(path)-1]      // un-choose
+    }
+}
+backtrack(0)
+'''
+cpp = '''
+vector<vector<int>> res;
+vector<int> path;
+function<void(int)> backtrack = [&](int start) {
+    res.push_back(path);           // vector copies on push_back
+    for (int i = start; i < nums.size(); i++) {
+        path.push_back(nums[i]);   // choose
+        backtrack(i + 1);          // explore
+        path.pop_back();           // un-choose
+    }
+};
+backtrack(0);
+'''
+java = '''
+List<List<Integer>> res = new ArrayList<>();
+List<Integer> path = new ArrayList<>();
+void backtrack(int[] nums, int start) {
+    res.add(new ArrayList<>(path)); // record a COPY!
+    for (int i = start; i < nums.length; i++) {
+        path.add(nums[i]);          // choose
+        backtrack(nums, i + 1);     // explore
+        path.remove(path.size() - 1); // un-choose
+    }
+}
+'''
+
+[[topic.complexity]]
+op = 'subsets of n items'
+big = 'O(2ⁿ)'
+note = 'each element in or out'
+
+[[topic.complexity]]
+op = 'permutations'
+big = 'O(n · n!)'
+
+[[topic.complexity]]
+op = 'combination sum'
+big = 'exponential, pruning helps'
+
+[[topic.complexity]]
+op = 'space'
+big = 'O(depth)'
+note = 'the recursion stack + current path'
+
+[[topic]]
+id = 'greedy'
+title = 'Greedy'
+kind = 'technique'
+emoji = '🤑'
+what = [
+  'A greedy algorithm makes the locally best choice at each step and never reconsiders — no backtracking, no table of subproblems. When it works it is usually the fastest possible approach (one pass, O(1) extra space), but it only works when the problem has the greedy-choice property: a local optimum can always be extended to a global one.',
+  "Recognizable examples: Maximum Subarray (Kadane's — a running sum that resets to 0 whenever it goes negative, because a negative prefix can only hurt); Jump Game (track the farthest reachable index; if the current index ever exceeds it, you're stuck); interval scheduling (sort by END time, always take the earliest-ending compatible interval — it leaves maximal room for the rest).",
+  "The honest way to trust a greedy: an exchange argument — \"take any optimal solution; swap its first choice for the greedy choice; it stays optimal\" — repeated, this transforms any optimal solution into the greedy one. If you can't sketch that argument, suspect the greedy is wrong and think DP (Coin Change with coins {1,3,4} and amount 6 is the classic greedy-killer: greedy says 4+1+1, optimal is 3+3).",
+]
+notes = [
+  "Greedy vs DP: if choices interact across the future (taking this now blocks something better later, in a way local info can't see), you need DP.",
+  'Sorting by the right key IS the greedy insight in interval problems — end time for scheduling, start time for merging.',
+  'Initialize best with the first element (not 0) when all values may be negative.',
+]
+
+[topic.syntax]
+go = '''
+// Kadane's: maximum subarray sum
+best, cur := nums[0], 0
+for _, x := range nums {
+    if cur < 0 { cur = 0 }      // negative prefix can only hurt
+    cur += x
+    if cur > best { best = cur }
+}
+'''
+cpp = '''
+int best = nums[0], cur = 0;
+for (int x : nums) {
+    if (cur < 0) cur = 0;
+    cur += x;
+    best = max(best, cur);
+}
+'''
+java = '''
+int best = nums[0], cur = 0;
+for (int x : nums) {
+    if (cur < 0) cur = 0;
+    cur += x;
+    best = Math.max(best, cur);
+}
+'''
+
+[[topic.complexity]]
+op = 'typical greedy scan'
+big = 'O(n)'
+
+[[topic.complexity]]
+op = 'with sorting first'
+big = 'O(n log n)'
+
+[[topic.complexity]]
+op = 'space'
+big = 'O(1)'
+note = 'usually a few running variables'
+
+[[topic]]
+id = 'unionfind'
+title = 'Union Find (Disjoint Set Union)'
+kind = 'structure'
+emoji = '🔗'
+what = [
+  'Union-find answers one question — "are these two things in the same group?" — and supports one change: merge two groups. It stores each element as a node pointing at a parent, and a group is identified by the root its members climb to. Nothing else is stored: no member lists, no adjacency, no visited set.',
+  'Two optimisations turn it from a linked list in disguise into a near-constant-time structure. Path compression re-points each node at its grandparent while walking up, so trees flatten a little on every query. Union by size hangs the smaller tree under the bigger one, so a tree never gets tall in the first place. Together they give an amortised cost of α(n) — the inverse Ackermann function, which is below 5 for any n a computer will ever hold.',
+  "The reason it beats DFS on connectivity problems is that it is incremental: edges can arrive one at a time and every query in between is still answered instantly, where a DFS would have to re-run. That also makes it the natural fit for Kruskal's MST, for cycle detection while a graph is being built, and for anything phrased as \"process these merges in order\".",
+]
+notes = [
+  'The parent array must be seeded with parent[i] = i. Forgetting it fails silently: every find returns 0 and everything looks connected.',
+  'Union by size and path compression together are what buy α(n). With neither, a chain of unions builds an n-deep tree and each find becomes O(n).',
+  'Compare find(a) with find(b), never parent[a] with parent[b] — the latter is wrong the moment either node sits below its root.',
+  'Keys that are not small integers (emails, strings, coordinates) need an id map first: hash the key to 0…n-1 the first time it is seen, then run the array structure on the ids.',
+  'The structure cannot un-merge. Problems that remove edges are usually solved by processing the input backwards, turning removals into additions.',
+]
+
+[topic.syntax]
+go = '''
+parent := make([]int, n)
+size := make([]int, n)
+for i := range parent { parent[i], size[i] = i, 1 }
+
+func find(x int) int {
+    for parent[x] != x {
+        parent[x] = parent[parent[x]]  // path compression
+        x = parent[x]
+    }
+    return x
+}
+
+func union(a, b int) bool {
+    ra, rb := find(a), find(b)
+    if ra == rb { return false }       // already together
+    if size[ra] > size[rb] { ra, rb = rb, ra }
+    parent[ra] = rb                    // smaller under bigger
+    size[rb] += size[ra]
+    return true
+}
+'''
+cpp = '''
+vector<int> parent(n), sz(n, 1);
+iota(parent.begin(), parent.end(), 0);
+
+int find(int x) {
+    while (parent[x] != x) {
+        parent[x] = parent[parent[x]];
+        x = parent[x];
+    }
+    return x;
+}
+
+bool unite(int a, int b) {
+    a = find(a), b = find(b);
+    if (a == b) return false;
+    if (sz[a] > sz[b]) swap(a, b);
+    parent[a] = b;
+    sz[b] += sz[a];
+    return true;
+}
+'''
+java = '''
+int[] parent = new int[n], size = new int[n];
+for (int i = 0; i < n; i++) { parent[i] = i; size[i] = 1; }
+
+int find(int x) {
+    while (parent[x] != x) {
+        parent[x] = parent[parent[x]];
+        x = parent[x];
+    }
+    return x;
+}
+
+boolean union(int a, int b) {
+    int ra = find(a), rb = find(b);
+    if (ra == rb) return false;
+    if (size[ra] > size[rb]) { int t = ra; ra = rb; rb = t; }
+    parent[ra] = rb;
+    size[rb] += size[ra];
+    return true;
+}
+'''
+
+[[topic.complexity]]
+op = 'find / union'
+big = 'O(α(n))'
+note = 'amortised; α(n) < 5 always'
+
+[[topic.complexity]]
+op = 'build n singletons'
+big = 'O(n)'
+
+[[topic.complexity]]
+op = 'count components'
+big = 'O(1)'
+note = 'keep a counter, decrement on each real merge'
+
+[[topic.complexity]]
+op = 'space'
+big = 'O(n)'
+
+[[topic]]
+id = 'prefixsum'
+title = 'Prefix Sums & Difference Arrays'
+kind = 'technique'
+emoji = '➕'
+what = [
+  'A prefix sum turns "sum of a range" from a loop into a subtraction. Build prefix[i] = the sum of the first i values — note the i, not i+1, so prefix[0] = 0 means "the sum of nothing" — and any range sum is prefix[right+1] − prefix[left]. That extra leading zero is what removes every special case for a range starting at index 0.',
+  'The same trick runs in reverse. A difference array records only where a value changes: adding v across [l, r] is diff[l] += v and diff[r+1] -= v, two writes instead of r − l + 1. A running sum at the end reconstructs the final array. Prefix sums answer many queries on fixed data; difference arrays apply many updates before one final read.',
+  'The pattern generalises past sums. Prefix XOR answers range-XOR queries; prefix counts answer "how many vowels in this substring"; 2-D prefix sums answer rectangle queries with four lookups by inclusion–exclusion. Combined with a hash map, prefix sums solve the whole "count subarrays with property X" family — including sum equals k, and sum divisible by k, where the key is the remainder rather than the sum.',
+]
+notes = [
+  'Size the prefix array n+1, not n. Almost every off-by-one here comes from trying to make n slots work.',
+  'sum(left..right) inclusive is prefix[right+1] − prefix[left]. Write it down once and stop re-deriving it under pressure.',
+  "Prefix sums overflow sooner than the input suggests: 10⁵ values of 10⁹ needs a 64-bit accumulator (long in Java, long long in C++; Go's int is already 64-bit).",
+  'Negative values are fine for prefix sums but break the sliding-window alternative — that is usually the tell for which technique a problem wants.',
+  'Remainders of negative numbers are negative in Go, C++ and Java. Normalise with ((x % k) + k) % k before using one as a map key.',
+  'The structure is immutable: one element update invalidates the whole tail. If updates interleave with queries, you want a Fenwick or segment tree.',
+]
+
+[topic.syntax]
+go = '''
+// prefix sums
+prefix := make([]int, len(nums)+1)
+for i, x := range nums { prefix[i+1] = prefix[i] + x }
+sum := prefix[r+1] - prefix[l]        // nums[l..r] inclusive
+
+// difference array: +v on [l, r]
+diff := make([]int, n+1)
+diff[l] += v
+diff[r+1] -= v
+run := 0
+for i := 0; i < n; i++ { run += diff[i]; out[i] = run }
+
+// count subarrays summing to k
+seen := map[int]int{0: 1}
+sum, count := 0, 0
+for _, x := range nums {
+    sum += x
+    count += seen[sum-k]
+    seen[sum]++
+}
+'''
+cpp = '''
+vector<long long> prefix(nums.size() + 1, 0);
+for (int i = 0; i < (int)nums.size(); i++)
+    prefix[i + 1] = prefix[i] + nums[i];
+long long sum = prefix[r + 1] - prefix[l];
+
+vector<int> diff(n + 1, 0);
+diff[l] += v; diff[r + 1] -= v;
+int run = 0;
+for (int i = 0; i < n; i++) { run += diff[i]; out[i] = run; }
+
+unordered_map<long long, int> seen{{0, 1}};
+long long s = 0; int count = 0;
+for (int x : nums) { s += x; count += seen[s - k]; seen[s]++; }
+'''
+java = '''
+long[] prefix = new long[nums.length + 1];
+for (int i = 0; i < nums.length; i++)
+    prefix[i + 1] = prefix[i] + nums[i];
+long sum = prefix[r + 1] - prefix[l];
+
+int[] diff = new int[n + 1];
+diff[l] += v; diff[r + 1] -= v;
+int run = 0;
+for (int i = 0; i < n; i++) { run += diff[i]; out[i] = run; }
+
+Map<Long, Integer> seen = new HashMap<>();
+seen.put(0L, 1);
+long s = 0; int count = 0;
+for (int x : nums) {
+    s += x;
+    count += seen.getOrDefault(s - k, 0);
+    seen.merge(s, 1, Integer::sum);
+}
+'''
+
+[[topic.complexity]]
+op = 'build prefix array'
+big = 'O(n)'
+
+[[topic.complexity]]
+op = 'range sum query'
+big = 'O(1)'
+
+[[topic.complexity]]
+op = '2-D rectangle query'
+big = 'O(1)'
+note = 'four lookups, inclusion–exclusion'
+
+[[topic.complexity]]
+op = 'range update (difference array)'
+big = 'O(1)'
+note = 'plus one O(n) sweep at the end'
+
+[[topic.complexity]]
+op = 'single element update'
+big = 'O(n)'
+note = 'use a Fenwick tree if updates interleave'
+
+[[topic]]
+id = 'monotonic'
+title = 'Monotonic Stack & Deque'
+kind = 'technique'
+emoji = '📉'
+what = [
+  'A monotonic stack keeps its contents sorted — increasing or decreasing — by popping everything that would break the order before pushing. That sounds like a constraint; it is really a filter. The elements popped are exactly the ones for which the new element is the answer, so "next greater element", "days until a warmer temperature" and "largest rectangle in a histogram" all fall out of the pop, not the push.',
+  'The cost argument is the same every time: each element is pushed once and popped once, so the total work is O(n) even though a single step may pop many elements. Seeing the inner loop and calling it O(n²) is the mistake this technique exists to punish.',
+  'A monotonic deque is the sliding-window version: values are dropped from the back when they can never win again, and from the front when they fall out of the window. That gives the maximum or minimum of every window in O(n) total — which is what Sliding Window Maximum is really asking for.',
+]
+notes = [
+  'Decide first whether the stack holds values or indices. Indices are almost always right: they give widths and distances, and the value is one lookup away.',
+  'An increasing stack (pop while top > new) finds the next smaller element; a decreasing stack (pop while top < new) finds the next greater. Getting the direction backwards is the classic bug.',
+  'Anything still on the stack at the end has no answer to its right. Handle it explicitly, or push a sentinel (0 for histograms, ∞ for minima) to force a final flush.',
+  'For the deque version, store indices so the front can be tested against the window: `if front <= i - k { popFront() }`.',
+  'Strict versus non-strict comparison decides how duplicates behave. Pick one deliberately and check it on a duplicate-heavy example.',
+]
+
+[topic.syntax]
+go = '''
+// next greater element to the right, -1 if none
+res := make([]int, len(nums))
+for i := range res { res[i] = -1 }
+stack := []int{}                        // indices, values decreasing
+for i, x := range nums {
+    for len(stack) > 0 && nums[stack[len(stack)-1]] < x {
+        top := stack[len(stack)-1]
+        stack = stack[:len(stack)-1]
+        res[top] = x                    // x is top's answer
+    }
+    stack = append(stack, i)
+}
+
+// sliding window maximum, deque of indices
+dq := []int{}
+for i, x := range nums {
+    for len(dq) > 0 && nums[dq[len(dq)-1]] <= x { dq = dq[:len(dq)-1] }
+    dq = append(dq, i)
+    if dq[0] <= i-k { dq = dq[1:] }     // fell out of the window
+    if i >= k-1 { out = append(out, nums[dq[0]]) }
+}
+'''
+cpp = '''
+vector<int> res(nums.size(), -1);
+stack<int> st;                          // indices
+for (int i = 0; i < (int)nums.size(); i++) {
+    while (!st.empty() && nums[st.top()] < nums[i]) {
+        res[st.top()] = nums[i];
+        st.pop();
+    }
+    st.push(i);
+}
+
+deque<int> dq;
+for (int i = 0; i < (int)nums.size(); i++) {
+    while (!dq.empty() && nums[dq.back()] <= nums[i]) dq.pop_back();
+    dq.push_back(i);
+    if (dq.front() <= i - k) dq.pop_front();
+    if (i >= k - 1) out.push_back(nums[dq.front()]);
+}
+'''
+java = '''
+int[] res = new int[nums.length];
+Arrays.fill(res, -1);
+Deque<Integer> st = new ArrayDeque<>();
+for (int i = 0; i < nums.length; i++) {
+    while (!st.isEmpty() && nums[st.peek()] < nums[i]) {
+        res[st.pop()] = nums[i];
+    }
+    st.push(i);
+}
+
+Deque<Integer> dq = new ArrayDeque<>();
+for (int i = 0; i < nums.length; i++) {
+    while (!dq.isEmpty() && nums[dq.peekLast()] <= nums[i]) dq.pollLast();
+    dq.addLast(i);
+    if (dq.peekFirst() <= i - k) dq.pollFirst();
+    if (i >= k - 1) out.add(nums[dq.peekFirst()]);
+}
+'''
+
+[[topic.complexity]]
+op = 'whole scan'
+big = 'O(n)'
+note = 'each index pushed once, popped once'
+
+[[topic.complexity]]
+op = 'one step, worst case'
+big = 'O(n)'
+note = 'amortised O(1) — the inner loop is not a factor'
+
+[[topic.complexity]]
+op = 'space'
+big = 'O(n)'
+
+[[topic]]
+id = 'sorting'
+title = 'Sorting & Selection'
+kind = 'technique'
+emoji = '🔤'
+what = [
+  'You will rarely implement a sort in an interview, but you will constantly choose one and reason about it. The library sort is O(n log n) and comparison-based: Go uses pattern-defeating quicksort, C++ introsort (quicksort falling back to heapsort), Java dual-pivot quicksort for primitives and Timsort for objects. That last split is why sorting a Java int[] is not stable while sorting an Integer[] is.',
+  'Sorting is more often the setup move than the answer. It is what makes two-pointer scans, greedy sweeps and interval merges possible, at a cost of O(n log n) up front. Recognising "sort, then one linear pass" as a shape is worth more than any implementation detail.',
+  'When only the k-th element is wanted, sorting is overkill. Quickselect partitions around a pivot and recurses into one side only, averaging O(n); a size-k heap costs O(n log k) and streams. And when the values are small integers, counting or bucket sort sidesteps the comparison lower bound entirely at O(n + range) — which is how "top k frequent elements" reaches O(n).',
+]
+notes = [
+  'Stability means equal elements keep their input order. It matters whenever you sort by one key having already sorted by another.',
+  'Comparators must be consistent: a < b, b < a and equality have to agree. An inconsistent one can crash Java at runtime ("Comparison method violates its general contract") rather than merely sorting oddly.',
+  'Never write `(a, b) -> a.value - b.value` for values that may be large or negative — the subtraction overflows. Use Integer.compare.',
+  'Sorting pairs by their second element is the interval-greedy setup; by their first, the merge setup. Which one you need is often the whole problem.',
+  'Quickselect is O(n) average but O(n²) worst case; randomising the pivot makes that vanishingly unlikely.',
+  'Counting sort needs a bounded value range, and its memory is proportional to that range, not to n.',
+]
+
+[topic.syntax]
+go = '''
+sort.Ints(nums)
+sort.Slice(items, func(i, j int) bool {   // by end, then start
+    if items[i].end != items[j].end { return items[i].end < items[j].end }
+    return items[i].start < items[j].start
+})
+sort.SliceStable(items, less)             // when stability matters
+
+// counting sort over a small range
+count := make([]int, maxVal+1)
+for _, x := range nums { count[x]++ }
+out = out[:0]
+for v, c := range count {
+    for ; c > 0; c-- { out = append(out, v) }
+}
+'''
+cpp = '''
+sort(nums.begin(), nums.end());
+sort(v.begin(), v.end(), [](auto& a, auto& b) {
+    return a.end != b.end ? a.end < b.end : a.start < b.start;
+});
+stable_sort(v.begin(), v.end(), cmp);
+
+nth_element(v.begin(), v.begin() + k, v.end());  // quickselect, O(n) avg
+partial_sort(v.begin(), v.begin() + k, v.end()); // k smallest, in order
+'''
+java = '''
+Arrays.sort(nums);                        // primitives: dual-pivot quicksort
+Arrays.sort(boxed, Comparator             // objects: Timsort, stable
+    .comparingInt((Item a) -> a.end)
+    .thenComparingInt(a -> a.start));
+list.sort(Comparator.comparingInt(Item::getEnd));
+
+// NEVER (a, b) -> a.end - b.end   — overflows
+Arrays.sort(pairs, (a, b) -> Integer.compare(a[1], b[1]));
+'''
+
+[[topic.complexity]]
+op = 'library sort'
+big = 'O(n log n)'
+
+[[topic.complexity]]
+op = 'quickselect (k-th element)'
+big = 'O(n) average'
+note = 'O(n²) worst case; randomise the pivot'
+
+[[topic.complexity]]
+op = 'k smallest with a heap'
+big = 'O(n log k)'
+note = 'streams, never holds more than k'
+
+[[topic.complexity]]
+op = 'counting / bucket sort'
+big = 'O(n + range)'
+note = 'small integer keys only'
+
+[[topic.complexity]]
+op = 'comparison lower bound'
+big = 'Ω(n log n)'
+note = 'why beating it always means not comparing'
+
+[[topic]]
+id = 'matching'
+title = 'String Matching (KMP & Rolling Hash)'
+kind = 'technique'
+emoji = '🔎'
+what = [
+  'The naive substring search tries the pattern at every position and, on a mismatch, throws away everything it just learned — O(n·m). KMP keeps that knowledge in a table: lps[i] is the length of the longest proper prefix of the pattern that is also a suffix of pattern[0..i]. On a mismatch after j matched characters the pattern slides so that lps[j-1] characters are still matched, and the haystack pointer never moves backwards. That one property is what makes the scan O(n + m).',
+  "The same table answers questions that have nothing to do with searching. The pattern's period is m − lps[m-1], so \"is this string one block repeated?\" is a single modulo away, and the shortest prefix that must be prepended to make a palindrome comes from running the table over s + separator + reverse(s).",
+  'Rolling hashes (Rabin–Karp) take the other route: turn each window into a number that updates in O(1) as the window slides, and compare numbers instead of strings. Simpler to write, and it generalises to 2-D and to many patterns at once — at the cost of being probabilistic, so equal hashes must be confirmed with a real comparison.',
+]
+notes = [
+  'lps[0] is always 0 — a proper prefix cannot be the whole string.',
+  'The fallback `length = lps[length-1]` is not a bug: it can run several times for one character, and the total across the build is still O(m).',
+  'The built-ins (strings.Index, string::find, String.indexOf) are what you would actually ship; the interview is asking whether you know what they do inside.',
+  'For a rolling hash use a large prime modulus and a random base. Base 31 with a 2³² modulus is exactly the case anti-hash tests are built to break.',
+  'Rabin–Karp must verify a hash match with a real comparison to be correct. Skipping that is a bug, not an optimisation.',
+]
+
+[topic.syntax]
+go = '''
+// LPS table
+lps := make([]int, len(p))
+for i, length := 1, 0; i < len(p); {
+    if p[i] == p[length] {
+        length++
+        lps[i] = length
+        i++
+    } else if length > 0 {
+        length = lps[length-1]    // fall back, do not restart
+    } else {
+        lps[i] = 0
+        i++
+    }
+}
+
+// is s one block repeated?
+period := len(s) - lps[len(s)-1]
+repeated := lps[len(s)-1] > 0 && len(s)%period == 0
+
+idx := strings.Index(haystack, needle)   // -1 if absent
+'''
+cpp = '''
+vector<int> lps(p.size(), 0);
+for (int i = 1, len = 0; i < (int)p.size(); ) {
+    if (p[i] == p[len])   { lps[i++] = ++len; }
+    else if (len > 0)     { len = lps[len - 1]; }
+    else                  { lps[i++] = 0; }
+}
+
+size_t at = haystack.find(needle);       // string::npos if absent
+'''
+java = '''
+int[] lps = new int[p.length()];
+for (int i = 1, len = 0; i < p.length(); ) {
+    if (p.charAt(i) == p.charAt(len)) { lps[i++] = ++len; }
+    else if (len > 0)                 { len = lps[len - 1]; }
+    else                              { lps[i++] = 0; }
+}
+
+int at = haystack.indexOf(needle);       // -1 if absent
+'''
+
+[[topic.complexity]]
+op = 'build LPS table'
+big = 'O(m)'
+
+[[topic.complexity]]
+op = 'KMP search'
+big = 'O(n + m)'
+
+[[topic.complexity]]
+op = 'naive search'
+big = 'O(n · m)'
+note = 'the thing KMP exists to beat'
+
+[[topic.complexity]]
+op = 'rolling hash search'
+big = 'O(n + m) expected'
+note = 'verify matches; collisions are possible'
+
+[[topic.complexity]]
+op = 'space'
+big = 'O(m)'
+
+[[topic]]
+id = 'toposort'
+title = 'Topological Sort'
+kind = 'technique'
+emoji = '🪜'
+what = [
+  'A topological order lists the vertices of a directed graph so that every edge points forwards. It exists if and only if the graph has no cycle — which is why one algorithm answers both "in what order can I do these tasks?" and "is this set of dependencies impossible?".',
+  "Kahn's algorithm is the BFS form: count the edges pointing into each vertex, start with the vertices whose count is zero, and each time one is emitted decrement its neighbours and enqueue any that reach zero. If fewer than n vertices come out, the ones left behind are exactly the vertices trapped in a cycle. The DFS form pushes each vertex after its descendants finish, producing the reverse order, and detects a cycle by meeting a vertex that is still on the recursion stack.",
+  'Most of the difficulty is upstream of the algorithm: turning the input into a graph. Course pairs, alien-alphabet letter comparisons, build dependencies and recipe ingredients are the same problem once the edges exist — and getting the edge direction backwards is the single most common mistake.',
+]
+notes = [
+  'Seed the queue with every zero-indegree vertex, not just one. Missing that produces a valid-looking but incomplete order.',
+  'The cycle test is `output.length != n`. It costs nothing and is usually the actual question being asked.',
+  'A vertex with no edges still belongs in the output — build the indegree table over all vertices, not only those appearing in an edge.',
+  'DFS-based topological sort needs three colours (unvisited / in progress / done). A plain visited set cannot tell a cycle from a diamond.',
+  'The order is usually not unique. If the problem wants the lexicographically smallest one, swap the queue for a priority queue.',
+]
+
+[topic.syntax]
+go = '''
+indeg := make([]int, n)
+adj := make([][]int, n)
+for _, e := range edges {          // e = [from, to]: from must come first
+    adj[e[0]] = append(adj[e[0]], e[1])
+    indeg[e[1]]++
+}
+
+queue := []int{}
+for v := 0; v < n; v++ {
+    if indeg[v] == 0 { queue = append(queue, v) }
+}
+order := []int{}
+for len(queue) > 0 {
+    v := queue[0]
+    queue = queue[1:]
+    order = append(order, v)
+    for _, w := range adj[v] {
+        indeg[w]--
+        if indeg[w] == 0 { queue = append(queue, w) }
+    }
+}
+if len(order) != n { /* a cycle: no valid order */ }
+'''
+cpp = '''
+vector<int> indeg(n, 0);
+vector<vector<int>> adj(n);
+for (auto& e : edges) { adj[e[0]].push_back(e[1]); indeg[e[1]]++; }
+
+queue<int> q;
+for (int v = 0; v < n; v++) if (!indeg[v]) q.push(v);
+vector<int> order;
+while (!q.empty()) {
+    int v = q.front(); q.pop();
+    order.push_back(v);
+    for (int w : adj[v]) if (--indeg[w] == 0) q.push(w);
+}
+bool hasCycle = (int)order.size() != n;
+'''
+java = '''
+int[] indeg = new int[n];
+List<List<Integer>> adj = new ArrayList<>();
+for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
+for (int[] e : edges) { adj.get(e[0]).add(e[1]); indeg[e[1]]++; }
+
+Deque<Integer> q = new ArrayDeque<>();
+for (int v = 0; v < n; v++) if (indeg[v] == 0) q.add(v);
+List<Integer> order = new ArrayList<>();
+while (!q.isEmpty()) {
+    int v = q.poll();
+    order.add(v);
+    for (int w : adj.get(v)) if (--indeg[w] == 0) q.add(w);
+}
+boolean hasCycle = order.size() != n;
+'''
+
+[[topic.complexity]]
+op = 'Kahn / DFS topological sort'
+big = 'O(V + E)'
+
+[[topic.complexity]]
+op = 'cycle detection'
+big = 'O(V + E)'
+note = 'free — it is the same run'
+
+[[topic.complexity]]
+op = 'lexicographically smallest order'
+big = 'O(V log V + E)'
+note = 'priority queue instead of a plain queue'
+
+[[topic.complexity]]
+op = 'space'
+big = 'O(V + E)'
+
+[[topic]]
+id = 'shortestpath'
+title = 'Shortest Paths'
+kind = 'technique'
+emoji = '🧭'
+what = [
+  'Which algorithm to reach for is decided entirely by the edge weights. Unweighted, or all weights equal: plain BFS, because the first time BFS reaches a vertex it has used the fewest edges possible. Non-negative weights: Dijkstra, a BFS whose queue is a min-heap keyed by distance. Weights that may be negative: Bellman–Ford, which relaxes every edge V−1 times and can also report a negative cycle. All pairs on a small graph: Floyd–Warshall, three nested loops with the intermediate vertex outermost.',
+  'Dijkstra is greedy, and its correctness rests on non-negativity: once a vertex is popped with the smallest tentative distance, no later path can improve it, because every remaining edge only adds. One negative edge destroys that argument — which is why the answer to "what if weights can be negative?" is a different algorithm, not a patch.',
+  'Many problems that never mention paths are shortest-path problems in disguise. Minimum effort across a grid, cheapest flights within k stops, the path maximising a product of probabilities, the fewest transformations of a word ladder — each becomes one of these four once the state and the edge cost are named. Choosing what a "vertex" is is usually the real work: it may be a cell, a (cell, fuel left) pair, or a string.',
+]
+notes = [
+  'Dijkstra with a heap needs a stale-entry check: after popping, if the popped distance is worse than the recorded one, skip it. Without it the same vertex is processed repeatedly.',
+  'Do not use Dijkstra on negative weights "because it usually works" — it returns a wrong answer silently rather than failing.',
+  '0-1 BFS (a deque, 0-weight edges to the front and 1-weight to the back) is O(V + E) and beats Dijkstra whenever every weight is 0 or 1.',
+  'For "at most k stops", the state is (vertex, stops used). Plain Dijkstra over vertices alone is wrong: a costlier path with fewer stops may be the one that survives.',
+  'Bellman–Ford needs exactly V−1 rounds; a V-th round that still improves something proves a negative cycle.',
+  'Multiplying probabilities instead of adding costs works with a max-heap and the same relaxation. The algorithm does not care that the operator changed, only that it stays monotone.',
+]
+
+[topic.syntax]
+go = '''
+// Dijkstra: dist[] plus a min-heap of (distance, vertex)
+dist := make([]int, n)
+for i := range dist { dist[i] = math.MaxInt }
+dist[src] = 0
+pq := &minHeap{{0, src}}
+for pq.Len() > 0 {
+    cur := heap.Pop(pq).(item)
+    if cur.d > dist[cur.v] { continue }     // stale entry
+    for _, e := range adj[cur.v] {          // e = {to, weight}
+        if nd := cur.d + e.w; nd < dist[e.to] {
+            dist[e.to] = nd
+            heap.Push(pq, item{nd, e.to})
+        }
+    }
+}
+'''
+cpp = '''
+vector<long long> dist(n, LLONG_MAX);
+dist[src] = 0;
+priority_queue<pair<long long,int>,
+               vector<pair<long long,int>>, greater<>> pq;
+pq.push({0, src});
+while (!pq.empty()) {
+    auto [d, v] = pq.top(); pq.pop();
+    if (d > dist[v]) continue;              // stale
+    for (auto& [to, w] : adj[v]) {
+        if (d + w < dist[to]) {
+            dist[to] = d + w;
+            pq.push({dist[to], to});
+        }
+    }
+}
+'''
+java = '''
+long[] dist = new long[n];
+Arrays.fill(dist, Long.MAX_VALUE);
+dist[src] = 0;
+PriorityQueue<long[]> pq =
+    new PriorityQueue<>((a, b) -> Long.compare(a[0], b[0]));
+pq.add(new long[]{0, src});
+while (!pq.isEmpty()) {
+    long[] cur = pq.poll();
+    int v = (int) cur[1];
+    if (cur[0] > dist[v]) continue;         // stale
+    for (int[] e : adj.get(v)) {            // e = {to, weight}
+        if (cur[0] + e[1] < dist[e[0]]) {
+            dist[e[0]] = cur[0] + e[1];
+            pq.add(new long[]{dist[e[0]], e[0]});
+        }
+    }
+}
+'''
+
+[[topic.complexity]]
+op = 'BFS (unweighted)'
+big = 'O(V + E)'
+
+[[topic.complexity]]
+op = 'Dijkstra with a binary heap'
+big = 'O((V + E) log V)'
+note = 'non-negative weights only'
+
+[[topic.complexity]]
+op = '0-1 BFS with a deque'
+big = 'O(V + E)'
+note = 'weights all 0 or 1'
+
+[[topic.complexity]]
+op = 'Bellman–Ford'
+big = 'O(V · E)'
+note = 'negative edges; detects negative cycles'
+
+[[topic.complexity]]
+op = 'Floyd–Warshall (all pairs)'
+big = 'O(V³)'
+note = 'intermediate vertex in the outermost loop'
+
+[[topic]]
+id = 'memo'
+title = 'Recursion & Memoization'
+kind = 'technique'
+emoji = '🌀'
+what = [
+  'Every recursive solution has three parts, and naming them in order is most of the work: the state (what arguments fully describe a subproblem), the base case (the smallest state, answered without recursing), and the transition (how a state is built from smaller ones). If two different call paths can reach the same state, the recursion is re-computing work, and a cache fixes it — that is all memoization is.',
+  'Top-down memoization and bottom-up tabulation compute the same values in different orders. Top-down is easier to derive, because you write the recurrence exactly as you reasoned about it and only visit the states you actually need. Bottom-up avoids the call stack and makes space optimisation obvious — when a row only depends on the row before it, the table collapses to two rows, then often to one.',
+  'Recursion depth is a real constraint, not a formality. Java and C++ overflow the stack at roughly 10⁴–10⁵ frames; Go grows its stacks dynamically and survives far more. A recursion over 10⁵ elements is fine in Go and a crash in Java, and that difference alone sometimes decides which form to write.',
+]
+notes = [
+  'The cache key must be the *whole* state. Forgetting one parameter produces answers that are right on small inputs and wrong on large ones — the hardest kind of bug to spot.',
+  'Distinguish "not computed yet" from a legitimate 0 or -1 result. Use a sentinel that cannot occur naturally (Integer.MIN_VALUE, or a separate seen array).',
+  'Count the states before writing anything: states × work-per-state is the complexity. If it does not fit the constraints, the state is wrong — no amount of coding will save it.',
+  'A recursive helper in Go or C++ that captures itself must be declared before it is assigned (`var dfs func(int) int` / `function<int(int)> dfs`).',
+  'Passing arrays by value into a recursive helper copies them on every call. Pass a reference or index instead, or the complexity is quietly multiplied by n.',
+]
+
+[topic.syntax]
+go = '''
+memo := map[[2]int]int{}
+var dfs func(i, j int) int          // declare first: it refers to itself
+dfs = func(i, j int) int {
+    if i == n || j == m { return 0 }          // base case
+    key := [2]int{i, j}
+    if v, ok := memo[key]; ok { return v }    // cached
+    best := dfs(i+1, j)                       // transition
+    if a[i] == b[j] { best = max(best, 1+dfs(i+1, j+1)) }
+    memo[key] = best
+    return best
+}
+'''
+cpp = '''
+vector<vector<int>> memo(n + 1, vector<int>(m + 1, -1));
+function<int(int,int)> dfs = [&](int i, int j) {
+    if (i == n || j == m) return 0;
+    int& cached = memo[i][j];
+    if (cached != -1) return cached;
+    int best = dfs(i + 1, j);
+    if (a[i] == b[j]) best = max(best, 1 + dfs(i + 1, j + 1));
+    return cached = best;
+};
+'''
+java = '''
+Integer[][] memo = new Integer[n + 1][m + 1];   // null = not computed
+
+int dfs(int i, int j) {
+    if (i == n || j == m) return 0;
+    if (memo[i][j] != null) return memo[i][j];
+    int best = dfs(i + 1, j);
+    if (a[i] == b[j]) best = Math.max(best, 1 + dfs(i + 1, j + 1));
+    return memo[i][j] = best;
+}
+'''
+
+[[topic.complexity]]
+op = 'memoized recursion'
+big = 'O(states × work per state)'
+
+[[topic.complexity]]
+op = 'without a cache'
+big = 'often O(2ⁿ)'
+note = 'the same states recomputed down every path'
+
+[[topic.complexity]]
+op = 'space (top-down)'
+big = 'O(states + depth)'
+note = 'the recursion stack counts'
+
+[[topic.complexity]]
+op = 'space (bottom-up, rolling)'
+big = 'O(one row)'
+note = 'when a row only depends on the previous one'
+
+[[topic]]
+id = 'math'
+title = 'Number Theory & Overflow'
+kind = 'technique'
+emoji = '🧮'
+what = [
+  'Most "math" interview problems are really about avoiding the obvious computation. Trailing zeroes of n! is a count of the factors of five, not a factorial. Checking primality needs divisors only up to √n, because a composite always has one there. Counting all primes below n is the Sieve of Eratosthenes, marking multiples instead of testing each candidate. In every case the naive version is not slow — it is impossible, because the intermediate value does not fit.',
+  'The tools that keep coming up are small: gcd by the Euclidean algorithm (and lcm = a / gcd(a, b) × b, dividing first so the product does not overflow), fast exponentiation by squaring for x^n and for modular powers, and modular arithmetic where every intermediate step is reduced so nothing grows.',
+  "Overflow is the silent failure mode. A 32-bit int holds about 2.1 × 10⁹, which two multiplied five-digit numbers already exceed; a 64-bit integer holds about 9.2 × 10¹⁸. Go's int is 64-bit on any modern platform, C++ and Java default to 32-bit int and need an explicit long. The classic bug is `(lo + hi) / 2` in a binary search over large values — `lo + (hi - lo) / 2` never overflows.",
+]
+notes = [
+  'Integer division truncates toward zero in Go, C++ and Java, so -7 / 2 is -3, not -4. Python floors instead — do not carry that intuition across.',
+  'The remainder of a negative number is negative in all three languages. Normalise with ((x % m) + m) % m before using it as an index or key.',
+  'Ceiling division of non-negative integers is (a + b - 1) / b — no floating point, so no rounding surprises.',
+  'Cast before multiplying, not after: in Java `(long) a * b` is right and `(long)(a * b)` has already overflowed.',
+  'Never compare floating-point values with ==. Compare against an epsilon, or restructure to use integers.',
+  'x % 2 == 1 is false for negative odd numbers in C++ and Java. Use x % 2 != 0.',
+]
+
+[topic.syntax]
+go = '''
+func gcd(a, b int) int {
+    for b != 0 { a, b = b, a%b }
+    return a
+}
+lcm := a / gcd(a, b) * b          // divide first: avoids overflow
+
+func power(x, n, mod int) int {   // exponentiation by squaring
+    result := 1
+    for n > 0 {
+        if n&1 == 1 { result = result * x % mod }
+        x = x * x % mod
+        n >>= 1
+    }
+    return result
+}
+
+mid := lo + (hi-lo)/2             // never overflows
+ceil := (a + b - 1) / b
+'''
+cpp = '''
+int g = __gcd(a, b);              // <algorithm>; or std::gcd in C++17
+long long l = 1LL * a / g * b;
+
+long long power(long long x, long long n, long long mod) {
+    long long result = 1;
+    while (n > 0) {
+        if (n & 1) result = result * x % mod;
+        x = x * x % mod;
+        n >>= 1;
+    }
+    return result;
+}
+
+int mid = lo + (hi - lo) / 2;
+long long product = 1LL * a * b;  // cast BEFORE multiplying
+'''
+java = '''
+static int gcd(int a, int b) {
+    while (b != 0) { int t = b; b = a % b; a = t; }
+    return a;
+}
+long lcm = (long) a / gcd(a, b) * b;
+
+static long power(long x, long n, long mod) {
+    long result = 1;
+    while (n > 0) {
+        if ((n & 1) == 1) result = result * x % mod;
+        x = x * x % mod;
+        n >>= 1;
+    }
+    return result;
+}
+
+int mid = lo + (hi - lo) / 2;
+long product = (long) a * b;      // cast BEFORE multiplying
+'''
+
+[[topic.complexity]]
+op = 'gcd (Euclid)'
+big = 'O(log min(a, b))'
+
+[[topic.complexity]]
+op = 'primality test by trial division'
+big = 'O(√n)'
+
+[[topic.complexity]]
+op = 'Sieve of Eratosthenes'
+big = 'O(n log log n)'
+note = 'all primes below n'
+
+[[topic.complexity]]
+op = 'exponentiation by squaring'
+big = 'O(log n)'
+
+[[topic.complexity]]
+op = 'digits of n'
+big = 'O(log₁₀ n)'
+
+[[topic]]
+id = 'matrix'
+title = 'Matrix Manipulation'
+kind = 'technique'
+emoji = '🔲'
+what = [
+  'Matrix problems are usually about index arithmetic under pressure, and the same three moves cover most of them. Rotating 90° clockwise in place is transpose (swap [r][c] with [c][r]) followed by reversing each row — two simple passes instead of one impossible-to-debug index formula. Spiral order is four boundaries (top, bottom, left, right) that close in, with a guard before the two return passes so a single leftover row or column is not emitted twice.',
+  'The second recurring theme is doing it in place without a second matrix. Set Matrix Zeroes uses the first row and column as its own marker storage; Game of Life packs the next generation into a spare bit of each cell so neighbours still read the old value. Both are the same idea: find somewhere inside the data to store the marks.',
+  'Traversals of a grid are graph traversals with the adjacency implied — the four (or eight) direction offsets are the edge list. Writing the offsets as a small array of pairs and looping over it beats four copy-pasted blocks, and it is where off-by-one bounds bugs stop hiding.',
+]
+notes = [
+  'Rows are the first index and columns the second: grid[r][c], with r < rows and c < cols. Half of all matrix bugs are a swapped pair.',
+  'Check bounds before dereferencing, not after — and in one expression: `nr >= 0 && nr < rows && nc >= 0 && nc < cols && grid[nr][nc] == 1`.',
+  "A ragged matrix is a real input in Java (int[][] rows can differ in length). Read each row's own length rather than grid[0].length when it might vary.",
+  'In C++, `vector<vector<int>> g(rows, vector<int>(cols))` allocates properly; `g[r][c]` on an empty outer vector is undefined behaviour, so check `!g.empty()` first.',
+  'For spiral traversal, the guard `if (top <= bottom)` before the right-to-left pass, and `if (left <= right)` before the bottom-to-top pass, are what stop a single remaining line being printed twice.',
+]
+
+[topic.syntax]
+go = '''
+dirs := [][2]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}
+for _, d := range dirs {
+    nr, nc := r+d[0], c+d[1]
+    if nr < 0 || nr >= rows || nc < 0 || nc >= cols { continue }
+    // visit grid[nr][nc]
+}
+
+// rotate 90° clockwise, in place
+for r := 0; r < n; r++ {                    // transpose
+    for c := r + 1; c < n; c++ {
+        m[r][c], m[c][r] = m[c][r], m[r][c]
+    }
+}
+for _, row := range m {                     // reverse each row
+    for i, j := 0, n-1; i < j; i, j = i+1, j-1 {
+        row[i], row[j] = row[j], row[i]
+    }
+}
+'''
+cpp = '''
+int dr[] = {-1, 1, 0, 0}, dc[] = {0, 0, -1, 1};
+for (int k = 0; k < 4; k++) {
+    int nr = r + dr[k], nc = c + dc[k];
+    if (nr < 0 || nr >= rows || nc < 0 || nc >= cols) continue;
+    // visit grid[nr][nc]
+}
+
+for (int r = 0; r < n; r++)                 // transpose
+    for (int c = r + 1; c < n; c++)
+        swap(m[r][c], m[c][r]);
+for (auto& row : m) reverse(row.begin(), row.end());
+'''
+java = '''
+int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+for (int[] d : dirs) {
+    int nr = r + d[0], nc = c + d[1];
+    if (nr < 0 || nr >= rows || nc < 0 || nc >= cols) continue;
+    // visit grid[nr][nc]
+}
+
+for (int r = 0; r < n; r++)                 // transpose
+    for (int c = r + 1; c < n; c++) {
+        int t = m[r][c]; m[r][c] = m[c][r]; m[c][r] = t;
+    }
+for (int[] row : m)                         // reverse each row
+    for (int i = 0, j = n - 1; i < j; i++, j--) {
+        int t = row[i]; row[i] = row[j]; row[j] = t;
+    }
+'''
+
+[[topic.complexity]]
+op = 'full traversal'
+big = 'O(rows · cols)'
+
+[[topic.complexity]]
+op = 'rotate in place'
+big = 'O(n²) time, O(1) space'
+
+[[topic.complexity]]
+op = 'spiral order'
+big = 'O(rows · cols)'
+
+[[topic.complexity]]
+op = 'BFS / DFS over a grid'
+big = 'O(rows · cols)'
+note = 'each cell enqueued once'
+
+[[topic.complexity]]
+op = 'space for a visited grid'
+big = 'O(rows · cols)'
+note = 'often avoidable by marking the grid itself'
+
+[[topic]]
+id = 'design'
+title = 'Design Problems'
+kind = 'technique'
+emoji = '🧩'
+what = [
+  "A design question hands you an interface and a time bound and asks you to pick the structures. The bound is the instruction: \"O(1) get and put\" means a hash map plus something that maintains order, because a hash map alone has no order and a list alone has no lookup. Almost every cache, iterator or counter problem is a *composition* of two structures where each covers the other's weakness.",
+  'The recurring pairings are worth memorising. Hash map + doubly linked list gives LRU: the map finds a node in O(1), the list moves it to the front in O(1) because the node carries its own neighbours. Hash map + array gives insert/delete/getRandom in O(1), with deletion done by swapping the victim with the last element. Two heaps give a running median. A queue gives any "events in the last N seconds" counter. A stack of iterators gives a paused traversal.',
+  'The other half of the job is keeping the pieces consistent. Every operation must update every structure, and a key left behind in one map is the classic bug — it does not crash, it just returns stale data much later. When an interviewer asks you to walk through an eviction, they are checking exactly that.',
+]
+notes = [
+  'Ask about capacity zero, duplicate keys, and operations on an empty structure before coding. They are where design problems hide their edge cases.',
+  'A doubly linked list is needed for O(1) removal, not a singly linked one: removing a node requires its predecessor, and only a doubly linked node knows it.',
+  "Java's LinkedHashMap with accessOrder = true is an LRU cache in three lines — say that you know, then implement it by hand, because that is what is being asked.",
+  'For "last N seconds" counters, a queue is O(1) amortised but unbounded in memory. The follow-up answer is bucketing into N slots of (timestamp, count).',
+  "Deleting from a hash-map-plus-array in O(1) means swapping the victim with the last element — and remembering to update the moved element's stored index.",
+]
+
+[topic.syntax]
+go = '''
+// LRU: map to node, list keeps recency (container/list)
+type LRU struct {
+    cap   int
+    items map[int]*list.Element
+    order *list.List            // front = most recently used
+}
+
+func (c *LRU) Get(key int) int {
+    e, ok := c.items[key]
+    if !ok { return -1 }
+    c.order.MoveToFront(e)      // O(1): the node knows its neighbours
+    return e.Value.(*entry).value
+}
+
+// O(1) insert / delete / getRandom
+type RandomSet struct {
+    idx  map[int]int            // value -> position
+    vals []int
+}
+// delete: move the last value into the hole, then shrink
+'''
+cpp = '''
+class LRUCache {
+    int cap;
+    list<pair<int,int>> order;                       // front = newest
+    unordered_map<int, list<pair<int,int>>::iterator> items;
+public:
+    int get(int key) {
+        auto it = items.find(key);
+        if (it == items.end()) return -1;
+        order.splice(order.begin(), order, it->second);   // O(1) move
+        return it->second->second;
+    }
+};
+'''
+java = '''
+// By hand: HashMap + doubly linked list.
+class Node { int key, val; Node prev, next; }
+Map<Integer, Node> items = new HashMap<>();
+
+// Or, when the interviewer allows the library:
+Map<Integer, Integer> lru = new LinkedHashMap<>(cap, 0.75f, true) {
+    protected boolean removeEldestEntry(Map.Entry<Integer,Integer> e) {
+        return size() > cap;
+    }
+};
+'''
+
+[[topic.complexity]]
+op = 'hash map get / put'
+big = 'O(1) average'
+
+[[topic.complexity]]
+op = 'doubly linked list move / remove'
+big = 'O(1)'
+note = 'given the node — which is what the map supplies'
+
+[[topic.complexity]]
+op = 'LRU / LFU get and put'
+big = 'O(1)'
+
+[[topic.complexity]]
+op = 'running median (two heaps)'
+big = 'O(log n) insert, O(1) query'
+
+[[topic.complexity]]
+op = 'iterator with a stack'
+big = 'O(1) amortised, O(h) space'
+
+[[topic]]
+id = 'complexity'
+title = 'Reading the Constraints'
+kind = 'technique'
+emoji = '⏱'
+what = [
+  'The constraints tell you the intended complexity before you have thought about the problem, and reading them first saves the twenty minutes usually spent optimising the wrong thing. A rough guide, at roughly 10⁸ simple operations per second: n ≤ 10 allows O(n!) or O(2ⁿ) brute force; n ≤ 20 says bitmask DP or subsets; n ≤ 500 allows O(n³); n ≤ 5000 allows O(n²); n ≤ 10⁵ means O(n log n) — sort, heap, or binary search; n ≤ 10⁷ means a single linear pass; and anything larger wants O(log n) or O(1), which means maths.',
+  'Big-O deliberately drops constants and lower-order terms, so it describes growth, not speed. O(n) with a hash map can lose to O(n log n) with a sorted array at small n, because hashing has a constant factor and cache misses are expensive. Interviewers care about the exponent; production cares about both.',
+  'Space complexity is asked about less and matters just as much. Recursion costs O(depth) in stack frames whether or not you allocated anything, and "in place" means O(1) *extra* — reusing the input is allowed, and is exactly what an interviewer means when they ask you to do better than O(n) space.',
+]
+notes = [
+  'Analyse loops by counting how many times a line runs in total, not how deeply it is nested. A while loop inside a for loop is often linear overall — that is the whole point of the amortised argument behind two pointers and monotonic stacks.',
+  'Sorting is O(n log n), so any solution that sorts cannot be better than that, no matter what follows.',
+  'Recursion depth counts as space: an O(n)-deep recursion is O(n) space even with no allocation.',
+  'For recursive divide-and-conquer, the master theorem shortcut: halving with O(1) work per level is O(log n), halving with O(n) work per level is O(n log n), and branching into two full-size subproblems is O(2ⁿ).',
+  'State the complexity out loud before you start coding. If it does not fit the constraints, that is the cheapest possible moment to find out.',
+]
+
+[topic.syntax]
+go = '''
+// n <= 10        O(n!)  / O(2^n)   permutations, subsets, brute force
+// n <= 20        O(2^n · n)        bitmask DP
+// n <= 500       O(n^3)            Floyd-Warshall, interval DP
+// n <= 5_000     O(n^2)            2-D DP, all pairs
+// n <= 100_000   O(n log n)        sort, heap, binary search
+// n <= 10_000_000 O(n)             one pass, counting
+// n > 10^9       O(log n) / O(1)   maths, bit tricks
+
+// values up to 10^9 fit in int32; sums of 10^5 of them do not.
+// Go's int is 64-bit, so this is one worry fewer than in C++/Java.
+'''
+cpp = '''
+// int      ~ 2.1e9      (use for indices, small values)
+// long long ~ 9.2e18    (use for sums, products, prefix sums)
+// double has 15-16 significant digits — never for money or equality
+
+// A rough budget: 1e8 simple operations per second.
+// 1e5 elements * log2(1e5) ~ 17 = 1.7e6 -> comfortably fast.
+'''
+java = '''
+// int  ~ 2.1e9    long ~ 9.2e18
+// (long) a * b    — cast BEFORE the multiply, not after
+
+// Recursion depth: the JVM overflows around 10^4 frames by default.
+// An O(n)-deep recursion over 10^5 elements will not survive; make it
+// iterative or increase -Xss.
+'''
+
+[[topic.complexity]]
+op = 'O(1)'
+big = 'constant'
+note = 'array index, hash lookup, arithmetic'
+
+[[topic.complexity]]
+op = 'O(log n)'
+big = 'halving'
+note = 'binary search, heap push/pop, balanced tree'
+
+[[topic.complexity]]
+op = 'O(n)'
+big = 'one pass'
+note = 'scan, two pointers, counting'
+
+[[topic.complexity]]
+op = 'O(n log n)'
+big = 'sort-shaped'
+note = 'sorting, n heap operations, divide and conquer'
+
+[[topic.complexity]]
+op = 'O(n²)'
+big = 'every pair'
+note = 'fine to 5000, hopeless at 10⁵'
+
+[[topic.complexity]]
+op = 'O(2ⁿ) / O(n!)'
+big = 'exhaustive'
+note = 'only when n is tiny — subsets, permutations'
+
+[[topic]]
+id = 'interview'
+title = 'Running the 45 Minutes'
+kind = 'technique'
+emoji = '🎯'
+what = [
+  'The algorithm is only part of what is being scored. A working solution delivered in silence rates below a slightly worse one that was explained, tested and corrected out loud, because the interviewer is trying to predict what you are like to work with. Say what you are considering before you commit to it, and say why you rejected the alternative.',
+  'A reliable shape for the time: restate the problem in your own words and confirm it (1 minute); ask about the constraints and the edge cases — empty input, duplicates, negatives, overflow (2 minutes); state a brute-force solution and its complexity, so there is always something on the table (2 minutes); name the bottleneck and the structure that removes it, and get agreement before coding (5 minutes); write it while narrating the invariant of each loop (15 minutes); then walk a small example through the finished code line by line, out loud, and fix what you find (5 minutes).',
+  'That last step is the one candidates skip and interviewers weigh most. Tracing your own code and finding your own off-by-one is the strongest signal you can send; being told about it by the interviewer is the weakest. Leave time for it deliberately — a solution that is 90% written and traced beats one that is 100% written and unexamined.',
+]
+notes = [
+  'Ask before assuming: can the input be empty, can values be negative, are there duplicates, is it sorted, how large can it get, may the input be modified?',
+  'Never stay silent for more than about twenty seconds. "I am thinking about whether a hash map removes the inner loop" is a contribution; a blank pause is not.',
+  'If you are stuck, say what you have and what is blocking it. Interviewers are usually allowed to give hints and almost always want to.',
+  'Write the brute force down if nothing better comes. An O(n²) solution that works scores far better than an O(n) solution that does not exist.',
+  'Name variables for what they mean — left, right, remaining, seen. Single letters are fine for indices and nothing else.',
+  'When you finish, say the time and space complexity unprompted, and mention the one case you would test first.',
+  'Hidden constraints are real questions: "the array is sorted" means binary search or two pointers, "values are 0…25" means a 26-slot array, "return any valid answer" means a greedy solution may be enough.',
+]
+
+[topic.syntax]
+go = '''
+// A shape worth having in muscle memory before the clock starts.
+func solve(nums []int, target int) int {
+    if len(nums) == 0 {          // 1. edge cases first, out loud
+        return -1
+    }
+    seen := map[int]int{}        // 2. the structure that removes the inner loop
+    for i, x := range nums {     // 3. invariant: seen holds every value before i
+        if j, ok := seen[target-x]; ok {
+            return j             // 4. the exit, and why it is correct
+        }
+        seen[x] = i
+    }
+    return -1                    // 5. the "nothing found" case, never forgotten
+}
+// O(n) time, O(n) space — say this before being asked.
+'''
+cpp = '''
+int solve(vector<int>& nums, int target) {
+    if (nums.empty()) return -1;
+    unordered_map<int, int> seen;
+    for (int i = 0; i < (int)nums.size(); i++) {
+        auto it = seen.find(target - nums[i]);
+        if (it != seen.end()) return it->second;
+        seen[nums[i]] = i;
+    }
+    return -1;
+}
+// Trace it: nums = {3, 3}, target = 6. Does it return 0? Say the answer aloud.
+'''
+java = '''
+static int solve(int[] nums, int target) {
+    if (nums.length == 0) return -1;
+    Map<Integer, Integer> seen = new HashMap<>();
+    for (int i = 0; i < nums.length; i++) {
+        Integer j = seen.get(target - nums[i]);
+        if (j != null) return j;
+        seen.put(nums[i], i);
+    }
+    return -1;
+}
+// Then: "O(n) time, O(n) space. The case I would test first is duplicates."
+'''
+
+[[topic.complexity]]
+op = 'clarify and restate'
+big = '~3 min'
+note = 'constraints, edge cases, examples'
+
+[[topic.complexity]]
+op = 'brute force, stated aloud'
+big = '~2 min'
+note = 'always have something on the table'
+
+[[topic.complexity]]
+op = 'agree on the approach'
+big = '~5 min'
+note = 'name the bottleneck before coding'
+
+[[topic.complexity]]
+op = 'write it'
+big = '~15 min'
+note = 'narrate the invariant of each loop'
+
+[[topic.complexity]]
+op = 'trace an example line by line'
+big = '~5 min'
+note = 'the step candidates skip and interviewers weigh most'

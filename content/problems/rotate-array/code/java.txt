@@ -1,0 +1,17 @@
+static void rotate(int[] nums, int k) {
+    int n = nums.length;
+    k %= n; //@norm
+    reverse(nums, 0, n - 1); //@rev1
+    reverse(nums, 0, k - 1); //@rev2
+    reverse(nums, k, n - 1); //@rev3
+}
+
+static void reverse(int[] nums, int lo, int hi) {
+    while (lo < hi) { //@loop
+        int t = nums[lo];
+        nums[lo] = nums[hi];
+        nums[hi] = t; //@swap
+        lo++;
+        hi--; //@move
+    }
+}

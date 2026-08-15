@@ -1,0 +1,20 @@
+string simplifyPath(string path) {
+    vector<string> stack; //@init
+    stringstream ss(path);
+    string part;
+    while (getline(ss, part, '/')) { //@loop
+        if (part.empty() || part == ".") { //@skip
+            continue;
+        }
+        if (part == "..") { //@up
+            if (!stack.empty()) { //@canPop
+                stack.pop_back(); //@pop
+            }
+            continue;
+        }
+        stack.push_back(part); //@push
+    }
+    string out;
+    for (auto& d : stack) out += "/" + d;
+    return out.empty() ? "/" : out; //@ret
+}

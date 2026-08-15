@@ -1,0 +1,16 @@
+int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+    int total = 0, tank = 0, start = 0; //@init
+    for (int i = 0; i < (int)gas.size(); i++) { //@loop
+        int diff = gas[i] - cost[i]; //@diff
+        total += diff; //@total
+        tank += diff; //@tank
+        if (tank < 0) { //@check
+            start = i + 1; //@restart
+            tank = 0; //@reset
+        }
+    }
+    if (total < 0) { //@feasible
+        return -1; //@none
+    }
+    return start; //@ret
+}

@@ -1,0 +1,34 @@
+slug = 'pascals-triangle'
+title = "Pascal's Triangle"
+category = 'Arrays & Hashing'
+difficulty = 'Easy'
+tier = '250'
+complexity = 'O(numRows^2) time · O(numRows^2) space'
+
+description = "Return the first numRows of Pascal's triangle, where each number is the sum of the two numbers directly above it. Watch each new row fill in: the two ends are always 1 and every interior cell adds its two parents from the row above."
+approach = 'Build the triangle row by row. Each row starts and ends with 1; every interior entry row[j] is the sum of row[j-1] and row[j] from the previous row.'
+
+[[inputs]]
+name = 'numRows'
+label = 'numRows'
+type = 'int'
+min = 1
+max = 10
+
+[default_input]
+numRows = 5
+
+[[tests]]
+expected = "1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1"
+[tests.input]
+numRows = 5
+
+[[tests]]
+expected = '1'
+[tests.input]
+numRows = 1
+
+[[tests]]
+expected = "1\n1 1\n1 2 1"
+[tests.input]
+numRows = 3

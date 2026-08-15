@@ -1,0 +1,18 @@
+static boolean searchMatrix(int[][] matrix, int target) {
+    int rows = matrix.length, cols = matrix[0].length;
+    int lo = 0, hi = rows * cols - 1; //@init
+    while (lo <= hi) { //@loop
+        int mid = lo + (hi - lo) / 2; //@mid
+        int r = mid / cols, c = mid % cols; //@map
+        int v = matrix[r][c]; //@read
+        if (v == target) { //@cmp
+            return true; //@found
+        }
+        if (v < target) { //@less
+            lo = mid + 1; //@right
+        } else {
+            hi = mid - 1; //@left
+        }
+    }
+    return false; //@none
+}

@@ -1,0 +1,14 @@
+static double findMaxAverage(int[] nums, int k) {
+    int windowSum = 0; //@initSum
+    for (int i = 0; i < k; i++) { //@fill
+        windowSum += nums[i]; //@add
+    }
+    int maxSum = windowSum; //@best
+    for (int r = k; r < nums.length; r++) { //@loop
+        windowSum += nums[r] - nums[r-k]; //@slide
+        if (windowSum > maxSum) { //@cmp
+            maxSum = windowSum; //@newBest
+        }
+    }
+    return (double) maxSum / k; //@ret
+}

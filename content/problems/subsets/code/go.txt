@@ -1,0 +1,19 @@
+func subsets(nums []int) [][]int {
+    res := [][]int{} //@init
+    subset := []int{} //@sub
+    backtrack(0, nums, subset, &res) //@call
+    return res //@done
+}
+
+func backtrack(i int, nums []int, subset []int, res *[][]int) {
+    if i == len(nums) { //@base
+        cp := make([]int, len(subset)) //@add
+        copy(cp, subset)
+        *res = append(*res, cp)
+        return //@ret
+    }
+    subset = append(subset, nums[i]) //@include
+    backtrack(i+1, nums, subset, res) //@recIn
+    subset = subset[:len(subset)-1] //@exclude
+    backtrack(i+1, nums, subset, res) //@recEx
+}

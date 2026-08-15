@@ -1,0 +1,9 @@
+static int getSum(int a, int b) {
+    int sum = a, carry = b; //@init
+    while (carry != 0) { //@loop
+        int next = (sum & carry) << 1; //@carry
+        sum = sum ^ carry; //@add
+        carry = next; //@shift
+    }
+    return sum; //@ret
+}

@@ -1,0 +1,21 @@
+func leastInterval(tasks []byte, n int) int {
+    count := map[byte]int{} //@count
+    maxCount := 0 //@maxInit
+    for _, t := range tasks { //@tally
+        count[t]++ //@inc
+        if count[t] > maxCount { //@cmpMax
+            maxCount = count[t] //@setMax
+        }
+    }
+    ties := 0 //@ties
+    for _, c := range count { //@tieLoop
+        if c == maxCount { //@isTie
+            ties++ //@addTie
+        }
+    }
+    slots := (maxCount-1)*(n+1) + ties //@formula
+    if slots < len(tasks) { //@compare
+        return len(tasks) //@noIdle
+    }
+    return slots //@ret
+}

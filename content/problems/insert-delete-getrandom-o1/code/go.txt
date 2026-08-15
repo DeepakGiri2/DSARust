@@ -1,0 +1,30 @@
+type RandomizedSet struct {
+    idx  map[int]int //@init
+    vals []int //@vals
+}
+
+func (s *RandomizedSet) Insert(v int) bool {
+    if _, ok := s.idx[v]; ok { //@hasInsert
+        return false
+    }
+    s.idx[v] = len(s.vals) //@record
+    s.vals = append(s.vals, v) //@append
+    return true //@inserted
+}
+
+func (s *RandomizedSet) Remove(v int) bool {
+    i, ok := s.idx[v] //@lookup
+    if !ok { //@absent
+        return false
+    }
+    last := s.vals[len(s.vals)-1] //@last
+    s.vals[i] = last //@move
+    s.idx[last] = i //@reindex
+    s.vals = s.vals[:len(s.vals)-1] //@shrink
+    delete(s.idx, v) //@forget
+    return true //@removed
+}
+
+func (s *RandomizedSet) GetRandom() int {
+    return s.vals[rand.Intn(len(s.vals))] //@random
+}

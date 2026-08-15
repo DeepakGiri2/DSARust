@@ -1,0 +1,90 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+type TreeNode struct {
+    Val   int
+    Left  *TreeNode
+    Right *TreeNode
+}
+
+func levelOrder(root *TreeNode) [][]int {
+    res := [][]int{}
+    if root == nil {
+        return res
+    }
+    queue := []*TreeNode{root}
+    for len(queue) > 0 {
+        size := len(queue)
+        level := []int{}
+        for i := 0; i < size; i++ {
+            node := queue[0]
+            queue = queue[1:]
+            level = append(level, node.Val)
+            if node.Left != nil {
+                queue = append(queue, node.Left)
+            }
+            if node.Right != nil {
+                queue = append(queue, node.Right)
+            }
+        }
+        res = append(res, level)
+    }
+    return res
+}
+
+func buildTree(tokens []string) *TreeNode {
+    if len(tokens) == 0 || tokens[0] == "n" {
+        return nil
+    }
+    v, _ := strconv.Atoi(tokens[0])
+    root := &TreeNode{Val: v}
+    queue := []*TreeNode{root}
+    i := 1
+    for len(queue) > 0 && i < len(tokens) {
+        cur := queue[0]
+        queue = queue[1:]
+        if i < len(tokens) {
+            if tokens[i] != "n" {
+                v, _ := strconv.Atoi(tokens[i])
+                cur.Left = &TreeNode{Val: v}
+                queue = append(queue, cur.Left)
+            }
+            i++
+        }
+        if i < len(tokens) {
+            if tokens[i] != "n" {
+                v, _ := strconv.Atoi(tokens[i])
+                cur.Right = &TreeNode{Val: v}
+                queue = append(queue, cur.Right)
+            }
+            i++
+        }
+    }
+    return root
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    root := buildTree(strings.Fields(line))
+    levels := levelOrder(root)
+    var sb strings.Builder
+    for i, lvl := range levels {
+        if i > 0 {
+            sb.WriteString("\n")
+        }
+        strs := make([]string, len(lvl))
+        for j, v := range lvl {
+            strs[j] = strconv.Itoa(v)
+        }
+        sb.WriteString(strings.Join(strs, " "))
+    }
+    fmt.Println(sb.String())
+}

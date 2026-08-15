@@ -1,0 +1,36 @@
+slug = 'remove-duplicates-from-sorted-list'
+title = 'Remove Duplicates From Sorted List'
+category = 'Linked List'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '83'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Remove duplicate values from a sorted linked list so that each value appears once.'
+approach = 'Sorted means equal values are adjacent, so a duplicate is always the node directly after the current one — no set, no lookahead, no second pass. On a match, skip over the neighbour and stay put, because the node after it might be a duplicate too; only on a mismatch does the pointer advance.'
+
+[[inputs]]
+name = 'list'
+label = 'list'
+type = 'int-array'
+max_len = 12
+min = 0
+max = 99
+
+[default_input]
+list = [1, 1, 2, 3, 3]
+
+[[tests]]
+expected = '1 2 3'
+[tests.input]
+list = [1, 1, 2, 3, 3]
+
+[[tests]]
+expected = '1 2'
+[tests.input]
+list = [1, 1, 2]
+
+[[tests]]
+expected = '1'
+[tests.input]
+list = [1, 1, 1]

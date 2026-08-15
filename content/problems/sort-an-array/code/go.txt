@@ -1,0 +1,32 @@
+func sortArray(nums []int) []int {
+    if len(nums) <= 1 { //@base
+        return nums
+    }
+    mid := len(nums) / 2 //@mid
+    left := sortArray(nums[:mid]) //@recL
+    right := sortArray(nums[mid:]) //@recR
+    return merge(left, right) //@merge
+}
+
+func merge(a, b []int) []int {
+    out := make([]int, 0, len(a)+len(b)) //@init
+    i, j := 0, 0 //@cursors
+    for i < len(a) && j < len(b) { //@loop
+        if a[i] <= b[j] { //@cmp
+            out = append(out, a[i]) //@takeA
+            i++
+        } else {
+            out = append(out, b[j]) //@takeB
+            j++
+        }
+    }
+    for i < len(a) { //@drainA
+        out = append(out, a[i])
+        i++
+    }
+    for j < len(b) { //@drainB
+        out = append(out, b[j])
+        j++
+    }
+    return out //@ret
+}

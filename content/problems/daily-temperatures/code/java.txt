@@ -1,0 +1,14 @@
+static int[] dailyTemperatures(int[] temps) {
+    int n = temps.length;
+    int[] answer = new int[n]; //@init
+    Deque<Integer> stack = new ArrayDeque<>(); //@initStack
+    for (int i = 0; i < n; i++) { //@loop
+        while (!stack.isEmpty() && temps[i] > temps[stack.peek()]) { //@while
+            int j = stack.peek(); //@peek
+            stack.pop(); //@pop
+            answer[j] = i - j; //@set
+        }
+        stack.push(i); //@push
+    }
+    return answer; //@ret
+}

@@ -1,0 +1,35 @@
+slug = 'accounts-merge'
+title = 'Accounts Merge'
+category = 'Union Find'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '721'
+complexity = 'O(n log n) time (the sort) · O(n) space'
+
+description = "Each account is a name followed by a list of emails. Two accounts belong to the same person if they share at least one email — a name alone proves nothing. Merge them and return each person's emails in sorted order."
+approach = "Union-find over emails, not accounts. Give every distinct email an integer id the first time it is seen, then union every email of an account with that account's first email — sharing one email transitively merges everything. A second pass buckets the emails by root, and the owner's name is whatever name was attached to any email in the bucket."
+
+[[inputs]]
+name = 'accounts'
+label = 'accounts'
+type = 'string'
+max_len = 90
+help = 'Name: email email, Name: email — comma separated accounts'
+
+[default_input]
+accounts = 'John: a@m b@m, John: b@m c@m, Mary: m@m, John: z@m'
+
+[[tests]]
+expected = 'John:a@m,b@m,c@m | John:z@m | Mary:m@m'
+[tests.input]
+accounts = 'John: a@m b@m, John: b@m c@m, Mary: m@m, John: z@m'
+
+[[tests]]
+expected = 'Alex:x@m | Alex:y@m'
+[tests.input]
+accounts = 'Alex: x@m, Alex: y@m'
+
+[[tests]]
+expected = 'Kim:p@m,q@m,r@m'
+[tests.input]
+accounts = 'Kim: p@m q@m, Kim: q@m r@m'

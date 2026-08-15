@@ -1,0 +1,17 @@
+var best int
+
+func gain(node *TreeNode) int {
+    if node == nil { //@base
+        return 0 //@ret0
+    }
+    left := max(0, gain(node.Left)) //@recL
+    right := max(0, gain(node.Right)) //@recR
+    best = max(best, node.Val+left+right) //@best
+    return node.Val + max(left, right) //@ret
+}
+
+func maxPathSum(root *TreeNode) int {
+    best = math.MinInt //@init
+    gain(root) //@call
+    return best //@result
+}

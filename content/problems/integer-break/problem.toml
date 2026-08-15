@@ -1,0 +1,35 @@
+slug = 'integer-break'
+title = 'Integer Break'
+category = '1-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '343'
+complexity = 'O(n²) time · O(n) space'
+
+description = 'Split an integer into at least two positive parts so that their product is as large as possible, and return that product.'
+approach = "For each first part j, the rest is either left whole — giving j · (n - j) — or broken up further, giving j · dp[n - j]. Taking the larger of those two is what encodes 'at least two parts': the whole-remainder option keeps the split legal, and the dp option lets it go deeper only when that actually helps."
+
+[[inputs]]
+name = 'n'
+label = 'n'
+type = 'int'
+min = 2
+max = 12
+
+[default_input]
+n = 8
+
+[[tests]]
+expected = '18'
+[tests.input]
+n = 8
+
+[[tests]]
+expected = '1'
+[tests.input]
+n = 2
+
+[[tests]]
+expected = '36'
+[tests.input]
+n = 10

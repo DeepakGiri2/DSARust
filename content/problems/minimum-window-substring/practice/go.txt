@@ -1,0 +1,54 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "math"
+    "os"
+    "strings"
+)
+
+func minWindow(s string, t string) string {
+    if len(t) == 0 {
+        return ""
+    }
+    need := map[byte]int{}
+    for i := 0; i < len(t); i++ {
+        need[t[i]]++
+    }
+    window := map[byte]int{}
+    have, needCount := 0, len(need)
+    resL, resR, resLen := -1, -1, math.MaxInt32
+    left := 0
+    for right := 0; right < len(s); right++ {
+        c := s[right]
+        window[c]++
+        if need[c] > 0 && window[c] == need[c] {
+            have++
+        }
+        for have == needCount {
+            if right-left+1 < resLen {
+                resL, resR = left, right
+                resLen = right - left + 1
+            }
+            window[s[left]]--
+            if need[s[left]] > 0 && window[s[left]] < need[s[left]] {
+                have--
+            }
+            left++
+        }
+    }
+    if resLen == math.MaxInt32 {
+        return ""
+    }
+    return s[resL : resR+1]
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line1, _ := reader.ReadString('\n')
+    s := strings.TrimSpace(line1)
+    line2, _ := reader.ReadString('\n')
+    t := strings.TrimSpace(line2)
+    fmt.Println(minWindow(s, t))
+}

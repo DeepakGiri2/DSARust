@@ -1,0 +1,17 @@
+int goodNodes(TreeNode* root) {
+    return dfs(root, INT_MIN); //@call
+}
+
+int dfs(TreeNode* node, int maxSoFar) {
+    if (node == nullptr) { //@base
+        return 0; //@ret0
+    }
+    int count = 0; //@init
+    if (node->val >= maxSoFar) { //@check
+        count = 1; //@good
+    }
+    maxSoFar = max(maxSoFar, node->val); //@upd
+    count += dfs(node->left, maxSoFar); //@recL
+    count += dfs(node->right, maxSoFar); //@recR
+    return count; //@ret
+}

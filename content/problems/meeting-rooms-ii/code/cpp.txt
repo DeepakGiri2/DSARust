@@ -1,0 +1,24 @@
+int minMeetingRooms(vector<vector<int>>& intervals) {
+    vector<int> starts, ends; //@split
+    for (auto& iv : intervals) {
+        starts.push_back(iv[0]);
+        ends.push_back(iv[1]);
+    }
+    sort(starts.begin(), starts.end());
+    sort(ends.begin(), ends.end());
+    int rooms = 0, best = 0; //@init
+    size_t i = 0, j = 0; //@cursors
+    while (i < starts.size()) { //@loop
+        if (starts[i] < ends[j]) { //@overlap
+            rooms++; //@open
+            i++;
+            if (rooms > best) { //@peak
+                best = rooms; //@record
+            }
+        } else { //@free
+            rooms--; //@close
+            j++;
+        }
+    }
+    return best; //@ret
+}

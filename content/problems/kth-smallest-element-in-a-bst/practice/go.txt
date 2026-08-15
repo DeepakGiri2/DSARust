@@ -1,0 +1,74 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+type TreeNode struct {
+    Val   int
+    Left  *TreeNode
+    Right *TreeNode
+}
+
+func kthSmallest(root *TreeNode, k int) int {
+    stack := []*TreeNode{}
+    cur := root
+    for cur != nil || len(stack) > 0 {
+        for cur != nil {
+            stack = append(stack, cur)
+            cur = cur.Left
+        }
+        cur = stack[len(stack)-1]
+        stack = stack[:len(stack)-1]
+        k--
+        if k == 0 {
+            return cur.Val
+        }
+        cur = cur.Right
+    }
+    return -1
+}
+
+func buildTree(tokens []string) *TreeNode {
+    if len(tokens) == 0 || tokens[0] == "n" {
+        return nil
+    }
+    v, _ := strconv.Atoi(tokens[0])
+    root := &TreeNode{Val: v}
+    queue := []*TreeNode{root}
+    i := 1
+    for len(queue) > 0 && i < len(tokens) {
+        cur := queue[0]
+        queue = queue[1:]
+        if i < len(tokens) {
+            if tokens[i] != "n" {
+                v, _ := strconv.Atoi(tokens[i])
+                cur.Left = &TreeNode{Val: v}
+                queue = append(queue, cur.Left)
+            }
+            i++
+        }
+        if i < len(tokens) {
+            if tokens[i] != "n" {
+                v, _ := strconv.Atoi(tokens[i])
+                cur.Right = &TreeNode{Val: v}
+                queue = append(queue, cur.Right)
+            }
+            i++
+        }
+    }
+    return root
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    l1, _ := reader.ReadString('\n')
+    l2, _ := reader.ReadString('\n')
+    root := buildTree(strings.Fields(l1))
+    k, _ := strconv.Atoi(strings.TrimSpace(l2))
+    fmt.Println(kthSmallest(root, k))
+}

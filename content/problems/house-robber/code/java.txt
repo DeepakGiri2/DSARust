@@ -1,0 +1,18 @@
+static int rob(int[] nums) {
+    int n = nums.length; //@init
+    int[] dp = new int[n]; //@dp
+    dp[0] = nums[0]; //@base
+    for (int i = 1; i < n; i++) { //@loop
+        int skip = dp[i-1]; //@skip
+        int rob = nums[i]; //@robval
+        if (i >= 2) { //@guard
+            rob += dp[i-2]; //@add
+        }
+        if (rob > skip) { //@cmp
+            dp[i] = rob; //@takerob
+        } else {
+            dp[i] = skip; //@takeskip
+        }
+    }
+    return dp[n-1]; //@ret
+}

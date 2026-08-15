@@ -1,0 +1,41 @@
+bool differsByOne(const string& a, const string& b) {
+    if (a.size() != b.size()) return false;
+    int diff = 0;
+    for (size_t i = 0; i < a.size(); i++) if (a[i] != b[i]) diff++;
+    return diff == 1;
+}
+
+int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+    vector<bool> used(wordList.size(), false); //@init
+    int target = -1; //@target
+    for (int i = 0; i < (int)wordList.size(); i++) { //@findTarget
+        if (wordList[i] == endWord) {
+            target = i;
+        }
+    }
+    if (target < 0) { //@absent
+        return 0;
+    }
+    vector<string> q = {beginWord}; //@seed
+    int steps = 1; //@steps
+    while (!q.empty()) { //@loop
+        vector<string> next; //@level
+        for (auto& w : q) { //@scan
+            if (w == endWord) { //@found
+                return steps; //@ret
+            }
+            for (int i = 0; i < (int)wordList.size(); i++) { //@candidates
+                if (used[i]) { //@skip
+                    continue;
+                }
+                if (differsByOne(w, wordList[i])) { //@adjacent
+                    used[i] = true; //@consume
+                    next.push_back(wordList[i]); //@enqueue
+                }
+            }
+        }
+        q = next; //@advance
+        steps++; //@bump
+    }
+    return 0; //@fail
+}

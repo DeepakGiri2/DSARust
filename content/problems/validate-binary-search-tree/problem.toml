@@ -1,0 +1,33 @@
+slug = 'validate-binary-search-tree'
+title = 'Validate Binary Search Tree'
+category = 'Trees'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(n) time · O(h) space (recursion stack)'
+
+description = "Given the root of a binary tree, determine whether it is a valid binary search tree: every node's value must be strictly greater than all values in its left subtree and strictly less than all values in its right subtree. Watch how an allowed (low, high) range narrows as we descend."
+approach = "Recursion with bounds. Each node carries an open interval (low, high) it must fall strictly inside. Going left tightens the upper bound to the node's value; going right tightens the lower bound. A value outside its range breaks the BST rule immediately."
+
+[[inputs]]
+name = 'tree'
+label = "tree (level-order, 'n' = null)"
+type = 'tree'
+max_len = 40
+
+[default_input]
+tree = '5 3 8 1 4 7 9'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+tree = '5 3 8 1 4 7 9'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+tree = '5 1 4 n n 3 6'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+tree = '2 1 3'

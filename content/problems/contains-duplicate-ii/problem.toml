@@ -1,0 +1,43 @@
+slug = 'contains-duplicate-ii'
+title = 'Contains Duplicate II'
+category = 'Sliding Window'
+difficulty = 'Easy'
+tier = '250'
+complexity = 'O(n) time · O(min(n, k)) space'
+
+description = 'Given an integer array nums and an integer k, return true if there are two distinct indices i and j with nums[i] == nums[j] and |i − j| ≤ k. A window of the last k values slides across the array.'
+approach = 'Keep a hash set holding only the values inside a window of the last k indices. Before checking index i, drop the value that has fallen out of range; if the current value is already in the set, we found two equal values within distance k.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 40
+
+[[inputs]]
+name = 'k'
+label = 'k'
+type = 'int'
+min = 1
+
+[default_input]
+nums = [1, 2, 3, 1]
+k = 3
+
+[[tests]]
+expected = 'true'
+[tests.input]
+nums = [1, 2, 3, 1]
+k = 3
+
+[[tests]]
+expected = 'true'
+[tests.input]
+nums = [1, 0, 1, 1]
+k = 1
+
+[[tests]]
+expected = 'false'
+[tests.input]
+nums = [1, 2, 3, 1, 2, 3]
+k = 2

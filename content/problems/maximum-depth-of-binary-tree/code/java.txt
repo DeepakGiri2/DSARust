@@ -1,0 +1,8 @@
+static int maxDepth(TreeNode root) {
+    if (root == null) { //@base
+        return 0; //@ret0
+    }
+    int left = maxDepth(root.left); //@recL
+    int right = maxDepth(root.right); //@recR
+    return 1 + Math.max(left, right); //@ret
+}

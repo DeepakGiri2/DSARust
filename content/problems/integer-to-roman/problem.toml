@@ -1,0 +1,35 @@
+slug = 'integer-to-roman'
+title = 'Integer to Roman'
+category = 'Math & Geometry'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '12'
+complexity = 'O(1) time · O(1) space'
+
+description = 'Convert an integer to its Roman numeral, using the subtractive forms IV, IX, XL, XC, CD and CM where they apply.'
+approach = 'Put the six subtractive forms into the value table alongside the plain symbols and sort the whole thing descending. Greedy then works without any special cases: repeatedly take the largest value that still fits. Greedy is safe precisely because the table is built so that no smaller combination can ever beat taking the largest — that property is what the subtractive entries are for.'
+
+[[inputs]]
+name = 'num'
+label = 'num'
+type = 'int'
+min = 1
+max = 3999
+
+[default_input]
+num = 1994
+
+[[tests]]
+expected = 'MCMXCIV'
+[tests.input]
+num = 1994
+
+[[tests]]
+expected = 'LVIII'
+[tests.input]
+num = 58
+
+[[tests]]
+expected = 'MMMDCCXLIX'
+[tests.input]
+num = 3749

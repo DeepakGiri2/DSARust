@@ -1,0 +1,33 @@
+slug = 'valid-parentheses'
+title = 'Valid Parentheses'
+category = 'Stack'
+difficulty = 'Easy'
+tier = '50'
+complexity = 'O(n) time · O(n) space'
+
+description = "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid: every opener is closed by the same type of bracket, in the correct order."
+approach = 'Use a stack. Push every opening bracket. For a closing bracket, the top of the stack must be its matching opener — pop it. At the end the stack must be empty.'
+
+[[inputs]]
+name = 's'
+label = 's (brackets only)'
+type = 'string'
+max_len = 24
+
+[default_input]
+s = '({[]})[]'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = '({[]})[]'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = '(]'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = '((('

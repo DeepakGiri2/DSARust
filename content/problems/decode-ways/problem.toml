@@ -1,0 +1,40 @@
+slug = 'decode-ways'
+title = 'Decode Ways'
+category = '1-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '91'
+complexity = 'O(n) time · O(1) space'
+
+description = 'A digit string encodes letters with A = 1 through Z = 26. Count how many different letter strings it could decode to.'
+approach = 'Every decoding ends with either a one-digit letter or a two-digit one, so the count at position i is the count one back plus the count two back — Fibonacci with conditions attached. The conditions are what carry the real content: a single digit only works if it is not 0, and a pair only if it reads between 10 and 26, which rules out both 0-leading pairs and anything above Z.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 12
+help = 'digits only'
+
+[default_input]
+s = '226'
+
+[[tests]]
+expected = '3'
+[tests.input]
+s = '226'
+
+[[tests]]
+expected = '2'
+[tests.input]
+s = '12'
+
+[[tests]]
+expected = '0'
+[tests.input]
+s = '06'
+
+[[tests]]
+expected = '1'
+[tests.input]
+s = '2101'

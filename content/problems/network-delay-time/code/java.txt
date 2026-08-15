@@ -1,0 +1,38 @@
+static final int INF = 1 << 30;
+
+static int networkDelayTime(int[][] times, int n, int k) {
+    List<int[]>[] adj = new List[n + 1]; //@build
+    for (int i = 0; i <= n; i++) adj[i] = new ArrayList<>();
+    for (int[] t : times) {
+        adj[t[0]].add(new int[]{t[1], t[2]});
+    }
+    int[] dist = new int[n + 1]; //@init
+    Arrays.fill(dist, INF);
+    dist[k] = 0; //@seed
+    boolean[] visited = new boolean[n + 1]; //@visited
+    for (int iter = 0; iter < n; iter++) { //@loop
+        int u = -1; //@pick
+        for (int v = 1; v <= n; v++) { //@scan
+            if (!visited[v] && dist[v] != INF && (u == -1 || dist[v] < dist[u])) {
+                u = v; //@closest
+            }
+        }
+        if (u == -1) { //@stuck
+            break;
+        }
+        visited[u] = true; //@settle
+        for (int[] e : adj[u]) { //@relax
+            if (dist[u] + e[1] < dist[e[0]]) { //@shorter
+                dist[e[0]] = dist[u] + e[1]; //@update
+            }
+        }
+    }
+    int ans = 0; //@max
+    for (int v = 1; v <= n; v++) { //@check
+        if (dist[v] == INF) { //@unreachable
+            return -1; //@fail
+        }
+        ans = Math.max(ans, dist[v]); //@bump
+    }
+    return ans; //@ret
+}

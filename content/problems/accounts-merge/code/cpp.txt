@@ -1,0 +1,37 @@
+vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+    unordered_map<string, int> id; //@init
+    vector<string> owner;
+    vector<int> parent;
+    for (auto& acc : accounts) { //@scan
+        for (int k = 1; k < (int)acc.size(); k++) { //@each
+            if (!id.count(acc[k])) { //@new
+                id[acc[k]] = parent.size();
+                parent.push_back(parent.size());
+                owner.push_back(acc[0]);
+            }
+            int a = find(parent, id[acc[1]]), b = find(parent, id[acc[k]]); //@roots
+            parent[a] = b; //@union
+        }
+    }
+
+    map<int, vector<string>> groups; //@group
+    for (auto& [email, i] : id) { //@collect
+        groups[find(parent, i)].push_back(email); //@bucket
+    }
+    vector<vector<string>> out;
+    for (auto& [r, emails] : groups) { //@build
+        sort(emails.begin(), emails.end()); //@sort
+        vector<string> row{owner[r]};
+        row.insert(row.end(), emails.begin(), emails.end()); //@row
+        out.push_back(row);
+    }
+    return out; //@ret
+}
+
+int find(vector<int>& parent, int x) {
+    while (parent[x] != x) { //@walk
+        parent[x] = parent[parent[x]]; //@compress
+        x = parent[x]; //@up
+    }
+    return x; //@root
+}

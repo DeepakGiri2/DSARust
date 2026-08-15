@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int lengthOfLongestSubstring(string s) {
+    unordered_map<char, int> last;
+    int best = 0, left = 0;
+    for (int right = 0; right < (int)s.size(); right++) {
+        char c = s[right];
+        if (last.count(c) && last[c] >= left) {
+            left = last[c] + 1;
+        }
+        last[c] = right;
+        if (right - left + 1 > best) {
+            best = right - left + 1;
+        }
+    }
+    return best;
+}
+
+int main() {
+    string s;
+    getline(cin, s);
+    while (!s.empty() && (s.back() == '\n' || s.back() == '\r' || s.back() == ' ')) s.pop_back();
+    cout << lengthOfLongestSubstring(s) << endl;
+}

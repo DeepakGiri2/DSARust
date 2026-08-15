@@ -1,0 +1,12 @@
+static int subarraysDivByK(int[] nums, int k) {
+    int[] count = new int[k]; //@init
+    count[0] = 1; //@seed
+    int sum = 0, ans = 0; //@zero
+    for (int x : nums) { //@loop
+        sum += x; //@add
+        int r = ((sum % k) + k) % k; //@mod
+        ans += count[r]; //@take
+        count[r]++; //@store
+    }
+    return ans; //@ret
+}

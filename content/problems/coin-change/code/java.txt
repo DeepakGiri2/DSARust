@@ -1,0 +1,17 @@
+static int coinChange(int[] coins, int amount) {
+    int[] dp = new int[amount+1]; //@init
+    for (int a = 1; a <= amount; a++) { //@fill
+        dp[a] = amount + 1; //@inf
+    }
+    for (int a = 1; a <= amount; a++) { //@outer
+        for (int c : coins) { //@inner
+            if (c <= a && dp[a-c] + 1 < dp[a]) { //@check
+                dp[a] = dp[a-c] + 1; //@update
+            }
+        }
+    }
+    if (dp[amount] > amount) { //@test
+        return -1; //@none
+    }
+    return dp[amount]; //@ret
+}

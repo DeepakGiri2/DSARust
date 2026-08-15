@@ -1,0 +1,10 @@
+func maxProfit(prices []int) int {
+    hold, sold, rest := -prices[0], 0, 0 //@init
+    for i := 1; i < len(prices); i++ { //@loop
+        prevHold, prevSold, prevRest := hold, sold, rest //@snapshot
+        hold = maxi(prevHold, prevRest-prices[i]) //@hold
+        sold = prevHold + prices[i] //@sold
+        rest = maxi(prevRest, prevSold) //@rest
+    }
+    return maxi(sold, rest) //@ret
+}

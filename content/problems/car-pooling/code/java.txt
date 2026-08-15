@@ -1,0 +1,16 @@
+static boolean carPooling(int[][] trips, int capacity) {
+    Arrays.sort(trips, (a, b) -> a[1] - b[1]); //@sort
+    PriorityQueue<int[]> h = new PriorityQueue<>((a, b) -> a[0] - b[0]); //@init
+    int onboard = 0; //@onboard
+    for (int[] t : trips) { //@loop
+        while (!h.isEmpty() && h.peek()[0] <= t[1]) { //@dropoff
+            onboard -= h.poll()[1]; //@leave
+        }
+        onboard += t[0]; //@board
+        if (onboard > capacity) { //@over
+            return false; //@no
+        }
+        h.add(new int[]{t[2], t[0]}); //@push
+    }
+    return true; //@yes
+}

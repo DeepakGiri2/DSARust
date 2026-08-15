@@ -1,0 +1,45 @@
+slug = 'search-insert-position'
+title = 'Search Insert Position'
+category = 'Binary Search'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '35'
+complexity = 'O(log n) time · O(1) space'
+
+description = 'Return the index of a target in a sorted array, or the index where it would be inserted to keep the array sorted.'
+approach = "The half-open form: `hi` starts one past the end and never moves to `mid - 1`, only to `mid`. That keeps a single invariant true throughout — everything below `lo` is smaller than the target and everything from `hi` up is not — so when the range collapses, `lo` is simultaneously 'where it is' and 'where it would go'. No separate not-found case is needed."
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 20
+
+[[inputs]]
+name = 'target'
+label = 'target'
+type = 'int'
+min = -100
+max = 100
+
+[default_input]
+nums = [1, 3, 5, 6]
+target = 5
+
+[[tests]]
+expected = '2'
+[tests.input]
+nums = [1, 3, 5, 6]
+target = 5
+
+[[tests]]
+expected = '1'
+[tests.input]
+nums = [1, 3, 5, 6]
+target = 2
+
+[[tests]]
+expected = '4'
+[tests.input]
+nums = [1, 3, 5, 6]
+target = 7

@@ -1,0 +1,26 @@
+type BSTIterator struct{ stack []*TreeNode }
+
+func Constructor(root *TreeNode) BSTIterator { //@init
+    it := BSTIterator{}
+    it.pushLeft(root) //@seed
+    return it
+}
+
+// Push the whole left spine: the smallest unvisited node ends up on top.
+func (it *BSTIterator) pushLeft(node *TreeNode) { //@push
+    for node != nil { //@descend
+        it.stack = append(it.stack, node) //@stack
+        node = node.Left //@goleft
+    }
+}
+
+func (it *BSTIterator) Next() int { //@next
+    node := it.stack[len(it.stack)-1] //@top
+    it.stack = it.stack[:len(it.stack)-1] //@pop
+    it.pushLeft(node.Right) //@right
+    return node.Val //@val
+}
+
+func (it *BSTIterator) HasNext() bool { //@hasnext
+    return len(it.stack) > 0 //@any
+}

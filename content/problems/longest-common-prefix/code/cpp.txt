@@ -1,0 +1,13 @@
+string longestCommonPrefix(vector<string>& strs) {
+    string prefix = ""; //@init
+    for (int j = 0; j < (int)strs[0].size(); j++) { //@col
+        char c = strs[0][j]; //@pick
+        for (int k = 1; k < (int)strs.size(); k++) { //@row
+            if (j >= (int)strs[k].size() || strs[k][j] != c) { //@mismatch
+                return prefix; //@ret
+            }
+        }
+        prefix += c; //@grow
+    }
+    return prefix; //@done
+}

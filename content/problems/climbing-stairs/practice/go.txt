@@ -1,0 +1,42 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func climbStairs(n int) int {
+    memo := map[int]int{}
+    return climb(n, memo)
+}
+
+func climb(n int, memo map[int]int) int {
+    if n <= 2 {
+        return n
+    }
+    if v, ok := memo[n]; ok {
+        return v
+    }
+    result := climb(n-1, memo) + climb(n-2, memo)
+    memo[n] = result
+    return result
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    n := readInts(reader)[0]
+    fmt.Println(climbStairs(n))
+}

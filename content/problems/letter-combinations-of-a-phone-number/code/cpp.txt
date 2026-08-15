@@ -1,0 +1,18 @@
+vector<string> letterCombinations(string digits) {
+    if (digits.empty()) { //@empty
+        return {}; //@retEmpty
+    }
+    vector<string> keypad = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    vector<string> res; //@init
+    function<void(int, string)> back = [&](int i, string cur) {
+        if (i == (int)digits.size()) { //@base
+            res.push_back(cur); //@add
+            return; //@ret
+        }
+        for (char ch : keypad[digits[i] - '0']) { //@loop
+            back(i + 1, cur + ch); //@rec
+        }
+    };
+    back(0, ""); //@call
+    return res; //@done
+}

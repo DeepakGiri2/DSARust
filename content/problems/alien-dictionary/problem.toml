@@ -1,0 +1,40 @@
+slug = 'alien-dictionary'
+title = 'Alien Dictionary'
+category = 'Advanced Graphs'
+difficulty = 'Hard'
+tier = '150'
+leetcode = '269'
+complexity = 'O(total characters) time · O(1) space (26 letters)'
+
+description = "Given words sorted in an unknown alphabet's order, recover an order of the letters consistent with them. Return '(no valid order)' if none exists."
+approach = "Each adjacent pair of words yields at most one fact: at their first differing character, the earlier word's letter comes first. Everything after that position tells you nothing. Those facts form a directed graph, and any topological order of it is a valid alphabet — so run Kahn's algorithm, repeatedly emitting a letter with no unmet predecessors. If letters remain when the queue empties, the constraints contain a cycle. The one non-graph case is a word followed by its own prefix, which no ordering can justify."
+
+[[inputs]]
+name = 'words'
+label = 'words'
+type = 'string'
+max_len = 60
+help = 'words separated by spaces, in the alien order'
+
+[default_input]
+words = 'wrt wrf er ett rftt'
+
+[[tests]]
+expected = 'wertf'
+[tests.input]
+words = 'wrt wrf er ett rftt'
+
+[[tests]]
+expected = 'zx'
+[tests.input]
+words = 'z x'
+
+[[tests]]
+expected = '(no valid order)'
+[tests.input]
+words = 'z x z'
+
+[[tests]]
+expected = '(no valid order)'
+[tests.input]
+words = 'abc ab'

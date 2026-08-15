@@ -1,0 +1,33 @@
+slug = 'single-number'
+title = 'Single Number'
+category = 'Bit Manipulation'
+difficulty = 'Easy'
+tier = '50'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Given a non-empty array where every element appears exactly twice except for one element that appears once, find that single element. Must run in O(n) time and O(1) extra space.'
+approach = 'XOR fold. XOR is its own inverse (x ^ x = 0) and has 0 as identity (x ^ 0 = x), so XOR-ing every element together cancels each duplicated pair to 0 and leaves only the unique value.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums (each twice except one)'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+nums = [4, 1, 2, 1, 2]
+
+[[tests]]
+expected = '4'
+[tests.input]
+nums = [4, 1, 2, 1, 2]
+
+[[tests]]
+expected = '1'
+[tests.input]
+nums = [2, 2, 1]
+
+[[tests]]
+expected = '7'
+[tests.input]
+nums = [7]

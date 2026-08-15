@@ -1,0 +1,18 @@
+int compress(vector<char>& chars) {
+    int write = 0, read = 0; //@init
+    while (read < (int)chars.size()) { //@loop
+        char ch = chars[read]; //@char
+        int count = 0; //@count
+        while (read < (int)chars.size() && chars[read] == ch) { //@run
+            read++;
+            count++; //@grow
+        }
+        chars[write++] = ch; //@put
+        if (count > 1) { //@many
+            for (char d : to_string(count)) { //@digits
+                chars[write++] = d; //@digit
+            }
+        }
+    }
+    return write; //@ret
+}

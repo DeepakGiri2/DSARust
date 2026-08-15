@@ -1,0 +1,35 @@
+slug = 'snakes-and-ladders'
+title = 'Snakes and Ladders'
+category = 'Graphs'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '909'
+complexity = 'O(n²) time · O(n²) space'
+
+description = 'On a boustrophedon board, each move rolls 1 to 6 and then follows any snake or ladder on the landing square. Return the fewest moves to reach the last square.'
+approach = "Every square is a node and each roll is one edge, all of equal cost — so breadth-first search finds the fewest moves. The board's layout is pure arithmetic: squares are numbered from the bottom left and alternate direction each row, so a square number converts to a cell without any search. A snake or ladder is not a special move but a relabelling of where the edge lands."
+
+[[inputs]]
+name = 'board'
+label = 'board'
+type = 'string'
+max_len = 60
+help = 'rows top to bottom, values comma separated; -1 for a plain square'
+
+[default_input]
+board = '-1,-1,-1 -1,-1,8 -1,-1,-1'
+
+[[tests]]
+expected = '2'
+[tests.input]
+board = '-1,-1,-1 -1,-1,8 -1,-1,-1'
+
+[[tests]]
+expected = '1'
+[tests.input]
+board = '-1,-1 -1,3'
+
+[[tests]]
+expected = '2'
+[tests.input]
+board = '-1,-1,-1 -1,-1,-1 -1,-1,-1'

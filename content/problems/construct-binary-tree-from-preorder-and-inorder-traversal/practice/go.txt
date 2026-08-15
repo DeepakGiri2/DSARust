@@ -1,0 +1,78 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+type TreeNode struct {
+    Val   int
+    Left  *TreeNode
+    Right *TreeNode
+}
+
+func buildTree(preorder []int, inorder []int) *TreeNode {
+    idx := 0
+    var helper func(lo, hi int) *TreeNode
+    helper = func(lo, hi int) *TreeNode {
+        if lo > hi {
+            return nil
+        }
+        rootVal := preorder[idx]
+        idx++
+        root := &TreeNode{Val: rootVal}
+        mid := lo
+        for inorder[mid] != rootVal {
+            mid++
+        }
+        root.Left = helper(lo, mid-1)
+        root.Right = helper(mid+1, hi)
+        return root
+    }
+    return helper(0, len(inorder)-1)
+}
+
+func readInts(line string) []int {
+    fields := strings.Fields(line)
+    nums := make([]int, 0, len(fields))
+    for _, f := range fields {
+        v, _ := strconv.Atoi(f)
+        nums = append(nums, v)
+    }
+    return nums
+}
+
+func serialize(root *TreeNode) string {
+    if root == nil {
+        return ""
+    }
+    tokens := []string{}
+    queue := []*TreeNode{root}
+    for len(queue) > 0 {
+        node := queue[0]
+        queue = queue[1:]
+        if node == nil {
+            tokens = append(tokens, "n")
+            continue
+        }
+        tokens = append(tokens, strconv.Itoa(node.Val))
+        queue = append(queue, node.Left, node.Right)
+    }
+    for len(tokens) > 0 && tokens[len(tokens)-1] == "n" {
+        tokens = tokens[:len(tokens)-1]
+    }
+    return strings.Join(tokens, " ")
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    l1, _ := reader.ReadString('\n')
+    l2, _ := reader.ReadString('\n')
+    preorder := readInts(l1)
+    inorder := readInts(l2)
+    root := buildTree(preorder, inorder)
+    fmt.Println(serialize(root))
+}

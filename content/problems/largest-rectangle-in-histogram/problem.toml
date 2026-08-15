@@ -1,0 +1,30 @@
+slug = 'largest-rectangle-in-histogram'
+title = 'Largest Rectangle in Histogram'
+category = 'Stack'
+difficulty = 'Hard'
+tier = '150'
+complexity = 'O(n) time · O(n) space'
+
+description = 'Given the heights of adjacent bars of equal width, find the area of the largest rectangle that fits inside the histogram.'
+approach = 'A monotonic increasing stack of (start index, height). When a shorter bar arrives, every taller bar on the stack can no longer extend, so its rectangle is finalised right there — and the shorter bar inherits the earliest start position it popped, because it can stretch back over all of them.'
+
+[[inputs]]
+name = 'heights'
+label = 'heights'
+type = 'int-array'
+max_len = 40
+min = 0
+max = 30
+
+[default_input]
+heights = [2, 1, 5, 6, 2, 3]
+
+[[tests]]
+expected = '10'
+[tests.input]
+heights = [2, 1, 5, 6, 2, 3]
+
+[[tests]]
+expected = '4'
+[tests.input]
+heights = [2, 4]

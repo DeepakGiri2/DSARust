@@ -1,0 +1,43 @@
+slug = 'word-search'
+title = 'Word Search'
+category = 'Backtracking'
+difficulty = 'Medium'
+tier = '50'
+complexity = 'O(m·n·4^L) time · O(L) space (recursion depth, L = word length)'
+
+description = 'Given an m × n grid of characters `board` and a string `word`, return true if `word` can be built from letters of sequentially adjacent cells (up/down/left/right). The same cell may not be used more than once in a single path.'
+approach = 'Try to start the word at every cell whose letter equals word[0]. From there run a DFS that matches one letter at a time: mark the current cell as visited (set it to #) so the path never reuses it, recurse into the 4 neighbors for the next letter, and restore the cell on the way back out (backtracking). Success is when the match index k reaches the length of the word.'
+
+[[inputs]]
+name = 'board'
+label = 'board (rows space-separated letters)'
+type = 'grid'
+max_len = 40
+
+[[inputs]]
+name = 'word'
+label = 'word'
+type = 'string'
+max_len = 8
+
+[default_input]
+board = 'ABCE SFCS ADEE'
+word = 'ABCCED'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+board = 'ABCE SFCS ADEE'
+word = 'ABCCED'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+board = 'ABCE SFCS ADEE'
+word = 'ABCB'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+board = 'AB CD'
+word = 'ABDC'

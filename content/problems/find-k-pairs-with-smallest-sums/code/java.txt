@@ -1,0 +1,16 @@
+static List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+    // {sum, i, j}, smallest sum on top.
+    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]); //@init
+    for (int i = 0; i < nums1.length && i < k; i++) { //@seed
+        pq.offer(new int[]{nums1[i] + nums2[0], i, 0}); //@push
+    }
+    List<List<Integer>> out = new ArrayList<>(); //@out
+    while (!pq.isEmpty() && out.size() < k) { //@loop
+        int[] p = pq.poll(); //@pop
+        out.add(List.of(nums1[p[1]], nums2[p[2]])); //@take
+        if (p[2] + 1 < nums2.length) { //@more
+            pq.offer(new int[]{nums1[p[1]] + nums2[p[2] + 1], p[1], p[2] + 1}); //@next
+        }
+    }
+    return out; //@ret
+}

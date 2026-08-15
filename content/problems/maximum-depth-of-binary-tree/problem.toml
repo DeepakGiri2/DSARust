@@ -1,0 +1,33 @@
+slug = 'maximum-depth-of-binary-tree'
+title = 'Maximum Depth of Binary Tree'
+category = 'Trees'
+difficulty = 'Easy'
+tier = '50'
+complexity = 'O(n) time · O(h) space (recursion stack, h = height)'
+
+description = 'Given the root of a binary tree, return its maximum depth — the number of nodes along the longest path from the root down to the farthest leaf. A classic first taste of tree recursion: use Step In / Step Out to watch the call stack grow and shrink.'
+approach = 'Recursion: the depth of a node is 1 + the depth of its deeper subtree. The base case is an empty (nil) node, whose depth is 0. Watch the call stack grow as we dive down, then collapse as each call returns its answer.'
+
+[[inputs]]
+name = 'tree'
+label = "tree (level-order, 'n' = null)"
+type = 'tree'
+max_len = 40
+
+[default_input]
+tree = '3 9 20 n n 15 7'
+
+[[tests]]
+expected = '3'
+[tests.input]
+tree = '3 9 20 n n 15 7'
+
+[[tests]]
+expected = '2'
+[tests.input]
+tree = '1 2 3'
+
+[[tests]]
+expected = '1'
+[tests.input]
+tree = '1'

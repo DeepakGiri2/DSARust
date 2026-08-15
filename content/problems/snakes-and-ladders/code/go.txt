@@ -1,0 +1,42 @@
+func snakesAndLadders(board [][]int) int {
+    n := len(board)
+    target := n * n //@target
+    dist := make([]int, n*n+1) //@init
+    for i := range dist {
+        dist[i] = -1
+    }
+    dist[1] = 0 //@seed
+    q := []int{1} //@queue
+    for len(q) > 0 { //@loop
+        cur := q[0] //@pop
+        q = q[1:]
+        if cur == target { //@arrived
+            return dist[cur] //@ret
+        }
+        for roll := 1; roll <= 6; roll++ { //@rolls
+            next := cur + roll //@step
+            if next > target { //@past
+                break
+            }
+            r, c := cell(n, next) //@locate
+            if board[r][c] != -1 { //@jump
+                next = board[r][c] //@teleport
+            }
+            if dist[next] == -1 { //@fresh
+                dist[next] = dist[cur] + 1 //@setDist
+                q = append(q, next) //@push
+            }
+        }
+    }
+    return -1 //@none
+}
+
+func cell(n, square int) (int, int) {
+    idx := square - 1
+    row := idx / n
+    col := idx % n
+    if row%2 == 1 {
+        col = n - 1 - col
+    }
+    return n - 1 - row, col
+}

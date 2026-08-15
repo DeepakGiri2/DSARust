@@ -1,0 +1,36 @@
+ListNode* sortList(ListNode* head) {
+    if (!head || !head->next) { //@base
+        return head; //@trivial
+    }
+    ListNode *slow = head, *fast = head->next; //@find
+    while (fast && fast->next) { //@advance
+        slow = slow->next;
+        fast = fast->next->next; //@hop
+    }
+    ListNode* mid = slow->next; //@mid
+    slow->next = nullptr; //@cut
+    ListNode* left = sortList(head); //@left
+    ListNode* right = sortList(mid); //@right
+    return merge(left, right); //@merge
+}
+
+ListNode* merge(ListNode* a, ListNode* b) {
+    ListNode dummy; //@dummy
+    ListNode* tail = &dummy;
+    while (a && b) { //@both
+        if (a->val <= b->val) { //@pick
+            tail->next = a; //@takea
+            a = a->next;
+        } else {
+            tail->next = b; //@takeb
+            b = b->next;
+        }
+        tail = tail->next; //@advtail
+    }
+    if (a) { //@rest
+        tail->next = a; //@resta
+    } else {
+        tail->next = b; //@restb
+    }
+    return dummy.next; //@done
+}

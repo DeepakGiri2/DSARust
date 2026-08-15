@@ -1,0 +1,47 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        while (curr != null) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+
+    static int[] readInts(BufferedReader br) throws Exception {
+        String line = br.readLine();
+        if (line == null || line.trim().isEmpty()) return new int[0];
+        String[] parts = line.trim().split("\\s+");
+        int[] nums = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);
+        return nums;
+    }
+
+    static class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int v) { val = v; }
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] vals = readInts(br);
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+        for (int v : vals) { tail.next = new ListNode(v); tail = tail.next; }
+        ListNode head = reverseList(dummy.next);
+        StringBuilder sb = new StringBuilder();
+        for (ListNode p = head; p != null; p = p.next) {
+            if (sb.length() > 0) sb.append(' ');
+            sb.append(p.val);
+        }
+        System.out.println(sb);
+    }
+}

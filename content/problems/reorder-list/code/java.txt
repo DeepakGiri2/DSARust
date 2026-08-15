@@ -1,0 +1,23 @@
+static void reorderList(ListNode head) {
+    ListNode slow = head, fast = head.next; //@mid
+    while (fast != null && fast.next != null) { //@midLoop
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    ListNode second = slow.next; //@split
+    slow.next = null; //@cut
+    ListNode prev = null; //@revInit
+    while (second != null) { //@revLoop
+        ListNode next = second.next;
+        second.next = prev; //@flip
+        prev = second;
+        second = next;
+    }
+    ListNode first = head, sec = prev; //@weaveInit
+    while (sec != null) { //@weave
+        ListNode f = first.next, s = sec.next; //@save
+        first.next = sec; //@linkA
+        sec.next = f; //@linkB
+        first = f; sec = s; //@advance
+    }
+}

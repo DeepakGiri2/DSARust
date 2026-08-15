@@ -1,0 +1,52 @@
+slug = 'hamming-distance'
+title = 'Hamming Distance'
+category = 'Bit Manipulation'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '461'
+complexity = 'O(set bits) time · O(1) space'
+
+description = 'Count the positions at which two integers differ in binary.'
+approach = "XOR puts a 1 exactly where the two numbers disagree, so the question becomes 'how many 1 bits?'. Counting them with n & (n - 1) is what makes this proportional to the number of set bits rather than to the width of the word: subtracting one flips the lowest set bit and everything below it, so the AND clears precisely that one bit and nothing else."
+
+[[inputs]]
+name = 'x'
+label = 'x'
+type = 'int'
+min = 0
+max = 255
+
+[[inputs]]
+name = 'y'
+label = 'y'
+type = 'int'
+min = 0
+max = 255
+
+[default_input]
+x = 1
+y = 4
+
+[[tests]]
+expected = '2'
+[tests.input]
+x = 1
+y = 4
+
+[[tests]]
+expected = '1'
+[tests.input]
+x = 3
+y = 1
+
+[[tests]]
+expected = '0'
+[tests.input]
+x = 0
+y = 0
+
+[[tests]]
+expected = '8'
+[tests.input]
+x = 255
+y = 0

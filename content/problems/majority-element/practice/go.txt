@@ -1,0 +1,41 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func majorityElement(nums []int) int {
+    count := 0
+    candidate := 0
+    for i := 0; i < len(nums); i++ {
+        if count == 0 {
+            candidate = nums[i]
+        }
+        if nums[i] == candidate {
+            count++
+        } else {
+            count--
+        }
+    }
+    return candidate
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    nums := readInts(reader)
+    fmt.Println(majorityElement(nums))
+}

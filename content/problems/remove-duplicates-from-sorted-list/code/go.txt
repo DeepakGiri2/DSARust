@@ -1,0 +1,11 @@
+func deleteDuplicates(head *ListNode) *ListNode {
+    cur := head //@init
+    for cur != nil && cur.Next != nil { //@loop
+        if cur.Val == cur.Next.Val { //@same
+            cur.Next = cur.Next.Next //@skip
+        } else { //@diff
+            cur = cur.Next //@advance
+        }
+    }
+    return head //@ret
+}

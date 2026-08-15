@@ -1,0 +1,14 @@
+static int[] twoSumII(int[] numbers, int target) {
+    int l = 0, r = numbers.length - 1; //@init
+    while (l < r) { //@loop
+        int sum = numbers[l] + numbers[r]; //@sum
+        if (sum == target) { //@cmp
+            return new int[]{l + 1, r + 1}; //@found
+        } else if (sum < target) { //@less
+            l++; //@moveL
+        } else {
+            r--; //@moveR
+        }
+    }
+    return new int[0]; //@none
+}

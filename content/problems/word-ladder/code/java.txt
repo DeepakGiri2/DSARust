@@ -1,0 +1,41 @@
+static boolean differsByOne(String a, String b) {
+    if (a.length() != b.length()) return false;
+    int diff = 0;
+    for (int i = 0; i < a.length(); i++) if (a.charAt(i) != b.charAt(i)) diff++;
+    return diff == 1;
+}
+
+static int ladderLength(String beginWord, String endWord, List<String> wordList) {
+    boolean[] used = new boolean[wordList.size()]; //@init
+    int target = -1; //@target
+    for (int i = 0; i < wordList.size(); i++) { //@findTarget
+        if (wordList.get(i).equals(endWord)) {
+            target = i;
+        }
+    }
+    if (target < 0) { //@absent
+        return 0;
+    }
+    List<String> q = new ArrayList<>(List.of(beginWord)); //@seed
+    int steps = 1; //@steps
+    while (!q.isEmpty()) { //@loop
+        List<String> next = new ArrayList<>(); //@level
+        for (String w : q) { //@scan
+            if (w.equals(endWord)) { //@found
+                return steps; //@ret
+            }
+            for (int i = 0; i < wordList.size(); i++) { //@candidates
+                if (used[i]) { //@skip
+                    continue;
+                }
+                if (differsByOne(w, wordList.get(i))) { //@adjacent
+                    used[i] = true; //@consume
+                    next.add(wordList.get(i)); //@enqueue
+                }
+            }
+        }
+        q = next; //@advance
+        steps++; //@bump
+    }
+    return 0; //@fail
+}

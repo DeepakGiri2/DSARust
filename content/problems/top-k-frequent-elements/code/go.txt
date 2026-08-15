@@ -1,0 +1,23 @@
+func topKFrequent(nums []int, k int) []int {
+    count := map[int]int{} //@count
+    for _, n := range nums { //@build
+        count[n]++ //@inc
+    }
+    buckets := make([][]int, len(nums)+1) //@buckets
+    added := map[int]bool{} //@addedmap
+    for _, n := range nums { //@fill
+        if !added[n] { //@isnew
+            buckets[count[n]] = append(buckets[count[n]], n) //@place
+            added[n] = true //@mark
+        }
+    }
+    res := []int{} //@res
+    for f := len(nums); f >= 1; f-- { //@scan
+        for _, n := range buckets[f] { //@take
+            if len(res) < k { //@room
+                res = append(res, n) //@add
+            }
+        }
+    }
+    return res //@return
+}

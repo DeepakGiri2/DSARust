@@ -1,0 +1,29 @@
+static Map<Integer, Integer> idx = new HashMap<>(); //@init
+static List<Integer> vals = new ArrayList<>(); //@vals
+static Random rng = new Random();
+
+static boolean insert(int v) {
+    if (idx.containsKey(v)) { //@hasInsert
+        return false;
+    }
+    idx.put(v, vals.size()); //@record
+    vals.add(v); //@append
+    return true; //@inserted
+}
+
+static boolean remove(int v) {
+    Integer i = idx.get(v); //@lookup
+    if (i == null) { //@absent
+        return false;
+    }
+    int last = vals.get(vals.size() - 1); //@last
+    vals.set(i, last); //@move
+    idx.put(last, i); //@reindex
+    vals.remove(vals.size() - 1); //@shrink
+    idx.remove(v); //@forget
+    return true; //@removed
+}
+
+static int getRandom() {
+    return vals.get(rng.nextInt(vals.size())); //@random
+}

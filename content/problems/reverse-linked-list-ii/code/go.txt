@@ -1,0 +1,15 @@
+func reverseBetween(head *ListNode, left int, right int) *ListNode {
+    dummy := &ListNode{Next: head} //@dummy
+    prev := dummy //@prev
+    for i := 0; i < left-1; i++ { //@walk
+        prev = prev.Next //@hop
+    }
+    curr := prev.Next //@curr
+    for i := 0; i < right-left; i++ { //@loop
+        next := curr.Next //@save
+        curr.Next = next.Next //@unlink
+        next.Next = prev.Next //@front
+        prev.Next = next //@attach
+    }
+    return dummy.Next //@ret
+}

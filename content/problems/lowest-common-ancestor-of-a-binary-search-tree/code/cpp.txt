@@ -1,0 +1,13 @@
+int lowestCommonAncestor(TreeNode* root, int p, int q) {
+    TreeNode* cur = root; //@start
+    while (cur != nullptr) { //@loop
+        if (p < cur->val && q < cur->val) { //@bothLeft
+            cur = cur->left; //@goLeft
+        } else if (p > cur->val && q > cur->val) { //@bothRight
+            cur = cur->right; //@goRight
+        } else { //@split
+            return cur->val; //@ret
+        }
+    }
+    return -1; //@none
+}

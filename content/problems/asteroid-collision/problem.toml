@@ -1,0 +1,36 @@
+slug = 'asteroid-collision'
+title = 'Asteroid Collision'
+category = 'Stack'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '735'
+complexity = 'O(n) time · O(n) space'
+
+description = "Asteroids move along a row; a positive value moves right, a negative one moves left, and the value's magnitude is its size. When two meet the smaller explodes, and equal sizes destroy each other. Return what survives."
+approach = "Only a right-mover followed by a left-mover can ever collide, and a stack of survivors makes that the only case to check. A new left-mover fights the stack's top repeatedly: each fight either removes the top, removes the newcomer, or removes both — so the whole cascade is a single while loop, and every asteroid is pushed and popped at most once."
+
+[[inputs]]
+name = 'asteroids'
+label = 'asteroids'
+type = 'int-array'
+max_len = 20
+min = -50
+max = 50
+
+[default_input]
+asteroids = [5, 10, -5]
+
+[[tests]]
+expected = '5 10'
+[tests.input]
+asteroids = [5, 10, -5]
+
+[[tests]]
+expected = '10'
+[tests.input]
+asteroids = [10, 2, -5]
+
+[[tests]]
+expected = '-2 -1 1 2'
+[tests.input]
+asteroids = [-2, -1, 1, 2]

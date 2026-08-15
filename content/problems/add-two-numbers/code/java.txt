@@ -1,0 +1,19 @@
+static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    ListNode dummy = new ListNode(); //@dummy
+    ListNode tail = dummy; int carry = 0; //@init
+    while (l1 != null || l2 != null || carry != 0) { //@loop
+        int sum = carry; //@sum
+        if (l1 != null) { //@takeA
+            sum += l1.val;
+            l1 = l1.next;
+        }
+        if (l2 != null) { //@takeB
+            sum += l2.val;
+            l2 = l2.next;
+        }
+        carry = sum / 10; //@carry
+        tail.next = new ListNode(sum % 10); //@digit
+        tail = tail.next; //@advance
+    }
+    return dummy.next; //@ret
+}

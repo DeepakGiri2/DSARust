@@ -1,0 +1,11 @@
+func kClosest(points [][]int, k int) [][]int {
+    h := &MaxHeap{} //@init
+    for _, p := range points { //@loop
+        d := p[0]*p[0] + p[1]*p[1] //@dist
+        heap.Push(h, item{d, p}) //@push
+        if h.Len() > k { //@check
+            heap.Pop(h) //@pop
+        }
+    }
+    return h.items() //@ret
+}

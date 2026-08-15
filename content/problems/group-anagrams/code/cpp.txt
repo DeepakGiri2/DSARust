@@ -1,0 +1,21 @@
+string sortKey(string w) {
+    sort(w.begin(), w.end());
+    return w;
+}
+
+vector<vector<string>> groupAnagrams(vector<string>& words) {
+    unordered_map<string, vector<string>> groups; //@init
+    vector<string> order; //@order
+    for (string& w : words) { //@loop
+        string key = sortKey(w); //@key
+        if (groups.find(key) == groups.end()) { //@new
+            order.push_back(key); //@addorder
+        }
+        groups[key].push_back(w); //@add
+    }
+    vector<vector<string>> res; //@res
+    for (string& k : order) { //@collect
+        res.push_back(groups[k]); //@push
+    }
+    return res; //@return
+}

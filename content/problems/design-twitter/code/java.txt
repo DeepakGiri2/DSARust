@@ -1,0 +1,36 @@
+static int clock = 0; //@init
+static Map<Integer, List<int[]>> tweets = new HashMap<>(); //@tweets
+static Map<Integer, Set<Integer>> follows = new HashMap<>(); //@follows
+
+static void postTweet(int userId, int tweetId) {
+    clock++; //@clock
+    tweets.computeIfAbsent(userId, k -> new ArrayList<>()).add(new int[]{clock, tweetId}); //@post
+}
+
+static void follow(int a, int b) {
+    follows.computeIfAbsent(a, k -> new LinkedHashSet<>()).add(b); //@follow
+}
+
+static void unfollow(int a, int b) {
+    follows.getOrDefault(a, Set.of()).remove(b); //@unfollow
+}
+
+static List<Integer> getNewsFeed(int userId) {
+    PriorityQueue<int[]> h = new PriorityQueue<>((x, y) -> y[0] - x[0]); //@heapInit
+    List<Integer> sources = new ArrayList<>(List.of(userId)); //@self
+    for (int f : follows.getOrDefault(userId, Set.of())) { //@followed
+        sources.add(f);
+    }
+    for (int s : sources) { //@collect
+        List<int[]> list = tweets.getOrDefault(s, List.of());
+        for (int i = list.size() - 1; i >= 0 && i >= list.size() - 10; i--) { //@recent
+            h.add(list.get(i)); //@push
+        }
+    }
+    List<Integer> out = new ArrayList<>(); //@out
+    while (out.size() < 10 && !h.isEmpty()) { //@drain
+        int[] top = h.poll(); //@pop
+        out.add(top[1]); //@emit
+    }
+    return out; //@ret
+}

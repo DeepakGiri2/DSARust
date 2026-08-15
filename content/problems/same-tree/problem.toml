@@ -1,0 +1,43 @@
+slug = 'same-tree'
+title = 'Same Tree'
+category = 'Trees'
+difficulty = 'Easy'
+tier = '50'
+complexity = 'O(n) time · O(h) space (recursion stack)'
+
+description = 'Given the roots of two binary trees p and q, return true if they are structurally identical AND every corresponding pair of nodes holds the same value. Watch both trees side by side as the recursion compares them node-for-node.'
+approach = 'Recursion: two trees are the same when their roots match (both nil, or both present with equal values) AND their left subtrees are the same AND their right subtrees are the same. Any single mismatch short-circuits to false.'
+
+[[inputs]]
+name = 'p'
+label = "tree p (level-order, 'n' = null)"
+type = 'tree'
+max_len = 40
+
+[[inputs]]
+name = 'q'
+label = "tree q (level-order, 'n' = null)"
+type = 'tree'
+max_len = 40
+
+[default_input]
+p = '1 2 3'
+q = '1 2 3'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+p = '1 2 3'
+q = '1 2 3'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+p = '1 2'
+q = '1 n 2'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+p = '1 2 1'
+q = '1 1 2'

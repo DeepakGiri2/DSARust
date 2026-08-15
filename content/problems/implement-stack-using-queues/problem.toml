@@ -1,0 +1,30 @@
+slug = 'implement-stack-using-queues'
+title = 'Implement Stack Using Queues'
+category = 'Stack'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '225'
+complexity = 'O(n) push · O(1) pop/top · O(n) space'
+
+description = 'Build a last-in-first-out stack whose only storage is a first-in-first-out queue.'
+approach = "A queue hands back its oldest item and a stack wants its newest, so one of the two operations has to pay. Make push pay: after enqueuing the new value, rotate every older element around behind it. The queue's front is then always the most recently pushed value, so pop and top become plain queue reads."
+
+[[inputs]]
+name = 'ops'
+label = 'ops'
+type = 'string'
+max_len = 60
+help = 'push <x> / pop / top / empty, comma separated'
+
+[default_input]
+ops = 'push 1, push 2, top, pop, empty'
+
+[[tests]]
+expected = '2 2 false'
+[tests.input]
+ops = 'push 1, push 2, top, pop, empty'
+
+[[tests]]
+expected = 'false 1 true'
+[tests.input]
+ops = 'push 1, empty, pop, empty'

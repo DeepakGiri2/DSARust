@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int climb(int n, unordered_map<int, int>& memo);
+
+int climbStairs(int n) {
+    unordered_map<int, int> memo;
+    return climb(n, memo);
+}
+
+int climb(int n, unordered_map<int, int>& memo) {
+    if (n <= 2) {
+        return n;
+    }
+    if (memo.count(n)) {
+        return memo[n];
+    }
+    int result = climb(n - 1, memo) + climb(n - 2, memo);
+    memo[n] = result;
+    return result;
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    int n = readInts()[0];
+    cout << climbStairs(n) << endl;
+}

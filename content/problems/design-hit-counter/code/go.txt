@@ -1,0 +1,16 @@
+type HitCounter struct{ q []int }
+
+func Constructor() HitCounter { //@init
+    return HitCounter{}
+}
+
+func (h *HitCounter) Hit(timestamp int) { //@hit
+    h.q = append(h.q, timestamp) //@push
+}
+
+func (h *HitCounter) GetHits(timestamp int) int { //@get
+    for len(h.q) > 0 && h.q[0] <= timestamp-300 { //@stale
+        h.q = h.q[1:] //@drop
+    }
+    return len(h.q) //@count
+}

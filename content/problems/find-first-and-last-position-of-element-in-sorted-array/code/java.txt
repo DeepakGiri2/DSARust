@@ -1,0 +1,22 @@
+static int[] searchRange(int[] nums, int target) {
+    int lo = lowerBound(nums, target); //@first
+    if (lo == nums.length || nums[lo] != target) { //@absent
+        return new int[]{-1, -1}; //@none
+    }
+    int hi = lowerBound(nums, target + 1) - 1; //@last
+    return new int[]{lo, hi}; //@ret
+}
+
+// First index whose value is >= target (nums.length if there is none).
+static int lowerBound(int[] nums, int target) {
+    int l = 0, r = nums.length; //@init
+    while (l < r) { //@loop
+        int m = (l + r) / 2; //@mid
+        if (nums[m] < target) { //@cmp
+            l = m + 1; //@right
+        } else {
+            r = m; //@left
+        }
+    }
+    return l; //@bound
+}

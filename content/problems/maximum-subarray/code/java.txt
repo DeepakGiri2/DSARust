@@ -1,0 +1,14 @@
+static int maxSubArray(int[] nums) {
+    int cur = nums[0], best = nums[0]; //@init
+    for (int i = 1; i < nums.length; i++) { //@loop
+        if (nums[i] > cur + nums[i]) { //@cmp
+            cur = nums[i]; //@reset
+        } else {
+            cur = cur + nums[i]; //@extend
+        }
+        if (cur > best) { //@cmpBest
+            best = cur; //@newBest
+        }
+    }
+    return best; //@ret
+}

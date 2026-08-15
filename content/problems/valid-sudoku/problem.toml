@@ -1,0 +1,33 @@
+slug = 'valid-sudoku'
+title = 'Valid Sudoku'
+category = 'Arrays & Hashing'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(1) time · O(1) space (the board is a fixed 9×9)'
+
+description = "Determine if a partially filled 9×9 Sudoku board is valid. Only the filled cells are checked: no digit may repeat within a row, a column, or a 3×3 box. Empty cells are '.'."
+approach = 'Scan every filled cell once. For each digit build three signatures — its row, its column, and its 3×3 box. If any signature was seen before, that unit has a duplicate and the board is invalid.'
+
+[[inputs]]
+name = 'board'
+label = 'board (81 chars, row-major, . = empty)'
+type = 'grid'
+max_len = 100
+
+[default_input]
+board = '53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+board = '53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+board = '83..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+board = '.................................................................................'

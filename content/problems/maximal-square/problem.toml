@@ -1,0 +1,35 @@
+slug = 'maximal-square'
+title = 'Maximal Square'
+category = '2-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '221'
+complexity = 'O(rows · cols) time · O(rows · cols) space'
+
+description = 'Find the area of the largest square of 1s inside a binary matrix.'
+approach = 'Let each cell record the largest square whose *bottom-right corner* it is. Such a square exists only if three smaller squares do — the ones cornered directly above, directly left, and diagonally up-left — so the side is one more than the smallest of those three. The minimum is the point: a single short neighbour caps the whole square, which is exactly the geometric constraint.'
+
+[[inputs]]
+name = 'matrix'
+label = 'matrix'
+type = 'grid'
+max_len = 200
+help = '0 or 1 per cell'
+
+[default_input]
+matrix = '10100 10111 11111 10010'
+
+[[tests]]
+expected = '4'
+[tests.input]
+matrix = '10100 10111 11111 10010'
+
+[[tests]]
+expected = '1'
+[tests.input]
+matrix = '01 10'
+
+[[tests]]
+expected = '0'
+[tests.input]
+matrix = '0'

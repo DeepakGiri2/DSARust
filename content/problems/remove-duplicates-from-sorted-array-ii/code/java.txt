@@ -1,0 +1,10 @@
+static int removeDuplicates(int[] nums) {
+    int k = 0; //@init
+    for (int v : nums) { //@loop
+        if (k < 2 || v != nums[k - 2]) { //@allowed
+            nums[k] = v; //@write
+            k++; //@bump
+        }
+    }
+    return k; //@ret
+}

@@ -1,0 +1,53 @@
+type entry struct{ key, value, freq int }
+
+type LFUCache struct {
+    cap     int
+    minFreq int
+    items   map[int]*list.Element //@init
+    freqs   map[int]*list.List
+}
+
+func Constructor(capacity int) LFUCache {
+    return LFUCache{cap: capacity, items: map[int]*list.Element{}, freqs: map[int]*list.List{}}
+}
+
+// Move a key from bucket f to bucket f+1, newest first.
+func (c *LFUCache) touch(e *list.Element) { //@touch
+    en := e.Value.(*entry)
+    c.freqs[en.freq].Remove(e) //@unlink
+    if c.freqs[en.freq].Len() == 0 && c.minFreq == en.freq { //@bumpmin
+        c.minFreq++
+    }
+    en.freq++ //@bump
+    if c.freqs[en.freq] == nil {
+        c.freqs[en.freq] = list.New()
+    }
+    c.items[en.key] = c.freqs[en.freq].PushFront(en) //@relink
+}
+
+func (c *LFUCache) Get(key int) int { //@get
+    e, ok := c.items[key]
+    if !ok { //@miss
+        return -1 //@nokey
+    }
+    c.touch(e) //@hit
+    return e.Value.(*entry).value //@val
+}
+
+func (c *LFUCache) Put(key int, value int) { //@put
+    if e, ok := c.items[key]; ok { //@exists
+        e.Value.(*entry).value = value //@update
+        c.touch(e)
+        return
+    }
+    if len(c.items) == c.cap { //@full
+        victim := c.freqs[c.minFreq].Back() //@victim
+        c.freqs[c.minFreq].Remove(victim)
+        delete(c.items, victim.Value.(*entry).key) //@evict
+    }
+    if c.freqs[1] == nil {
+        c.freqs[1] = list.New()
+    }
+    c.items[key] = c.freqs[1].PushFront(&entry{key, value, 1}) //@insert
+    c.minFreq = 1 //@newmin
+}

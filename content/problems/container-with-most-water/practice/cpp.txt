@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int maxArea(vector<int>& heights) {
+    int l = 0, r = (int)heights.size() - 1;
+    int best = 0;
+    while (l < r) {
+        int h = heights[l];
+        if (heights[r] < h) {
+            h = heights[r];
+        }
+        int area = h * (r - l);
+        if (area > best) {
+            best = area;
+        }
+        if (heights[l] < heights[r]) {
+            l++;
+        } else {
+            r--;
+        }
+    }
+    return best;
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> heights = readInts();
+    cout << maxArea(heights) << endl;
+}

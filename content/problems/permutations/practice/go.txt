@@ -1,0 +1,59 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func permute(nums []int) [][]int {
+    res := [][]int{}
+    current := []int{}
+    used := make([]bool, len(nums))
+    backtrack(nums, current, used, &res)
+    return res
+}
+
+func backtrack(nums []int, current []int, used []bool, res *[][]int) {
+    if len(current) == len(nums) {
+        cp := make([]int, len(current))
+        copy(cp, current)
+        *res = append(*res, cp)
+        return
+    }
+    for i := 0; i < len(nums); i++ {
+        if used[i] {
+            continue
+        }
+        used[i] = true
+        current = append(current, nums[i])
+        backtrack(nums, current, used, res)
+        current = current[:len(current)-1]
+        used[i] = false
+    }
+}
+
+func readInts(reader *bufio.Reader) []int {
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    nums := make([]int, len(fields))
+    for i, f := range fields {
+        nums[i], _ = strconv.Atoi(f)
+    }
+    return nums
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    nums := readInts(reader)
+    res := permute(nums)
+    for _, p := range res {
+        parts := make([]string, len(p))
+        for i, v := range p {
+            parts[i] = strconv.Itoa(v)
+        }
+        fmt.Println(strings.Join(parts, " "))
+    }
+}

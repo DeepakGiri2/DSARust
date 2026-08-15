@@ -1,0 +1,20 @@
+func canPartition(nums []int) bool {
+    total := 0 //@sum
+    for _, v := range nums {
+        total += v
+    }
+    if total%2 == 1 { //@odd
+        return false
+    }
+    target := total / 2 //@target
+    reachable := make([]bool, target+1) //@init
+    reachable[0] = true //@seed
+    for _, v := range nums { //@loop
+        for s := target; s >= v; s-- { //@inner
+            if reachable[s-v] { //@check
+                reachable[s] = true //@mark
+            }
+        }
+    }
+    return reachable[target] //@ret
+}

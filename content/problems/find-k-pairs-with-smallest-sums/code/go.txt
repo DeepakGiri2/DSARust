@@ -1,0 +1,17 @@
+type pair struct{ sum, i, j int }
+
+func kSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
+    h := &pairHeap{} //@init
+    for i := 0; i < len(nums1) && i < k; i++ { //@seed
+        heap.Push(h, pair{nums1[i] + nums2[0], i, 0}) //@push
+    }
+    out := [][]int{} //@out
+    for h.Len() > 0 && len(out) < k { //@loop
+        p := heap.Pop(h).(pair) //@pop
+        out = append(out, []int{nums1[p.i], nums2[p.j]}) //@take
+        if p.j+1 < len(nums2) { //@more
+            heap.Push(h, pair{nums1[p.i] + nums2[p.j+1], p.i, p.j + 1}) //@next
+        }
+    }
+    return out //@ret
+}

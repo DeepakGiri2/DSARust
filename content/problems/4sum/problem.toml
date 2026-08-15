@@ -1,0 +1,47 @@
+slug = '4sum'
+title = '4Sum'
+category = 'Two Pointers'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '18'
+complexity = 'O(n³) time · O(1) extra space'
+
+description = 'Find every unique quadruplet in an array that sums to a target.'
+approach = 'Fix the first two values with nested loops and let two pointers close in on the remaining pair — since the array is sorted, a sum that is too small can only be fixed by raising the left pointer, and one that is too large by lowering the right. That removes a whole factor of n. Uniqueness needs no set of seen results: skipping a value equal to the previous one, at each of the four positions, generates each quadruplet exactly once.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 10
+min = -20
+max = 20
+
+[[inputs]]
+name = 'target'
+label = 'target'
+type = 'int'
+min = -40
+max = 40
+
+[default_input]
+nums = [1, 0, -1, 0, -2, 2]
+target = 0
+
+[[tests]]
+expected = '-2,-1,1,2 -2,0,0,2 -1,0,0,1'
+[tests.input]
+nums = [1, 0, -1, 0, -2, 2]
+target = 0
+
+[[tests]]
+expected = '2,2,2,2'
+[tests.input]
+nums = [2, 2, 2, 2, 2]
+target = 8
+
+[[tests]]
+expected = '(none)'
+[tests.input]
+nums = [1, 2, 3]
+target = 6

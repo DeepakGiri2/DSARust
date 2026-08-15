@@ -1,0 +1,41 @@
+slug = 'find-pivot-index'
+title = 'Find Pivot Index'
+category = 'Prefix Sums'
+difficulty = 'Easy'
+tier = 'extra'
+leetcode = '724'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Return the leftmost index where the sum of the values strictly to its left equals the sum of the values strictly to its right. Return -1 if there is no such index.'
+approach = 'The right-hand sum is not worth recomputing: once the total is known, right = total − left − nums[i] falls out of one subtraction. So one pass adds everything up, and a second pass walks the array carrying the left sum, deriving the right sum for free at every index.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 20
+min = -50
+max = 50
+
+[default_input]
+nums = [1, 7, 3, 6, 5, 6]
+
+[[tests]]
+expected = '3'
+[tests.input]
+nums = [1, 7, 3, 6, 5, 6]
+
+[[tests]]
+expected = '-1'
+[tests.input]
+nums = [1, 2, 3]
+
+[[tests]]
+expected = '0'
+[tests.input]
+nums = [2, 1, -1]
+
+[[tests]]
+expected = '0'
+[tests.input]
+nums = [-1, -1, -1, 0, 1, 1]

@@ -1,0 +1,46 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func minStackOps(ops string) string {
+    tokens := strings.Fields(ops)
+    stack := []int{}
+    mins := []int{}
+    out := []string{}
+    for i := 0; i < len(tokens); i++ {
+        op := tokens[i]
+        if op == "push" {
+            i++
+            x, _ := strconv.Atoi(tokens[i])
+            stack = append(stack, x)
+            m := x
+            if len(mins) > 0 && mins[len(mins)-1] < m {
+                m = mins[len(mins)-1]
+            }
+            mins = append(mins, m)
+        } else if op == "pop" {
+            v := stack[len(stack)-1]
+            stack = stack[:len(stack)-1]
+            mins = mins[:len(mins)-1]
+            out = append(out, strconv.Itoa(v))
+        } else if op == "top" {
+            out = append(out, strconv.Itoa(stack[len(stack)-1]))
+        } else {
+            out = append(out, strconv.Itoa(mins[len(mins)-1]))
+        }
+    }
+    return strings.Join(out, " ")
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    ops := strings.TrimSpace(line)
+    fmt.Println(minStackOps(ops))
+}

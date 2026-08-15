@@ -1,0 +1,40 @@
+import java.util.*;
+import java.io.*;
+
+class Main {
+
+    static String minStackOps(String ops) {
+        String[] tokens = ops.trim().split("\\s+");
+        Deque<Integer> stack = new ArrayDeque<>();
+        Deque<Integer> mins = new ArrayDeque<>();
+        List<String> out = new ArrayList<>();
+        for (int i = 0; i < tokens.length; i++) {
+            String op = tokens[i];
+            if (op.equals("push")) {
+                i++;
+                int x = Integer.parseInt(tokens[i]);
+                stack.push(x);
+                int m = x;
+                if (!mins.isEmpty() && mins.peek() < m) {
+                    m = mins.peek();
+                }
+                mins.push(m);
+            } else if (op.equals("pop")) {
+                int v = stack.pop();
+                mins.pop();
+                out.add(String.valueOf(v));
+            } else if (op.equals("top")) {
+                out.add(String.valueOf(stack.peek()));
+            } else {
+                out.add(String.valueOf(mins.peek()));
+            }
+        }
+        return String.join(" ", out);
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String ops = br.readLine().trim();
+        System.out.println(minStackOps(ops));
+    }
+}

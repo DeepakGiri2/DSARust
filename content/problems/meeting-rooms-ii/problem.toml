@@ -1,0 +1,35 @@
+slug = 'meeting-rooms-ii'
+title = 'Meeting Rooms II'
+category = 'Intervals'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '253'
+complexity = 'O(n log n) time · O(n) space'
+
+description = 'Return the fewest rooms needed to hold every meeting.'
+approach = 'Rooms are only needed for meetings happening at the same instant, so the intervals can be broken apart entirely: sort all the start times and all the end times separately and sweep through them in order. A start before the next end means a new room opens; otherwise a room frees. The answer is the highest number of rooms ever open at once — which never needed to know which meeting was in which room.'
+
+[[inputs]]
+name = 'intervals'
+label = 'intervals'
+type = 'string'
+max_len = 60
+help = "'start end' pairs, comma separated"
+
+[default_input]
+intervals = '0 30, 5 10, 15 20'
+
+[[tests]]
+expected = '2'
+[tests.input]
+intervals = '0 30, 5 10, 15 20'
+
+[[tests]]
+expected = '1'
+[tests.input]
+intervals = '7 10, 2 4'
+
+[[tests]]
+expected = '3'
+[tests.input]
+intervals = '1 5, 2 6, 3 7'

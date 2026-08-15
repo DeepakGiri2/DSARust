@@ -1,0 +1,13 @@
+int findJudge(int n, vector<vector<int>>& trust) {
+    vector<int> score(n + 1, 0); //@init
+    for (auto& t : trust) { //@loop
+        score[t[0]]--; //@truster
+        score[t[1]]++; //@trusted
+    }
+    for (int i = 1; i <= n; i++) { //@scan
+        if (score[i] == n - 1) { //@check
+            return i; //@ret
+        }
+    }
+    return -1; //@none
+}

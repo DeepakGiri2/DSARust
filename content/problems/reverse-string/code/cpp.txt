@@ -1,0 +1,10 @@
+string reverseString(string s) {
+    string chars = s; //@init
+    int l = 0, r = (int)chars.size() - 1; //@bounds
+    while (l < r) { //@loop
+        swap(chars[l], chars[r]); //@swap
+        l++; //@moveL
+        r--; //@moveR
+    }
+    return chars; //@ret
+}

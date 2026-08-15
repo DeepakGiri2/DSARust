@@ -1,0 +1,39 @@
+static final int INF = 1 << 30;
+
+static int minimumEffortPath(int[][] heights) {
+    int rows = heights.length, cols = heights[0].length;
+    int[][] effort = new int[rows][cols]; //@init
+    boolean[][] visited = new boolean[rows][cols]; //@visited
+    for (int[] row : effort) Arrays.fill(row, INF);
+    effort[0][0] = 0; //@seed
+    int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    for (int iter = 0; iter < rows * cols; iter++) { //@loop
+        int br = -1, bc = -1; //@pick
+        for (int r = 0; r < rows; r++) { //@scan
+            for (int c = 0; c < cols; c++) {
+                if (!visited[r][c] && effort[r][c] != INF &&
+                    (br < 0 || effort[r][c] < effort[br][bc])) {
+                    br = r; bc = c; //@lowest
+                }
+            }
+        }
+        if (br < 0) { //@stuck
+            break;
+        }
+        if (br == rows - 1 && bc == cols - 1) { //@arrived
+            return effort[br][bc]; //@ret
+        }
+        visited[br][bc] = true; //@settle
+        for (int[] d : dirs) { //@relax
+            int nr = br + d[0], nc = bc + d[1];
+            if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && !visited[nr][nc]) {
+                int diff = Math.abs(heights[nr][nc] - heights[br][bc]); //@diff
+                int t = Math.max(effort[br][bc], diff); //@worst
+                if (t < effort[nr][nc]) { //@better
+                    effort[nr][nc] = t; //@update
+                }
+            }
+        }
+    }
+    return -1; //@none
+}

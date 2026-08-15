@@ -1,0 +1,29 @@
+vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+    vector<vector<int>> adj(numCourses); //@adj
+    vector<int> indeg(numCourses, 0); //@indeg
+    for (auto& p : prerequisites) { //@build
+        adj[p[1]].push_back(p[0]); //@edge
+        indeg[p[0]]++; //@count
+    }
+    queue<int> q; //@queue
+    for (int c = 0; c < numCourses; c++) { //@seed
+        if (indeg[c] == 0) { //@free
+            q.push(c); //@enqueue
+        }
+    }
+    vector<int> order; //@order
+    while (!q.empty()) { //@loop
+        int c = q.front(); q.pop(); //@take
+        order.push_back(c); //@append
+        for (int next : adj[c]) { //@release
+            indeg[next]--; //@dec
+            if (indeg[next] == 0) { //@nowFree
+                q.push(next); //@enqueue2
+            }
+        }
+    }
+    if ((int)order.size() != numCourses) { //@check
+        return {}; //@cycle
+    }
+    return order; //@ret
+}

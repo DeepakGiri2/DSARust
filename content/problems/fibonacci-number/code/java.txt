@@ -1,0 +1,12 @@
+static int fib(int n) {
+    if (n < 2) { //@base
+        return n;
+    }
+    int prev = 0, cur = 1; //@init
+    for (int i = 2; i <= n; i++) { //@loop
+        int next = prev + cur; //@add
+        prev = cur; //@shift
+        cur = next; //@advance
+    }
+    return cur; //@ret
+}

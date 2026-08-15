@@ -1,0 +1,35 @@
+slug = 'walls-and-gates'
+title = 'Walls and Gates'
+category = 'Graphs'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '286'
+complexity = 'O(rows · cols) time · O(rows · cols) space'
+
+description = 'Fill every empty room with its distance to the nearest gate. Walls block movement, and unreachable rooms keep their infinite value.'
+approach = "Running a search from every room would repeat the same work. Instead run one breadth-first search from *all* gates at once: seed the queue with every gate before expanding anything. Because BFS expands in order of distance, the first time a room is reached is via the nearest gate — so 'is this room still infinite?' is a complete test and no distance is ever revised."
+
+[[inputs]]
+name = 'rooms'
+label = 'rooms'
+type = 'grid'
+max_len = 200
+help = 'G = gate, W = wall, . = empty room'
+
+[default_input]
+rooms = '.WG. ...W .W.W GW..'
+
+[[tests]]
+expected = '3,-1,0,1 2,2,1,-1 1,-1,2,-1 0,-1,3,4'
+[tests.input]
+rooms = '.WG. ...W .W.W GW..'
+
+[[tests]]
+expected = '0,1'
+[tests.input]
+rooms = 'G.'
+
+[[tests]]
+expected = '2147483647,-1'
+[tests.input]
+rooms = '.W'

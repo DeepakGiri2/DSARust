@@ -1,0 +1,30 @@
+slug = 'insert-delete-getrandom-o1'
+title = 'Insert Delete GetRandom O(1)'
+category = 'Arrays & Hashing'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '380'
+complexity = 'O(1) per operation · O(n) space'
+
+description = 'Support inserting, removing and returning a uniformly random element, all in constant time.'
+approach = "Random selection wants a dense array; deletion wants a hash map. Keep both, with the map holding each value's index in the array. Deleting from the middle of an array is normally linear, so it is avoided entirely: swap the doomed element with the last one, fix that one's recorded index, and shrink. Order is destroyed, but nothing here ever depended on order."
+
+[[inputs]]
+name = 'ops'
+label = 'ops'
+type = 'string'
+max_len = 68
+help = 'insert <v> / remove <v> / random <i>, comma separated; random takes the index to draw'
+
+[default_input]
+ops = 'insert 1, remove 2, insert 2, random 1, remove 1, insert 2, random 0'
+
+[[tests]]
+expected = 'true false true 2 true false 2'
+[tests.input]
+ops = 'insert 1, remove 2, insert 2, random 1, remove 1, insert 2, random 0'
+
+[[tests]]
+expected = 'true true true 7'
+[tests.input]
+ops = 'insert 5, insert 7, remove 5, random 0'

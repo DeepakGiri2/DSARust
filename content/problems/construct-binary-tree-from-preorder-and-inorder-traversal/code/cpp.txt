@@ -1,0 +1,19 @@
+TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+    int idx = 0;
+    function<TreeNode*(int, int)> helper = [&](int lo, int hi) -> TreeNode* {
+        if (lo > hi) { //@base
+            return nullptr; //@retNil
+        }
+        int rootVal = preorder[idx]; //@pickRoot
+        idx++; //@advance
+        TreeNode* root = new TreeNode(rootVal); //@makeNode
+        int mid = lo;
+        while (inorder[mid] != rootVal) { //@findMid
+            mid++;
+        }
+        root->left = helper(lo, mid - 1); //@recL
+        root->right = helper(mid + 1, hi); //@recR
+        return root; //@ret
+    };
+    return helper(0, (int)inorder.size() - 1);
+}

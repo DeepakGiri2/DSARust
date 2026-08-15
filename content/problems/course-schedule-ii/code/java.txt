@@ -1,0 +1,30 @@
+static int[] findOrder(int numCourses, int[][] prerequisites) {
+    List<List<Integer>> adj = new ArrayList<>(); //@adj
+    for (int i = 0; i < numCourses; i++) adj.add(new ArrayList<>());
+    int[] indeg = new int[numCourses]; //@indeg
+    for (int[] p : prerequisites) { //@build
+        adj.get(p[1]).add(p[0]); //@edge
+        indeg[p[0]]++; //@count
+    }
+    Deque<Integer> q = new ArrayDeque<>(); //@queue
+    for (int c = 0; c < numCourses; c++) { //@seed
+        if (indeg[c] == 0) { //@free
+            q.add(c); //@enqueue
+        }
+    }
+    List<Integer> order = new ArrayList<>(); //@order
+    while (!q.isEmpty()) { //@loop
+        int c = q.poll(); //@take
+        order.add(c); //@append
+        for (int next : adj.get(c)) { //@release
+            indeg[next]--; //@dec
+            if (indeg[next] == 0) { //@nowFree
+                q.add(next); //@enqueue2
+            }
+        }
+    }
+    if (order.size() != numCourses) { //@check
+        return new int[0]; //@cycle
+    }
+    return order.stream().mapToInt(Integer::intValue).toArray(); //@ret
+}

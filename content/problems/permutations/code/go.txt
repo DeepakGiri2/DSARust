@@ -1,0 +1,26 @@
+func permute(nums []int) [][]int {
+    res := [][]int{} //@init
+    current := []int{} //@cur
+    used := make([]bool, len(nums)) //@used
+    backtrack(nums, current, used, &res) //@call
+    return res //@done
+}
+
+func backtrack(nums []int, current []int, used []bool, res *[][]int) {
+    if len(current) == len(nums) { //@base
+        cp := make([]int, len(current)) //@add
+        copy(cp, current)
+        *res = append(*res, cp)
+        return //@ret
+    }
+    for i := 0; i < len(nums); i++ { //@loop
+        if used[i] { //@skip
+            continue
+        }
+        used[i] = true //@mark
+        current = append(current, nums[i]) //@choose
+        backtrack(nums, current, used, res) //@rec
+        current = current[:len(current)-1] //@unchoose
+        used[i] = false //@unmark
+    }
+}

@@ -1,0 +1,36 @@
+const int INF = 1 << 30;
+
+int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+    vector<vector<pair<int, int>>> adj(n + 1); //@build
+    for (auto& t : times) {
+        adj[t[0]].push_back({t[1], t[2]});
+    }
+    vector<int> dist(n + 1, INF); //@init
+    dist[k] = 0; //@seed
+    vector<bool> visited(n + 1, false); //@visited
+    for (int iter = 0; iter < n; iter++) { //@loop
+        int u = -1; //@pick
+        for (int v = 1; v <= n; v++) { //@scan
+            if (!visited[v] && dist[v] != INF && (u == -1 || dist[v] < dist[u])) {
+                u = v; //@closest
+            }
+        }
+        if (u == -1) { //@stuck
+            break;
+        }
+        visited[u] = true; //@settle
+        for (auto& e : adj[u]) { //@relax
+            if (dist[u] + e.second < dist[e.first]) { //@shorter
+                dist[e.first] = dist[u] + e.second; //@update
+            }
+        }
+    }
+    int ans = 0; //@max
+    for (int v = 1; v <= n; v++) { //@check
+        if (dist[v] == INF) { //@unreachable
+            return -1; //@fail
+        }
+        ans = max(ans, dist[v]); //@bump
+    }
+    return ans; //@ret
+}

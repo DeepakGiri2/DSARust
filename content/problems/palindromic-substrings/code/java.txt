@@ -1,0 +1,17 @@
+static int countSubstrings(String s) {
+    int count = 0; //@init
+    for (int i = 0; i < s.length(); i++) { //@loop
+        count += expand(s, i, i); //@odd
+        count += expand(s, i, i + 1); //@even
+    }
+    return count; //@ret
+}
+
+static int expand(String s, int l, int r) {
+    int found = 0; //@expInit
+    while (l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r)) { //@grow
+        found++; //@hit
+        l--; r++;
+    }
+    return found; //@expRet
+}

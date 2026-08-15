@@ -1,0 +1,35 @@
+slug = 'single-threaded-cpu'
+title = 'Single-Threaded CPU'
+category = 'Heap / Priority Queue'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '1834'
+complexity = 'O(n log n) time · O(n) space'
+
+description = 'Tasks become available at given times and take given amounts of processing. Whenever the CPU is free it takes the shortest available task, breaking ties by index. Return the order in which they run.'
+approach = 'Two orderings are needed at once — by availability time to know what has arrived, and by processing time to know what to run — so use both. Sort the tasks by arrival and walk a cursor through them, feeding everything that has arrived into a min-heap keyed by processing time. If the heap ever empties, the clock jumps forward to the next arrival rather than ticking, which keeps the cost tied to the number of tasks rather than to the size of the timestamps.'
+
+[[inputs]]
+name = 'tasks'
+label = 'tasks'
+type = 'string'
+max_len = 60
+help = "'available processing' pairs, comma separated"
+
+[default_input]
+tasks = '1 2, 2 4, 3 2, 4 1'
+
+[[tests]]
+expected = '0 2 3 1'
+[tests.input]
+tasks = '1 2, 2 4, 3 2, 4 1'
+
+[[tests]]
+expected = '4 3 2 0 1'
+[tests.input]
+tasks = '7 10, 7 12, 7 5, 7 4, 7 2'
+
+[[tests]]
+expected = '0'
+[tests.input]
+tasks = '5 2'

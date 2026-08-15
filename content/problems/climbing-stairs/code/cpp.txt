@@ -1,0 +1,16 @@
+int climbStairs(int n) {
+    unordered_map<int, int> memo; //@init
+    return climb(n, memo); //@call
+}
+
+int climb(int n, unordered_map<int, int>& memo) {
+    if (n <= 2) { //@base
+        return n; //@retbase
+    }
+    if (memo.count(n)) { //@memo
+        return memo[n]; //@retmemo
+    }
+    int result = climb(n - 1, memo) + climb(n - 2, memo); //@rec
+    memo[n] = result; //@store
+    return result; //@ret
+}

@@ -1,0 +1,15 @@
+func lastStoneWeight(stones []int) int {
+    h := &MaxHeap{} //@init
+    for _, s := range stones { heap.Push(h, s) } //@build
+    for h.Len() > 1 { //@loop
+        y := heap.Pop(h).(int) //@pop1
+        x := heap.Pop(h).(int) //@pop2
+        if x != y { //@check
+            heap.Push(h, y-x) //@push
+        }
+    }
+    if h.Len() == 0 { //@empty
+        return 0
+    }
+    return (*h)[0] //@return
+}

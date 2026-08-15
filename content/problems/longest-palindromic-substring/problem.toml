@@ -1,0 +1,28 @@
+slug = 'longest-palindromic-substring'
+title = 'Longest Palindromic Substring'
+category = '1-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n²) time · O(1) space'
+
+description = 'Return the longest substring that reads the same forwards and backwards.'
+approach = 'Expand around every centre. A palindrome is symmetric about a middle, and there are 2n-1 possible middles — n single characters and n-1 gaps between them. Growing outwards from each is O(n) and needs no table.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 24
+
+[default_input]
+s = 'babad'
+
+[[tests]]
+expected = 'bab'
+[tests.input]
+s = 'babad'
+
+[[tests]]
+expected = 'bb'
+[tests.input]
+s = 'cbbd'

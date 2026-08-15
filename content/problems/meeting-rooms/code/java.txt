@@ -1,0 +1,10 @@
+static boolean canAttendMeetings(int[][] intervals) {
+    Arrays.sort(intervals, (a, b) -> a[0] - b[0]); //@sort
+    for (int i = 1; i < intervals.length; i++) { //@loop
+        int prevEnd = intervals[i - 1][1]; //@prev
+        if (intervals[i][0] < prevEnd) { //@overlap
+            return false; //@no
+        }
+    }
+    return true; //@yes
+}

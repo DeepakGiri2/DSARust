@@ -1,0 +1,25 @@
+map<string, vector<string>> adj;
+vector<string> route;
+
+void visit(const string& airport) {
+    while (!adj[airport].empty()) { //@while
+        string next = adj[airport].front(); //@take
+        adj[airport].erase(adj[airport].begin());
+        visit(next); //@recurse
+    }
+    route.push_back(airport); //@append
+}
+
+vector<string> findItinerary(vector<vector<string>>& tickets) {
+    adj.clear(); route.clear(); //@build
+    for (auto& t : tickets) {
+        adj[t[0]].push_back(t[1]);
+    }
+    for (auto& kv : adj) { //@sort
+        sort(kv.second.begin(), kv.second.end());
+    }
+    route.clear(); //@route
+    visit("JFK"); //@start
+    reverse(route.begin(), route.end()); //@reverse
+    return route; //@ret
+}

@@ -1,0 +1,35 @@
+static int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+static void flow(int[][] h, boolean[][] seen, int r, int c) {
+    seen[r][c] = true; //@mark
+    for (int[] d : dirs) { //@neighbours
+        int nr = r + d[0], nc = c + d[1];
+        if (nr >= 0 && nr < h.length && nc >= 0 && nc < h[0].length &&
+            !seen[nr][nc] && h[nr][nc] >= h[r][c]) { //@uphill
+            flow(h, seen, nr, nc); //@recurse
+        }
+    }
+}
+
+static List<List<Integer>> pacificAtlantic(int[][] heights) {
+    int rows = heights.length, cols = heights[0].length;
+    boolean[][] pac = new boolean[rows][cols]; //@init
+    boolean[][] atl = new boolean[rows][cols];
+    for (int r = 0; r < rows; r++) { //@leftRight
+        flow(heights, pac, r, 0);
+        flow(heights, atl, r, cols - 1);
+    }
+    for (int c = 0; c < cols; c++) { //@topBottom
+        flow(heights, pac, 0, c);
+        flow(heights, atl, rows - 1, c);
+    }
+    List<List<Integer>> res = new ArrayList<>(); //@collect
+    for (int r = 0; r < rows; r++) { //@rowLoop
+        for (int c = 0; c < cols; c++) { //@colLoop
+            if (pac[r][c] && atl[r][c]) { //@both
+                res.add(List.of(r, c)); //@add
+            }
+        }
+    }
+    return res; //@ret
+}

@@ -1,0 +1,47 @@
+slug = 'capacity-to-ship-packages-within-d-days'
+title = 'Capacity to Ship Packages Within D Days'
+category = 'Binary Search'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '1011'
+complexity = 'O(n log(sum)) time · O(1) space'
+
+description = 'Packages must be shipped in the order given, within a fixed number of days. Find the smallest ship capacity that makes this possible.'
+approach = 'Binary search the *answer*, not the array. A capacity either works or does not, and if a capacity works then every larger one does too — that monotonicity is the whole justification. The feasibility test is a greedy pass: load until the next package would overflow, then start a new day. Greedy is optimal here because delaying a package can never reduce the number of days.'
+
+[[inputs]]
+name = 'weights'
+label = 'weights'
+type = 'int-array'
+max_len = 15
+min = 1
+max = 50
+
+[[inputs]]
+name = 'days'
+label = 'days'
+type = 'int'
+min = 1
+max = 15
+
+[default_input]
+weights = [1, 2, 3, 4, 5]
+days = 2
+
+[[tests]]
+expected = '9'
+[tests.input]
+weights = [1, 2, 3, 4, 5]
+days = 2
+
+[[tests]]
+expected = '6'
+[tests.input]
+weights = [3, 2, 2, 4, 1, 4]
+days = 3
+
+[[tests]]
+expected = '3'
+[tests.input]
+weights = [1, 2, 3, 1, 1]
+days = 4

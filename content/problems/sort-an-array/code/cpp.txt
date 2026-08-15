@@ -1,0 +1,32 @@
+vector<int> merge(vector<int>& a, vector<int>& b) {
+    vector<int> out; //@init
+    size_t i = 0, j = 0; //@cursors
+    while (i < a.size() && j < b.size()) { //@loop
+        if (a[i] <= b[j]) { //@cmp
+            out.push_back(a[i]); //@takeA
+            i++;
+        } else {
+            out.push_back(b[j]); //@takeB
+            j++;
+        }
+    }
+    while (i < a.size()) { //@drainA
+        out.push_back(a[i]); i++;
+    }
+    while (j < b.size()) { //@drainB
+        out.push_back(b[j]); j++;
+    }
+    return out; //@ret
+}
+
+vector<int> sortArray(vector<int>& nums) {
+    if (nums.size() <= 1) { //@base
+        return nums;
+    }
+    int mid = nums.size() / 2; //@mid
+    vector<int> l(nums.begin(), nums.begin() + mid);
+    vector<int> r(nums.begin() + mid, nums.end());
+    vector<int> left = sortArray(l); //@recL
+    vector<int> right = sortArray(r); //@recR
+    return merge(left, right); //@merge
+}

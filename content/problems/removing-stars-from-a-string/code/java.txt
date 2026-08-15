@@ -1,0 +1,11 @@
+static String removeStars(String s) {
+    StringBuilder stack = new StringBuilder(); //@init
+    for (int i = 0; i < s.length(); i++) { //@loop
+        if (s.charAt(i) == '*') { //@isStar
+            stack.deleteCharAt(stack.length() - 1); //@pop
+        } else { //@isChar
+            stack.append(s.charAt(i)); //@push
+        }
+    }
+    return stack.toString(); //@ret
+}

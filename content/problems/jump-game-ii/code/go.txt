@@ -1,0 +1,13 @@
+func jump(nums []int) int {
+    jumps, end, far := 0, 0, 0 //@init
+    for i := 0; i < len(nums)-1; i++ { //@loop
+        if i+nums[i] > far { //@reach
+            far = i + nums[i] //@setFar
+        }
+        if i == end { //@boundary
+            jumps++ //@count
+            end = far //@extend
+        }
+    }
+    return jumps //@ret
+}

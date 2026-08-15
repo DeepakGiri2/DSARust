@@ -1,0 +1,22 @@
+class TimeMap {
+    unordered_map<string, vector<pair<int, string>>> store; //@init
+public:
+    void set(string key, string value, int stamp) {
+        store[key].push_back({stamp, value}); //@set
+    }
+    string get(string key, int stamp) {
+        auto& hist = store[key]; //@hist
+        int lo = 0, hi = (int)hist.size() - 1; //@bounds
+        string best = ""; //@best
+        while (lo <= hi) { //@loop
+            int mid = lo + (hi - lo) / 2; //@mid
+            if (hist[mid].first <= stamp) { //@cmp
+                best = hist[mid].second; //@keep
+                lo = mid + 1; //@later
+            } else {
+                hi = mid - 1; //@earlier
+            }
+        }
+        return best; //@ret
+    }
+};

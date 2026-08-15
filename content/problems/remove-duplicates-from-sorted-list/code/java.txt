@@ -1,0 +1,11 @@
+static ListNode deleteDuplicates(ListNode head) {
+    ListNode cur = head; //@init
+    while (cur != null && cur.next != null) { //@loop
+        if (cur.val == cur.next.val) { //@same
+            cur.next = cur.next.next; //@skip
+        } else { //@diff
+            cur = cur.next; //@advance
+        }
+    }
+    return head; //@ret
+}

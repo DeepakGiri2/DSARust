@@ -1,0 +1,25 @@
+const INF = 1 << 30
+
+func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
+    dist := make([]int, n) //@init
+    for i := range dist {
+        dist[i] = INF
+    }
+    dist[src] = 0 //@seed
+    for round := 0; round <= k; round++ { //@rounds
+        next := append([]int{}, dist...) //@copy
+        for _, f := range flights { //@edges
+            if dist[f[0]] == INF { //@unreached
+                continue
+            }
+            if dist[f[0]]+f[2] < next[f[1]] { //@cheaper
+                next[f[1]] = dist[f[0]] + f[2] //@update
+            }
+        }
+        dist = next //@commit
+    }
+    if dist[dst] == INF { //@check
+        return -1 //@fail
+    }
+    return dist[dst] //@ret
+}

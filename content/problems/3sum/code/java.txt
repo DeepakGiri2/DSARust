@@ -1,0 +1,26 @@
+static List<List<Integer>> threeSum(int[] nums) {
+    Arrays.sort(nums); //@sort
+    List<List<Integer>> res = new ArrayList<>(); //@init
+    for (int i = 0; i + 2 < nums.length; i++) { //@iloop
+        if (i > 0 && nums[i] == nums[i - 1]) { //@skipI
+            continue; //@contI
+        }
+        int l = i + 1, r = nums.length - 1; //@lr
+        while (l < r) { //@wloop
+            int sum = nums[i] + nums[l] + nums[r]; //@sum
+            if (sum == 0) { //@zero
+                res.add(Arrays.asList(nums[i], nums[l], nums[r])); //@add
+                l++; //@advance
+                r--;
+                while (l < r && nums[l] == nums[l - 1]) { //@dedup
+                    l++;
+                }
+            } else if (sum < 0) { //@neg
+                l++; //@moveL
+            } else {
+                r--; //@moveR
+            }
+        }
+    }
+    return res; //@ret
+}

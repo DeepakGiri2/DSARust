@@ -1,0 +1,44 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "strings"
+)
+
+func numIslands(grid [][]byte) int {
+    rows, cols := len(grid), len(grid[0])
+    count := 0
+    for r := 0; r < rows; r++ {
+        for c := 0; c < cols; c++ {
+            if grid[r][c] == '1' {
+                count++
+                dfs(grid, r, c)
+            }
+        }
+    }
+    return count
+}
+
+func dfs(grid [][]byte, r int, c int) {
+    if r < 0 || r >= len(grid) || c < 0 || c >= len(grid[0]) || grid[r][c] != '1' {
+        return
+    }
+    grid[r][c] = '0'
+    dfs(grid, r+1, c)
+    dfs(grid, r-1, c)
+    dfs(grid, r, c+1)
+    dfs(grid, r, c-1)
+}
+
+func main() {
+    reader := bufio.NewReader(os.Stdin)
+    line, _ := reader.ReadString('\n')
+    fields := strings.Fields(line)
+    grid := make([][]byte, len(fields))
+    for i, row := range fields {
+        grid[i] = []byte(row)
+    }
+    fmt.Println(numIslands(grid))
+}

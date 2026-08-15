@@ -1,0 +1,16 @@
+class HitCounter {
+    queue<int> q;
+public:
+    HitCounter() {} //@init
+
+    void hit(int timestamp) { //@hit
+        q.push(timestamp); //@push
+    }
+
+    int getHits(int timestamp) { //@get
+        while (!q.empty() && q.front() <= timestamp - 300) { //@stale
+            q.pop(); //@drop
+        }
+        return q.size(); //@count
+    }
+};

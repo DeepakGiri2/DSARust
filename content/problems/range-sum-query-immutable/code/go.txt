@@ -1,0 +1,13 @@
+type NumArray struct{ prefix []int }
+
+func Constructor(nums []int) NumArray {
+    prefix := make([]int, len(nums)+1) //@init
+    for i, x := range nums { //@build
+        prefix[i+1] = prefix[i] + x //@add
+    }
+    return NumArray{prefix} //@ready
+}
+
+func (a *NumArray) SumRange(left, right int) int { //@query
+    return a.prefix[right+1] - a.prefix[left] //@answer
+}

@@ -1,0 +1,36 @@
+slug = 'best-time-to-buy-and-sell-stock-with-cooldown'
+title = 'Best Time to Buy & Sell Stock With Cooldown'
+category = '2-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '309'
+complexity = 'O(n) time · O(1) space'
+
+description = 'Buy and sell a stock any number of times to maximise profit, but after selling you must wait one day before buying again.'
+approach = "The cooldown is a *state*, not a counter. Track three running bests — holding a share, having just sold today, and free to act — and each day's values depend only on yesterday's. Buying is allowed only from the free state, which is what enforces the one-day wait: the day after a sale you are in 'just sold', from which no buy is reachable."
+
+[[inputs]]
+name = 'prices'
+label = 'prices'
+type = 'int-array'
+max_len = 12
+min = 0
+max = 50
+
+[default_input]
+prices = [1, 2, 3, 0, 2]
+
+[[tests]]
+expected = '3'
+[tests.input]
+prices = [1, 2, 3, 0, 2]
+
+[[tests]]
+expected = '0'
+[tests.input]
+prices = [1]
+
+[[tests]]
+expected = '6'
+[tests.input]
+prices = [6, 1, 3, 2, 4, 7]

@@ -1,0 +1,24 @@
+func rightSideView(root *TreeNode) []int {
+    res := []int{} //@init
+    if root == nil { //@empty
+        return res //@retempty
+    }
+    queue := []*TreeNode{root} //@enq
+    for len(queue) > 0 { //@while
+        size := len(queue) //@size
+        for i := 0; i < size; i++ { //@front
+            node := queue[0] //@pop
+            queue = queue[1:]
+            if i == size-1 { //@islast
+                res = append(res, node.Val) //@take
+            }
+            if node.Left != nil { //@left
+                queue = append(queue, node.Left)
+            }
+            if node.Right != nil { //@right
+                queue = append(queue, node.Right)
+            }
+        }
+    }
+    return res //@ret
+}

@@ -1,0 +1,30 @@
+static int[] merge(int[] a, int[] b) {
+    int[] out = new int[a.length + b.length]; //@init
+    int i = 0, j = 0, k = 0; //@cursors
+    while (i < a.length && j < b.length) { //@loop
+        if (a[i] <= b[j]) { //@cmp
+            out[k++] = a[i]; //@takeA
+            i++;
+        } else {
+            out[k++] = b[j]; //@takeB
+            j++;
+        }
+    }
+    while (i < a.length) { //@drainA
+        out[k++] = a[i]; i++;
+    }
+    while (j < b.length) { //@drainB
+        out[k++] = b[j]; j++;
+    }
+    return out; //@ret
+}
+
+static int[] sortArray(int[] nums) {
+    if (nums.length <= 1) { //@base
+        return nums;
+    }
+    int mid = nums.length / 2; //@mid
+    int[] left = sortArray(Arrays.copyOfRange(nums, 0, mid)); //@recL
+    int[] right = sortArray(Arrays.copyOfRange(nums, mid, nums.length)); //@recR
+    return merge(left, right); //@merge
+}

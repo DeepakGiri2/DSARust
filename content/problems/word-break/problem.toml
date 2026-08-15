@@ -1,0 +1,38 @@
+slug = 'word-break'
+title = 'Word Break'
+category = '1-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n² · m) time · O(n) space'
+
+description = 'Decide whether a string can be segmented into a sequence of dictionary words.'
+approach = "dp[i] means 'the first i characters can be segmented'. It is true when some dictionary word ends at i and the prefix before that word was already reachable — which turns an exponential search into one pass with a lookup."
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 24
+
+[[inputs]]
+name = 'dict'
+label = 'dict'
+type = 'string'
+max_len = 60
+help = 'space separated words'
+
+[default_input]
+s = 'leetcode'
+dict = 'leet code'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = 'leetcode'
+dict = 'leet code'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = 'catsandog'
+dict = 'cats dog sand and cat'

@@ -1,0 +1,17 @@
+func goodNodes(root *TreeNode) int {
+    return dfs(root, math.MinInt) //@call
+}
+
+func dfs(node *TreeNode, maxSoFar int) int {
+    if node == nil { //@base
+        return 0 //@ret0
+    }
+    count := 0 //@init
+    if node.Val >= maxSoFar { //@check
+        count = 1 //@good
+    }
+    maxSoFar = max(maxSoFar, node.Val) //@upd
+    count += dfs(node.Left, maxSoFar) //@recL
+    count += dfs(node.Right, maxSoFar) //@recR
+    return count //@ret
+}

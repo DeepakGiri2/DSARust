@@ -1,0 +1,17 @@
+static boolean isPalindrome(String s) {
+    int l = 0, r = s.length() - 1; //@init
+    while (l < r) { //@loop
+        while (l < r && !Character.isLetterOrDigit(s.charAt(l))) { //@skipL
+            l++; //@incL
+        }
+        while (l < r && !Character.isLetterOrDigit(s.charAt(r))) { //@skipR
+            r--; //@decR
+        }
+        if (Character.toLowerCase(s.charAt(l)) != Character.toLowerCase(s.charAt(r))) { //@cmp
+            return false; //@bad
+        }
+        l++; //@moveL
+        r--; //@moveR
+    }
+    return true; //@good
+}

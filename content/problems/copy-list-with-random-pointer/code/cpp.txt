@@ -1,0 +1,11 @@
+Node* copyRandomList(Node* head) {
+    unordered_map<Node*, Node*> clones; //@init
+    for (Node* cur = head; cur != nullptr; cur = cur->next) { //@pass1
+        clones[cur] = new Node(cur->val); //@make
+    }
+    for (Node* cur = head; cur != nullptr; cur = cur->next) { //@pass2
+        clones[cur]->next = clones[cur->next]; //@linkNext
+        clones[cur]->random = clones[cur->random]; //@linkRandom
+    }
+    return clones[head]; //@ret
+}

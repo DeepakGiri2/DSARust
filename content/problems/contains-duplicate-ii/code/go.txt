@@ -1,0 +1,13 @@
+func containsNearbyDuplicate(nums []int, k int) bool {
+    seen := map[int]bool{} //@init
+    for i := 0; i < len(nums); i++ { //@loop
+        if i > k { //@evict
+            delete(seen, nums[i-k-1]) //@remove
+        }
+        if seen[nums[i]] { //@check
+            return true //@dup
+        }
+        seen[nums[i]] = true //@store
+    }
+    return false //@none
+}

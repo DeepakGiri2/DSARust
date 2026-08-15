@@ -1,0 +1,19 @@
+int findMaximizedCapital(int k, int w, vector<int>& profits, vector<int>& capital) {
+    int n = profits.size();
+    vector<int> idx(n); //@sort
+    iota(idx.begin(), idx.end(), 0);
+    sort(idx.begin(), idx.end(), [&](int a, int b) { return capital[a] < capital[b]; });
+    priority_queue<int> h; //@init
+    int i = 0; //@cursor
+    for (int round = 0; round < k; round++) { //@loop
+        while (i < n && capital[idx[i]] <= w) { //@afford
+            h.push(profits[idx[i]]); //@offer
+            i++;
+        }
+        if (h.empty()) { //@none
+            break;
+        }
+        w += h.top(); h.pop(); //@take
+    }
+    return w; //@ret
+}

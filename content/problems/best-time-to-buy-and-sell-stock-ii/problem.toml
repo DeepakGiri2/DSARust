@@ -1,0 +1,41 @@
+slug = 'best-time-to-buy-and-sell-stock-ii'
+title = 'Best Time to Buy & Sell Stock II'
+category = 'Greedy'
+difficulty = 'Medium'
+tier = 'extra'
+leetcode = '122'
+complexity = 'O(n) time · O(1) space'
+
+description = 'You may buy and sell the stock as many times as you like, holding at most one share at a time. Return the maximum profit.'
+approach = 'Collect every upward step. Any profitable multi-day hold is the sum of its daily changes, and the negative days in it can always be skipped by selling before them and rebuying after — so the best possible total is the sum of the positive differences alone. The trades that produces are legal because a sell and a same-day rebuy costs nothing.'
+
+[[inputs]]
+name = 'prices'
+label = 'prices'
+type = 'int-array'
+max_len = 14
+min = 0
+max = 50
+
+[default_input]
+prices = [7, 1, 5, 3, 6, 4]
+
+[[tests]]
+expected = '7'
+[tests.input]
+prices = [7, 1, 5, 3, 6, 4]
+
+[[tests]]
+expected = '4'
+[tests.input]
+prices = [1, 2, 3, 4, 5]
+
+[[tests]]
+expected = '0'
+[tests.input]
+prices = [7, 6, 4, 3, 1]
+
+[[tests]]
+expected = '0'
+[tests.input]
+prices = [3, 3, 3]

@@ -1,0 +1,14 @@
+func corpFlightBookings(bookings [][]int, n int) []int {
+    diff := make([]int, n+1) //@init
+    for _, b := range bookings { //@loop
+        diff[b[0]-1] += b[2] //@open
+        diff[b[1]] -= b[2] //@close
+    }
+    ans := make([]int, n) //@alloc
+    run := 0 //@zero
+    for i := 0; i < n; i++ { //@sweep
+        run += diff[i] //@run
+        ans[i] = run //@fill
+    }
+    return ans //@ret
+}

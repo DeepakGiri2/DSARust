@@ -1,0 +1,44 @@
+class LFUCache {
+    private final int cap;
+    private int minFreq = 0;
+    private final Map<Integer, int[]> vals = new HashMap<>();               // key -> {value, freq} //@init
+    private final Map<Integer, LinkedHashSet<Integer>> freqs = new HashMap<>();
+
+    LFUCache(int capacity) {
+        cap = capacity;
+    }
+
+    private void touch(int key) { //@touch
+        int f = vals.get(key)[1];
+        freqs.get(f).remove(key); //@unlink
+        if (freqs.get(f).isEmpty() && minFreq == f) { //@bumpmin
+            minFreq++;
+        }
+        vals.get(key)[1] = ++f; //@bump
+        freqs.computeIfAbsent(f, k -> new LinkedHashSet<>()).add(key); //@relink
+    }
+
+    int get(int key) { //@get
+        if (!vals.containsKey(key)) { //@miss
+            return -1; //@nokey
+        }
+        touch(key); //@hit
+        return vals.get(key)[0]; //@val
+    }
+
+    void put(int key, int value) { //@put
+        if (vals.containsKey(key)) { //@exists
+            vals.get(key)[0] = value; //@update
+            touch(key);
+            return;
+        }
+        if (vals.size() == cap) { //@full
+            int victim = freqs.get(minFreq).iterator().next(); //@victim
+            freqs.get(minFreq).remove(victim);
+            vals.remove(victim); //@evict
+        }
+        vals.put(key, new int[]{value, 1});
+        freqs.computeIfAbsent(1, k -> new LinkedHashSet<>()).add(key); //@insert
+        minFreq = 1; //@newmin
+    }
+}

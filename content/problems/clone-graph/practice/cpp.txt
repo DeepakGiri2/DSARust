@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node {
+    int val;
+    vector<Node*> neighbors;
+    Node(int v) : val(v) {}
+};
+
+Node* dfs(Node* cur, unordered_map<Node*, Node*>& cloned);
+
+Node* cloneGraph(Node* node) {
+    if (node == nullptr) {
+        return nullptr;
+    }
+    unordered_map<Node*, Node*> cloned;
+    return dfs(node, cloned);
+}
+
+Node* dfs(Node* cur, unordered_map<Node*, Node*>& cloned) {
+    if (cloned.count(cur)) {
+        return cloned[cur];
+    }
+    Node* clone = new Node(cur->val);
+    cloned[cur] = clone;
+    for (Node* nb : cur->neighbors) {
+        clone->neighbors.push_back(dfs(nb, cloned));
+    }
+    return clone;
+}
+
+int main() {
+    string inputLine;
+    getline(cin, inputLine);
+    unordered_map<int, Node*> nodes;
+    function<Node*(int)> getNode = [&](int v) -> Node* {
+        if (nodes.count(v)) return nodes[v];
+        Node* n = new Node(v);
+        nodes[v] = n;
+        return n;
+    };
+    istringstream ss(inputLine);
+    string tok;
+    while (ss >> tok) {
+        size_t comma = tok.find(',');
+        int a = stoi(tok.substr(0, comma));
+        int b = stoi(tok.substr(comma + 1));
+        Node* na = getNode(a);
+        Node* nb = getNode(b);
+        na->neighbors.push_back(nb);
+        nb->neighbors.push_back(na);
+    }
+    if (nodes.empty()) return 0;
+    int start = INT_MAX;
+    for (auto& kv : nodes) start = min(start, kv.first);
+    Node* clone = cloneGraph(nodes[start]);
+    map<int, vector<int>> result;
+    set<Node*> seen;
+    function<void(Node*)> visit = [&](Node* n) {
+        if (!n || seen.count(n)) return;
+        seen.insert(n);
+        vector<int> nbs;
+        for (Node* x : n->neighbors) nbs.push_back(x->val);
+        sort(nbs.begin(), nbs.end());
+        result[n->val] = nbs;
+        for (Node* x : n->neighbors) visit(x);
+    };
+    visit(clone);
+    for (auto& kv : result) {
+        cout << kv.first << ":";
+        for (int x : kv.second) cout << " " << x;
+        cout << endl;
+    }
+}

@@ -1,0 +1,20 @@
+func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
+    dummy := &ListNode{} //@dummy
+    tail := dummy //@tail0
+    for list1 != nil && list2 != nil { //@loop
+        if list1.Val <= list2.Val { //@cmp
+            tail.Next = list1 //@take1
+            list1 = list1.Next //@adv1
+        } else {
+            tail.Next = list2 //@take2
+            list2 = list2.Next //@adv2
+        }
+        tail = tail.Next //@advtail
+    }
+    if list1 != nil { //@rest
+        tail.Next = list1 //@attach1
+    } else {
+        tail.Next = list2 //@attach2
+    }
+    return dummy.Next //@ret
+}

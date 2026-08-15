@@ -1,0 +1,44 @@
+slug = 'kth-smallest-element-in-a-bst'
+title = 'Kth Smallest Element in a BST'
+category = 'Trees'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(h + k) time · O(h) space (the stack)'
+
+description = 'Given the root of a binary search tree and an integer k, return the kth smallest value (1-indexed) in the tree. An in-order traversal of a BST visits values in sorted order, so the kth node it reaches is the answer.'
+approach = "Iterative in-order traversal with an explicit stack. Dive to the leftmost node, pushing each ancestor. Pop to 'visit' the next smallest value and decrement k; when k hits 0 the popped node holds the answer. After visiting a node, move into its right subtree and repeat."
+
+[[inputs]]
+name = 'root'
+label = "tree (level-order, 'n' = null)"
+type = 'tree'
+max_len = 40
+
+[[inputs]]
+name = 'k'
+label = 'k (1-indexed)'
+type = 'int'
+min = 1
+max = 15
+
+[default_input]
+root = '5 3 6 2 4 n n 1'
+k = 3
+
+[[tests]]
+expected = '3'
+[tests.input]
+root = '5 3 6 2 4 n n 1'
+k = 3
+
+[[tests]]
+expected = '1'
+[tests.input]
+root = '3 1 4 n 2'
+k = 1
+
+[[tests]]
+expected = '3'
+[tests.input]
+root = '2 1 3'
+k = 3

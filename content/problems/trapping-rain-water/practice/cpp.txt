@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int trap(vector<int>& height) {
+    int l = 0, r = (int)height.size() - 1;
+    int leftMax = 0, rightMax = 0;
+    int water = 0;
+    while (l < r) {
+        if (height[l] < height[r]) {
+            if (height[l] >= leftMax) {
+                leftMax = height[l];
+            } else {
+                water += leftMax - height[l];
+            }
+            l++;
+        } else {
+            if (height[r] >= rightMax) {
+                rightMax = height[r];
+            } else {
+                water += rightMax - height[r];
+            }
+            r--;
+        }
+    }
+    return water;
+}
+
+vector<int> readInts() {
+    string line;
+    getline(cin, line);
+    istringstream ss(line);
+    vector<int> nums;
+    int x;
+    while (ss >> x) nums.push_back(x);
+    return nums;
+}
+
+int main() {
+    vector<int> height = readInts();
+    cout << trap(height) << endl;
+}

@@ -1,0 +1,43 @@
+slug = 'permutation-in-string'
+title = 'Permutation in String'
+category = 'Sliding Window'
+difficulty = 'Medium'
+tier = '150'
+complexity = 'O(n) time · O(1) space (26 letters)'
+
+description = 'Given two strings s1 and s2, return true if s2 contains a permutation of s1 as a contiguous substring. A window of length s1 whose letter counts match s1 exactly is such a permutation.'
+approach = 'Slide a fixed-size window of length len(s1) across s2, maintaining letter counts. The window is a permutation of s1 exactly when every per-character difference (window − need) is zero.'
+
+[[inputs]]
+name = 's1'
+label = 's1'
+type = 'string'
+max_len = 12
+
+[[inputs]]
+name = 's2'
+label = 's2'
+type = 'string'
+max_len = 16
+
+[default_input]
+s1 = 'ab'
+s2 = 'eidbaooo'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s1 = 'ab'
+s2 = 'eidbaooo'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s1 = 'ab'
+s2 = 'eidboaoo'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s1 = 'adc'
+s2 = 'dcda'

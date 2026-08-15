@@ -1,0 +1,22 @@
+bool isSymmetric(TreeNode* root) {
+    if (root == nullptr) { //@empty
+        return true;
+    }
+    return mirror(root->left, root->right); //@call
+}
+
+bool mirror(TreeNode* a, TreeNode* b) {
+    if (a == nullptr && b == nullptr) { //@bothNil
+        return true;
+    }
+    if (a == nullptr || b == nullptr) { //@oneNil
+        return false;
+    }
+    if (a->val != b->val) { //@valCmp
+        return false;
+    }
+    if (!mirror(a->left, b->right)) { //@outer
+        return false; //@failOuter
+    }
+    return mirror(a->right, b->left); //@inner
+}

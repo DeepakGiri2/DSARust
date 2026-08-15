@@ -1,0 +1,47 @@
+slug = 'target-sum'
+title = 'Target Sum'
+category = '2-D Dynamic Programming'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '494'
+complexity = 'O(n · sum) time · O(sum) space'
+
+description = 'Put a + or a - in front of every number so the expression evaluates to a given target, and count how many ways that can be done.'
+approach = 'Rather than enumerating 2^n sign choices, carry a tally of every total still reachable and how many ways each is reached. Each number splits every tally entry in two, added and subtracted. Different sign choices that arrive at the same running total are indistinguishable from then on, so merging them is exactly what turns exponential branching into linear work.'
+
+[[inputs]]
+name = 'nums'
+label = 'nums'
+type = 'int-array'
+max_len = 8
+min = 0
+max = 10
+
+[[inputs]]
+name = 'target'
+label = 'target'
+type = 'int'
+min = -30
+max = 30
+
+[default_input]
+nums = [1, 1, 1, 1, 1]
+target = 3
+
+[[tests]]
+expected = '5'
+[tests.input]
+nums = [1, 1, 1, 1, 1]
+target = 3
+
+[[tests]]
+expected = '1'
+[tests.input]
+nums = [1]
+target = 1
+
+[[tests]]
+expected = '2'
+[tests.input]
+nums = [1, 2, 1]
+target = 0

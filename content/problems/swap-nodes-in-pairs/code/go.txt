@@ -1,0 +1,13 @@
+func swapPairs(head *ListNode) *ListNode {
+    dummy := &ListNode{Next: head} //@dummy
+    prev := dummy //@prev
+    for prev.Next != nil && prev.Next.Next != nil { //@loop
+        first := prev.Next //@first
+        second := first.Next //@second
+        first.Next = second.Next //@relinkFirst
+        second.Next = first //@relinkSecond
+        prev.Next = second //@relinkPrev
+        prev = first //@advance
+    }
+    return dummy.Next //@ret
+}

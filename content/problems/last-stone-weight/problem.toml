@@ -1,0 +1,33 @@
+slug = 'last-stone-weight'
+title = 'Last Stone Weight'
+category = 'Heap / Priority Queue'
+difficulty = 'Easy'
+tier = '150'
+complexity = 'O(n log n) time · O(n) space'
+
+description = 'You are given an array of stones where stones[i] is the weight of the ith stone. Each turn, smash the two heaviest stones together: if they weigh the same both are destroyed, otherwise the lighter is destroyed and the heavier is reduced by the lighter weight. Return the weight of the last remaining stone, or 0 if none remain.'
+approach = 'A max-heap gives O(log n) access to the two heaviest stones. Build the heap from all weights, then repeatedly pop the two largest; if they differ push their difference back. When at most one stone is left, that stone (or 0) is the answer.'
+
+[[inputs]]
+name = 'stones'
+label = 'stones'
+type = 'int-array'
+max_len = 40
+
+[default_input]
+stones = [2, 7, 4, 1, 8, 1]
+
+[[tests]]
+expected = '1'
+[tests.input]
+stones = [2, 7, 4, 1, 8, 1]
+
+[[tests]]
+expected = '0'
+[tests.input]
+stones = [2, 2]
+
+[[tests]]
+expected = '1'
+[tests.input]
+stones = [1]

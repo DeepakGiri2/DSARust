@@ -1,0 +1,24 @@
+vector<int> rightSideView(TreeNode* root) {
+    vector<int> res; //@init
+    if (root == nullptr) { //@empty
+        return res; //@retempty
+    }
+    queue<TreeNode*> q; //@enq
+    q.push(root);
+    while (!q.empty()) { //@while
+        int size = q.size(); //@size
+        for (int i = 0; i < size; i++) { //@front
+            TreeNode* node = q.front(); q.pop(); //@pop
+            if (i == size - 1) { //@islast
+                res.push_back(node->val); //@take
+            }
+            if (node->left != nullptr) { //@left
+                q.push(node->left);
+            }
+            if (node->right != nullptr) { //@right
+                q.push(node->right);
+            }
+        }
+    }
+    return res; //@ret
+}

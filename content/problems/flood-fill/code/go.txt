@@ -1,0 +1,19 @@
+func floodFill(image [][]int, sr int, sc int, color int) [][]int {
+    start := image[sr][sc] //@start
+    if start == color { //@same
+        return image
+    }
+    fill(image, sr, sc, start, color) //@call
+    return image //@ret
+}
+
+func fill(image [][]int, r, c, from, to int) {
+    if r < 0 || r >= len(image) || c < 0 || c >= len(image[0]) || image[r][c] != from { //@bounds
+        return //@stop
+    }
+    image[r][c] = to //@paint
+    fill(image, r+1, c, from, to) //@down
+    fill(image, r-1, c, from, to) //@up
+    fill(image, r, c+1, from, to) //@right
+    fill(image, r, c-1, from, to) //@left
+}

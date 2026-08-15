@@ -1,0 +1,18 @@
+func generateParenthesis(n int) []string {
+    res := []string{} //@init
+    var back func(cur string, open, close int)
+    back = func(cur string, open, close int) {
+        if len(cur) == 2*n { //@base
+            res = append(res, cur) //@add
+            return //@ret
+        }
+        if open < n { //@canOpen
+            back(cur+"(", open+1, close) //@recOpen
+        }
+        if close < open { //@canClose
+            back(cur+")", open, close+1) //@recClose
+        }
+    }
+    back("", 0, 0) //@call
+    return res //@done
+}

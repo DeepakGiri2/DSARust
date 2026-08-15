@@ -1,0 +1,33 @@
+slug = 'valid-palindrome'
+title = 'Valid Palindrome'
+category = 'Two Pointers'
+difficulty = 'Easy'
+tier = '50'
+complexity = 'O(n) time · O(1) space'
+
+description = 'A phrase is a palindrome if, after lowercasing and removing all non-alphanumeric characters, it reads the same forward and backward. Given a string s, return true if it is a palindrome.'
+approach = 'Two pointers start at both ends and walk inward. Skip anything that is not a letter or digit, then compare the lowercased characters. A single mismatch means it is not a palindrome.'
+
+[[inputs]]
+name = 's'
+label = 's'
+type = 'string'
+max_len = 30
+
+[default_input]
+s = 'Madam!'
+
+[[tests]]
+expected = 'true'
+[tests.input]
+s = 'A man, a plan, a canal: Panama'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = 'race a car'
+
+[[tests]]
+expected = 'false'
+[tests.input]
+s = '0P'

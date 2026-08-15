@@ -1,0 +1,47 @@
+slug = 'minimum-interval-to-include-each-query'
+title = 'Minimum Interval to Include Each Query'
+category = 'Intervals'
+difficulty = 'Hard'
+tier = '150'
+leetcode = '1851'
+complexity = 'O((n + q) log(n + q)) time · O(n) space'
+
+description = 'For each query point, return the size of the smallest interval that contains it, or -1 if none does.'
+approach = 'Answer the queries in increasing order rather than the order given. Then a single forward cursor can admit every interval whose start has been passed, and a min-heap keyed by size makes the smallest of them immediately available. Intervals that have already ended are discarded from the top of the heap as they surface — and because the queries only move forwards, anything discarded can never be needed again.'
+
+[[inputs]]
+name = 'intervals'
+label = 'intervals'
+type = 'string'
+max_len = 60
+help = "'start end' pairs, comma separated"
+
+[[inputs]]
+name = 'queries'
+label = 'queries'
+type = 'int-array'
+max_len = 8
+min = 0
+max = 100
+
+[default_input]
+intervals = '1 4, 2 4, 3 6, 4 4'
+queries = [2, 3, 4, 5]
+
+[[tests]]
+expected = '3 3 1 4'
+[tests.input]
+intervals = '1 4, 2 4, 3 6, 4 4'
+queries = [2, 3, 4, 5]
+
+[[tests]]
+expected = '2 -1 4 6'
+[tests.input]
+intervals = '2 3, 2 5, 1 8, 20 25'
+queries = [2, 19, 5, 22]
+
+[[tests]]
+expected = '-1'
+[tests.input]
+intervals = '1 2'
+queries = [5]

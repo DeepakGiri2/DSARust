@@ -1,0 +1,31 @@
+slug = 'online-stock-span'
+title = 'Online Stock Span'
+category = 'Stack'
+difficulty = 'Medium'
+tier = '250'
+leetcode = '901'
+complexity = 'O(1) amortised per price · O(n) space'
+
+description = "For each day's stock price, report the span: how many consecutive days up to and including today had a price no greater than today's."
+approach = "A price that has already been beaten can never be the answer for any later day, so it can be discarded — but not before its span is absorbed into the winner's. That absorption is what turns a nested scan into a linear one: a decreasing stack of (price, span) pairs, where each pop hands over a whole block of days in one step."
+
+[[inputs]]
+name = 'prices'
+label = 'prices'
+type = 'int-array'
+max_len = 15
+min = 1
+max = 200
+
+[default_input]
+prices = [100, 80, 60, 70, 60, 75, 85]
+
+[[tests]]
+expected = '1 1 1 2 1 4 6'
+[tests.input]
+prices = [100, 80, 60, 70, 60, 75, 85]
+
+[[tests]]
+expected = '1 2 3 4 5'
+[tests.input]
+prices = [31, 41, 48, 59, 79]

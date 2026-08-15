@@ -1,0 +1,47 @@
+slug = 'hand-of-straights'
+title = 'Hand of Straights'
+category = 'Greedy'
+difficulty = 'Medium'
+tier = '150'
+leetcode = '846'
+complexity = 'O(n log n) time · O(n) space'
+
+description = 'Return true if a hand of cards can be split entirely into groups of consecutive values of a given size.'
+approach = 'The smallest card left has no choice: nothing below it exists, so it must start a group. That removes all the guesswork — take the lowest remaining value, and consume one run of consecutive cards starting there for every copy of it. If any value in that run is short, no arrangement exists, because that card had no alternative home either.'
+
+[[inputs]]
+name = 'hand'
+label = 'hand'
+type = 'int-array'
+max_len = 12
+min = 1
+max = 20
+
+[[inputs]]
+name = 'groupSize'
+label = 'groupSize'
+type = 'int'
+min = 1
+max = 6
+
+[default_input]
+hand = [1, 2, 3, 6, 2, 3, 4, 7, 8]
+groupSize = 3
+
+[[tests]]
+expected = 'true'
+[tests.input]
+hand = [1, 2, 3, 6, 2, 3, 4, 7, 8]
+groupSize = 3
+
+[[tests]]
+expected = 'false'
+[tests.input]
+hand = [1, 2, 3, 4, 5]
+groupSize = 4
+
+[[tests]]
+expected = 'false'
+[tests.input]
+hand = [8, 10, 12]
+groupSize = 3

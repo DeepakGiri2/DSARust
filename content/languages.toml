@@ -1,0 +1,72 @@
+# Languages are data, not an enum in the binary.
+#
+# Adding a language here — plus `code/<id>.txt` in the problem packs that
+# support it — gives it a tab in the code panel, `//@tag` line syncing and a
+# runnable practice editor. No Rust changes, no rebuild.
+#
+# `toolchain` is how the practice tab compiles and runs locally. Argv is passed
+# straight to the OS with no shell, so paths with spaces are safe everywhere:
+#   {src}  the written source file      {exe}  the output binary
+#   {dir}  the scratch directory
+# Omit `toolchain` and the language is still viewable and still animates; only
+# "Run" is unavailable. `remote_compiler` names the Compiler Explorer compiler
+# used when no local toolchain is installed.
+
+[[language]]
+id = "go"
+label = "Go"
+ext = "go"
+syntax = "go"
+comment = "//"
+order = 0
+remote_compiler = "gl1260"
+
+[language.toolchain]
+probe = "go"
+run = ["go", "run", "{src}"]
+
+[[language]]
+id = "cpp"
+label = "C++"
+ext = "cpp"
+syntax = "cpp"
+comment = "//"
+order = 1
+remote_compiler = "g161"
+
+[language.toolchain]
+probe = "g++"
+compile = ["g++", "-std=c++17", "-O1", "-w", "-o", "{exe}", "{src}"]
+run = ["{exe}"]
+
+[[language]]
+id = "java"
+label = "Java"
+ext = "java"
+syntax = "java"
+comment = "//"
+order = 2
+remote_compiler = "java2501"
+# javac insists the file be named after the public class.
+source_name = "Main.java"
+
+[language.toolchain]
+probe = "javac"
+compile = ["javac", "-nowarn", "-d", "{dir}", "{src}"]
+run = ["java", "-cp", "{dir}", "Main"]
+
+# Declared so problem packs can ship `code/python.txt` whenever an author wants
+# to; packs without one simply do not show the tab.
+[[language]]
+id = "python"
+label = "Python"
+ext = "py"
+syntax = "python"
+comment = "#"
+order = 3
+remote_compiler = "python312"
+
+[language.toolchain]
+probe = "python3"
+probe_windows = "python"
+run = ["python3", "{src}"]

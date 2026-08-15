@@ -1,0 +1,14 @@
+class NumArray {
+    vector<int> prefix;
+public:
+    NumArray(vector<int>& nums) {
+        prefix.assign(nums.size() + 1, 0); //@init
+        for (int i = 0; i < (int)nums.size(); i++) { //@build
+            prefix[i + 1] = prefix[i] + nums[i]; //@add
+        }
+    } //@ready
+
+    int sumRange(int left, int right) { //@query
+        return prefix[right + 1] - prefix[left]; //@answer
+    }
+};

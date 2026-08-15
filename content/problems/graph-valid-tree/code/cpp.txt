@@ -1,0 +1,27 @@
+vector<int> parent;
+
+int find(int x) {
+    while (parent[x] != x) { //@walk
+        parent[x] = parent[parent[x]];
+        x = parent[x];
+    }
+    return x; //@root
+}
+
+bool validTree(int n, vector<vector<int>>& edges) {
+    if ((int)edges.size() != n - 1) { //@count
+        return false;
+    }
+    parent.assign(n, 0); //@init
+    for (int i = 0; i < n; i++) {
+        parent[i] = i; //@seed
+    }
+    for (auto& e : edges) { //@loop
+        int a = find(e[0]), b = find(e[1]); //@find
+        if (a == b) { //@cycle
+            return false; //@no
+        }
+        parent[a] = b; //@union
+    }
+    return true; //@yes
+}

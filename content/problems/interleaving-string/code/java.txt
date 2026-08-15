@@ -1,0 +1,24 @@
+static boolean isInterleave(String s1, String s2, String s3) {
+    int m = s1.length(), n = s2.length();
+    if (m + n != s3.length()) { //@length
+        return false;
+    }
+    boolean[][] dp = new boolean[m + 1][n + 1]; //@init
+    dp[0][0] = true; //@seed
+    for (int i = 0; i <= m; i++) { //@rowLoop
+        for (int j = 0; j <= n; j++) { //@colLoop
+            if (i == 0 && j == 0) { //@origin
+                continue;
+            }
+            boolean ok = false; //@ok
+            if (i > 0 && s1.charAt(i - 1) == s3.charAt(i + j - 1) && dp[i - 1][j]) { //@fromS1
+                ok = true; //@takeS1
+            }
+            if (j > 0 && s2.charAt(j - 1) == s3.charAt(i + j - 1) && dp[i][j - 1]) { //@fromS2
+                ok = true; //@takeS2
+            }
+            dp[i][j] = ok; //@store
+        }
+    }
+    return dp[m][n]; //@ret
+}

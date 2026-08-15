@@ -1,0 +1,24 @@
+static List<List<Integer>> permute(int[] nums) {
+    List<List<Integer>> res = new ArrayList<>(); //@init
+    List<Integer> current = new ArrayList<>(); //@cur
+    boolean[] used = new boolean[nums.length]; //@used
+    backtrack(nums, current, used, res); //@call
+    return res; //@done
+}
+
+static void backtrack(int[] nums, List<Integer> current, boolean[] used, List<List<Integer>> res) {
+    if (current.size() == nums.length) { //@base
+        res.add(new ArrayList<>(current)); //@add
+        return; //@ret
+    }
+    for (int i = 0; i < nums.length; i++) { //@loop
+        if (used[i]) { //@skip
+            continue;
+        }
+        used[i] = true; //@mark
+        current.add(nums[i]); //@choose
+        backtrack(nums, current, used, res); //@rec
+        current.remove(current.size() - 1); //@unchoose
+        used[i] = false; //@unmark
+    }
+}

@@ -1,0 +1,30 @@
+func findOrder(numCourses int, prerequisites [][]int) []int {
+    adj := make([][]int, numCourses) //@adj
+    indeg := make([]int, numCourses) //@indeg
+    for _, p := range prerequisites { //@build
+        adj[p[1]] = append(adj[p[1]], p[0]) //@edge
+        indeg[p[0]]++ //@count
+    }
+    queue := []int{} //@queue
+    for c := 0; c < numCourses; c++ { //@seed
+        if indeg[c] == 0 { //@free
+            queue = append(queue, c) //@enqueue
+        }
+    }
+    order := []int{} //@order
+    for len(queue) > 0 { //@loop
+        c := queue[0] //@take
+        queue = queue[1:]
+        order = append(order, c) //@append
+        for _, next := range adj[c] { //@release
+            indeg[next]-- //@dec
+            if indeg[next] == 0 { //@nowFree
+                queue = append(queue, next) //@enqueue2
+            }
+        }
+    }
+    if len(order) != numCourses { //@check
+        return []int{} //@cycle
+    }
+    return order //@ret
+}

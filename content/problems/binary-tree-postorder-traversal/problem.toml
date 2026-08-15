@@ -1,0 +1,29 @@
+slug = 'binary-tree-postorder-traversal'
+title = 'Binary Tree Postorder Traversal'
+category = 'Trees'
+difficulty = 'Easy'
+tier = '250'
+leetcode = '145'
+complexity = 'O(n) time · O(h) space (h = height)'
+
+description = "Return the values of a binary tree's nodes in postorder — left subtree, right subtree, node."
+approach = 'Postorder is the reverse of a mirrored preorder. Run the easy preorder loop but push the *left* child first, which visits node-right-left, then reverse the result. Reversing node-right-left gives left-right-node exactly, so no second stack and no visited flags are needed.'
+
+[[inputs]]
+name = 'root'
+label = "tree (level-order, 'n' = null)"
+type = 'tree'
+max_len = 80
+
+[default_input]
+root = '4 2 7 1 3 6 9'
+
+[[tests]]
+expected = '1 3 2 6 9 7 4'
+[tests.input]
+root = '4 2 7 1 3 6 9'
+
+[[tests]]
+expected = '3 2 1'
+[tests.input]
+root = '1 n 2 3'
