@@ -1,0 +1,2 @@
+const e="#7c6cff";function o(n){const t=(n??"").trim().replace(/^#/,"");return/^[0-9a-f]{6}$/i.test(t)?`#${t.toLowerCase()}`:e}function c(n,t){const r=Math.round(Math.min(255,Math.max(0,t)));return o(n)+r.toString(16).padStart(2,"0")}const a={"#7c6cff":"violet","#22d3ee":"cyan","#34d399":"green","#fbbf24":"amber","#f87171":"red","#f472b6":"pink"};function f(n){const t=o(n);return a[t]??t}export{f as c,o as p,c as w};
+//# sourceMappingURL=profileColor-DyYhd8Rl.js.map

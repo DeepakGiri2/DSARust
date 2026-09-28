@@ -1,0 +1,2 @@
+import{j as l}from"./codemirror-DEXhlTHn.js";import{c as u}from"./clsx-B-dksMZM.js";function p({value:a,options:r,onChange:s,small:t,className:i,"aria-label":n}){return l.jsx("div",{className:u("seg",t&&"small",i),role:"group","aria-label":n,children:r.map(e=>l.jsx("button",{type:"button","aria-pressed":e.value===a,title:e.title,disabled:e.disabled,onClick:()=>e.value!==a&&s(e.value),children:e.label},e.value))})}export{p as S};
+//# sourceMappingURL=Seg-Bp-m5H2O.js.map

@@ -1,0 +1,2 @@
+import{J as s,K as a}from"./index-Di4Vkc9S.js";function e(){return s({mutationFn:t=>a.post("/auth/verify-email",t)})}function n(){return s({mutationFn:()=>a.post("/auth/verify-email/resend")})}function r(){return s({mutationFn:t=>a.post("/auth/password/forgot",t)})}function u(){return s({mutationFn:t=>a.post("/auth/password/reset",t)})}export{r as a,u as b,e as c,n as u};
+//# sourceMappingURL=hooks-BV115TqS.js.map
