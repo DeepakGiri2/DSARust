@@ -1,0 +1,168 @@
+# Deploys the cloud platform with CDK.
+#
+#   push to main       → CI, then deploy to dev
+#   workflow_dispatch  → CI, then deploy the chosen stage (prod waits for the
+#                        required reviewers of the "prod" GitHub environment)
+#
+# AWS access is OIDC-only: the job assumes the stage's deploy role (created by
+# the Dsa<Stage>-GithubOidc stack, see docs/platform/DEPLOY.md), which can do
+# nothing but assume the CDK bootstrap roles. No long-lived keys exist.
+#
+# Per-environment variables (Settings → Environments → dev / prod):
+#   AWS_DEPLOY_ROLE_ARN  required  role ARN output by Dsa<Stage>-GithubOidc
+#   AWS_REGION           optional  default us-east-1
+#   AWS_ACCOUNT_ID       optional  pins the stacks to this account
+#   DOMAIN_NAME, CERTIFICATE_ARN, HOSTED_ZONE_ID, HOSTED_ZONE_NAME  optional custom domain
+#   ALARM_EMAIL          optional  alarm + budget notifications
+#   CDK_EXTRA_CONTEXT    optional  more "-c key=value" pairs, e.g. "-c rdsProxy=true -c apiMaxTasks=30"
+name: platform-deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - backend/**
+      - web/**
+      - infra/**
+      - crates/**
+      - content/**
+      - Cargo.toml
+      - Cargo.lock
+      - .github/workflows/platform-*.yml
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: Stage to deploy
+        type: choice
+        options: [dev, prod]
+        default: dev
+        required: true
+
+permissions:
+  contents: read
+
+# One deployment per stage at a time, never cancelled half-way through a
+# CloudFormation update; later runs queue behind the current one.
+concurrency:
+  group: deploy-${{ github.event_name == 'workflow_dispatch' && inputs.stage || 'dev' }}
+  cancel-in-progress: false
+
+jobs:
+  ci:
+    uses: ./.github/workflows/platform-ci.yml
+    permissions:
+      contents: read
+
+  deploy:
+    name: deploy (${{ github.event_name == 'workflow_dispatch' && inputs.stage || 'dev' }})
+    needs: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: read
+      id-token: write # OIDC → sts:AssumeRoleWithWebIdentity
+    environment:
+      name: ${{ github.event_name == 'workflow_dispatch' && inputs.stage || 'dev' }}
+      url: ${{ steps.smoke.outputs.url }}
+    env:
+      STAGE: ${{ github.event_name == 'workflow_dispatch' && inputs.stage || 'dev' }}
+      AWS_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+      # Lambda rejects image indexes with provenance attestations; push plain manifests.
+      BUILDX_NO_DEFAULT_ATTESTATIONS: '1'
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            web/package-lock.json
+            infra/package-lock.json
+
+      - name: Build the SPA
+        working-directory: web
+        run: |
+          npm ci
+          npm run build
+
+      - name: Install CDK app
+        working-directory: infra
+        run: npm ci
+
+      - name: Emulate arm64 for the API image
+        if: contains(vars.CDK_EXTRA_CONTEXT, 'apiCpuArchitecture=ARM64')
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
+      - uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          role-session-name: dsa-${{ env.STAGE }}-${{ github.run_id }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: cdk deploy (builds and pushes both images, migrates, rolls the service)
+        working-directory: infra
+        env:
+          AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+          DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
+          CERTIFICATE_ARN: ${{ vars.CERTIFICATE_ARN }}
+          HOSTED_ZONE_ID: ${{ vars.HOSTED_ZONE_ID }}
+          HOSTED_ZONE_NAME: ${{ vars.HOSTED_ZONE_NAME }}
+          ALARM_EMAIL: ${{ vars.ALARM_EMAIL }}
+          CDK_EXTRA_CONTEXT: ${{ vars.CDK_EXTRA_CONTEXT }}
+        run: |
+          set -euo pipefail
+          args=(-c "stage=${STAGE}" -c "region=${AWS_REGION}")
+          if [[ -n "${AWS_ACCOUNT_ID}" ]]; then args+=(-c "account=${AWS_ACCOUNT_ID}"); fi
+          if [[ -n "${DOMAIN_NAME}" ]]; then args+=(-c "domainName=${DOMAIN_NAME}" -c "certificateArn=${CERTIFICATE_ARN}"); fi
+          if [[ -n "${HOSTED_ZONE_ID}" ]]; then args+=(-c "hostedZoneId=${HOSTED_ZONE_ID}" -c "hostedZoneName=${HOSTED_ZONE_NAME}"); fi
+          if [[ -n "${ALARM_EMAIL}" ]]; then args+=(-c "alarmEmail=${ALARM_EMAIL}"); fi
+          if [[ -n "${CDK_EXTRA_CONTEXT}" ]]; then read -r -a extra <<< "${CDK_EXTRA_CONTEXT}"; args+=("${extra[@]}"); fi
+          # Migrations run inside the deployment (Custom::DsaMigrations) before
+          # the ECS service rolls; a failed migration fails this step.
+          npx cdk deploy --all "${args[@]}" \
+            --require-approval never \
+            --concurrency 3 \
+            --progress events \
+            --outputs-file cdk-outputs.json
+
+      - name: Smoke test
+        id: smoke
+        run: |
+          set -euo pipefail
+          prefix="Dsa${STAGE^}"
+          out=infra/cdk-outputs.json
+          url=$(jq -r --arg s "${prefix}-Edge" '.[$s].PublicUrl' "$out")
+          tg=$(jq -r --arg s "${prefix}-Ingress" '.[$s].TargetGroupArn' "$out")
+          alb=$(jq -r --arg s "${prefix}-Ingress" '.[$s].AlbDnsName' "$out")
+          echo "url=${url}" >> "$GITHUB_OUTPUT"
+
+          echo "::group::readiness: every API target passes /readyz (the ALB health check)"
+          for i in $(seq 1 30); do
+            states=$(aws elbv2 describe-target-health --target-group-arn "$tg" \
+              --query 'TargetHealthDescriptions[].TargetHealth.State' --output text)
+            echo "attempt $i: ${states:-<no targets>}"
+            unhealthy=$(tr '\t' '\n' <<< "$states" | grep -cv '^healthy$' || true)
+            if [[ -n "$states" && "$unhealthy" == "0" ]]; then break; fi
+            if [[ $i -eq 30 ]]; then echo "::error::targets not healthy: $states"; exit 1; fi
+            sleep 10
+          done
+          echo "::endgroup::"
+
+          echo "::group::GET ${url}/api/v1/meta through CloudFront"
+          curl -fsS --retry 12 --retry-delay 10 --retry-all-errors --max-time 20 "${url}/api/v1/meta" | tee /tmp/meta.json
+          jq -e 'type == "object"' /tmp/meta.json > /dev/null
+          echo "::endgroup::"
+
+          echo "::group::SPA shell and a client-side route"
+          curl -fsS --max-time 20 "${url}/" | grep -q 'id="root"'
+          curl -fsS --max-time 20 "${url}/problems/two-sum" | grep -q 'id="root"'
+          echo "::endgroup::"
+
+          echo "::group::the ALB must not answer outside CloudFront"
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://${alb}/api/v1/meta" || true)
+          echo "direct ALB response: ${code:-none}"
+          if [[ "$code" =~ ^2 ]]; then echo "::error::ALB served a request that did not come through CloudFront"; exit 1; fi
+          echo "::endgroup::"

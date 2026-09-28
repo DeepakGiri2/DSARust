@@ -1,0 +1,82 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 20px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: -0.6px;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 16px;
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
+}
+
+.value {
+  font-size: 30px;
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.sub {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.panel {
+  padding: 16px 18px;
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
+}
+
+.panelTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.ok {
+  color: var(--green);
+  font-size: 13.5px;
+}
+
+.errors {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.errors li {
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--red-tint);
+  color: var(--text);
+  word-break: break-word;
+}

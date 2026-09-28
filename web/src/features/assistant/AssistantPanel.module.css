@@ -1,0 +1,615 @@
+/*
+ * The AI assist column. Sizes and colours follow the desktop's panel
+ * (assistant.rs + style.rs): 10.5–12.5px text, `side_head` section labels,
+ * `code_block` surfaces, red/green diff rows at ~11% tint.
+ */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  padding: 10px 12px 12px;
+  font-size: 13px;
+}
+
+/* ── header ─────────────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.title {
+  margin-right: auto;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.state {
+  font-size: 11px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.online {
+  color: var(--green);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.model {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quota {
+  white-space: nowrap;
+}
+
+.quotaOut {
+  color: var(--amber);
+}
+
+.modeRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.modes {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
+.modes > button {
+  flex: 1;
+  padding-inline: 6px;
+}
+
+/* ── notices: signed out, unavailable, offline ─────────────────────────── */
+
+.notice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.noticeTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.noticeActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.center {
+  display: grid;
+  place-items: center;
+  padding: 32px 0;
+}
+
+/* ── the transcript ─────────────────────────────────────────────────────── */
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 2px 2px 6px;
+}
+
+.empty {
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+.turn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  min-width: 0;
+}
+
+.turn > * {
+  max-width: 100%;
+}
+
+.speaker {
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--accent-2);
+}
+
+.you {
+  color: var(--accent);
+}
+
+.userBody {
+  align-self: stretch;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel-2);
+}
+
+.cursor {
+  color: var(--accent);
+  font-size: 12px;
+  line-height: 1;
+  animation: blink 1s steps(1) infinite;
+}
+
+.note {
+  font-size: 11.5px;
+  color: var(--text-dim);
+}
+
+/* ── rich text ──────────────────────────────────────────────────────────── */
+
+.rich {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-self: stretch;
+  min-width: 0;
+  color: var(--text);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.rich p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.code {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel-2);
+  overflow: hidden;
+}
+
+.codeHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 3px 4px 3px 10px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--text-dim);
+}
+
+.code pre {
+  padding: 8px 10px;
+  overflow-x: auto;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--code-text);
+}
+
+.code pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+}
+
+.copy {
+  padding: 1px 8px;
+  font-size: 11px;
+}
+
+.locked {
+  position: relative;
+  min-width: 0;
+  border: 1px dashed color-mix(in srgb, var(--amber) 55%, transparent);
+  border-radius: var(--radius);
+  background: var(--panel-2);
+  overflow: hidden;
+}
+
+.blurred {
+  max-height: 7.5em;
+  overflow: hidden;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  filter: blur(5px);
+  opacity: 0.7;
+  user-select: none;
+}
+
+.reveal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border: none;
+  background: color-mix(in srgb, var(--panel) 45%, transparent);
+  color: var(--amber);
+  font-size: 11.5px;
+  text-align: center;
+}
+
+.reveal:hover {
+  background: color-mix(in srgb, var(--panel) 20%, transparent);
+}
+
+/* ── thinking, options, errors ──────────────────────────────────────────── */
+
+.think {
+  align-self: stretch;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.think summary {
+  width: fit-content;
+  cursor: pointer;
+  user-select: none;
+}
+
+.thinkBody {
+  max-height: 220px;
+  margin-top: 4px;
+  padding: 4px 0 4px 10px;
+  overflow-y: auto;
+  border-left: 2px solid var(--border);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.option {
+  max-width: 100%;
+  padding: 5px 10px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--panel-2);
+  color: var(--text);
+  font-size: 12px;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.option:hover:not(:disabled) {
+  background: var(--accent-tint);
+}
+
+.option:disabled {
+  opacity: 0.5;
+}
+
+.error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  align-self: stretch;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--red) 40%, transparent);
+  border-radius: var(--radius);
+  background: var(--red-tint);
+  color: var(--red);
+  font-size: 12px;
+}
+
+.errorText {
+  flex: 1 1 160px;
+}
+
+/* ── composer ───────────────────────────────────────────────────────────── */
+
+.composer {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.composerRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  min-height: 24px;
+  font-size: 12px;
+}
+
+.composerRow :global(.check) {
+  font-size: 12px;
+}
+
+.elsewhere {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  color: var(--text-dim);
+}
+
+.inputRow {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.textarea {
+  flex: 1;
+  min-width: 0;
+  min-height: 52px;
+  max-height: 160px;
+  resize: none;
+  font-size: 13px;
+  field-sizing: content;
+}
+
+.send {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.tip {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+/* ── fix mode ───────────────────────────────────────────────────────────── */
+
+.issues {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stream {
+  max-height: 260px;
+  padding: 8px 10px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel-2);
+  color: var(--text-dim);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.proposed {
+  font-size: 11.5px;
+  color: var(--green);
+}
+
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  padding: 7px 10px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--accent-tint);
+  font-size: 12px;
+}
+
+.bannerActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.pill {
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.minus {
+  color: var(--red);
+  background: var(--red-tint);
+}
+
+.plus {
+  color: var(--green);
+  background: var(--green-tint);
+}
+
+.kept {
+  color: var(--text-dim);
+}
+
+.apply {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.apply:hover:not(:disabled) {
+  color: #fff;
+  filter: brightness(1.12);
+}
+
+.resolved {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* ── the diff ───────────────────────────────────────────────────────────── */
+
+.diffScroll {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+}
+
+.diffTable {
+  min-width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.diffTable td {
+  padding: 0;
+  vertical-align: top;
+}
+
+.diffTable .num {
+  width: 1%;
+  min-width: 3.5ch;
+  padding: 0 4px 0 8px;
+  color: var(--text-dim);
+  font-size: 10.5px;
+  text-align: right;
+  opacity: 0.7;
+  user-select: none;
+}
+
+.diffTable .marker {
+  width: 1%;
+  padding: 0 6px;
+  text-align: center;
+  user-select: none;
+}
+
+.diffTable .text {
+  padding-right: 12px;
+  white-space: pre;
+}
+
+.same .text {
+  color: color-mix(in srgb, var(--text) 80%, transparent);
+}
+
+/* Removals are on their way out, so they are dimmed; additions are at full contrast. */
+.removed {
+  background: color-mix(in srgb, var(--red) 11%, transparent);
+}
+
+.removed .marker {
+  color: var(--red);
+}
+
+.removed .text {
+  color: color-mix(in srgb, var(--text) 67%, transparent);
+}
+
+.added {
+  background: color-mix(in srgb, var(--green) 11%, transparent);
+}
+
+.added .marker {
+  color: var(--green);
+}
+
+.added .text {
+  color: var(--text);
+}
+
+/* A change that has been un-ticked is not going to happen, so it stops shouting. */
+.left {
+  opacity: 0.42;
+}
+
+.hunkRow td {
+  padding: 6px 8px 3px;
+}
+
+.hunkToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sans);
+  font-size: 11.5px;
+  color: var(--text);
+  cursor: pointer;
+  user-select: none;
+}
+
+.hunkToggle input {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--accent);
+}
+
+.hunkOff {
+  color: var(--text-dim);
+}
+
+.fold td {
+  padding: 2px 8px;
+  color: var(--text-dim);
+  font-size: 10.5px;
+  opacity: 0.8;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    animation: none;
+  }
+}

@@ -1,0 +1,196 @@
+/*
+ * The workspace's own control vocabulary, ported from the desktop's style.rs
+ * helpers: `toolbar`, `apply_btn`, `pill`, `side_head`, `side_empty`,
+ * `code_block`, `card`. Global primitives (.mini-btn, .seg, .section-label …)
+ * come from styles/base.css; these are the ones only this screen uses.
+ */
+
+/* `toolbar()`: a translucent strip (PANEL @ 0xcc) the backdrop tints. */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  padding: 7px 10px;
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--panel) 80%, transparent);
+}
+
+.spacer {
+  margin-left: auto;
+}
+
+/* `apply_btn()`: the primary action — Run, play, re-visualize. */
+.apply {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 26px;
+  padding: 3px 12px;
+  border: none;
+  border-radius: 7px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    filter 0.15s,
+    transform 0.1s;
+}
+
+.apply:hover:not(:disabled) {
+  filter: brightness(1.12);
+}
+
+.apply:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.apply:disabled {
+  opacity: 0.5;
+}
+
+/* `side_head()`: `.section-label` keeps the cyan tick; this sets the spacing,
+   and `.asIs` keeps the desktop's lowercase heads ("input", "logs"). */
+.head {
+  margin: 10px 0 5px;
+}
+
+.asIs {
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+/* `side_empty()` */
+.empty {
+  padding: 2px 0;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-dim);
+}
+
+/* `code_block()` */
+.codeBlock {
+  margin: 0;
+  padding: 8px 10px;
+  background: color-mix(in srgb, var(--panel-2) 94%, transparent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* `pill()`: a label on a 13% tint of its own colour. */
+.pill {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.green {
+  color: var(--green);
+  background: var(--green-tint);
+}
+
+.red {
+  color: var(--red);
+  background: var(--red-tint);
+}
+
+.amber {
+  color: var(--amber);
+  background: var(--amber-tint);
+}
+
+.cyan {
+  color: var(--accent-2);
+  background: var(--accent-2-tint);
+}
+
+.dim {
+  color: var(--text-dim);
+  background: color-mix(in srgb, var(--text-dim) 13%, transparent);
+}
+
+/* `card()` */
+.card {
+  padding: 12px;
+  background: color-mix(in srgb, var(--panel) 90%, transparent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+/* A message with an action: sign in, verify, upgrade, slow down. */
+.notice {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent-2);
+  border-radius: var(--radius-sm);
+  background: var(--accent-2-tint);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.noticeError {
+  border-left-color: var(--red);
+  background: var(--red-tint);
+}
+
+.noticeActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.noticeList {
+  margin: 0;
+  padding-left: 16px;
+}
+
+/* The drag handle between two columns: a hairline that lights up. */
+.splitter {
+  flex: 0 0 7px;
+  align-self: stretch;
+  position: relative;
+  cursor: col-resize;
+  touch-action: none;
+  outline: none;
+}
+
+.splitter::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 3px;
+  width: 1px;
+  background: var(--border);
+  transition: background 0.15s;
+}
+
+.splitter:hover::after,
+.splitter:focus-visible::after,
+.splitter:active::after {
+  width: 2px;
+  left: 2.5px;
+  background: var(--accent);
+}
+
+/* Compact layouts: the columns that no longer fit become tabs. */
+.paneTabs {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  margin-bottom: 6px;
+}

@@ -1,0 +1,95 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-right: auto;
+}
+
+.field {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.select {
+  width: auto;
+  min-width: 240px;
+  padding: 5px 9px;
+  font-size: 13px;
+}
+
+.transport {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  padding: 8px 10px;
+}
+
+.transport > button {
+  min-width: 34px;
+  justify-content: center;
+}
+
+.scrub {
+  flex: 1 1 180px;
+  min-width: 120px;
+  accent-color: var(--accent);
+}
+
+.counter {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  min-width: 64px;
+  text-align: center;
+}
+
+.speed {
+  width: 96px;
+  accent-color: var(--accent);
+}
+
+.note {
+  padding: 10px 14px;
+  font-size: 13px;
+  min-height: 42px;
+}
+
+.stage {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  overflow: hidden;
+}
+
+.frame {
+  max-width: 100%;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  font-size: 12px;
+  color: var(--text-dim);
+}

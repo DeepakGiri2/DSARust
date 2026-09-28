@@ -1,0 +1,520 @@
+/* The problem list, sized from list.rs / style.rs: a 1180px column, the raised
+   filter card, 19px category heads with the two-tone bar, 37px rows. */
+
+.page {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 28px 20px 40px;
+}
+
+/* ── hero ────────────────────────────────────────────────────────────────── */
+
+.kicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  font-size: 11.5px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.pillCyan {
+  color: var(--accent-2);
+  background: color-mix(in srgb, var(--accent-2) 13%, transparent);
+}
+
+.pillViolet {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 13%, transparent);
+}
+
+.pillDim {
+  color: var(--text-dim);
+  background: var(--panel-2);
+}
+
+.pillGreen {
+  color: var(--green);
+  background: var(--green-tint);
+  padding: 3px 10px;
+}
+
+.pillAmber {
+  color: var(--amber);
+  background: var(--amber-tint);
+  padding: 3px 10px;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 300;
+  letter-spacing: -1px;
+  line-height: 1.12;
+}
+
+.subtitle {
+  margin-top: 8px;
+  max-width: 780px;
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+.subtitle strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ── the filter card: its own raised surface, so it reads as a toolbar ───── */
+
+.filters {
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 18px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: color-mix(in srgb, var(--panel) 85%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+
+.segScroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.searchBox {
+  position: relative;
+  display: inline-flex;
+}
+
+.search {
+  width: 220px;
+  padding: 5px 30px 5px 10px;
+  font-size: 13px;
+}
+
+.slash {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--text-dim);
+}
+
+.shown {
+  padding: 3px 10px;
+}
+
+.locked > :not(.hint) {
+  opacity: 0.55;
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.picker {
+  min-width: 190px;
+  justify-content: flex-start;
+  padding: 5px 10px;
+}
+
+.pickerText {
+  flex: 1;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.caret {
+  color: var(--text-dim);
+  font-size: 10px;
+}
+
+.tick {
+  display: inline-block;
+  width: 14px;
+  color: var(--accent-2);
+}
+
+.menuName {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menuCount {
+  font-size: 11px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.warn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  background: var(--amber-tint);
+  border: 1px solid color-mix(in srgb, var(--amber) 35%, transparent);
+  font-size: 13px;
+}
+
+/* ── category sections ───────────────────────────────────────────────────── */
+
+.section {
+  margin-top: 30px;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* Two halves rather than a gradient: at four pixels wide a ramp would not be
+   visible anyway, and this keeps the accent pair on screen (style.rs). */
+.bar {
+  width: 4px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 2px;
+  background: linear-gradient(var(--accent) 50%, var(--accent-2) 50%);
+}
+
+.sectionTitle {
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+}
+
+.rule {
+  flex: 1;
+  min-width: 24px;
+  height: 1px;
+  background: color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.rows {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* ── rows ────────────────────────────────────────────────────────────────── */
+
+.row {
+  --edge: var(--border);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 38px;
+  padding: 7px 12px 7px 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+/* The edge marker sits inside the left margin, part of the border rather than
+   a first column; it brightens under the pointer. */
+.row::before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: 5px;
+  bottom: 5px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--edge);
+  opacity: 0.5;
+  transition: opacity 0.15s;
+}
+
+.row:hover {
+  background: var(--panel-2);
+  border-color: color-mix(in srgb, var(--edge) 67%, transparent);
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--edge) 16%, transparent);
+}
+
+.row:hover::before {
+  opacity: 1;
+}
+
+.row:has(.rowTitle:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.glyph {
+  width: 14px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 11px;
+}
+
+.rowTitle {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  color: var(--text);
+}
+
+/* The whole row is the link's hit area. */
+.rowTitle::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.rowTitle:focus-visible {
+  outline: none;
+}
+
+/* Done, so it recedes (0xbb alpha on the desktop). */
+.solved .rowTitle {
+  color: color-mix(in srgb, var(--text) 73%, transparent);
+}
+
+.plain .rowTitle {
+  color: var(--text-dim);
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.badge,
+.badgeDim,
+.lock {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+.badge {
+  color: var(--accent-2);
+  background: color-mix(in srgb, var(--accent-2) 13%, transparent);
+}
+
+.badgeDim {
+  color: var(--text-dim);
+  background: var(--panel-2);
+}
+
+.lock {
+  color: var(--amber);
+  background: var(--amber-tint);
+}
+
+/* Above the stretched link, so a star click never opens the problem. */
+.star {
+  position: relative;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  line-height: 1;
+  color: color-mix(in srgb, var(--text-dim) 60%, transparent);
+  transition: color 0.15s;
+}
+
+.star:hover {
+  color: var(--amber);
+}
+
+.star[aria-pressed='true'] {
+  color: var(--amber);
+}
+
+.star[aria-pressed='true'] > span {
+  animation: star-pop 0.25s ease-out;
+}
+
+@keyframes star-pop {
+  60% {
+    transform: scale(1.3);
+  }
+}
+
+/* ── empty state, footer ─────────────────────────────────────────────────── */
+
+.emptyText {
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.emptyActions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.foot {
+  margin-top: 40px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* ── dialogs ─────────────────────────────────────────────────────────────── */
+
+.modalNote {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.55;
+}
+
+.modalHint {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.modalHint strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.promptActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.playlistList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.playlistItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 10px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.playlistRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.playlistName {
+  flex: 1;
+  min-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13.5px;
+}
+
+.confirm {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.confirm :global(.btn) {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.inlineForm {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.inlineForm :global(.input) {
+  flex: 1;
+  min-width: 0;
+}
+
+.newPlaylist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* ── narrow screens ──────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .page {
+    padding: 20px 16px 32px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .filters {
+    width: 100%;
+  }
+
+  .searchBox,
+  .search {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .long,
+  .badge,
+  .badgeDim {
+    display: none;
+  }
+
+  .row {
+    gap: 8px;
+    padding-right: 6px;
+  }
+}

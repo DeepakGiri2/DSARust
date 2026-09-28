@@ -1,0 +1,41 @@
+.stack {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: min(420px, calc(100vw - 32px));
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  font-size: 13px;
+  animation: slide 0.2s ease-out;
+}
+
+.info {
+  border-left: 3px solid var(--accent-2);
+}
+
+.success {
+  border-left: 3px solid var(--green);
+}
+
+.error {
+  border-left: 3px solid var(--red);
+}
+
+@keyframes slide {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}

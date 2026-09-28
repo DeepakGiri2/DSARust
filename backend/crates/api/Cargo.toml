@@ -1,0 +1,73 @@
+[package]
+name = "dsa-api"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "DSA Visualized cloud API: accounts, progress, traces, runs and AI assist over PostgreSQL"
+
+[[bin]]
+name = "dsa-api"
+path = "src/main.rs"
+
+[features]
+default = []
+# AWS integrations: the Lambda runner client, SES email and Bedrock AI. Off by
+# default so a local build does not compile the AWS SDK; the production image
+# enables it.
+aws = ["dep:aws-config", "dep:aws-sdk-lambda", "dep:aws-sdk-sesv2", "dep:aws-sdk-bedrockruntime"]
+
+[dependencies]
+dsa-core = { workspace = true }
+dsa-content = { workspace = true }
+dsa-harness = { workspace = true }
+dsa-ai = { workspace = true }
+dsa-protocol = { workspace = true }
+
+tokio = { workspace = true }
+axum = { workspace = true }
+tower = { workspace = true }
+tower-http = { workspace = true }
+http = { workspace = true }
+http-body-util = { workspace = true }
+bytes = { workspace = true }
+futures = { workspace = true }
+tokio-stream = { workspace = true }
+async-stream = { workspace = true }
+async-trait = { workspace = true }
+reqwest = { workspace = true }
+
+sqlx = { workspace = true }
+redis = { workspace = true }
+moka = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+uuid = { workspace = true }
+time = { workspace = true }
+
+argon2 = { workspace = true }
+rand = { workspace = true }
+sha2 = { workspace = true }
+hmac = { workspace = true }
+subtle = { workspace = true }
+base64 = { workspace = true }
+hex = { workspace = true }
+
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+metrics = { workspace = true }
+metrics-exporter-prometheus = { workspace = true }
+clap = { workspace = true }
+dotenvy = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+url = { workspace = true }
+lettre = { workspace = true }
+
+aws-config = { workspace = true, optional = true }
+aws-sdk-lambda = { workspace = true, optional = true }
+aws-sdk-sesv2 = { workspace = true, optional = true }
+aws-sdk-bedrockruntime = { workspace = true, optional = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

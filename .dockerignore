@@ -1,0 +1,18 @@
+# Build contexts are the repository root (the API links the desktop's crates
+# and bakes content/ into its image). Keep everything else out: target
+# directories alone are gigabytes.
+#
+# Anchor build-output patterns to where Cargo actually puts them. A loose
+# `**/target-*` once matched content/problems/target-sum and silently dropped
+# a problem from the image; `dsa-api check-content` now fails the build if a
+# catalogued problem has no pack.
+/target
+/backend/target
+/backend/target-*
+**/node_modules
+**/.git
+**/.env
+web/dist
+infra/cdk.out
+/dist
+.claude

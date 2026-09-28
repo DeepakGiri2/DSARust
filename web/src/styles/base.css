@@ -1,0 +1,575 @@
+/*
+ * Global base + the shared control vocabulary.
+ *
+ * Class names follow the original web stylesheet (`.seg`, `.diff-*`,
+ * `.mini-btn`), which the desktop app ported to egui; screens compose these
+ * rather than restyling their own buttons. Screen-specific styling lives in
+ * CSS modules next to each screen.
+ */
+
+@import '@fontsource/ubuntu/300.css';
+@import '@fontsource/ubuntu/400.css';
+@import '@fontsource/ubuntu/500.css';
+@import '@fontsource/ubuntu/700.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/600.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.link {
+  color: var(--accent-2);
+}
+
+a.link:hover {
+  text-decoration: underline;
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--mono);
+}
+
+code {
+  background: var(--panel-2);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+kbd {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 1px 5px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--panel-2);
+  font-size: 11px;
+  text-align: center;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+/* Thin scrollbars that match the palette (desktop: 9px floating bars). */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 9px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ── the backdrop: a wash, a hairline lattice that dissolves, three lights ── */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background: linear-gradient(180deg, #131626 0%, #0a0c12 100%);
+}
+
+:root[data-theme='light'] .backdrop {
+  background: linear-gradient(180deg, #f4f6fc 0%, #fafbfd 100%);
+}
+
+.backdrop::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--accent) 9%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--accent) 9%, transparent) 1px, transparent 1px);
+  background-size: 76px 76px;
+  mask-image: linear-gradient(180deg, #000 0%, transparent 85%);
+}
+
+.backdrop i {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(8px);
+  opacity: 0.9;
+}
+
+.backdrop i:nth-child(1) {
+  left: -30vmax;
+  top: -40vmax;
+  width: 124vmax;
+  height: 124vmax;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 20%, transparent), transparent);
+  animation: drift-a 48s ease-in-out infinite alternate;
+}
+
+.backdrop i:nth-child(2) {
+  right: -38vmax;
+  top: -40vmax;
+  width: 100vmax;
+  height: 100vmax;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent-2) 18%, transparent), transparent);
+  animation: drift-b 59s ease-in-out infinite alternate;
+}
+
+.backdrop i:nth-child(3) {
+  left: 10vmax;
+  bottom: -70vmax;
+  width: 112vmax;
+  height: 112vmax;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--pink) 12%, transparent), transparent);
+  animation: drift-c 71s ease-in-out infinite alternate;
+}
+
+.backdrop.frozen i {
+  animation: none;
+}
+
+@keyframes drift-a {
+  to {
+    transform: translate(6vw, 8vh);
+  }
+}
+
+@keyframes drift-b {
+  to {
+    transform: translate(-6vw, 9vh);
+  }
+}
+
+@keyframes drift-c {
+  to {
+    transform: translate(5vw, -8vh);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop i {
+    animation: none;
+  }
+}
+
+/* ── segmented control ───────────────────────────────────────────────────── */
+
+.seg {
+  display: inline-flex;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2px;
+  gap: 2px;
+}
+
+.seg > button {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  padding: 5px 13px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    color 0.15s,
+    background 0.15s;
+}
+
+.seg > button:hover {
+  color: var(--text);
+}
+
+.seg > button[aria-pressed='true'] {
+  background: var(--accent);
+  color: #fff;
+}
+
+.seg.small > button {
+  padding: 3px 10px;
+  font-size: 12px;
+}
+
+/* ── buttons ─────────────────────────────────────────────────────────────── */
+
+.mini-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--panel-2);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  transition:
+    color 0.15s,
+    border-color 0.15s,
+    transform 0.1s;
+}
+
+.mini-btn:hover:not(:disabled) {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.mini-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.mini-btn:disabled {
+  opacity: 0.5;
+}
+
+.mini-btn[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    filter 0.15s,
+    background 0.15s,
+    border-color 0.15s,
+    transform 0.1s;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.12);
+}
+
+.btn-ghost {
+  background: var(--panel-2);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.btn-danger {
+  background: var(--red-tint);
+  border-color: color-mix(in srgb, var(--red) 55%, transparent);
+  color: var(--red);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--red) 22%, transparent);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* ── pills and chips ─────────────────────────────────────────────────────── */
+
+.diff {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+.diff-easy {
+  color: var(--green);
+  background: var(--green-tint);
+}
+
+.diff-medium {
+  color: var(--amber);
+  background: var(--amber-tint);
+}
+
+.diff-hard {
+  color: var(--red);
+  background: var(--red-tint);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.chip-accent {
+  color: var(--accent-2);
+  background: var(--accent-2-tint);
+  border-color: transparent;
+}
+
+.chip-violet {
+  color: var(--accent);
+  background: var(--accent-tint);
+  border-color: transparent;
+}
+
+.chip-green {
+  color: var(--green);
+  background: var(--green-tint);
+  border-color: transparent;
+}
+
+.chip-amber {
+  color: var(--amber);
+  background: var(--amber-tint);
+  border-color: transparent;
+}
+
+/* ── section label: the cyan bar + small caps (“STDIN”, “EXAMPLE 1”) ─────── */
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.section-label::before {
+  content: '';
+  width: 3px;
+  height: 13px;
+  border-radius: 2px;
+  background: var(--accent-2);
+}
+
+/* ── cards and surfaces ──────────────────────────────────────────────────── */
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.glass {
+  background: var(--panel-glass);
+  backdrop-filter: blur(6px);
+}
+
+/* ── form controls ───────────────────────────────────────────────────────── */
+
+.input {
+  width: 100%;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  padding: 8px 11px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: var(--accent);
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--red);
+}
+
+.input.mono {
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+textarea.input {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.field > label {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.field-error {
+  font-size: 12px;
+  color: var(--red);
+}
+
+.field-hint {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--text-dim);
+  cursor: pointer;
+  user-select: none;
+}
+
+.check input {
+  accent-color: var(--accent);
+  width: 15px;
+  height: 15px;
+}
+
+/* ── misc ────────────────────────────────────────────────────────────────── */
+
+.muted {
+  color: var(--text-dim);
+}
+
+.mono {
+  font-family: var(--mono);
+}
+
+.grad-text {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.85);
+  }
+  60% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  25% {
+    transform: translateX(-3px);
+  }
+  75% {
+    transform: translateX(3px);
+  }
+}

@@ -1,0 +1,212 @@
+/* The full-screen problem workspace and its header (app.rs `problem_header`). */
+
+/* Translucent over the backdrop, like the desktop's panel_fill (BG @ 0xd0). */
+.workspace {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 10px;
+  background: var(--panel-glass);
+  overflow: hidden;
+}
+
+.full {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--panel-glass);
+}
+
+.notFound {
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.notFound h1 {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.tabFallback {
+  flex: 1;
+}
+
+.tabFallback[hidden] {
+  display: none;
+}
+
+/* ── header ────────────────────────────────────────────────────────────── */
+
+.header {
+  gap: 6px 10px;
+}
+
+.title {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.category {
+  font-size: 11.5px;
+  color: var(--text-dim);
+}
+
+.complexity {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent-2);
+}
+
+.leetcode {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.leetcode:hover {
+  color: var(--text);
+}
+
+.attempts {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.inPlaylist {
+  color: var(--text);
+}
+
+.headerRight {
+  margin-left: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.celebrate {
+  animation:
+    pop 0.5s ease-out,
+    header-glow 1.6s ease-out;
+}
+
+@keyframes header-glow {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--green) 60%, transparent);
+  }
+  to {
+    box-shadow: 0 0 0 12px transparent;
+  }
+}
+
+/* ── menus ─────────────────────────────────────────────────────────────── */
+
+.menuNote {
+  padding: 6px 10px;
+  font-size: 11.5px;
+  color: var(--text-dim);
+}
+
+.menuCheck {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: none;
+  font-size: 13px;
+  text-align: left;
+  color: var(--text);
+}
+
+.menuCheck:hover {
+  background: var(--panel-2);
+}
+
+.box {
+  flex: 0 0 15px;
+  height: 15px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 10px;
+  color: #fff;
+}
+
+.menuCheck[aria-checked='true'] .box {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.prompt {
+  max-width: 290px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 6px 8px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.promptActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ── locked (premium) and source-less problems ─────────────────────────── */
+
+.locked {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 4px 10px;
+  overflow: auto;
+}
+
+.lockedStatement {
+  flex: 1 1 420px;
+  max-width: 720px;
+}
+
+.upgrade {
+  flex: 0 1 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.upgrade h2 {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+@media (max-width: 700px) {
+  .workspace {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .celebrate {
+    animation: none;
+  }
+}

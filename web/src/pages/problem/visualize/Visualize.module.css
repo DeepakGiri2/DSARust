@@ -1,0 +1,661 @@
+/* ⏵ Visualize — sizes and colours follow crates/dsa-app/src/problem.rs. */
+
+.viz {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.viz[hidden],
+.pane[hidden],
+.center[hidden] {
+  display: none;
+}
+
+.columns {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.side {
+  flex: 0 0 auto;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 4px 10px 6px;
+}
+
+.center {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 8px 0;
+}
+
+.pane {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── code ──────────────────────────────────────────────────────────────── */
+
+/* The code keeps 62% of the column and the input the rest, as on the desktop;
+   with no input editor below it, it takes everything. */
+.codePanel {
+  flex: 0 0 62%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.codePanel:only-child {
+  flex: 1 1 auto;
+}
+
+.codeHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding: 2px 0 6px;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.bpHint {
+  font-size: 10px;
+}
+
+.code {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  outline-offset: -2px;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: max-content;
+  min-width: 100%;
+  padding: 1px 8px 1px 0;
+  border-radius: 4px;
+}
+
+.current {
+  background: var(--accent-tint);
+}
+
+.bp,
+.bpSpace {
+  flex: 0 0 18px;
+  height: 18px;
+}
+
+.bp {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--text-dim);
+}
+
+.bp:hover,
+.bpOn {
+  color: var(--red);
+}
+
+.num {
+  flex: 0 0 3ch;
+  text-align: right;
+  font-size: 11px;
+  color: var(--text-dim);
+  user-select: none;
+}
+
+.text {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  font-size: inherit;
+  color: var(--code-text);
+  white-space: pre;
+}
+
+/* ── input ─────────────────────────────────────────────────────────────── */
+
+.inputs {
+  flex: 0 1 auto;
+  min-height: 0;
+  margin-top: 8px;
+  padding-top: 2px;
+  border-top: 1px solid var(--border);
+  overflow: auto;
+}
+
+.inputRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px 8px;
+}
+
+.fieldLabel {
+  font-size: 11.5px;
+  color: var(--text-dim);
+}
+
+.fieldInput {
+  width: 110px;
+  padding: 4px 8px;
+}
+
+.wide {
+  width: 200px;
+}
+
+.help {
+  flex-basis: 100%;
+  font-size: 10.5px;
+  color: var(--text-dim);
+}
+
+.inputErrors {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 6px;
+  list-style: none;
+  font-size: 11.5px;
+  color: var(--red);
+}
+
+/* ── centre: note, canvas, result, about ───────────────────────────────── */
+
+.note {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  min-height: 34px;
+  padding: 7px 10px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.noteGlyph {
+  font-size: 13px;
+}
+
+.ev_call {
+  color: var(--accent-2);
+}
+
+.ev_return {
+  color: var(--green);
+}
+
+.ev_stmt {
+  color: var(--text-dim);
+}
+
+.canvasScroll {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 6px 0 12px;
+  overflow: auto;
+}
+
+.canvas {
+  flex: 0 0 auto;
+}
+
+.traceError {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.traceError code {
+  padding: 0;
+  background: none;
+  font-size: 12px;
+  color: var(--red);
+  white-space: pre-wrap;
+}
+
+.result {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.resultLabel {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.resultValue {
+  padding: 0;
+  background: none;
+  font-size: 14px;
+  color: var(--green);
+}
+
+.about h3 {
+  margin-bottom: 2px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.about p {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text);
+  white-space: pre-wrap;
+}
+
+.about p + h3 {
+  margin-top: 8px;
+}
+
+/* ── inspector ─────────────────────────────────────────────────────────── */
+
+.inspectorBody {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.varsHead {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 2px 0 6px;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.frameNote {
+  font-size: 10.5px;
+  color: var(--amber);
+}
+
+.vars {
+  flex: 0 1 auto;
+  max-height: 240px;
+  overflow: auto;
+  font-family: var(--mono);
+  font-size: 11.5px;
+}
+
+.varRow {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 2px 0;
+}
+
+.star {
+  padding: 0 2px;
+  border: none;
+  background: none;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.star:hover,
+.starOn {
+  color: var(--amber);
+}
+
+.disclosure {
+  flex: 0 0 12px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 10px;
+  text-align: center;
+  color: var(--text-dim);
+}
+
+.varName {
+  color: var(--accent-2);
+}
+
+.varValue {
+  color: var(--text);
+  word-break: break-all;
+}
+
+.changed {
+  color: var(--amber);
+}
+
+.children {
+  padding-left: 40px;
+  list-style: none;
+  font-size: 10.5px;
+  color: var(--text-dim);
+  white-space: pre;
+}
+
+.hot {
+  color: var(--text);
+}
+
+.more {
+  font-style: italic;
+}
+
+.stack {
+  flex: 0 1 auto;
+  max-height: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  overflow: auto;
+  list-style: none;
+}
+
+.frame {
+  padding: 2px 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: none;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  text-align: left;
+  color: var(--text-dim);
+}
+
+.frame:hover {
+  background: var(--panel-2);
+}
+
+.frameTop {
+  color: var(--text);
+}
+
+.frameSel {
+  background: color-mix(in srgb, var(--accent) 38%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 65%, transparent);
+  color: var(--text);
+}
+
+.frameSel:hover {
+  background: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.logsHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.linkBtn {
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 10.5px;
+  color: var(--text-dim);
+  text-decoration: underline dotted;
+}
+
+.linkBtn:hover {
+  color: var(--text);
+}
+
+.showLogs {
+  align-self: flex-start;
+  margin-top: 10px;
+}
+
+.logs {
+  flex: 1;
+  min-height: 60px;
+  overflow: auto;
+}
+
+/* ── log lines (inspector and console) ─────────────────────────────────── */
+
+.logLine {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+
+.logStep {
+  flex: 0 0 3ch;
+  text-align: right;
+  font-size: 10px;
+  color: var(--text-dim);
+  opacity: 0.6;
+}
+
+.logGlyph {
+  flex: 0 0 auto;
+  color: var(--log);
+}
+
+.logText {
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.colored .logText {
+  color: var(--log);
+}
+
+.faded .logGlyph {
+  opacity: 0.5;
+}
+
+.faded .logText,
+.faded.colored .logText {
+  color: var(--text-dim);
+  opacity: 0.85;
+}
+
+.console {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 4px 2px;
+}
+
+.consoleHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.consoleCount {
+  font-size: 10.5px;
+}
+
+.consoleBody {
+  max-height: 120px;
+  overflow: auto;
+  padding: 8px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.consoleBody .logLine {
+  font-size: 11px;
+}
+
+/* ── transport ─────────────────────────────────────────────────────────── */
+
+.transport {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  max-width: 100%;
+}
+
+.tbtn {
+  min-width: 34px;
+  justify-content: center;
+}
+
+.play {
+  min-width: 44px;
+}
+
+.scrubber {
+  width: 150px;
+  accent-color: var(--accent);
+}
+
+.counter {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.speed {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.speed input {
+  width: 150px;
+  accent-color: var(--accent);
+}
+
+.speedValue {
+  min-width: 4.5ch;
+  font-size: 10.5px;
+  color: var(--text-dim);
+}
+
+/* ── the gate ──────────────────────────────────────────────────────────── */
+
+.gateWrap {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+  overflow: auto;
+}
+
+.gate {
+  max-width: 560px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gate h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.gate p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.gate .gateHint {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.gateActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+/* ── phone: tabs on top, one pane below ────────────────────────────────── */
+
+.stacked {
+  flex-direction: column;
+  border-bottom: none;
+}
+
+.stacked > .side {
+  order: -1;
+  flex: 0 0 auto;
+  overflow: visible;
+  padding: 0;
+}
+
+.stacked > .center {
+  flex: 0 0 auto;
+  min-height: 60dvh;
+  padding: 0;
+}
+
+.stacked .pane {
+  overflow: visible;
+}
+
+.stacked .codePanel {
+  flex: 0 0 auto;
+  max-height: 55dvh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .code {
+    scroll-behavior: auto;
+  }
+}

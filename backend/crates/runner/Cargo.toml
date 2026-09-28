@@ -1,0 +1,44 @@
+[package]
+name = "dsa-runner"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Sandboxed code execution for DSA Visualized (AWS Lambda container or HTTP worker)"
+
+[lib]
+name = "dsa_runner"
+path = "src/lib.rs"
+
+[[bin]]
+name = "dsa-runner"
+path = "src/main.rs"
+
+[dependencies]
+dsa-protocol = { workspace = true }
+
+tokio = { workspace = true }
+axum = { workspace = true }
+tower-http = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+uuid = { workspace = true }
+subtle = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+anyhow = { workspace = true }
+
+# The sandbox and the Lambda transport only exist on Linux: every production
+# deployment is a Linux container, and gating them keeps a Windows or macOS
+# checkout building (and unit-testable) without pretending to sandbox.
+[target.'cfg(target_os = "linux")'.dependencies]
+libc = { workspace = true }
+seccompiler = { workspace = true }
+lambda_runtime = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }
+
+# The Linux integration tests query the real uid to decide what to assert.
+[target.'cfg(target_os = "linux")'.dev-dependencies]
+libc = { workspace = true }

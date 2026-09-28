@@ -1,0 +1,291 @@
+/* The site chrome. The bar is glass over the backdrop, like the desktop's
+   translucent panels, and its content lines up with the 1180px page column. */
+
+.shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  outline: none;
+}
+
+.skip {
+  position: absolute;
+  left: 12px;
+  top: -48px;
+  z-index: 60;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
+  font-size: 13px;
+  transition: top 0.15s;
+}
+
+.skip:focus {
+  top: 8px;
+}
+
+/* ── top bar ─────────────────────────────────────────────────────────────── */
+
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--panel-glass);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.inner {
+  max-width: 1220px;
+  height: 52px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.brand {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+  border-radius: var(--radius-sm);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.link {
+  padding: 6px 11px;
+  border-radius: var(--radius-sm);
+  color: var(--text-dim);
+  font-size: 13px;
+  transition:
+    color 0.15s,
+    background 0.15s;
+}
+
+.link:hover {
+  color: var(--text);
+}
+
+.active {
+  color: var(--text);
+  background: var(--panel-2);
+}
+
+.right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.guestWide {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cta {
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
+.iconBtn {
+  width: 32px;
+  height: 30px;
+  justify-content: center;
+  font-size: 14px;
+  padding: 0;
+}
+
+.burger {
+  display: none;
+  width: 34px;
+  height: 30px;
+  justify-content: center;
+  padding: 0;
+  font-size: 15px;
+}
+
+.mobileNav {
+  display: none;
+}
+
+.mobileActions {
+  display: flex;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.mobileActions > * {
+  flex: 1;
+}
+
+/* ── the profile chip ────────────────────────────────────────────────────── */
+
+.chipButton {
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: var(--radius-pill);
+  color: inherit;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 320px;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--panel-2);
+  color: var(--text);
+  font-size: 12px;
+  white-space: nowrap;
+  transition: filter 0.15s;
+}
+
+.chipButton:hover .chip,
+.chipButton[aria-expanded='true'] .chip {
+  filter: brightness(1.18);
+}
+
+.chipFace {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.chipName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chipScore {
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.caret {
+  color: var(--text-dim);
+  font-size: 10px;
+}
+
+.menuHead {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 6px 10px 4px;
+  min-width: 0;
+}
+
+.menuName {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.menuEmail {
+  font-size: 12px;
+  color: var(--text-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 240px;
+}
+
+/* ── verify banner ───────────────────────────────────────────────────────── */
+
+.banner {
+  background: var(--amber-tint);
+  border-bottom: 1px solid color-mix(in srgb, var(--amber) 35%, transparent);
+}
+
+.bannerInner {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 7px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.bannerText {
+  flex: 1;
+  min-width: 200px;
+}
+
+.bannerText strong {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.bannerClose {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+
+.bannerClose:hover {
+  color: var(--text);
+}
+
+/* ── narrow screens ──────────────────────────────────────────────────────── */
+
+@media (max-width: 720px) {
+  .nav,
+  .guestWide {
+    display: none;
+  }
+
+  .burger {
+    display: inline-flex;
+  }
+
+  .mobileNav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 16px 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .mobileNav .link {
+    padding: 9px 11px;
+    font-size: 14px;
+  }
+
+  .chipLong {
+    display: none;
+  }
+
+  .chip {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .inner {
+    padding: 0 14px;
+    gap: 10px;
+  }
+
+  .bannerInner {
+    padding: 7px 14px;
+  }
+}

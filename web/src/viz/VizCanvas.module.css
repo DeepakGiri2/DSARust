@@ -1,0 +1,17 @@
+/* The gap between views is set inline from VIEW_SPACING (render.ts). */
+.root {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.view {
+  display: block;
+}
+
+/* `ui.add_space(8.0); ui.weak(...)` in show_views. */
+.empty {
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--text-dim);
+}

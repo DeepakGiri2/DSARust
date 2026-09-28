@@ -1,0 +1,128 @@
+/*
+ * Design tokens.
+ *
+ * Dark values are the desktop's `style.rs` constants, which were themselves the
+ * original web app's :root — one palette across all three clients. Semantic
+ * canvas colours (found / rejected / current / settled) come from
+ * `crates/dsa-viz/src/theme.rs` and must stay distinct in both themes.
+ */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #0b0e14;
+  --panel: #11151f;
+  --panel-2: #161b28;
+  --border: #232a3b;
+  --text: #d6dbe8;
+  --text-dim: #8b93a7;
+  --text-faint: #4a5268;
+
+  --accent: #7c6cff;
+  --accent-2: #22d3ee;
+  --green: #34d399;
+  --red: #f87171;
+  --amber: #fbbf24;
+  --pink: #f472b6;
+
+  /* 13% tints, as the difficulty pills use (`#rrggbb22`). */
+  --accent-tint: #7c6cff22;
+  --accent-2-tint: #22d3ee18;
+  --green-tint: #34d39922;
+  --amber-tint: #fbbf2422;
+  --red-tint: #f8717122;
+
+  /* Panels are translucent so the backdrop tints every screen (desktop: BG @ 0xd0). */
+  --panel-glass: rgb(11 14 20 / 0.82);
+  --overlay: rgb(5 7 12 / 0.72);
+
+  /* Canvas semantics — dsa-viz Theme::dark(). */
+  --viz-bg: #0b0e14;
+  --viz-cell: #161b28;
+  --viz-cell-stroke: #232a3b;
+  --viz-text: #d6dbe8;
+  --viz-muted: #8b93a7;
+  --viz-accent: #7c6cff;
+  --viz-good: #34d399;
+  --viz-bad: #f87171;
+  --viz-cur: #fbbf24;
+  --viz-window: #22d3ee;
+  --viz-dim: #4a5163;
+
+  /* Code colours — the desktop's code panel palette (problem.rs builds it
+     from the canvas theme): keywords in the window cyan, types in the accent,
+     strings found-green, numbers current-amber, comments dim. */
+  --code-text: #d6dbe8;
+  --code-kw: #22d3ee;
+  --code-str: #34d399;
+  --code-num: #fbbf24;
+  --code-com: #4a5163;
+  --code-fn: #d6dbe8;
+  --code-type: #7c6cff;
+  --code-punct: #8b93a7;
+  --code-active: #7c6cff2e;
+
+  --shadow: 0 8px 24px rgb(0 0 0 / 0.4);
+
+  --sans: 'Ubuntu', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'JetBrains Mono', 'Cascadia Code', Consolas, 'Courier New', monospace;
+
+  --radius-sm: 6px;
+  --radius: 8px;
+  --radius-lg: 10px;
+  --radius-pill: 999px;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #fafbfd;
+  --panel: #ffffff;
+  --panel-2: #edf0f6;
+  --border: #c9d1e0;
+  --text: #1b202c;
+  --text-dim: #666f84;
+  --text-faint: #a8b1c2;
+
+  --accent: #146cd8;
+  --accent-2: #714ae0;
+  --green: #0e9f63;
+  --red: #d6333f;
+  --amber: #b57d00;
+  --pink: #c2417f;
+
+  --accent-tint: #146cd822;
+  --accent-2-tint: #714ae018;
+  --green-tint: #0e9f6322;
+  --amber-tint: #b57d0022;
+  --red-tint: #d6333f22;
+
+  --panel-glass: rgb(250 251 253 / 0.9);
+  --overlay: rgb(20 24 32 / 0.45);
+
+  /* dsa-viz Theme::light(). */
+  --viz-bg: #fafbfd;
+  --viz-cell: #edf0f6;
+  --viz-cell-stroke: #c9d1e0;
+  --viz-text: #1b202c;
+  --viz-muted: #666f84;
+  --viz-accent: #146cd8;
+  --viz-good: #0e9f63;
+  --viz-bad: #d6333f;
+  --viz-cur: #b57d00;
+  --viz-window: #714ae0;
+  --viz-dim: #a8b1c2;
+
+  --code-text: #1b202c;
+  --code-kw: #714ae0;
+  --code-str: #0e9f63;
+  --code-num: #b57d00;
+  --code-com: #a8b1c2;
+  --code-fn: #1b202c;
+  --code-type: #146cd8;
+  --code-punct: #666f84;
+  --code-active: #146cd81f;
+
+  --shadow: 0 8px 24px rgb(20 24 32 / 0.12);
+}

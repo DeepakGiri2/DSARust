@@ -1,0 +1,30 @@
+/*
+ * The seven roles of the desktop highlighter (highlight.rs `Palette`), coloured
+ * from the shared `--code-*` tokens so light/dark and any palette change apply
+ * to every code surface at once. Punctuation has no token of its own: the
+ * desktop paints it with the muted text colour, and so does this.
+ */
+
+.syn-kw {
+  color: var(--code-kw);
+}
+
+.syn-type {
+  color: var(--code-type);
+}
+
+.syn-str {
+  color: var(--code-str);
+}
+
+.syn-num {
+  color: var(--code-num);
+}
+
+.syn-com {
+  color: var(--code-com);
+}
+
+.syn-punct {
+  color: var(--text-dim);
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@dsa/infra",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AWS CDK v2 app for the DSA Visualized cloud platform (network, data, runner, API, edge, observability, CI roles)",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "watch": "tsc --noEmit --watch",
+    "test": "vitest run",
+    "synth:dev": "cdk synth -c stage=dev --quiet",
+    "synth:prod": "cdk synth -c stage=prod --quiet",
+    "validate:workflows": "node scripts/validate-workflows.mjs",
+    "cdk": "cdk"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.271.0",
+    "cdk-nag": "3.0.2",
+    "constructs": "^10.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "aws-cdk": "2.1143.0",
+    "tsx": "^4.20.0",
+    "typescript": "~5.9.3",
+    "vitest": "^3.2.4",
+    "yaml": "^2.8.1"
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}

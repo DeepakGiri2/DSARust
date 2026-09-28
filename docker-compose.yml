@@ -1,0 +1,134 @@
+# DSA Visualized — the cloud platform, locally.
+#
+#   docker compose up --build          # postgres, redis, mailpit, runner, api
+#   cd web && npm install && npm run dev
+#
+# Then open http://localhost:5173 (Vite proxies /api to the API on :8080, the
+# same single-origin shape CloudFront gives production). Emails land in
+# Mailpit at http://localhost:8025.
+#
+# Host ports another project already uses can be moved; the containers talk
+# to each other on the compose network, so only these published ports change:
+#   DSA_API_PORT (8080)  DSA_PG_PORT (55432)  DSA_REDIS_PORT (56379)
+# e.g. DSA_API_PORT=18080 docker compose up --build, then run the web dev
+# server with DSA_API_URL=http://localhost:18080.
+#
+# The runner executes submissions inside its sandbox (per-job uid, rlimits,
+# seccomp — see backend/crates/runner/README.md). It needs to start as root
+# inside its container to drop each job to its own uid, but keeps only the
+# capabilities that takes, and needs no network of its own beyond answering
+# the API.
+
+name: dsa-visualized
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: dsa
+      POSTGRES_PASSWORD: dsa
+      POSTGRES_DB: dsa
+    ports:
+      - "${DSA_PG_PORT:-55432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dsa -d dsa"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "${DSA_REDIS_PORT:-56379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "8025:8025" # web UI
+      - "1025:1025" # SMTP
+
+  runner:
+    build:
+      context: .
+      dockerfile: backend/docker/runner.Dockerfile
+      target: runtime
+    environment:
+      RUNNER_BIND: 0.0.0.0:8081
+      RUNNER_TOKEN: dev-runner-token
+      RUNNER_MAX_CONCURRENCY: "4"
+      LOG_FORMAT: pretty
+      RUST_LOG: info
+    ports:
+      - "8081:8081"
+    # Root, for per-job uids, with only what that needs: switch uid/gid, hand
+    # job files over (chown) and clean them up (DAC_OVERRIDE, FOWNER), and
+    # kill job processes that belong to other uids.
+    cap_drop: [ALL]
+    cap_add: [CHOWN, DAC_OVERRIDE, FOWNER, SETUID, SETGID, KILL]
+    security_opt:
+      - no-new-privileges:true
+    # The runner writes only under /tmp, so the image stays read-only and jobs
+    # find no world-writable directory but /tmp and /dev/shm, both swept.
+    # `exec`: Docker mounts tmpfs noexec by default, and the compiled C++/Go
+    # programs run from the job directory under /tmp (as on Lambda).
+    read_only: true
+    tmpfs:
+      - /tmp:size=1g,mode=1777,exec
+    # Four jobs at 256 threads each (RLIMIT_NPROC per job uid) plus the runner:
+    # one job's fork bomb cannot eat the other jobs' share.
+    pids_limit: 1280
+    mem_limit: 3g
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8081/healthz"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build:
+      context: .
+      dockerfile: backend/docker/api.Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      runner:
+        condition: service_healthy
+    environment:
+      DSA_ENV: development
+      DSA_BIND: 0.0.0.0:8080
+      DSA_METRICS_BIND: 0.0.0.0:9464
+      DSA_PUBLIC_URL: http://localhost:5173
+      DATABASE_URL: postgres://dsa:dsa@postgres:5432/dsa
+      REDIS_URL: redis://redis:6379
+      RUN_MIGRATIONS: "true"
+      RUNNER_MODE: http
+      RUNNER_URL: http://runner:8081
+      RUNNER_TOKEN: dev-runner-token
+      MAIL_MODE: smtp
+      SMTP_URL: smtp://mailpit:1025
+      MAIL_FROM: "DSA Visualized <no-reply@dsa.test>"
+      # none | ollama (e.g. OLLAMA_URL=http://host.docker.internal:11434) | anthropic
+      AI_PROVIDER: ${AI_PROVIDER:-none}
+      AI_MODEL: ${AI_MODEL:-}
+      OLLAMA_URL: ${OLLAMA_URL:-http://host.docker.internal:11434}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ADMIN_EMAILS: ${ADMIN_EMAILS:-}
+      LOG_FORMAT: pretty
+      RUST_LOG: info,dsa_api=debug
+    ports:
+      - "${DSA_API_PORT:-8080}:8080"
+      - "9464:9464"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  pgdata:
